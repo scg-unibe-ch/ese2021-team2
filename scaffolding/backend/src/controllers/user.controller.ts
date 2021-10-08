@@ -8,6 +8,7 @@ import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 const userController: Router = express.Router();
 const userService = new UserService();
 
+
 userController.post('/register', checkPassword, checkNoDuplicates,
     (req: Request, res: Response) => {
         userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
