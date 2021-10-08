@@ -15,9 +15,9 @@ export class UserComponent {
 
   user: User | undefined;
 
-  userToRegister: User = new User(0, '', '');
+  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
 
-  userToLogin: User = new User(0, '', '');
+  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
 
   endpointMsgUser: string = '';
   endpointMsgAdmin: string = '';
@@ -38,24 +38,37 @@ export class UserComponent {
   registerUser(): void {
     this.httpClient.post(environment.endpointURL + "user/register", {
       userName: this.userToRegister.username,
-      password: this.userToRegister.password
+      password: this.userToRegister.password,
+  
+
     }).subscribe(() => {
       this.userToRegister.username = this.userToRegister.password = '';
     });
+
+
+    console.log(this.userToRegister.fname)
+
   }
 
-  loginUser(): void {
+
+  loginUser(): void { 
+    console.log('login attempt');
+    
     this.httpClient.post(environment.endpointURL + "user/login", {
       userName: this.userToLogin.username,
-      password: this.userToLogin.password
+      password: this.userToLogin.password,
     }).subscribe((res: any) => {
+
+      console.log(res);
+      
+      
       this.userToLogin.username = this.userToLogin.password = '';
 
       localStorage.setItem('userName', res.user.userName);
       localStorage.setItem('userToken', res.token);
 
       this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password));
+      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber));
     });
   }
 
