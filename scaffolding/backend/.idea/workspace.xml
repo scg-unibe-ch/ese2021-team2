@@ -19,6 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="e962acc2-5ed2-4a0c-98b5-1b36fec9ad3d" name="Default Changelist" comment="" />
     <list default="true" id="e962acc2-5ed2-4a0c-98b5-1b36fec9ad3d" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/middlewares/delete_acc.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/middlewares/no_duplicate_acc.ts" afterDir="false" />
@@ -59,7 +60,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="C:\Users\marko\Documents\ESE Assistent\ese2021-Github\ese2021\scaffolding\backend\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -88,6 +89,7 @@
       <workItem from="1631349125796" duration="7915000" />
       <workItem from="1631364224676" duration="17308000" />
       <workItem from="1633693446623" duration="4634000" />
+      <workItem from="1633698476675" duration="131000" />
     </task>
     <servers />
   </component>
