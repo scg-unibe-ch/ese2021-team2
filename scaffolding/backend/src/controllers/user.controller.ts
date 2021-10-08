@@ -3,11 +3,12 @@ import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { verifyToken } from '../middlewares/checkAuth';
 import { checkPassword } from '../middlewares/checkPassword';
+import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 
 const userController: Router = express.Router();
 const userService = new UserService();
 
-userController.post('/register', checkPassword,
+userController.post('/register', checkPassword, checkNoDuplicates,
     (req: Request, res: Response) => {
         userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
     }
