@@ -105,3 +105,6 @@ dist
 
 # Ignore DS_Store
 .DS_Store
+
+# Ignore .idea
+.idea/
