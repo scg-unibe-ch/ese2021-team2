@@ -19,7 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="e962acc2-5ed2-4a0c-98b5-1b36fec9ad3d" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="e962acc2-5ed2-4a0c-98b5-1b36fec9ad3d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +49,11 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+<<<<<<< Updated upstream
     <property name="ts.external.directory.path" value="C:\Users\marko\Documents\ESE Assistent\ese2021-Github\ese2021\scaffolding\backend\node_modules\typescript\lib" />
+=======
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+>>>>>>> Stashed changes
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -58,6 +68,11 @@
       <workItem from="1631259278543" duration="3818000" />
       <workItem from="1631349125796" duration="7915000" />
       <workItem from="1631364224676" duration="17308000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1633693446623" duration="4634000" />
+      <workItem from="1633698476675" duration="131000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
