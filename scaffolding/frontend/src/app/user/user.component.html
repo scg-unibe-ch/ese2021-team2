@@ -6,8 +6,34 @@
   <mat-form-field>
     <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password">
   </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Firstname" name="firstname" [(ngModel)]="userToRegister.firstname">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Lastname" name="lastname" [(ngModel)]="userToRegister.lastname">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Email" name="email" [(ngModel)]="userToRegister.email">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Street" name="street" [(ngModel)]="userToRegister.street">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Zip code" name="zip" [(ngModel)]="userToRegister.zip">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="City" name="city" [(ngModel)]="userToRegister.city">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Birthdate" name="birthdate" [(ngModel)]="userToRegister.birthdate">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Telephone number" name="telephone" [(ngModel)]="userToRegister.telephone">
+  </mat-form-field>
+  <mat-form-field>
   <button mat-flat-button color="primary" (click)="registerUser()">Register</button>
-</mat-card>
+  </mat-form-field>
+ </mat-card>
 
 <mat-card>
   <h3>Login</h3>
