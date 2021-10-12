@@ -19,6 +19,9 @@ export class UserComponent {
 
   userToLogin: User = new User(0, '', '');
 
+  invPwMsgRegistration: string | undefined;
+  invalidPassword: boolean | undefined;
+
   endpointMsgUser: string = '';
   endpointMsgAdmin: string = '';
 
@@ -81,5 +84,40 @@ export class UserComponent {
     }, () => {
       this.endpointMsgAdmin = "Unauthorized";
     });
+  }
+
+
+  checkUserPassword(): void{
+    let invalidFormat = false;
+    let msg = '';
+
+    try {
+      const pw: string = this.userToRegister.password;
+
+      if (pw.length < 8) {
+        invalidFormat = true;
+        msg = 'Password too short';
+      } else if (pw.search(/\d/) === -1) {
+        invalidFormat = true;
+        msg = 'Password must contain number';
+      } else if (pw.search('[A-Z]') === -1) {
+        invalidFormat = true;
+        msg = 'Password must contain capital letter';
+      } else if (pw.search('[a-z]') === -1) {
+        invalidFormat = true;
+        msg = 'Password must contain lowercase letter';
+      } else if (!(/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/.test(pw))) {
+        invalidFormat = true;
+        msg = 'Password must contain a special character';
+      }
+      if (invalidFormat) {
+        this.invPwMsgRegistration = msg;
+      }
+
+    } catch{
+      this.invPwMsgRegistration = "Something unusual went wrong. Please try again."
+    }
+    finally {this.invalidPassword = invalidFormat;
+    }
   }
 }

@@ -4,9 +4,13 @@
     <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.username">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password">
+    <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
+    <div *ngIf="invalidPassword">
+      <br>
+      {{invPwMsgRegistration}}
+    </div>
   </mat-form-field>
-  <button mat-flat-button color="primary" (click)="registerUser()">Register</button>
+  <button mat-flat-button color="primary" (click)="registerUser()" [disabled]="invalidPassword" >Register</button>
 </mat-card>
 
 <mat-card>
