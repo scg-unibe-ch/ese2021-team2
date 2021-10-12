@@ -35,6 +35,7 @@ export class Server {
 
 
 
+
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
                 console.log(`server listening at http://localhost:${this.port}`);   // indicate that the server has started
