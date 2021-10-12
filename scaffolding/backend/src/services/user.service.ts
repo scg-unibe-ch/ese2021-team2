@@ -12,7 +12,6 @@ export class UserService {
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
-        console.log('reached be user.services.ts line 15');
 
 
         const secret = process.env.JWT_SECRET;

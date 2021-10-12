@@ -4,12 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../services/user.service';
 
+
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
+
+  falseLogin: boolean = false;
 
   loggedIn: boolean | undefined;
 
@@ -52,25 +56,35 @@ export class UserComponent {
 
 
   loginUser(): void { 
-    console.log('login attempt');
     
-    this.httpClient.post(environment.endpointURL + "user/login", {
-      userName: this.userToLogin.username,
-      password: this.userToLogin.password,
-    }).subscribe((res: any) => {
+  
+    
+      this.httpClient.post(environment.endpointURL + "user/login", {
+        userName: this.userToLogin.username,
+        password: this.userToLogin.password,
+      }).subscribe((res: any) => {
 
-      console.log(res);
+        this.falseLogin = false;
+        
+        
+        this.userToLogin.username = this.userToLogin.password = '';
+
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userToken', res.token);
+
+        this.userService.setLoggedIn(true);
+        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber));
+      },
+      err => {
+        this.falseLogin=true;
+      }
       
-      
-      this.userToLogin.username = this.userToLogin.password = '';
+      );
+    
 
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userToken', res.token);
-
-      this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber));
-    });
-  }
+}
+  
+  
 
   logoutUser(): void {
     localStorage.removeItem('userName');

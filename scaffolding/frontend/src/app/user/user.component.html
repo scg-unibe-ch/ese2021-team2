@@ -58,6 +58,8 @@
       <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password">
     </mat-form-field>
     <button mat-flat-button color="primary" (click)="loginUser()">Login</button>
+    <p style="color: red;" *ngIf="falseLogin">Wrong username or password. Please try again.</p>
+
   </div>
 
   <div *ngIf="loggedIn">
