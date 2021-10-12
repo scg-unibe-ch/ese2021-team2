@@ -7,6 +7,8 @@
     <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password">
   </mat-form-field>
   <button mat-flat-button color="primary" (click)="registerUser()">Register</button>
+  <br>
+  <span style="color:red" *ngIf="!!registrationFeedback"> {{ registrationFeedback  }}</span>
 </mat-card>
 
 <mat-card>
