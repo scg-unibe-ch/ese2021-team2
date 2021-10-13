@@ -109,4 +109,10 @@ export class UserComponent {
       this.endpointMsgAdmin = "Unauthorized";
     });
   }
+
+
+  loginGuest(){
+    this.userService.setLoggedIn(true);
+    this.userService.setUser(new User(0, "Guest", "0", "", "", "", "", 0, "", "", "", "",  ));
+  }
 }

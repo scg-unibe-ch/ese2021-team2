@@ -60,6 +60,10 @@
     <button mat-flat-button color="primary" (click)="loginUser()">Login</button>
     <p style="color: red;" *ngIf="falseLogin">Wrong username or password. Please try again.</p>
 
+    <br>
+    <button mat-flat-button color="primary" (click)="loginGuest()" id="liguest">Login as guest</button>
+
+
   </div>
 
   <div *ngIf="loggedIn">
