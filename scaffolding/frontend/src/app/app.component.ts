@@ -89,4 +89,10 @@ export class AppComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
 
   }
+
+  test(){
+ 
+      console.log(this.user);
+    
+  }
 }

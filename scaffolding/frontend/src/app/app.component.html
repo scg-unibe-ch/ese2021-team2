@@ -2,8 +2,7 @@
   <mat-toolbar-row>
     <span>ESE-2021 Frontend Scaffolding</span>
     
-    <p>     </p>
-    <p *ngIf="loggedIn">test</p>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -29,6 +28,38 @@
   </mat-tab>
 
   <mat-tab *ngIf="loggedIn" label="Profile Page">
-    Profile Page
+    <mat-card>
+      
+      <h1>{{this.user?.username}}</h1>
+      <label for="">First name:</label>
+      <p>{{this.user?.fname}}</p>
+      <br>
+      <label for="">Last name:</label>
+      <p>{{this.user?.lname}}</p>
+      <br>
+      <label for="">Street:</label>
+      <p>{{this.user?.street}}</p>
+      <br>
+      <label for="">House Number:</label>
+      <p>{{this.user?.housenr}}</p>
+      <br>
+      <label for="">ZIP-Code:</label>
+      <p>{{this.user?.zipCode}}</p>
+      <br>
+      <label for="">City:</label>
+      <p>{{this.user?.city}}</p>
+      <br>
+      <label for="">E-mail:</label>
+      <p>{{this.user?.email}}</p>
+      <br>
+      <label for="">Phone Number:</label>
+      <p>{{this.user?.phonenumber}}</p>
+      <br>
+      <label for="">Last name:</label>
+      <p>{{this.user?.lname}}</p>
+      <br>
+      <label for="">Birthday:</label>
+      <p>{{this.user?.birthday}}</p>
+    </mat-card>
   </mat-tab>
 </mat-tab-group>
