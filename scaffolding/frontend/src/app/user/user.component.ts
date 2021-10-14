@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../services/user.service';
 
+
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -11,13 +13,15 @@ import { UserService } from '../services/user.service';
 })
 export class UserComponent {
 
+  falseLogin: boolean = false;
+
   loggedIn: boolean | undefined;
 
   user: User | undefined;
 
-  userToRegister: User = new User(0, '', '');
+  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
 
-  userToLogin: User = new User(0, '', '');
+  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
 
   endpointMsgUser: string = '';
   endpointMsgAdmin: string = '';
@@ -38,26 +42,61 @@ export class UserComponent {
   registerUser(): void {
     this.httpClient.post(environment.endpointURL + "user/register", {
       userName: this.userToRegister.username,
-      password: this.userToRegister.password
+      password: this.userToRegister.password,
+      fname: this.userToRegister.fname,
+      lname: this.userToRegister.lname,
+      street: this.userToRegister.street,
+      housenr: this.userToRegister.housenr,
+      zipCode: this.userToRegister.zipCode,
+      city: this.userToRegister.city,
+      email: this.userToRegister.email,
+      birthday: this.userToRegister.birthday,
+      phonenumber: this.userToRegister.phonenumber
+      
+      
     }).subscribe(() => {
+     
+      this.userToLogin=this.userToRegister;
+      this.loginUser();
       this.userToRegister.username = this.userToRegister.password = '';
     });
+
+    
+
+
   }
 
-  loginUser(): void {
-    this.httpClient.post(environment.endpointURL + "user/login", {
-      userName: this.userToLogin.username,
-      password: this.userToLogin.password
-    }).subscribe((res: any) => {
-      this.userToLogin.username = this.userToLogin.password = '';
 
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userToken', res.token);
+  loginUser(): void { 
+    
+  
+    
+      this.httpClient.post(environment.endpointURL + "user/login", {
+        userName: this.userToLogin.username,
+        password: this.userToLogin.password,
+      }).subscribe((res: any) => {
 
-      this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password));
-    });
-  }
+        this.falseLogin = false;
+        
+        
+        this.userToLogin.username = this.userToLogin.password = '';
+
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userToken', res.token);
+
+        this.userService.setLoggedIn(true);
+        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber));
+      },
+      err => {
+        this.falseLogin=true;
+      }
+      
+      );
+    
+
+}
+  
+  
 
   logoutUser(): void {
     localStorage.removeItem('userName');
@@ -81,5 +120,11 @@ export class UserComponent {
     }, () => {
       this.endpointMsgAdmin = "Unauthorized";
     });
+  }
+
+
+  loginGuest(){
+    this.userService.setLoggedIn(true);
+    this.userService.setUser(new User(0, "Guest", "0", "", "", "", "", 0, "", "", "", "",  ));
   }
 }

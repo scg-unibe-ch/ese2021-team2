@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
+    console.log(this.user?.fname);
   }
 
   ngOnInit() {
@@ -87,5 +88,11 @@ export class AppComponent implements OnInit {
     // Set boolean whether a user is logged in or not
     this.userService.setLoggedIn(!!userToken);
 
+  }
+
+  test(){
+ 
+      console.log(this.user);
+    
   }
 }

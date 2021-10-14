@@ -13,6 +13,8 @@ export class UserService {
     }
 
     public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
+
+
         const secret = process.env.JWT_SECRET;
         return User.findOne({
             where: {
@@ -20,8 +22,22 @@ export class UserService {
             }
         })
         .then(user => {
+            console.log('reached be user.services.ts line 25');
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the login request
-                const token: string = jwt.sign({ userName: user.userName, userId: user.userId, admin: user.admin }, secret, { expiresIn: '2h' });
+                const token: string = jwt.sign({
+                    userName: user.userName,
+                    userId: user.userId,
+                    admin: user.admin,
+                    fname: user.fname,
+                    lname: user.lname,
+                    email: user.email,
+                    street: user.street,
+                    housenr: user.housenr,
+                    zipCode: user.zipCode,
+                    city: user.city,
+                    birthday: user.birthday,
+                    phonenumber: user.phonenumber
+                    }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
             } else {
                 return Promise.reject({ message: 'not authorized' });
