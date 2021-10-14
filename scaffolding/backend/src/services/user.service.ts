@@ -25,8 +25,10 @@ export class UserService {
                  ]
             }
     }).then(user => {
-            console.log('reached be user.services.ts line 25');
-            if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the login request
+            console.log(user);
+            if (user != null) {
+                if (bcrypt.compareSync(loginRequestee.password, user.password)) {
+                    // compares the hash with the password from the login request
                 const token: string = jwt.sign({
                     userName: user.userName,
                     userId: user.userId,
@@ -42,8 +44,11 @@ export class UserService {
                     phonenumber: user.phonenumber
                     }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
+                } else {
+                    return Promise.reject({ message: 'wrong Password' });
+                }
             } else {
-                return Promise.reject({ message: 'not authorized' });
+                return Promise.reject({ message: 'wrong Email/Username' });
             }
         })
         .catch(err => Promise.reject({ message: err }));

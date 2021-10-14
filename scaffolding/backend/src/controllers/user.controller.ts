@@ -11,7 +11,7 @@ const userService = new UserService();
 
 userController.post('/register', checkPassword, checkNoDuplicates,
     (req: Request, res: Response) => {
-        console.log(req);
+
 
         userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
     }
@@ -19,7 +19,7 @@ userController.post('/register', checkPassword, checkNoDuplicates,
 
 userController.post('/login',
     (req: Request, res: Response) => {
-        console.log('reached BE user controller line 17');
+
 
 
         userService.login(req.body).then(login => res.send(login)).catch(err => res.status(500).send(err));
