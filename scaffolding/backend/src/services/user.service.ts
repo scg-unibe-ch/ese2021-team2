@@ -45,10 +45,10 @@ export class UserService {
                     }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
                 } else {
-                    return Promise.reject({ message: 'wrong Password' });
+                    return Promise.reject({ message: 'Wrong Password' });
                 }
             } else {
-                return Promise.reject({ message: 'wrong Email/Username' });
+                return Promise.reject({ message: ' Email/Username not found' });
             }
         })
         .catch(err => Promise.reject({ message: err }));
