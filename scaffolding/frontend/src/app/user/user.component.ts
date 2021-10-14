@@ -13,6 +13,10 @@ import { UserService } from '../services/user.service';
 })
 export class UserComponent {
 
+  userNameEmpty: boolean = true;
+
+  emailEmpty: boolean = true;
+
   falseLogin: boolean = false;
 
   loggedIn: boolean | undefined;
@@ -142,5 +146,25 @@ export class UserComponent {
     } finally {
       this.invalidPassword = invalidFormat;
     }
+  }
+
+  checkIfUsernameEmpty(){
+    if(this.userToLogin.username===""){ 
+      this.userNameEmpty=true;
+    }else{
+    this.userNameEmpty=false;
+    }
+    
+  }
+
+  checkIfEmailEmpty(){
+    console.log("test");
+    if(this.userToLogin.email===""){
+       this.emailEmpty=true;
+    }else{
+      
+      
+      this.emailEmpty=false;
+    }   
   }
 }

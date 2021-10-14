@@ -20,7 +20,7 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput type="text" placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email">
+    <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email">
   </mat-form-field>
   <br>
   <h3>Adress</h3>
@@ -39,7 +39,7 @@
 
   <br>
   <mat-form-field>
-    <input matInput type="text" placeholder="Birthdate" name="birthday" [(ngModel)]="userToRegister.birthday">
+    <input matInput type="date" placeholder="Birthdate" name="birthday" [(ngModel)]="userToRegister.birthday">
   </mat-form-field>
   <br>
   <mat-form-field>
@@ -55,11 +55,11 @@
   <h3>Login</h3>
 
   <div *ngIf="!loggedIn">
-    <mat-form-field>
-      <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.username">
+    <mat-form-field *ngIf="emailEmpty">
+      <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.username" (input)="checkIfUsernameEmpty()" >
     </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email">
+    <mat-form-field *ngIf="userNameEmpty">
+      <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()">
     </mat-form-field>
     <mat-form-field>
       <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password">

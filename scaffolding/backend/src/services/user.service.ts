@@ -3,6 +3,7 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+const { Op } = require('sequelize');
 
 export class UserService {
 
@@ -18,10 +19,12 @@ export class UserService {
         const secret = process.env.JWT_SECRET;
         return User.findOne({
             where: {
-                userName: loginRequestee.userName
+                [Op.or]: [
+                {userName: loginRequestee.userName},
+                {email: loginRequestee.email}
+                 ]
             }
-        })
-        .then(user => {
+    }).then(user => {
             console.log('reached be user.services.ts line 25');
             if (bcrypt.compareSync(loginRequestee.password, user.password)) {// compares the hash with the password from the login request
                 const token: string = jwt.sign({
