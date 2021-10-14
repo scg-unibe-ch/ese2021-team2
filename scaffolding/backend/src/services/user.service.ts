@@ -2,6 +2,7 @@ import { UserAttributes, User } from '../models/user.model';
 import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { DeleteRequest } from '../models/accountDelete.model';
 
 export class UserService {
 
@@ -27,6 +28,26 @@ export class UserService {
             }
         })
         .catch(err => Promise.reject({ message: err }));
+    }
+
+    // deletes a user from the database
+    public delete(deleteRequestee: DeleteRequest): Promise<string> {
+        try {
+            const tokenUsername: string = deleteRequestee.tokenPayload.userName;
+            const passedUsername: string = deleteRequestee.userName;
+            if (tokenUsername.normalize() === passedUsername.normalize()) {
+                User.destroy({
+                    where: {
+                        userName: passedUsername
+                    }
+                });
+                return Promise.resolve('User successfully deleted');
+            } else {
+                return Promise.reject('Deletion unsuccessful');
+            }
+        } catch (err) {
+            return Promise.reject('Deletion unsuccessful');
+        }
     }
 
     public getAll(): Promise<User[]> {
