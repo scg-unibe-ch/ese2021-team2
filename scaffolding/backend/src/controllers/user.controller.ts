@@ -17,6 +17,9 @@ userController.post('/register', checkPassword, checkNoDuplicates,
 
 userController.post('/login',
     (req: Request, res: Response) => {
+        console.log('reached BE user controller line 17');
+
+
         userService.login(req.body).then(login => res.send(login)).catch(err => res.status(500).send(err));
     }
 );
@@ -24,6 +27,12 @@ userController.post('/login',
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
         userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
+    }
+);
+
+userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
+    (req: Request, res: Response) => {
+        userService.delete(req.body).then(response => res.send(response)).catch(err => res.status(500).send(err));
     }
 );
 

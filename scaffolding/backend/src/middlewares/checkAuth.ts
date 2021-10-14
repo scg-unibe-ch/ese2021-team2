@@ -4,6 +4,10 @@ import { Request, Response } from 'express';
 // this way you can just define a function and export it instead of a whole class
 export function verifyToken(req: Request, res: Response, next: any) {
     try {
+
+        console.log('middleware reached');
+
+
         // get secret key from environment (defined in nodemon.json)
         const secret = process.env.JWT_SECRET;
         // since the authorization header consists of "Bearer <token>" where <token> is a JWT token
