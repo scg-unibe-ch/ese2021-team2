@@ -11,6 +11,8 @@ const userService = new UserService();
 
 userController.post('/register', checkPassword, checkNoDuplicates,
     (req: Request, res: Response) => {
+        console.log(req);
+
         userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
     }
 );

@@ -66,6 +66,7 @@ export class UserComponent {
   loginUser(): void {
     this.httpClient.post(environment.endpointURL + "user/login", {
       userName: this.userToLogin.username,
+      email: this.userToLogin.email,
       password: this.userToLogin.password,
     }).subscribe((res: any) => {
 
@@ -84,10 +85,6 @@ export class UserComponent {
     );
   }
 
-  loginGuest() {
-    this.userService.setLoggedIn(true);
-    this.userService.setUser(new User(0, "Guest", "0", "", "", "", "", 0, "", "", "", "",  ));
-  }
 
   logoutUser(): void {
     localStorage.removeItem('userName');

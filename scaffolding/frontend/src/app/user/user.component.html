@@ -59,13 +59,14 @@
       <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.username">
     </mat-form-field>
     <mat-form-field>
+      <input matInput type="text" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email">
+    </mat-form-field>
+    <mat-form-field>
       <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password">
     </mat-form-field>
     <button mat-flat-button color="primary" (click)="loginUser()">Login</button>
     <p style="color: red;" *ngIf="falseLogin">Wrong username or password. Please try again.</p>
 
-    <br>
-    <button mat-flat-button color="primary" (click)="loginGuest()" id="liguest">Login as guest</button>
 
 
   </div>

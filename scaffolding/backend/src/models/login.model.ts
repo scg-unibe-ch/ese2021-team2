@@ -9,4 +9,5 @@ export interface LoginResponse {
 export interface LoginRequest {
     userName: string;
     password: string;
+    email: string;
 }
