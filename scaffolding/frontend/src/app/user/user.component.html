@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!loggedIn">
   <h2>Register</h2>
   <mat-form-field>
     <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.username">
@@ -46,7 +46,8 @@
     <input matInput type="text" placeholder="Phone Number" name="phonenumber" [(ngModel)]="userToRegister.phonenumber">
   </mat-form-field>
 <button mat-flat-button color="primary" (click)="registerUser()">Register</button>
-
+  <br>
+  <span style="color:red" *ngIf="!!registrationFeedback"> {{ registrationFeedback  }}</span>
 
 </mat-card>
 

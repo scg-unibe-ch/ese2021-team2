@@ -33,6 +33,9 @@ export class UserComponent {
   endpointMsgUser: string = '';
   endpointMsgAdmin: string = '';
 
+  registrationFeedback: string = '';
+
+
   constructor(
     public httpClient: HttpClient,
     public userService: UserService
@@ -47,6 +50,7 @@ export class UserComponent {
   }
 
   registerUser(): void {
+    this.registrationFeedback = '';
     this.httpClient.post(environment.endpointURL + "user/register", {
       userName: this.userToRegister.username,
       password: this.userToRegister.password,
@@ -63,7 +67,12 @@ export class UserComponent {
       this.userToLogin=this.userToRegister;
       this.loginUser();
       this.userToRegister.username = this.userToRegister.password = '';
-    });
+  },
+(err: any) => {
+
+  this.registrationFeedback = err.error.message;
+
+});
   }
 
 
