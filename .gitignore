@@ -108,3 +108,6 @@ dist
 
 # Ignore .idea
 .idea/
+
+# Ignore *.code-workspace
+*.code-workspace
