@@ -55,24 +55,19 @@ export class UserService {
     }
 
     // deletes a user from the database
-    public delete(deleteRequestee: DeleteRequest): Promise<string> {
-        try {
-            const tokenUsername: string = deleteRequestee.tokenPayload.userName;
-            const passedUsername: string = deleteRequestee.userName;
-            if (tokenUsername.normalize() === passedUsername.normalize()) {
-                User.destroy({
-                    where: {
-                        userName: passedUsername
-                    }
-                });
-                return Promise.resolve('User successfully deleted');
-            } else {
-                return Promise.reject('Deletion unsuccessful');
-            }
-        } catch (err) {
-            return Promise.reject('Deletion unsuccessful');
+    public delete(deleteRequestee: DeleteRequest): Promise<number> {
+        const tokenUsername: string = deleteRequestee.tokenPayload.userName;
+        const passedUsername: string = deleteRequestee.userName;
+        if (tokenUsername.normalize() === passedUsername.normalize()) {
+           return User.destroy({
+                where: {
+                    userName: passedUsername
+                }
+            }).catch(err => Promise.reject({message: err}));
+        } else {
+            return Promise.reject();
         }
-    }
+}
 
     public getAll(): Promise<User[]> {
         return User.findAll();

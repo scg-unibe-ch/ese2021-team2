@@ -34,7 +34,7 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
 
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
-        userService.delete(req.body).then(response => res.send(response)).catch(err => res.status(500).send(err));
+        userService.delete(req.body).then(() => res.send()).catch(err => res.status(500).send(err));
     }
 );
 
