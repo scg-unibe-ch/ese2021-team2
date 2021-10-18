@@ -11,13 +11,19 @@ export async function checkNoDuplicates(req: Request, res: Response, next: any) 
         } else {
             next();
         }
+
+
     } catch (err) {
-
-
         res.status(500).send({message: 'Error'});
     }
 
 
+
+}
+
+
+
+export async function checkNoDuplicateEmail(req: Request, res: Response, next: any) {
     try {
         const un: string = req.body.email;
         const query = await User.findOne({where: {email: un}});
@@ -27,9 +33,18 @@ export async function checkNoDuplicates(req: Request, res: Response, next: any) 
         } else {
             next();
         }
+
+
     } catch (err) {
-
-
         res.status(500).send({message: 'Error'});
     }
+
+
+
 }
+
+
+
+
+
+

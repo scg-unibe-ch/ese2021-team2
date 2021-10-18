@@ -84,8 +84,7 @@ export class UserComponent {
       userName: this.userToLogin.username,
       email: this.userToLogin.email,
       password: this.userToLogin.password,
-    }).subscribe((res: any) => {
-
+    }).subscribe((res: any) => {  
       this.falseLogin = false;
       this.userToLogin.username = this.userToLogin.password = '';
 
