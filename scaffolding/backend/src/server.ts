@@ -13,6 +13,7 @@ import { User } from './models/user.model';
 import cors from 'cors';
 import {AdminController} from './controllers/admin.controller';
 import {ItemImage} from './models/itemImage.model';
+import { Post } from './models/post.model';
 
 
 export class Server {
@@ -27,6 +28,7 @@ export class Server {
         TodoItem.initialize(this.sequelize); // creates the tables if they dont exist
         TodoList.initialize(this.sequelize);
         User.initialize(this.sequelize);
+        Post.initialize(this.sequelize);
         ItemImage.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
