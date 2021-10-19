@@ -19,6 +19,7 @@ import { UserComponent } from './user/user.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { PostComponent } from './post/post.component';
 import { BoardComponent } from './board/board.component';
+import { PostListComponent } from './board/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BoardComponent } from './board/board.component';
     TodoItemComponent,
     UserComponent,
     PostComponent,
-    BoardComponent
+    BoardComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
