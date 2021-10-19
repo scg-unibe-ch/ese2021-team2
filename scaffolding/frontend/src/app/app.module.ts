@@ -18,8 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserComponent } from './user/user.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { BoardComponent } from './board/board.component';
-import { PostListComponent } from './post-list/post-list.component';
-import { PostComponent } from './postList/post/post.component';
+
 
 
 @NgModule({
@@ -29,8 +28,7 @@ import { PostComponent } from './postList/post/post.component';
     TodoItemComponent,
     UserComponent,
     BoardComponent,
-    PostListComponent,
-    PostComponent,
+    
 
   ],
   imports: [
