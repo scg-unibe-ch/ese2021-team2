@@ -1,3 +1,6 @@
+import { User } from "./user.model";
+
+
 export class Post {
 
     constructor(
@@ -9,5 +12,9 @@ export class Post {
         public boardId: number,
         public creatorId: number,
         public semester: string,
-    ) {}
+        public tags: string[]
+    ) {
+    
+
+    }
    }
