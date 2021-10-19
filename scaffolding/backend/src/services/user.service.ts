@@ -44,7 +44,7 @@ export class UserService {
                     zipCode: user.zipCode,
                     city: user.city,
                     birthday: user.birthday,
-                    phonenumber: user.phonenumber
+                    phonenumber: user.phonenumber,
                     }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
                 } else {

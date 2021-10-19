@@ -33,7 +33,7 @@ postController.delete('/delete',
 });
 
 
-postController.get('/getPostsofBoard',
+postController.get('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
     }
