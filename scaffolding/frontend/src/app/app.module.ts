@@ -17,9 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserComponent } from './user/user.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { PostComponent } from './post/post.component';
 import { BoardComponent } from './board/board.component';
-import { PostListComponent } from './board/post-list/post-list.component';
+import { PostListComponent } from './post-list/post-list.component';
+import { PostComponent } from './postList/post/post.component';
+
 
 @NgModule({
   declarations: [
@@ -27,9 +28,10 @@ import { PostListComponent } from './board/post-list/post-list.component';
     TodoListComponent,
     TodoItemComponent,
     UserComponent,
-    PostComponent,
     BoardComponent,
-    PostListComponent
+    PostListComponent,
+    PostComponent,
+
   ],
   imports: [
     BrowserModule,
