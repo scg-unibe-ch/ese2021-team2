@@ -1,4 +1,36 @@
-<mat-sidenav-container><mat-sidenav>
-    test
-</mat-sidenav>
+
+<mat-sidenav-container>
+    <mat-sidenav-content>
+        <img src="/assets/images/logo.png" /> 
+        <div class="profile">
+            <img class="avatar" src="/assets/images/profile_pic.png" />
+            <h3 class="h3side">max777</h3>
+            <h4 class="h4side">max mustermann</h4>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-button class="menu-button">
+            <mat-icon>home</mat-icon>
+            <span class="dashboard">Dashboard</span>
+        </button>
+        <button mat-button class="menu-button">
+            <span class="menutext">Subjects</span>
+        </button>
+        <button mat-button class="menu-button">
+            <span class="menutext">My Lectures</span>
+        </button>
+        <button mat-button class="menu-button">
+            <span class="menutext">Bookmark</span>
+        </button>
+        <button mat-button class="menu-button">
+            <span class="menutext">Shop</span>
+        </button>
+        <button mat-button class="menu-button">
+            <span class="menutext">Settings</span>
+        </button>
+
+        <mat-tab *ngIf="loggedIn">
+            <h3 class="h3side">{{this.user?.username}} </h3> 
+        </mat-tab>
+        
+    </mat-sidenav-content>
 </mat-sidenav-container>

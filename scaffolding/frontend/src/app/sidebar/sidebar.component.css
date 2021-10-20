@@ -1,3 +1,63 @@
-mat-sidenav {
-  background: aqua;
+mat-sidenav-content {
+  width: 200px;
+  background-color:white;
+  height: calc(100vh - 65px);
+  text-align: center;
+  padding-top: 16px;
+  margin-left: 0px;
+
+}
+
+.h3side {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  color: white;
+}
+
+.h4side {
+  margin-top: 0px;
+  font-weight: normal;
+  color: white;
+}
+
+.profile {
+  padding: 8px;
+  text-align: left;
+  background-color: #1E90FF;
+}
+.avatar {
+  margin-top: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  align-self: flex-start;
+  float: left;
+  margin-right: 8px;
+}
+.menu-button{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1rem;
+    margin-left: 0px !important;
+    color: rgb(214, 212, 212);
+    
+  }
+
+.menutext {
+  padding-left: 50px;
+}
+
+.dashboard {
+  padding-left: 26px;
+}
+
+.menu-button2 {
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  font-size: 1rem;
+  margin-left: 0px !important;
+  color: rgb(214, 212, 212);
 }
