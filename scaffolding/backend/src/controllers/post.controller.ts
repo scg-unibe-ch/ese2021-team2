@@ -33,9 +33,9 @@ postController.delete('/delete',
 });
 
 
-postController.get('/getPostsOfBoard',
+postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
-        postService.getPostsOfBoard(req.body).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+        postService.getPostsOfBoard(req.body.boardId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
     }
 );
 
@@ -53,3 +53,6 @@ postController.put('/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).send(err));
 
 });
+
+
+export const PostController: Router = postController;

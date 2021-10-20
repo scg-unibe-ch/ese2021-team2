@@ -14,6 +14,8 @@ export class PostComponent implements OnInit {
   @Input()
   post: Post = new Post(0,"","",0,"",0,0,"",[]);
 
+  voted=false;
+
   constructor() {}
 
 
@@ -22,5 +24,14 @@ export class PostComponent implements OnInit {
     
   }
 
+  upvote(){
+    this.post.likes++;
+    this.voted=true;
+  }
+
+  downvote(){
+    this.post.likes--;
+    this.voted=true;
+  }
   
 }

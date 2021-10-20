@@ -10,4 +10,7 @@
 <p>{{this.post.date}}</p>
 
 <p>likes: {{this.post.likes}}</p>
+
+<button (click)="upvote()" *ngIf="!voted">upvote</button>
+<button (click)="downvote()" *ngIf="!voted">downvote</button>
 </mat-card>
