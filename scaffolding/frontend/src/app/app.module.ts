@@ -17,6 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserComponent } from './user/user.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { BoardComponent } from './board/board.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostComponent } from './post-list/post/post.component';
@@ -27,6 +31,7 @@ import { PostComponent } from './post-list/post/post.component';
     TodoListComponent,
     TodoItemComponent,
     UserComponent,
+    SidebarComponent
     BoardComponent,
     PostListComponent,
     PostComponent 
@@ -43,7 +48,10 @@ import { PostComponent } from './post-list/post/post.component';
     MatButtonModule,
     MatListModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatDividerModule,
   ],
   providers: [
     {
