@@ -30,8 +30,6 @@ import { PostComponent } from './post-list/post/post.component';
     BoardComponent,
     PostListComponent,
     PostComponent
-
-
   ],
   imports: [
     BrowserModule,

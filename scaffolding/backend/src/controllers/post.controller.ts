@@ -5,10 +5,6 @@ import { Post } from '../models/post.model';
 
 
 
-
-
-
-
 const postController: Router = express.Router();
 const postService = new PostService;
 
@@ -17,7 +13,6 @@ postController.post('/createPost',
         postService.createPost(req.body).then(created => res.send(created)).catch(err => res.status(500).send(err));
     }
 );
-
 
 postController.delete('/delete',
 (req: Request, res: Response) => {
@@ -31,7 +26,6 @@ postController.delete('/delete',
         })
         .catch(err => res.status(500).send(err));
 });
-
 
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
@@ -51,8 +45,6 @@ postController.put('/:id', (req: Request, res: Response) => {
             }
         })
         .catch(err => res.status(500).send(err));
-
 });
-
 
 export const PostController: Router = postController;

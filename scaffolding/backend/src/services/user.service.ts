@@ -8,7 +8,7 @@ const { Op } = require('sequelize');
 export class UserService {
 
 
-    retu;
+
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
