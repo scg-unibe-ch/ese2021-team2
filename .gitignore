@@ -111,3 +111,5 @@ dist
 
 # Ignore *.code-workspace
 *.code-workspace
+*.sqbpro
+*.sqlite
