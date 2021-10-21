@@ -31,7 +31,7 @@ import { PostComponent } from './post-list/post/post.component';
     TodoListComponent,
     TodoItemComponent,
     UserComponent,
-    SidebarComponent
+    SidebarComponent,
     BoardComponent,
     PostListComponent,
     PostComponent 
