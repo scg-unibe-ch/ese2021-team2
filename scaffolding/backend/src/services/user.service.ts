@@ -7,6 +7,9 @@ const { Op } = require('sequelize');
 
 export class UserService {
 
+
+
+
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
         user.password = bcrypt.hashSync(user.password, saltRounds); // hashes the password, never store passwords as plaintext
@@ -41,7 +44,7 @@ export class UserService {
                     zipCode: user.zipCode,
                     city: user.city,
                     birthday: user.birthday,
-                    phonenumber: user.phonenumber
+                    phonenumber: user.phonenumber,
                     }, secret, { expiresIn: '2h' });
                 return Promise.resolve({ user, token });
                 } else {
@@ -73,7 +76,6 @@ export class UserService {
             return Promise.reject('Deletion unsuccessful');
         }
     }
-
     public getAll(): Promise<User[]> {
         return User.findAll();
     }

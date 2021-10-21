@@ -7,6 +7,14 @@
 </mat-toolbar>
 
 <mat-tab-group>
+  <mat-tab label="Board">
+    <mat-card>
+      <app-board></app-board>
+    </mat-card>
+  </mat-tab>
+
+
+
   <mat-tab label="Todo List Example">
     <mat-card>
       <mat-form-field>
@@ -62,4 +70,5 @@
       <p>{{this.user?.birthday}}</p>
     </mat-card>
   </mat-tab>
+
 </mat-tab-group>
