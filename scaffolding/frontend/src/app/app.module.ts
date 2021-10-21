@@ -29,7 +29,7 @@ import { PostComponent } from './post-list/post/post.component';
     UserComponent,
     BoardComponent,
     PostListComponent,
-    PostComponent
+    PostComponent 
   ],
   imports: [
     BrowserModule,
