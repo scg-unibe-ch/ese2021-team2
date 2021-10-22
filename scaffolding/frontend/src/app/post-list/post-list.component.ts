@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
+import { BoardComponent } from '../board/board.component';
 
 @Component({
   selector: 'app-post-list',
@@ -12,7 +13,8 @@ import { User } from '../models/user.model';
 })
 export class PostListComponent implements OnInit {
 
-
+  @Input()
+  mode = "board"
 
   postFeedback: string | undefined;
  
@@ -40,16 +42,34 @@ export class PostListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.boardId);
-    this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-      boardId: this.boardId
-    }).subscribe((res: any) => {  
-        this.posts = res;
-      } ,
-      err => {   
-        console.log(err);  
-      }
-    );
+    
+    if(this.mode==="board"){
+      this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
+        boardId: this.boardId
+      }).subscribe((res: any) => {  
+          this.posts = res;
+        } ,
+        err => {   
+          console.log(err);  
+        }
+      );
+    }else if(this.mode==="user"){
+
+
+      console.log("test");
+      
+      this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
+        userId: this.user?.userId
+      }).subscribe((res: any) => {  
+          this.posts = res;
+        } ,
+        err => {   
+          console.log(err);  
+        }
+      );
+    }
+
+
     this.checkUserStatus();
   }
 
@@ -69,6 +89,7 @@ export class PostListComponent implements OnInit {
     let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
     this.createPostInBackend(postToAdd);
     this.posts.push(postToAdd)
+    
   }
 
   createPostInBackend(post: Post): void {

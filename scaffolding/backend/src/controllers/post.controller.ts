@@ -33,6 +33,13 @@ postController.post('/getPostsOfBoard',
     }
 );
 
+postController.post('/getPostsByUser',
+    (req: Request, res: Response) => {
+        postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+    }
+);
+
+
 postController.put('/:id', (req: Request, res: Response) => {
     Post.findByPk(req.params.id)
         .then(found => {

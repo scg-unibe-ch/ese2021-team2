@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PostListComponent } from '../post-list/post-list.component';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
@@ -11,13 +11,15 @@ import { User } from '../models/user.model';
 })
 export class BoardComponent implements OnInit {
 
-  postList:PostListComponent;
+  @ViewChild(PostListComponent ) postList:PostListComponent;
+
+  
 
   title="Title";
   
   id = 1;
+ 
 
-  
 
   loggedIn: boolean | undefined;
 
@@ -44,6 +46,7 @@ export class BoardComponent implements OnInit {
   submitPost(){
     this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id);
     this.creatingPost=false;
+    this.ngOnInit();
   }
 
 

@@ -38,7 +38,9 @@ export class UserComponent {
   loginFeedback: string | undefined;
 
   ngOnInit():void{
-  
+  if(this.user?.username==undefined){
+    this.logoutUser();
+  }
     
   }
 
