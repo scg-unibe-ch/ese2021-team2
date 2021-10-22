@@ -37,6 +37,8 @@ export class UserComponent {
 
   loginFeedback: string | undefined;
 
+  hasProfilePicture: boolean = false;
+
 
 
   constructor(
@@ -84,7 +86,7 @@ export class UserComponent {
       userName: this.userToLogin.username,
       email: this.userToLogin.email,
       password: this.userToLogin.password,
-    }).subscribe((res: any) => {  
+    }).subscribe((res: any) => {
       this.falseLogin = false;
       this.userToLogin.username = this.userToLogin.password = '';
 
@@ -94,7 +96,7 @@ export class UserComponent {
       this.userService.setLoggedIn(true);
       this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin));
     } ,
-      err => {   
+      err => {
           this.loginFeedback=err.error.message.message;
         this.falseLogin=true;
       }
@@ -161,12 +163,12 @@ export class UserComponent {
   }
 
   checkIfUsernameEmpty(){
-    if(this.userToLogin.username===""){ 
+    if(this.userToLogin.username===""){
       this.userNameEmpty=true;
     }else{
     this.userNameEmpty=false;
     }
-    
+
   }
 
   checkIfEmailEmpty(){
@@ -174,9 +176,9 @@ export class UserComponent {
     if(this.userToLogin.email===""){
        this.emailEmpty=true;
     }else{
-      
-      
+
+
       this.emailEmpty=false;
-    }   
+    }
   }
 }

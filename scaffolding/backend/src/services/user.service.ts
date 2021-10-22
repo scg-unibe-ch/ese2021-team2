@@ -3,6 +3,8 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+import {MulterRequest} from '../models/multerRequest.model';
+import {upload} from '../middlewares/fileFilter';
 const { Op } = require('sequelize');
 
 export class UserService {
@@ -78,5 +80,40 @@ export class UserService {
     }
     public getAll(): Promise<User[]> {
         return User.findAll();
+    }
+
+    public updateProfileImage(req: MulterRequest): Promise<User> {
+        console.log(req.file + ' PARAMS ID');
+
+        return User.findByPk(req.params.id)
+            .then(async found => {
+                if (!found) {
+                    console.log('in if');
+
+                    return Promise.reject('User not found!');
+                } else {
+                    return new Promise<User>((resolve, reject) => {
+                        upload.single('image')(req, null, async (error: any) => {
+                            found.profile_image = req.file.filename;
+                            await found.save()
+                                .then(created => resolve(created))
+                                .catch(() => reject('Could not upload image!'));
+                        });
+                    });
+                }
+            })
+            .catch(() => Promise.reject('Could not upload image!'));
+    }
+
+    public getProfileImage(imageId: number): Promise < User > {
+        return User.findByPk(imageId)
+            .then(image => {
+                if (image) {
+                    return Promise.resolve(image);
+                } else {
+                    return Promise.reject('image not found!');
+                }
+            })
+            .catch(() => Promise.reject('could not fetch the image!'));
     }
 }

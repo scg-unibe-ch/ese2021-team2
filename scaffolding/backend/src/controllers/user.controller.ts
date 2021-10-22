@@ -5,6 +5,9 @@ import { verifyToken } from '../middlewares/checkAuth';
 import { checkPassword } from '../middlewares/checkPassword';
 import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
+import {MulterRequest} from '../models/multerRequest.model';
+import {upload} from '../middlewares/fileFilter';
+import {ItemImage} from '../models/itemImage.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -34,5 +37,18 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
         userService.delete(req.body).then(response => res.send(response)).catch(err => res.status(500).send(err));
     }
 );
+
+// add image to a todoItem
+userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
+    console.log('file in controller' + req.file);
+    userService.updateProfileImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.get('/:id/image', (req: Request, res: Response) => {
+    userService.getProfileImage(Number(req.params.id)).then(products => res.send(products))
+        .catch(err => res.status(500).send(err));
+});
+
 
 export const UserController: Router = userController;
