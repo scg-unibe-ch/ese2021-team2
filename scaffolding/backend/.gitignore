@@ -4,3 +4,4 @@ build
 *.sqlite
 db.sqlite
 *.sqbpro
+/uploads
