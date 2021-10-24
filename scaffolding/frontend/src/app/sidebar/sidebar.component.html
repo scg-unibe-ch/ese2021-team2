@@ -1,16 +1,15 @@
 
-<mat-sidenav-container>
-    <mat-sidenav-content>
-        <img src="/assets/images/logo.png" /> 
+
+    <div class="conatainer">
+        <a routerLink="/" routerLinkActive="active"><img src="/assets/images/logo.png" /> </a>
         <div class="profile">
             <img class="avatar" src="/assets/images/profile_pic.png" />
-            <!-- <div *ngIf="loggedIn"><h3 class="h3side">{{this.user?.username}}</h3></div> -->
             <div *ngIf="loggedIn; else notShow">
                 <h3 class="h3side">{{this.user?.username}}</h3>
                 <h4 class="h4side">{{this.user?.fname}} {{this.user?.lname}}</h4>
             </div>
             <ng-template #notShow>
-                <h3 class="h3side">logge dich ein</h3>
+                <h3 class="h3side"><a routerLink="/login" routerLinkActive="active">logge dich ein</a></h3>
                 <h4 class="h4side">hier könnte dein name stehen</h4>
             </ng-template>
             
@@ -34,11 +33,4 @@
         </button>
         <button mat-button class="menu-button">
             <span class="menutext">Settings</span>
-        </button>
-
-        <mat-tab *ngIf="loggedIn">
-            <h3 class="h3side">{{this.user?.username}} </h3> 
-        </mat-tab>
-        
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        </button> </div>
