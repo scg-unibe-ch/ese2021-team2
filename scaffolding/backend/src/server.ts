@@ -9,13 +9,11 @@ import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
 
-
 import cors from 'cors';
 import {AdminController} from './controllers/admin.controller';
 import {ItemImage} from './models/itemImage.model';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
-
 
 export class Server {
     private server: Application;
@@ -34,10 +32,6 @@ export class Server {
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
-
-
-
-
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -34,7 +33,7 @@ import { PostComponent } from './post-list/post/post.component';
     SidebarComponent,
     BoardComponent,
     PostListComponent,
-    PostComponent 
+    PostComponent
   ],
   imports: [
     BrowserModule,

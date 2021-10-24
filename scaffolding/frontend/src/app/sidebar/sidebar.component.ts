@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -11,10 +10,7 @@ import { User } from '../models/user.model';
 export class SidebarComponent implements OnInit {
 
   loggedIn: boolean | undefined;
-
   user: User | undefined;
-  
-
 
   constructor(public userService: UserService) {
     // Listen for changes
@@ -41,9 +37,9 @@ export class SidebarComponent implements OnInit {
   }
 
   test(){
- 
+
       console.log(this.user);
-    
+
   }
 
 }

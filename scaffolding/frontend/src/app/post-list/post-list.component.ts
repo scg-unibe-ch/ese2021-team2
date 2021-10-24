@@ -11,28 +11,25 @@ import { environment } from '../../environments/environment';
 })
 export class PostListComponent implements OnInit {
 
+  @Input() boardId: number | undefined;
+
   userService = new UserService();
-
   postFeedback: string | undefined;
- 
   posts: Post[] = [];
-
   changed= true;
 
-  @Input()
-  boardId: number | undefined;
-  constructor(public httpClient: HttpClient) { 
+  constructor(public httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
     console.log(this.boardId);
     this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
       boardId: this.boardId
-    }).subscribe((res: any) => {  
+    }).subscribe((res: any) => {
         this.posts = res;
       } ,
-      err => {   
-        console.log(err);  
+      err => {
+        console.log(err);
       }
     );
   }
@@ -44,7 +41,7 @@ export class PostListComponent implements OnInit {
   }
 
   createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", { 
+    this.httpClient.post(environment.endpointURL + "post/createPost", {
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -53,9 +50,12 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester
-    }).subscribe(() => {},  
-(err: any) => {
-  this.postFeedback = err.error.message;
-});
+    })
+    .subscribe(() => {},
+      (err: any) => {
+        this.postFeedback = err.error.message;
+      }
+    );
   }
+
 }
