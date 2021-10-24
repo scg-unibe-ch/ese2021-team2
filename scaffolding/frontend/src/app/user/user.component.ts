@@ -25,14 +25,6 @@ export class UserComponent {
   registrationFeedback: string = '';
   loginFeedback: string | undefined;
 
-<<<<<<< HEAD
-=======
-  ngOnInit():void{
-  
-    
-  }
-
->>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
   constructor(
     public httpClient: HttpClient,
     public userService: UserService
@@ -46,6 +38,9 @@ export class UserComponent {
     this.user = userService.getUser();
 
 
+  }
+
+  ngOnInit():void{
   }
 
   registerUser(): void {
@@ -73,7 +68,6 @@ export class UserComponent {
       });
   }
 
-
   loginUser(): void {
     this.httpClient.post(environment.endpointURL + "user/login", {
         userName: this.userToLogin.username,
@@ -96,7 +90,6 @@ export class UserComponent {
         }
       );
   }
-
 
   logoutUser(): void {
     localStorage.removeItem('userName');

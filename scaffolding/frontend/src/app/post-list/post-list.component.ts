@@ -12,37 +12,22 @@ import { User } from '../models/user.model';
 })
 export class PostListComponent implements OnInit {
 
-<<<<<<< HEAD
   @Input() boardId: number | undefined;
-=======
 
->>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
-
-  userService = new UserService();
   postFeedback: string | undefined;
   posts: Post[] = [];
   changed= true;
-
-<<<<<<< HEAD
-  constructor(public httpClient: HttpClient) {
-=======
   loggedIn: boolean | undefined;
-
-  @Input()
-  boardId: number | undefined;
-
   user: User | undefined;
 
-  constructor(public httpClient: HttpClient, public userService: UserService) { 
-
-  // Listen for changes
+  constructor(public httpClient: HttpClient, public userService: UserService) {
+    // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
 
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
->>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
   }
 
 
@@ -60,17 +45,13 @@ export class PostListComponent implements OnInit {
     this.checkUserStatus();
   }
 
-
-
   checkUserStatus(): void {
     // Get user data from local storage
     const userToken = localStorage.getItem('userToken');
 
     // Set boolean whether a user is logged in or not
     this.userService.setLoggedIn(!!userToken);
-
   }
-
 
   public createPost(title: string, content: string, semester:string, boardId: number): void{
     let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
