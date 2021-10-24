@@ -33,8 +33,8 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostComponent } from './post-list/post/post.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -50,8 +50,8 @@ import { HeaderComponent } from './header/header.component';
     PostComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
     HeaderComponent,
+    ProfileComponent,
 
   ],
   imports: [

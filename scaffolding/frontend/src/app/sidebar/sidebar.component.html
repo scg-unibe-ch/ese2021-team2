@@ -5,11 +5,11 @@
         <div class="profile">
             <img class="avatar" src="/assets/images/profile_pic.png" />
             <div *ngIf="loggedIn; else notShow">
-                <h3 class="h3side">{{this.user?.username}}</h3>
+                <h3 class="h3side"><a class="lin" routerLink="/profile" routerLinkActive="active">{{this.user?.username}}  </a></h3>
                 <h4 class="h4side">{{this.user?.fname}} {{this.user?.lname}}</h4>
             </div>
             <ng-template #notShow>
-                <h3 class="h3side"><a routerLink="/login" routerLinkActive="active">logge dich ein</a></h3>
+                <h3 class="h3side"><a class="lin" routerLink="/login" routerLinkActive="active">logge dich ein</a></h3>
                 <h4 class="h4side">hier könnte dein name stehen</h4>
             </ng-template>
             
