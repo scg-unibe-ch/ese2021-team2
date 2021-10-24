@@ -12,7 +12,8 @@ export class Post {
         public boardId: number,
         public creatorId: number,
         public semester: string,
-        public tags: string[]
+        public tags: string[],
+        public postImage: string | undefined
     ) {
     
 

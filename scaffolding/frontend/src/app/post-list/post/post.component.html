@@ -7,6 +7,10 @@
 
 <p>{{this.post.content}}</p>
 
+<div *ngIf = "post.postImage">
+   <img [src] = "imageURL" >
+</div>
+
 <p>{{this.post.date}}</p>
 
 <p>likes: {{this.post.likes}}</p>

@@ -11,6 +11,15 @@
     <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle"> 
     <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
     <input type="text" placeholder="semester" name="semester" [(ngModel)]="newSemester">
+    <br>
+    <br>
+    <button type="button" (click)="imageInput.click()">Add a photo</button>
+    <input hidden type="file" #imageInput  accept = "image/jpeg, image/png" (change)="processFile($event)">
+    <br>
+    <div class = "imagePreviewContainer" *ngIf = "imageURL" >
+        <img [src] = "imageURL">
+    </div>
+    <br>
     <button (click)="submitPost()" >Submit Post</button>
 </div>
 

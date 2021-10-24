@@ -15,6 +15,7 @@ import {AdminController} from './controllers/admin.controller';
 import {ItemImage} from './models/itemImage.model';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
+import { PostImage } from './models/postImage.model';
 
 
 export class Server {
@@ -31,9 +32,11 @@ export class Server {
         User.initialize(this.sequelize);
         Post.initialize(this.sequelize);
         ItemImage.initialize(this.sequelize);
+        PostImage.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
+        PostImage.createAssociations();
 
 
 

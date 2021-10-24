@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -12,8 +13,9 @@ export class PostComponent implements OnInit {
   
 
   @Input()
-  post: Post = new Post(0,"","",0,"",0,0,"",[]);
+  post: Post = new Post(0,"","",0,"",0,0,"",[], "");
 
+  imageURL: string = "";
   voted=false;
 
   constructor() {}
@@ -21,7 +23,7 @@ export class PostComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+    this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
   }
 
   upvote(){
@@ -33,5 +35,5 @@ export class PostComponent implements OnInit {
     this.post.likes--;
     this.voted=true;
   }
-  
+
 }
