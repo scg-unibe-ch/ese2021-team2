@@ -2,6 +2,8 @@ import express, { Router, Request, Response } from 'express';
 import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
+import { UserService } from '../services/user.service';
+import { UserController } from './user.controller';
 
 
 
@@ -53,5 +55,7 @@ postController.put('/:id', (req: Request, res: Response) => {
         })
         .catch(err => res.status(500).send(err));
 });
+
+
 
 export const PostController: Router = postController;

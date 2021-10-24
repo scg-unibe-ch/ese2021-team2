@@ -13,14 +13,10 @@ export class BoardComponent implements OnInit {
 
   @ViewChild(PostListComponent ) postList:PostListComponent;
 
-  
-
   title="Title";
   
   id = 1;
  
-
-
   loggedIn: boolean | undefined;
 
   newTitle: string= "";

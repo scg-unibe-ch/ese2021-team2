@@ -16,6 +16,7 @@ export interface UserAttributes {
     city: string;
     birthday: Date;
     phonenumber: string;
+
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
@@ -34,6 +35,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     city!: string;
     birthday!: Date;
     phonenumber!: string;
+
 
     public static initialize(sequelize: Sequelize) {
         User.init({
@@ -89,7 +91,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             phonenumber: {
                 type: DataTypes.STRING,
                 allowNull: true
-            }
+            },
 
 
         },

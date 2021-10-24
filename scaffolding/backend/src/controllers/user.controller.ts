@@ -35,4 +35,10 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
     }
 );
 
+userController.post('/likePost',
+    (req: Request, res: Response) => {
+        userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
+    }
+);
+
 export const UserController: Router = userController;

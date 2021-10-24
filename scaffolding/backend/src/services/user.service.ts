@@ -3,7 +3,10 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+import { like } from 'sequelize/types/lib/operators';
+import {Like} from '../models/like.model';
 const { Op } = require('sequelize');
+
 
 export class UserService {
 
@@ -79,4 +82,18 @@ export class UserService {
     public getAll(): Promise<User[]> {
         return User.findAll();
     }
+
+
+    public getLikedPosts(userid: number) {
+        return Like.findAll({
+            where: {
+                userId: userid
+            }
+        });
+    }
+
+    public likePost(userid: number, postid: number) {
+        return Like.create({userId: userid, postId: postid}).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
+    }
+
 }
