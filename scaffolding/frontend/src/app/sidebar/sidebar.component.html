@@ -3,8 +3,16 @@
         <img src="/assets/images/logo.png" />
         <div class="profile">
             <img class="avatar" src="/assets/images/profile_pic.png" />
-            <h3 class="h3side">max777</h3>
-            <h4 class="h4side">max mustermann</h4>
+            <!-- <div *ngIf="loggedIn"><h3 class="h3side">{{this.user?.username}}</h3></div> -->
+            <div *ngIf="loggedIn; else notShow">
+                <h3 class="h3side">{{this.user?.username}}</h3>
+                <h4 class="h4side">{{this.user?.fname}} {{this.user?.lname}}</h4>
+            </div>
+            <ng-template #notShow>
+                <h3 class="h3side">logge dich ein</h3>
+                <h4 class="h4side">hier könnte dein name stehen</h4>
+            </ng-template>
+            
         </div>
         <mat-divider></mat-divider>
         <button mat-button class="menu-button">

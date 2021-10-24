@@ -1,9 +1,7 @@
 mat-sidenav-content {
   width: 200px;
   background-color:white;
-  height: calc(100vh - 65px);
   text-align: center;
-  padding-top: 16px;
   margin-left: 0px;
 
 }

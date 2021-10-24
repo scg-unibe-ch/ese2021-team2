@@ -25,6 +25,14 @@ export class UserComponent {
   registrationFeedback: string = '';
   loginFeedback: string | undefined;
 
+<<<<<<< HEAD
+=======
+  ngOnInit():void{
+  
+    
+  }
+
+>>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
   constructor(
     public httpClient: HttpClient,
     public userService: UserService
@@ -36,6 +44,8 @@ export class UserComponent {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
+
+
   }
 
   registerUser(): void {
