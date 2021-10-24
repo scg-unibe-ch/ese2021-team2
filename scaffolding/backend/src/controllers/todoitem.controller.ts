@@ -18,12 +18,15 @@ todoItemController.post('/', (req: Request, res: Response) => {
 
 // add image to a todoItem
 todoItemController.post('/:id/image', (req: MulterRequest, res: Response) => {
-    itemService.addImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+    itemService.addImage(req)
+        .then(created => res.send(created))
+        .catch(err => res.status(500).send(err));
 });
 
 // get the filename of an image
 todoItemController.get('/:id/image', (req: Request, res: Response) => {
-    itemService.getImageItem(Number(req.params.id)).then(products => res.send(products))
+    itemService.getImageItem(Number(req.params.id))
+        .then(products => res.send(products))
         .catch(err => res.status(500).send(err));
 });
 

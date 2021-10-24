@@ -8,14 +8,10 @@ import { TodoItem } from '../../models/todo-item.model';
 })
 export class TodoItemComponent {
 
-  @Input()
-  todoItem: TodoItem = new TodoItem(0, 0, '', '', false);
+  @Input() todoItem: TodoItem = new TodoItem(0, 0, '', '', false);
 
-  @Output()
-  update = new EventEmitter<TodoItem>();
-
-  @Output()
-  delete = new EventEmitter<TodoItem>();
+  @Output() update = new EventEmitter<TodoItem>();
+  @Output() delete = new EventEmitter<TodoItem>();
 
   updateItem(): void {
     // Emits event to parent component that TodoItem got updated

@@ -11,16 +11,12 @@ import { environment } from '../../environments/environment';
 })
 export class TodoListComponent {
 
+  @Input() todoList: TodoList = new TodoList(0, '', []);
+
+  @Output() update = new EventEmitter<TodoList>();
+  @Output() delete = new EventEmitter<TodoList>();
+
   newTodoItemName: string = '';
-
-  @Input()
-  todoList: TodoList = new TodoList(0, '', []);
-
-  @Output()
-  update = new EventEmitter<TodoList>();
-
-  @Output()
-  delete = new EventEmitter<TodoList>();
 
   constructor(
     public httpClient: HttpClient

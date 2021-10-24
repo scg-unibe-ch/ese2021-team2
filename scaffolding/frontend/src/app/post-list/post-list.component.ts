@@ -12,14 +12,20 @@ import { User } from '../models/user.model';
 })
 export class PostListComponent implements OnInit {
 
+<<<<<<< HEAD
+  @Input() boardId: number | undefined;
+=======
 
+>>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
 
+  userService = new UserService();
   postFeedback: string | undefined;
- 
   posts: Post[] = [];
-
   changed= true;
 
+<<<<<<< HEAD
+  constructor(public httpClient: HttpClient) {
+=======
   loggedIn: boolean | undefined;
 
   @Input()
@@ -36,6 +42,7 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
+>>>>>>> ec19ce1757dbb445ce79bc62659a5b8fb7fea9ec
   }
 
 
@@ -43,11 +50,11 @@ export class PostListComponent implements OnInit {
     console.log(this.boardId);
     this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
       boardId: this.boardId
-    }).subscribe((res: any) => {  
+    }).subscribe((res: any) => {
         this.posts = res;
       } ,
-      err => {   
-        console.log(err);  
+      err => {
+        console.log(err);
       }
     );
     this.checkUserStatus();
@@ -72,7 +79,7 @@ export class PostListComponent implements OnInit {
   }
 
   createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", { 
+    this.httpClient.post(environment.endpointURL + "post/createPost", {
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -81,9 +88,12 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester
-    }).subscribe(() => {},  
-(err: any) => {
-  this.postFeedback = err.error.message;
-});
+    })
+    .subscribe(() => {},
+      (err: any) => {
+        this.postFeedback = err.error.message;
+      }
+    );
   }
+
 }
