@@ -114,16 +114,15 @@ export class UserService {
                     const fileName: string = found.profile_image;
                     if (fileName) {
                         return Promise.resolve(' C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/' + fileName);
-                        // C:/Users/User/Desktop/ESE-Projekt/ese2021-team2
 
                     } else {
                         return Promise.resolve('C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/default_image.jpg');
                     }
                 } else {
-                    return Promise.reject('no such user found');
+                    return Promise.reject('No such user found');
                 }
             })
-            .catch(() => Promise.reject('no such user!'));
+            .catch(() => Promise.reject('Could not fetch image'));
 
     }
 }
