@@ -1,10 +1,4 @@
-mat-sidenav-content {
-  width: 200px;
-  background-color:white;
-  text-align: center;
-  margin-left: 0px;
 
-}
 
 .h3side {
   margin-top: 16px;
@@ -58,4 +52,8 @@ mat-sidenav-content {
   font-size: 1rem;
   margin-left: 0px !important;
   color: rgb(214, 212, 212);
+}
+
+.lin {
+  color: white;
 }
