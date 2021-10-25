@@ -61,7 +61,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     type: DataTypes.STRING,
                     allowNull: true
                 }
-            }, 
+            },
             {
                 sequelize,
                 tableName: 'posts'

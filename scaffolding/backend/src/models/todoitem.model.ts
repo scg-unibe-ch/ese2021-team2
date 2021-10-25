@@ -52,8 +52,8 @@ export class TodoItem extends Model<TodoItemAttributes, TodoItemCreationAttribut
                     allowNull: false
                 }
             },
-            { 
-                sequelize, 
+            {
+                sequelize,
                 tableName: 'todoItems'
             }
         );

@@ -36,8 +36,6 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
