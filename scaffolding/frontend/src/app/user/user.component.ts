@@ -4,8 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../services/user.service';
 
-
-
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -14,33 +12,18 @@ import { UserService } from '../services/user.service';
 export class UserComponent {
 
   userNameEmpty: boolean = true;
-
   emailEmpty: boolean = true;
-
   falseLogin: boolean = false;
-
   loggedIn: boolean | undefined;
-
   user: User | undefined;
-
   userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
-
   userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
-
   invPwMsgRegistration: string | undefined;
   invalidPassword: boolean | undefined;
-
   endpointMsgUser: string = '';
   endpointMsgAdmin: string = '';
-
   registrationFeedback: string = '';
-
   loginFeedback: string | undefined;
-
-  ngOnInit():void{
-  
-    
-  }
 
   constructor(
     public httpClient: HttpClient,
@@ -57,55 +40,56 @@ export class UserComponent {
 
   }
 
+  ngOnInit():void{
+  }
+
   registerUser(): void {
     this.registrationFeedback = '';
     this.httpClient.post(environment.endpointURL + "user/register", {
-      userName: this.userToRegister.username,
-      password: this.userToRegister.password,
-      fname: this.userToRegister.fname,
-      lname: this.userToRegister.lname,
-      street: this.userToRegister.street,
-      housenr: this.userToRegister.housenr,
-      zipCode: this.userToRegister.zipCode,
-      city: this.userToRegister.city,
-      email: this.userToRegister.email,
-      birthday: this.userToRegister.birthday,
-      phonenumber: this.userToRegister.phonenumber
-    }).subscribe(() => {
-      this.userToLogin=this.userToRegister;
-      this.loginUser();
-      this.userToRegister.username = this.userToRegister.password = '';
-  },
-(err: any) => {
-
-  this.registrationFeedback = err.error.message;
-
-});
+        userName: this.userToRegister.username,
+        password: this.userToRegister.password,
+        fname: this.userToRegister.fname,
+        lname: this.userToRegister.lname,
+        street: this.userToRegister.street,
+        housenr: this.userToRegister.housenr,
+        zipCode: this.userToRegister.zipCode,
+        city: this.userToRegister.city,
+        email: this.userToRegister.email,
+        birthday: this.userToRegister.birthday,
+        phonenumber: this.userToRegister.phonenumber
+      })
+      .subscribe(() => {
+        this.userToLogin=this.userToRegister;
+        this.loginUser();
+        this.userToRegister.username = this.userToRegister.password = '';
+      },
+      (err: any) => {
+        this.registrationFeedback = err.error.message;
+      });
   }
-
 
   loginUser(): void {
     this.httpClient.post(environment.endpointURL + "user/login", {
-      userName: this.userToLogin.username,
-      email: this.userToLogin.email,
-      password: this.userToLogin.password,
-    }).subscribe((res: any) => {  
-      this.falseLogin = false;
-      this.userToLogin.username = this.userToLogin.password = '';
+        userName: this.userToLogin.username,
+        email: this.userToLogin.email,
+        password: this.userToLogin.password,
+      })
+      .subscribe((res: any) => {
+        this.falseLogin = false;
+        this.userToLogin.username = this.userToLogin.password = '';
 
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userToken', res.token);
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userToken', res.token);
 
-      this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin));
-    } ,
-      err => {   
-          this.loginFeedback=err.error.message.message;
-        this.falseLogin=true;
-      }
-    );
+        this.userService.setLoggedIn(true);
+        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin));
+        },
+        (err: any) => {
+            this.loginFeedback = err.error.message.message;
+            this.falseLogin=true;
+        }
+      );
   }
-
 
   logoutUser(): void {
     localStorage.removeItem('userName');
@@ -116,19 +100,25 @@ export class UserComponent {
   }
 
   accessUserEndpoint(): void {
-    this.httpClient.get(environment.endpointURL + "secured").subscribe(() => {
-      this.endpointMsgUser = "Access granted";
-    }, () => {
-      this.endpointMsgUser = "Unauthorized";
-    });
+    this.httpClient.get(environment.endpointURL + "secured")
+      .subscribe(() => {
+        this.endpointMsgUser = "Access granted";
+        },
+        () => {
+          this.endpointMsgUser = "Unauthorized";
+        }
+      );
   }
 
   accessAdminEndpoint(): void {
-    this.httpClient.get(environment.endpointURL + "admin").subscribe(() => {
-      this.endpointMsgAdmin = "Access granted";
-    }, () => {
-      this.endpointMsgAdmin = "Unauthorized";
-    });
+    this.httpClient.get(environment.endpointURL + "admin")
+      .subscribe(() => {
+          this.endpointMsgAdmin = "Access granted";
+        },
+        () => {
+          this.endpointMsgAdmin = "Unauthorized";
+        }
+      );
   }
 
   checkUserPassword(): void {
@@ -166,22 +156,18 @@ export class UserComponent {
   }
 
   checkIfUsernameEmpty(){
-    if(this.userToLogin.username===""){ 
+    if (this.userToLogin.username==="") {
       this.userNameEmpty=true;
-    }else{
+    } else {
     this.userNameEmpty=false;
     }
-    
   }
 
   checkIfEmailEmpty(){
-    console.log("test");
-    if(this.userToLogin.email===""){
-       this.emailEmpty=true;
-    }else{
-      
-      
+    if (this.userToLogin.email === "") {
+      this.emailEmpty=true;
+    } else {
       this.emailEmpty=false;
-    }   
+    }
   }
 }

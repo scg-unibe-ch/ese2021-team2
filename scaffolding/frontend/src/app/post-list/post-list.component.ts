@@ -12,24 +12,16 @@ import { User } from '../models/user.model';
 })
 export class PostListComponent implements OnInit {
 
-
+  @Input() boardId: number | undefined;
 
   postFeedback: string | undefined;
- 
   posts: Post[] = [];
-
   changed= true;
-
   loggedIn: boolean | undefined;
-
-  @Input()
-  boardId: number | undefined;
-
   user: User | undefined;
 
-  constructor(public httpClient: HttpClient, public userService: UserService) { 
-
-  // Listen for changes
+  constructor(public httpClient: HttpClient, public userService: UserService) {
+    // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
 
@@ -43,17 +35,15 @@ export class PostListComponent implements OnInit {
     console.log(this.boardId);
     this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
       boardId: this.boardId
-    }).subscribe((res: any) => {  
+    }).subscribe((res: any) => {
         this.posts = res;
       } ,
-      err => {   
-        console.log(err);  
+      err => {
+        console.log(err);
       }
     );
     this.checkUserStatus();
   }
-
-
 
   checkUserStatus(): void {
     // Get user data from local storage
@@ -61,9 +51,7 @@ export class PostListComponent implements OnInit {
 
     // Set boolean whether a user is logged in or not
     this.userService.setLoggedIn(!!userToken);
-
   }
-
 
   public createPost(title: string, content: string, semester:string, boardId: number): void{
     let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
@@ -72,7 +60,7 @@ export class PostListComponent implements OnInit {
   }
 
   createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", { 
+    this.httpClient.post(environment.endpointURL + "post/createPost", {
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -81,9 +69,12 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester
-    }).subscribe(() => {},  
-(err: any) => {
-  this.postFeedback = err.error.message;
-});
+    })
+    .subscribe(() => {},
+      (err: any) => {
+        this.postFeedback = err.error.message;
+      }
+    );
   }
+
 }

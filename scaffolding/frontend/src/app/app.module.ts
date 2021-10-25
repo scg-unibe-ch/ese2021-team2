@@ -52,7 +52,6 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     HeaderComponent,
     ProfileComponent,
-
   ],
   imports: [
     BrowserModule,

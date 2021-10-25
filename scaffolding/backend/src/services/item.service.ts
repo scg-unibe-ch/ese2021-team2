@@ -34,7 +34,4 @@ export class ItemService {
             })
             .catch(() => Promise.reject('could not fetch the image!'));
     }
-
-
-
 }

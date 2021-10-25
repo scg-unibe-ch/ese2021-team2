@@ -11,17 +11,10 @@ export async function checkNoDuplicates(req: Request, res: Response, next: any) 
         } else {
             next();
         }
-
-
     } catch (err) {
         res.status(500).send({message: 'Error'});
     }
-
-
-
 }
-
-
 
 export async function checkNoDuplicateEmail(req: Request, res: Response, next: any) {
     try {
@@ -33,14 +26,9 @@ export async function checkNoDuplicateEmail(req: Request, res: Response, next: a
         } else {
             next();
         }
-
-
     } catch (err) {
         res.status(500).send({message: 'Error'});
     }
-
-
-
 }
 
 
