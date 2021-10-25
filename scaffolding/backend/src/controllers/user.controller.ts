@@ -47,7 +47,7 @@ userController.post('/:id/image', upload.single('image'), (req: MulterRequest, r
 userController.get('/:id/image', (req: Request, res: Response) => {
     userService.getProfileImage(Number(req.params.id)).then(products => {
         console.log('send file');
-        res.sendFile(products);
+        res.sendFile(products, { root: process.cwd()});
     })
         .catch(err => res.status(500).send(err));
 });

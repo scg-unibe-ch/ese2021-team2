@@ -113,10 +113,10 @@ export class UserService {
                 if (found) {
                     const fileName: string = found.profile_image;
                     if (fileName) {
-                        return Promise.resolve(' C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/' + fileName);
+                        return Promise.resolve('./uploads/' + fileName);
 
                     } else {
-                        return Promise.resolve('C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/default_image.jpg');
+                        return Promise.resolve('./uploads/default_image.jpg');
                     }
                 } else {
                     return Promise.reject('No such user found');
