@@ -5,7 +5,9 @@ import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
 import {MulterRequest} from '../models/multerRequest.model';
 import {upload} from '../middlewares/fileFilter';
+import path from 'path';
 const { Op } = require('sequelize');
+
 
 export class UserService {
 
@@ -105,15 +107,23 @@ export class UserService {
             .catch(() => Promise.reject('Could not upload image!'));
     }
 
-    public getProfileImage(imageId: number): Promise < User > {
-        return User.findByPk(imageId)
-            .then(image => {
-                if (image) {
-                    return Promise.resolve(image);
+    public getProfileImage(userId: number): Promise < string > {
+        return User.findByPk(userId)
+            .then(found => {
+                if (found) {
+                    const fileName: string = found.profile_image;
+                    if (fileName) {
+                        return Promise.resolve(' C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/' + fileName);
+                        // C:/Users/User/Desktop/ESE-Projekt/ese2021-team2
+
+                    } else {
+                        return Promise.resolve('C:/Users/User/Desktop/ESE-Projekt/ese2021-team2/scaffolding/backend/uploads/default_image.jpg');
+                    }
                 } else {
-                    return Promise.reject('image not found!');
+                    return Promise.reject('no such user found');
                 }
             })
-            .catch(() => Promise.reject('could not fetch the image!'));
+            .catch(() => Promise.reject('no such user!'));
+
     }
 }

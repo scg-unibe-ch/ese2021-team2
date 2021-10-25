@@ -7,7 +7,6 @@ import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
 import {MulterRequest} from '../models/multerRequest.model';
 import {upload} from '../middlewares/fileFilter';
-import {ItemImage} from '../models/itemImage.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -46,7 +45,10 @@ userController.post('/:id/image', upload.single('image'), (req: MulterRequest, r
 
 // get the filename of an image
 userController.get('/:id/image', (req: Request, res: Response) => {
-    userService.getProfileImage(Number(req.params.id)).then(products => res.send(products))
+    userService.getProfileImage(Number(req.params.id)).then(products => {
+        console.log('send file');
+        res.sendFile(products);
+    })
         .catch(err => res.status(500).send(err));
 });
 
