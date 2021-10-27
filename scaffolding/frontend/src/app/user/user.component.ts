@@ -38,8 +38,6 @@ export class UserComponent {
   loginFeedback: string | undefined;
 
   userId: number | undefined;
-  displayMessage: string | undefined;
-  hasProfileImage: boolean | undefined;
 
 
   constructor(
@@ -73,7 +71,6 @@ export class UserComponent {
       this.userToLogin=this.userToRegister;
       this.loginUser();
       this.userToRegister.username = this.userToRegister.password = '';
-      this.hasProfileImage = false;
 
   },
 (err: any) => {
@@ -107,40 +104,7 @@ export class UserComponent {
     );
   }
 
-    addProfileImage( image: File ){
-      if(image){
-        const fd = new FormData();
-        fd.append('image', image);
-        this.httpClient.post(environment.endpointURL + 'user/' + this.userId + '/image', fd).subscribe((res) => {
-            this.displayMessage = 'Uploading successful!';
-            this.hasProfileImage = true;
-          },
-          error => {
-            this.displayMessage = error.error.message.message;
-          }
-        );
-      }
-    }
 
-    deleteProfileImage(){
-      this.httpClient.get(environment.endpointURL + 'user/' + this.userId + '/image').subscribe((res) => {
-          this.displayMessage = 'Delete successful!';
-          this.hasProfileImage = false;
-        },
-        error => {
-          this.displayMessage = error.error.message.message;
-        }
-      );
-
-    }
-
-    getImageSrc(): string
-    {
-      if( this.hasProfileImage ) {
-        return environment.endpointURL + 'user/' + this.userId + '/image';
-      }else
-        return '/assets/images/profile_pic.png';
-    }
 
 
   logoutUser(): void {
