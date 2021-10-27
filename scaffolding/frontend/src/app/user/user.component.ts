@@ -23,9 +23,9 @@ export class UserComponent {
 
   user: User | undefined;
 
-  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
+  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '');
 
-  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
+  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '');
 
   invPwMsgRegistration: string | undefined;
   invalidPassword: boolean | undefined;
@@ -37,8 +37,9 @@ export class UserComponent {
 
   loginFeedback: string | undefined;
 
-  hasProfilePicture: boolean = false;
-
+  userId: number | undefined;
+  displayMessage: string | undefined;
+  hasProfileImage: boolean | undefined;
 
 
   constructor(
@@ -72,6 +73,8 @@ export class UserComponent {
       this.userToLogin=this.userToRegister;
       this.loginUser();
       this.userToRegister.username = this.userToRegister.password = '';
+      this.hasProfileImage = false;
+
   },
 (err: any) => {
 
@@ -87,21 +90,57 @@ export class UserComponent {
       email: this.userToLogin.email,
       password: this.userToLogin.password,
     }).subscribe((res: any) => {
-      this.falseLogin = false;
-      this.userToLogin.username = this.userToLogin.password = '';
+        this.falseLogin = false;
+        this.userToLogin.username = this.userToLogin.password = '';
 
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userToken', res.token);
+        localStorage.setItem('userName', res.user.userName);
+        localStorage.setItem('userToken', res.token);
 
-      this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin));
-    } ,
+        this.userService.setLoggedIn(true);
+        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin, res.user.profile_image));
+        this.userId = res.user.userId;
+      },
       err => {
-          this.loginFeedback=err.error.message.message;
-        this.falseLogin=true;
+        this.loginFeedback = err.error.message.message;
+        this.falseLogin = true;
       }
     );
   }
+
+    addProfileImage( image: File ){
+      if(image){
+        const fd = new FormData();
+        fd.append('image', image);
+        this.httpClient.post(environment.endpointURL + 'user/' + this.userId + '/image', fd).subscribe((res) => {
+            this.displayMessage = 'Uploading successful!';
+            this.hasProfileImage = true;
+          },
+          error => {
+            this.displayMessage = error.error.message.message;
+          }
+        );
+      }
+    }
+
+    deleteProfileImage(){
+      this.httpClient.get(environment.endpointURL + 'user/' + this.userId + '/image').subscribe((res) => {
+          this.displayMessage = 'Delete successful!';
+          this.hasProfileImage = false;
+        },
+        error => {
+          this.displayMessage = error.error.message.message;
+        }
+      );
+
+    }
+
+    getImageSrc(): string
+    {
+      if( this.hasProfileImage ) {
+        return environment.endpointURL + 'user/' + this.userId + '/image';
+      }else
+        return '/assets/images/profile_pic.png';
+    }
 
 
   logoutUser(): void {

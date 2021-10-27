@@ -46,9 +46,14 @@ userController.post('/:id/image', upload.single('image'), (req: MulterRequest, r
 // get the filename of an image
 userController.get('/:id/image', (req: Request, res: Response) => {
     userService.getProfileImage(Number(req.params.id)).then(products => {
-        console.log('send file');
         res.sendFile(products, { root: process.cwd()});
     })
+        .catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.delete('/:id/image', (req: Request, res: Response) => {
+    userService.deleteProfileImage(Number(req.params.id)).then(response => res.send(response))
         .catch(err => res.status(500).send(err));
 });
 

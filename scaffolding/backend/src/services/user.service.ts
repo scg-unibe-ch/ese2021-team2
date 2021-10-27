@@ -90,8 +90,6 @@ export class UserService {
         return User.findByPk(req.params.id)
             .then(async found => {
                 if (!found) {
-                    console.log('in if');
-
                     return Promise.reject('User not found!');
                 } else {
                     return new Promise<User>((resolve, reject) => {
@@ -116,7 +114,7 @@ export class UserService {
                         return Promise.resolve('./uploads/' + fileName);
 
                     } else {
-                        return Promise.resolve('./uploads/default_image.jpg');
+                        return Promise.reject('./uploads/default_image.jpg');
                     }
                 } else {
                     return Promise.reject('No such user found');
@@ -124,5 +122,16 @@ export class UserService {
             })
             .catch(() => Promise.reject('Could not fetch image'));
 
+    }
+
+    deleteProfileImage(userId: number): Promise<string> {
+        return User.findByPk(userId)
+            .then(async found => {
+                    found.profile_image = '';
+                    await found.save();
+                    return Promise.resolve('Profile Image deleted');
+                }
+            )
+            .catch(() => Promise.reject('Could not delete image!'));
     }
 }
