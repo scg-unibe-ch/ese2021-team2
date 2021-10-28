@@ -29,12 +29,17 @@ postController.delete('/delete',
         .catch(err => res.status(500).send(err));
 });
 
+
+// needs to be changed to get request
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
     }
 );
 
+
+
+// needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
         postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));

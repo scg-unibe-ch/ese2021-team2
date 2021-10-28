@@ -35,6 +35,8 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
     }
 );
 
+
+// doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)
 userController.post('/likePost',
     (req: Request, res: Response) => {
         userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
