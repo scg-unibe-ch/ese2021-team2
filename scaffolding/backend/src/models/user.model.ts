@@ -16,9 +16,10 @@ export interface UserAttributes {
     city: string;
     birthday: Date;
     phonenumber: string;
+    profile_image: string;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> { }
+export interface UserCreationAttributes extends Optional<UserAttributes, 'userId' | 'profile_image'> { }
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
     userId!: number;
@@ -34,6 +35,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     city!: string;
     birthday!: Date;
     phonenumber!: string;
+    profile_image!: string;
 
     public static initialize(sequelize: Sequelize) {
         User.init(
@@ -90,11 +92,16 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                 phonenumber: {
                     type: DataTypes.STRING,
                     allowNull: true
-                }
-            },
+                },
+                profile_image: {
+                    type: DataTypes.STRING,
+                    allowNull: true,
+                    defaultValue: ''
+            }
+        },
             {
                 sequelize,
-                tableName: 'users'
+                tableName: 'users',
             }
         );
     }

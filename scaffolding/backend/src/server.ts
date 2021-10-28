@@ -10,10 +10,11 @@ import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
 
 import cors from 'cors';
-import {AdminController} from './controllers/admin.controller';
-import {ItemImage} from './models/itemImage.model';
+import { AdminController } from './controllers/admin.controller';
+import { ItemImage } from './models/itemImage.model';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
+import { Like } from './models/like.model';
 
 export class Server {
     private server: Application;
@@ -29,6 +30,7 @@ export class Server {
         User.initialize(this.sequelize);
         Post.initialize(this.sequelize);
         ItemImage.initialize(this.sequelize);
+        Like.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();

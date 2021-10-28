@@ -1,4 +1,4 @@
-import {Post} from '../models/post.model';
+import { Post } from '../models/post.model';
 const { Op } = require('sequelize');
 
 export class PostService {
@@ -34,5 +34,24 @@ export class PostService {
             }
         });
     }
+
+    // returns all posts belongin to a User
+    getPostsbyUser(userId: number): Promise<Post[]> {
+        return Post.findAll({
+            where: {
+                creatorId: userId
+            }
+        });
+    }
+
+    // returns a post with a specific id
+    getPostsbyId(pId: number): Promise<Post[]> {
+        return Post.findAll({
+            where: {
+                postId: pId
+            }
+        });
+    }
+
 }
 
