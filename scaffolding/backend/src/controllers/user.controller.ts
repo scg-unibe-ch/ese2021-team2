@@ -1,4 +1,3 @@
-
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { verifyToken } from '../middlewares/checkAuth';
@@ -11,29 +10,35 @@ import {upload} from '../middlewares/fileFilter';
 const userController: Router = express.Router();
 const userService = new UserService();
 
-
 userController.post('/register', checkPassword, checkNoDuplicates, checkNoDuplicateEmail,
     (req: Request, res: Response) => {
-
-        userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
+        userService.register(req.body)
+            .then(registered => res.send(registered))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.post('/login',
     (req: Request, res: Response) => {
-        userService.login(req.body).then(login => res.send(login)).catch(err => res.status(500).send(err));
+        userService.login(req.body)
+            .then(login => res.send(login))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
-        userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
+        userService.getAll()
+            .then(users => res.send(users))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
-        userService.delete(req.body).then(response => res.send(response)).catch(err => res.status(500).send(err));
+        userService.delete(req.body)
+            .then(response => res.send(response))
+            .catch(err => res.status(500).send(err));
     }
 );
 

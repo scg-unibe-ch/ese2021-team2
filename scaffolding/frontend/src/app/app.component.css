@@ -1,3 +1,12 @@
 label{
     color: gray;
 }
+
+
+mat-sidenav {
+        width: 200px;
+        background-color:white;
+        text-align: center;
+        margin-left: 0px;
+}
+      

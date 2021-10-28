@@ -38,64 +38,65 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     profile_image!: string;
 
     public static initialize(sequelize: Sequelize) {
-        User.init({
-            userId: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true
-            },
-            userName: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            password: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            admin: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: false
-            },
-            fname: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            lname: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            email: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            street: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            housenr: {
-                type: DataTypes.INTEGER,
-                allowNull: true
-            },
-            zipCode: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            city: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            birthday: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            phonenumber: {
-                type: DataTypes.STRING,
-                allowNull: true
-            },
-            profile_image: {
-                type: DataTypes.STRING,
-                allowNull: true,
-                defaultValue: ''
+        User.init(
+            {
+                userId: {
+                    type: DataTypes.INTEGER,
+                    autoIncrement: true,
+                    primaryKey: true
+                },
+                userName: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                },
+                password: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                },
+                admin: {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: false
+                },
+                fname: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                lname: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                email: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                street: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                housenr: {
+                    type: DataTypes.INTEGER,
+                    allowNull: true
+                },
+                zipCode: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                city: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                birthday: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                phonenumber: {
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                profile_image: {
+                    type: DataTypes.STRING,
+                    allowNull: true,
+                    defaultValue: ''
             }
 
 

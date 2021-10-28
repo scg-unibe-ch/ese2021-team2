@@ -1,11 +1,14 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>ESE-2021 Frontend Scaffolding</span>
+<app-header></app-header>
 
-
-  </mat-toolbar-row>
-</mat-toolbar>
-
+<mat-sidenav-container>
+  <mat-sidenav #sideNav mode="side" opened>
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!--
 <mat-tab-group>
   <mat-tab label="Board">
     <mat-card>
@@ -83,3 +86,5 @@
   </mat-tab>
 
 </mat-tab-group>
+
+-->

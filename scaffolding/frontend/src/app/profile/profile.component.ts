@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 
+
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   loggedIn: boolean | undefined;
+
   user: User | undefined;
+  
+
 
   constructor(public userService: UserService) {
     // Listen for changes
@@ -36,10 +40,19 @@ export class SidebarComponent implements OnInit {
 
   }
 
+  logoutUser(): void {
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userToken');
+
+    this.userService.setLoggedIn(false);
+    this.userService.setUser(undefined);
+  }
+
   test(){
-
+ 
       console.log(this.user);
-
+    
   }
 
 }
+

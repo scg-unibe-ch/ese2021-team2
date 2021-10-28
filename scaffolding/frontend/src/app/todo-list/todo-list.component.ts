@@ -11,20 +11,15 @@ import { environment } from '../../environments/environment';
 })
 export class TodoListComponent {
 
+  @Input() todoList: TodoList = new TodoList(0, '', []);
+
+  @Output() update = new EventEmitter<TodoList>();
+  @Output() delete = new EventEmitter<TodoList>();
+
   newTodoItemName: string = '';
 
-  @Input()
-  todoList: TodoList = new TodoList(0, '', []);
-
-  @Output()
-  update = new EventEmitter<TodoList>();
-
-  @Output()
-  delete = new EventEmitter<TodoList>();
-
-  constructor(
-    public httpClient: HttpClient
-  ) {}
+  constructor(public httpClient: HttpClient) {
+  }
 
   // EVENT - Update TodoList
   updateList(): void {
@@ -44,7 +39,8 @@ export class TodoListComponent {
       name: this.newTodoItemName,
       done: false,
       todoListId: this.todoList.listId
-    }).subscribe((item: any) => {
+    })
+    .subscribe((item: any) => {
       this.todoList.todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, '', item.done));
       this.newTodoItemName = '';
     });
@@ -59,13 +55,15 @@ export class TodoListComponent {
       name: todoItem.name,
       done: todoItem.done,
       todoListId: todoItem.listId
-    }).subscribe();
+    })
+    .subscribe();
   }
 
   // DELETE - TodoItem
   deleteItem(todoItem: TodoItem): void {
-    this.httpClient.delete(environment.endpointURL + "todoitem/" + todoItem.itemId).subscribe(() => {
-      this.todoList.todoItems.splice(this.todoList.todoItems.indexOf(todoItem), 1);
-    });
+    this.httpClient.delete(environment.endpointURL + "todoitem/" + todoItem.itemId)
+      .subscribe(() => {
+        this.todoList.todoItems.splice(this.todoList.todoItems.indexOf(todoItem), 1);
+      });
   }
 }

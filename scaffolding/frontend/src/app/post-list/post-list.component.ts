@@ -3,6 +3,7 @@ import { Post } from '../models/post.model';
 import { UserService } from '../services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-post-list',
@@ -11,40 +12,55 @@ import { environment } from '../../environments/environment';
 })
 export class PostListComponent implements OnInit {
 
-  userService = new UserService();
+  @Input() boardId: number | undefined;
 
   postFeedback: string | undefined;
- 
   posts: Post[] = [];
-
   changed= true;
+  loggedIn: boolean | undefined;
+  user: User | undefined;
 
-  @Input()
-  boardId: number | undefined;
-  constructor(public httpClient: HttpClient) { 
+  constructor(public httpClient: HttpClient, public userService: UserService) {
+    // Listen for changes
+    userService.loggedIn$.subscribe(res => this.loggedIn = res);
+    userService.user$.subscribe(res => this.user = res);
+
+    // Current value
+    this.loggedIn = userService.getLoggedIn();
+    this.user = userService.getUser();
   }
+
 
   ngOnInit(): void {
     console.log(this.boardId);
     this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
       boardId: this.boardId
-    }).subscribe((res: any) => {  
+    }).subscribe((res: any) => {
         this.posts = res;
       } ,
-      err => {   
-        console.log(err);  
+      err => {
+        console.log(err);
       }
     );
+    this.checkUserStatus();
+  }
+
+  checkUserStatus(): void {
+    // Get user data from local storage
+    const userToken = localStorage.getItem('userToken');
+
+    // Set boolean whether a user is logged in or not
+    this.userService.setLoggedIn(!!userToken);
   }
 
   public createPost(title: string, content: string, semester:string, boardId: number): void{
-    let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [])
+    let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
     this.createPostInBackend(postToAdd);
     this.posts.push(postToAdd)
   }
 
   createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", { 
+    this.httpClient.post(environment.endpointURL + "post/createPost", {
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -53,9 +69,12 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester
-    }).subscribe(() => {},  
-(err: any) => {
-  this.postFeedback = err.error.message;
-});
+    })
+    .subscribe(() => {},
+      (err: any) => {
+        this.postFeedback = err.error.message;
+      }
+    );
   }
+
 }
