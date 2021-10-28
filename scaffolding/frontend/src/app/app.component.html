@@ -40,7 +40,18 @@
 
   <mat-tab *ngIf="loggedIn" label="Profile Page">
     <mat-card>
-      
+      <div>
+        <img src ="{{this.getImageSrc()}}" width="50px" height="50px"/>
+      </div>
+      <div *ngIf="hasProfileImage(); else other">
+      <button mat-flat-button color="warn" (click)="deleteProfileImage()">Delete</button>
+      </div>
+      <ng-template #other>
+        <button type="button" (click)="imageInput.click()">Add a photo</button>
+        <input hidden type="file" #imageInput  accept = "image/jpeg, image/png" (change)="processFile($event)">
+        <br>
+      </ng-template>
+
       <h1>{{this.user?.username}}</h1>
       <label for="">First name:</label>
       <p>{{this.user?.fname}}</p>

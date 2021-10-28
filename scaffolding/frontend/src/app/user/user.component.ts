@@ -16,8 +16,11 @@ export class UserComponent {
   falseLogin: boolean = false;
   loggedIn: boolean | undefined;
   user: User | undefined;
-  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
-  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false);
+
+  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '');
+
+  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '');
+
   invPwMsgRegistration: string | undefined;
   invalidPassword: boolean | undefined;
   endpointMsgUser: string = '';
@@ -82,7 +85,8 @@ export class UserComponent {
         localStorage.setItem('userToken', res.token);
 
         this.userService.setLoggedIn(true);
-        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin));
+
+        this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber, res.user.admin, res.user.profile_image));
         },
         (err: any) => {
             this.loginFeedback = err.error.message.message;

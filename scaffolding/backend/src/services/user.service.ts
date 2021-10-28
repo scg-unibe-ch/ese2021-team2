@@ -3,7 +3,11 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+import {MulterRequest} from '../models/multerRequest.model';
+import {upload} from '../middlewares/fileFilter';
+import path from 'path';
 const { Op } = require('sequelize');
+
 
 export class UserService {
 
@@ -78,5 +82,56 @@ export class UserService {
 
     public getAll(): Promise<User[]> {
         return User.findAll();
+    }
+
+    public updateProfileImage(req: MulterRequest): Promise<User> {
+        console.log(req.file + ' PARAMS ID');
+
+        return User.findByPk(req.params.id)
+            .then(async found => {
+                if (!found) {
+                    return Promise.reject('User not found!');
+                } else {
+                    return new Promise<User>((resolve, reject) => {
+                        upload.single('image')(req, null, async (error: any) => {
+                            found.profile_image = req.file.filename;
+                            await found.save()
+                                .then(created => resolve(created))
+                                .catch(() => reject('Could not upload image!'));
+                        });
+                    });
+                }
+            })
+            .catch(() => Promise.reject('Could not upload image!'));
+    }
+
+    public getProfileImage(userId: number): Promise < string > {
+        return User.findByPk(userId)
+            .then(found => {
+                if (found) {
+                    const fileName: string = found.profile_image;
+                    if (fileName) {
+                        return Promise.resolve('./uploads/' + fileName);
+
+                    } else {
+                        return Promise.reject('./uploads/default_image.jpg');
+                    }
+                } else {
+                    return Promise.reject('No such user found');
+                }
+            })
+            .catch(() => Promise.reject('Could not fetch image'));
+
+    }
+
+    deleteProfileImage(userId: number): Promise<string> {
+        return User.findByPk(userId)
+            .then(async found => {
+                    found.profile_image = '';
+                    await found.save();
+                    return Promise.resolve('Profile Image deleted');
+                }
+            )
+            .catch(() => Promise.reject('Could not delete image!'));
     }
 }
