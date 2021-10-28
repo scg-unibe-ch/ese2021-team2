@@ -1,59 +1,95 @@
-
-
-.h3side {
-  margin-top: 16px;
-  margin-bottom: 0px;
-  color: white;
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.h4side {
-  margin-top: 0px;
-  font-weight: normal;
-  color: white;
+.logo > img {
+    width: 80%;
+    height: auto;
 }
 
-.profile {
-  padding: 8px;
-  text-align: left;
-  background-color: #1E90FF;
+.user-info {
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #1E90FF;
+    border-top: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(200, 200, 200);
 }
+
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .avatar {
-  margin-top: 8px;
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  align-self: flex-start;
-  float: left;
-  margin-right: 8px;
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
 }
-.menu-button{
-    width: 100%;
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    color: white;
+    font-family: "Roboto";
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.user-text div {
+    text-align: center;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+.user-text a {
+    margin: 5px;
+}
+
+.user-text a:link {
+    color: white;
+    text-decoration: none;
+}
+
+.user-text a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.user-text a:hover {
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+}
+
+.user-text a:active {
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+}
+
+.menu-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.menu-button {
     display: flex;
     justify-content: flex-start;
-    font-size: 1rem;
-    margin-left: 0px !important;
-    color: rgb(214, 212, 212);
-    
-  }
+    margin-top: 5px;
+    left: 0px;
+    color: rgb(200, 200, 200);
+    font-size: 1.2rem;
+}
 
-.menutext {
-  padding-left: 50px;
+.menu-text {
+    padding-left: 50px;
 }
 
 .dashboard {
-  padding-left: 26px;
-}
-
-.menu-button2 {
-  width: 100%;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  font-size: 1rem;
-  margin-left: 0px !important;
-  color: rgb(214, 212, 212);
-}
-
-.lin {
-  color: white;
+    padding-left: 26px;
 }

@@ -35,6 +35,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     HeaderComponent,
     ProfileComponent,
+    SubjectsComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +78,6 @@ import { ProfileComponent } from './profile/profile.component';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
