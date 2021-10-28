@@ -13,25 +13,17 @@ import { BoardComponent } from '../board/board.component';
 })
 export class PostListComponent implements OnInit {
 
-  @Input()
-  mode = "board"
+  @Input() mode = "board";
+  @Input() boardId: number | undefined;
 
   postFeedback: string | undefined;
- 
   posts: Post[] = [];
-
   changed= true;
-
   loggedIn: boolean | undefined;
-
-  @Input()
-  boardId: number | undefined;
-
   user: User | undefined;
 
-  constructor(public httpClient: HttpClient, public userService: UserService) { 
-
-  // Listen for changes
+  constructor(public httpClient: HttpClient, public userService: UserService) {
+    // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
 
@@ -43,7 +35,7 @@ export class PostListComponent implements OnInit {
 
   ngOnInit(): void {
     
-    if(this.mode==="board"){
+    if (this.mode==="board") {
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
       }).subscribe((res: any) => {  
@@ -53,11 +45,7 @@ export class PostListComponent implements OnInit {
           console.log(err);  
         }
       );
-    }else if(this.mode==="user"){
-
-
-      console.log("test");
-      
+    } else if (this.mode==="user") {
       this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
         userId: this.user?.userId
       }).subscribe((res: any) => {  
@@ -68,12 +56,8 @@ export class PostListComponent implements OnInit {
         }
       );
     }
-
-
     this.checkUserStatus();
   }
-
-
 
   checkUserStatus(): void {
     // Get user data from local storage
@@ -81,9 +65,7 @@ export class PostListComponent implements OnInit {
 
     // Set boolean whether a user is logged in or not
     this.userService.setLoggedIn(!!userToken);
-
   }
-
 
   public createPost(title: string, content: string, semester:string, boardId: number): void{
     let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
@@ -93,7 +75,7 @@ export class PostListComponent implements OnInit {
   }
 
   createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", { 
+    this.httpClient.post(environment.endpointURL + "post/createPost", {
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -102,9 +84,12 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester
-    }).subscribe(() => {},  
-(err: any) => {
-  this.postFeedback = err.error.message;
-});
+    })
+    .subscribe(() => {},
+      (err: any) => {
+        this.postFeedback = err.error.message;
+      }
+    );
   }
+
 }

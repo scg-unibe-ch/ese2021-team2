@@ -14,6 +14,7 @@ export class User {
     public birthday: string,
     public phonenumber: string,
     public admin: boolean,
+    public profile_image: string,
     public likedPosts: []
   ) {}
  }

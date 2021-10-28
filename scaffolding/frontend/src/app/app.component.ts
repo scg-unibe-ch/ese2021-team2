@@ -6,22 +6,19 @@ import { environment } from '../environments/environment';
 import { UserService } from './services/user.service';
 import { User } from './models/user.model';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
   title = 'frontend';
-
   todoLists: TodoList[] = [];
-
   newTodoListName: string = '';
-
   loggedIn: boolean | undefined;
-
   user: User | undefined;
+
 
   constructor(
     public httpClient: HttpClient,
@@ -46,7 +43,8 @@ export class AppComponent implements OnInit {
   createList(): void {
     this.httpClient.post(environment.endpointURL + "todolist", {
       name: this.newTodoListName
-    }).subscribe((list: any) => {
+    })
+    .subscribe((list: any) => {
       this.todoLists.push(new TodoList(list.todoListId, list.name, []));
       this.newTodoListName = '';
     })
@@ -54,31 +52,34 @@ export class AppComponent implements OnInit {
 
   // READ - TodoList, TodoItem
   readLists(): void {
-    this.httpClient.get(environment.endpointURL + "todolist").subscribe((lists: any) => {
-      lists.forEach((list: any) => {
-        const todoItems: TodoItem[] = [];
+    this.httpClient.get(environment.endpointURL + "todolist")
+      .subscribe((lists: any) => {
+        lists.forEach((list: any) => {
+          const todoItems: TodoItem[] = [];
 
-        list.todoItems.forEach((item: any) => {
-          todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
+          list.todoItems.forEach((item: any) => {
+            todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
+          });
+
+          this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
         });
-
-        this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
       });
-    });
   }
 
   // UPDATE - TodoList
   updateList(todoList: TodoList): void {
     this.httpClient.put(environment.endpointURL + "todolist/" + todoList.listId, {
       name: todoList.name
-    }).subscribe();
+    })
+    .subscribe();
   }
 
   // DELETE - TodoList
   deleteList(todoList: TodoList): void {
-    this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId).subscribe(() => {
-      this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
-    });
+    this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId)
+      .subscribe(() => {
+        this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
+      });
   }
 
   checkUserStatus(): void {
@@ -87,12 +88,51 @@ export class AppComponent implements OnInit {
 
     // Set boolean whether a user is logged in or not
     this.userService.setLoggedIn(!!userToken);
+  }
+
+  processFile(imageInputEvent: any) {
+    const f : File = imageInputEvent.target.files[0];
+    this.addProfileImage(f);
+  }
+  addProfileImage( newPicture: File){
+    if(newPicture){
+      const fd = new FormData();
+      fd.append('image', newPicture);
+      this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd).subscribe((res) => {
+
+        },
+        error => {
+        }
+      );
+    }
+  }
+
+  deleteProfileImage(){
+    this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image').subscribe((res) => {
+      },
+      error => {
+
+      }
+    );
 
   }
 
+  getImageSrc(): string
+  {
+    if( this.user?.profile_image ) {
+      return environment.endpointURL + 'user/' + this.user?.userId + '/image';
+    }else
+      return '/assets/images/default_image.jpg';
+  }
+
+  hasProfileImage(): boolean
+  {
+    return !!this.user?.profile_image;
+  }
+
+
+
   test(){
- 
       console.log(this.user);
-    
   }
 }

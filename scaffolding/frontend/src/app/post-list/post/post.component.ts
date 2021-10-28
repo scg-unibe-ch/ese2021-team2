@@ -6,20 +6,16 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 
-
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  
-  
 
-  @Input()
-  post: Post = new Post(0,"","",0,"",0,0,"",[]);
+  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", []);
 
-  voted=false;
+  voted = false;
 
   userCanVote= true;
 
@@ -37,14 +33,10 @@ export class PostComponent implements OnInit {
     this.user = userService.getUser();
   }
 
-
-
   ngOnInit(): void {
-    
   }   
 
   canUserVote(){
-
   }
 
   upvote(){
@@ -63,5 +55,5 @@ export class PostComponent implements OnInit {
     this.post.likes--;
     this.voted=true;
   }
-  
+
 }

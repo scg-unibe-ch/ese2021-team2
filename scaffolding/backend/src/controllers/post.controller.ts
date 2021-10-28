@@ -5,14 +5,14 @@ import { Post } from '../models/post.model';
 import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
 
-
-
 const postController: Router = express.Router();
 const postService = new PostService;
 
 postController.post('/createPost',
     (req: Request, res: Response) => {
-        postService.createPost(req.body).then(created => res.send(created)).catch(err => res.status(500).send(err));
+        postService.createPost(req.body)
+            .then(created => res.send(created))
+            .catch(err => res.status(500).send(err));
     }
 );
 
@@ -33,7 +33,9 @@ postController.delete('/delete',
 // needs to be changed to get request
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
-        postService.getPostsOfBoard(req.body.boardId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+        postService.getPostsOfBoard(req.body.boardId)
+            .then(posts => res.send(posts))
+            .catch(err => res.status(500).send(err));
     }
 );
 

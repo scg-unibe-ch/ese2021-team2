@@ -35,7 +35,10 @@ export class ItemImage extends Model<ItemImageAttributes, ItemCreationAttributes
                     allowNull: false
                 }
             },
-            { tableName: 'itemImages', sequelize }
+            {
+                sequelize,
+                tableName: 'itemImages'
+            }
         );
     }
 
