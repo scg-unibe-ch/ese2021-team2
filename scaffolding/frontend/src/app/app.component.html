@@ -83,6 +83,10 @@
       <label for="">Birthday:</label>
       <p>{{this.user?.birthday}}</p>
     </mat-card>
+    <mat-card>
+      <h2>posts</h2>
+      <app-post-list [mode]="'user'"></app-post-list>
+    </mat-card>
   </mat-tab>
 
 </mat-tab-group>

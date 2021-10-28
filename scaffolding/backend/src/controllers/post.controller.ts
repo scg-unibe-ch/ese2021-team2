@@ -2,6 +2,8 @@ import express, { Router, Request, Response } from 'express';
 import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
+import { UserService } from '../services/user.service';
+import { UserController } from './user.controller';
 
 const postController: Router = express.Router();
 const postService = new PostService;
@@ -27,6 +29,8 @@ postController.delete('/delete',
         .catch(err => res.status(500).send(err));
 });
 
+
+// needs to be changed to get request
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
@@ -34,6 +38,16 @@ postController.post('/getPostsOfBoard',
             .catch(err => res.status(500).send(err));
     }
 );
+
+
+
+// needs to be changed to get request
+postController.post('/getPostsByUser',
+    (req: Request, res: Response) => {
+        postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+    }
+);
+
 
 postController.put('/:id', (req: Request, res: Response) => {
     Post.findByPk(req.params.id)
@@ -48,5 +62,7 @@ postController.put('/:id', (req: Request, res: Response) => {
         })
         .catch(err => res.status(500).send(err));
 });
+
+
 
 export const PostController: Router = postController;

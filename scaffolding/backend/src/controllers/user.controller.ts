@@ -4,8 +4,8 @@ import { verifyToken } from '../middlewares/checkAuth';
 import { checkPassword } from '../middlewares/checkPassword';
 import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
-import {MulterRequest} from '../models/multerRequest.model';
-import {upload} from '../middlewares/fileFilter';
+import { MulterRequest } from '../models/multerRequest.model';
+import { upload } from '../middlewares/fileFilter';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -39,6 +39,14 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
         userService.delete(req.body)
             .then(response => res.send(response))
             .catch(err => res.status(500).send(err));
+    }
+);
+
+
+// doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)
+userController.post('/likePost',
+    (req: Request, res: Response) => {
+        userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
     }
 );
 

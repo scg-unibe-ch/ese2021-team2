@@ -98,8 +98,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                     allowNull: true,
                     defaultValue: ''
             }
-
-
         },
             {
                 sequelize,
