@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TodoList } from './models/todo-list.model';
 import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
-import { UserService } from './services/user.service';
+import { UserService } from './core/http/user/user.service';
 import { User } from './models/user.model';
 
 @Component({
@@ -19,20 +19,19 @@ export class AppComponent implements OnInit {
     loggedIn: boolean | undefined;
     user: User | undefined;
 
+    constructor(
+        public httpClient: HttpClient,
+        public userService: UserService
+    ) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
-  constructor(
-    public httpClient: HttpClient,
-    public userService: UserService
-  ) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
-
-        // Current value
-        this.loggedIn = userService.getLoggedIn();
-        this.user = userService.getUser();
-        console.log(this.user?.fname);
-    }
+            // Current value
+            this.loggedIn = userService.getLoggedIn();
+            this.user = userService.getUser();
+            console.log(this.user?.fname);
+        }
 
     ngOnInit() {
         this.readLists();
@@ -90,49 +89,49 @@ export class AppComponent implements OnInit {
         this.userService.setLoggedIn(!!userToken);
     }
 
-  processFile(imageInputEvent: any) {
-    const f : File = imageInputEvent.target.files[0];
-    this.addProfileImage(f);
-  }
-  addProfileImage( newPicture: File){
-    if(newPicture){
-      const fd = new FormData();
-      fd.append('image', newPicture);
-      this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd).subscribe((res) => {
-
-        },
-        error => {
-        }
-      );
+    processFile(imageInputEvent: any) {
+        const f : File = imageInputEvent.target.files[0];
+        this.addProfileImage(f);
     }
-  }
 
-  deleteProfileImage(){
-    this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image').subscribe((res) => {
-      },
-      error => {
+    addProfileImage(newPicture: File) {
+        if (newPicture) {
+            const fd = new FormData();
+            fd.append('image', newPicture);
+            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
+                .subscribe((res) => {
 
-      }
-    );
+                },
+                error => {
 
-  }
+                });
+        }
+    }
 
-  getImageSrc(): string
-  {
-    if( this.user?.profile_image ) {
-      return environment.endpointURL + 'user/' + this.user?.userId + '/image';
-    }else
-      return '/assets/images/default_image.jpg';
-  }
+    deleteProfileImage(){
+        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
+            .subscribe((res) => {
 
-  hasProfileImage(): boolean
-  {
-    return !!this.user?.profile_image;
-  }
+            },
+            error => {
 
+            });
+    }
 
+    getImageSrc(): string {
+        if (this.user?.profile_image) {
+            return environment.endpointURL + 'user/' + this.user?.userId + '/image';
+        } else {
+            return '/assets/images/default_image.jpg';
+        }
+    }
 
-  test(){
-      console.log(this.user);
-  }
+    hasProfileImage(): boolean {
+        return !!this.user?.profile_image;
+    }
+
+    test() {
+        console.log(this.user);
+    }
+
 }

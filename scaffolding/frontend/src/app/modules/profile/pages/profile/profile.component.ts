@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { UserService } from '../../../../core/http/user/user.service';
+import { User } from '../../../../models/user.model';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit {
   loggedIn: boolean | undefined;
 
   user: User | undefined;
-  
+
 
 
   constructor(public userService: UserService) {
@@ -49,9 +49,9 @@ export class ProfileComponent implements OnInit {
   }
 
   test(){
- 
+
       console.log(this.user);
-    
+
   }
 
 }

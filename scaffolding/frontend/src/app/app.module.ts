@@ -28,14 +28,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { BoardComponent } from './board/board.component';
-import { PostListComponent } from './post-list/post-list.component';
-import { PostComponent } from './post-list/post/post.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
-import { ProfileComponent } from './profile/profile.component';
-import { SubjectsComponent } from './subjects/subjects.component';
+import { PostComponent } from 'src/app/shared/components/post/post.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -44,14 +39,9 @@ import { SubjectsComponent } from './subjects/subjects.component';
     TodoItemComponent,
     UserComponent,
     SidebarComponent,
-    BoardComponent,
-    PostListComponent,
-    PostComponent,
-    HomeComponent,
-    LoginComponent,
     HeaderComponent,
-    ProfileComponent,
-    SubjectsComponent,
+    PostComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

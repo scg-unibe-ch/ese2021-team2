@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PostListComponent } from '../post-list/post-list.component';
+import { PostListComponent } from '../../components/post-list/post-list.component';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { UserService } from '../../../../core/http/user/user.service';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-board',

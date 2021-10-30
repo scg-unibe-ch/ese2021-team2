@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Post } from '../models/post.model';
-import { UserService } from '../services/user.service';
+import { Post } from '../../../../models/post.model';
+import { UserService } from '../../../../core/http/user/user.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { User } from '../models/user.model';
-import { BoardComponent } from '../board/board.component';
+import { environment } from '../../../../../environments/environment';
+import { User } from '../../../../models/user.model';
+import { BoardComponent } from '../../pages/board/board.component';
 
 @Component({
   selector: 'app-post-list',
@@ -34,25 +34,25 @@ export class PostListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
     if (this.mode==="board") {
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
-      }).subscribe((res: any) => {  
+      }).subscribe((res: any) => {
           this.posts = res;
         } ,
-        err => {   
-          console.log(err);  
+        err => {
+          console.log(err);
         }
       );
     } else if (this.mode==="user") {
       this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
         userId: this.user?.userId
-      }).subscribe((res: any) => {  
+      }).subscribe((res: any) => {
           this.posts = res;
         } ,
-        err => {   
-          console.log(err);  
+        err => {
+          console.log(err);
         }
       );
     }
@@ -71,7 +71,7 @@ export class PostListComponent implements OnInit {
     let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
     this.createPostInBackend(postToAdd);
     this.posts.push(postToAdd)
-    
+
   }
 
   createPostInBackend(post: Post): void {

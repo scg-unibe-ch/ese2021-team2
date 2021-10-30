@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
 
 @Component({
@@ -20,7 +20,6 @@ export class SidebarComponent implements OnInit {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
-        console.log(this.user?.fname);
     }
 
     ngOnInit() {
@@ -30,13 +29,9 @@ export class SidebarComponent implements OnInit {
     checkUserStatus(): void {
         // Get user data from local storage
         const userToken = localStorage.getItem('userToken');
-
+        console.log(userToken);
         // Set boolean whether a user is logged in or not
         this.userService.setLoggedIn(!!userToken);
-    }
-
-    test(){
-        console.log(this.user);
     }
 
 }
