@@ -3,6 +3,7 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+import { UpdateRequest } from '../models/accountUpdate.model';
 const { Op } = require('sequelize');
 
 export class UserService {
@@ -73,6 +74,36 @@ export class UserService {
             }
         } catch (err) {
             return Promise.reject('Deletion unsuccessful');
+        }
+    }
+
+    public update(updateRequestee: UpdateRequest ): Promise<String> {
+        try {
+            const tokenUsername: string = updateRequestee.tokenPayload.userName;
+            const passedUsername: string = updateRequestee.userName;
+            if (tokenUsername.normalize() === passedUsername.normalize()) {
+                User.update({
+                    fname: updateRequestee.fname,
+                    lname: updateRequestee.lname,
+                    email: updateRequestee.email,
+                    street: updateRequestee.street,
+                    housenr: updateRequestee.housenr,
+                    zipCode: updateRequestee.zipCode,
+                    city: updateRequestee.city,
+                    birthday: updateRequestee.birthday,
+                    phonenumber: updateRequestee.phonenumber,
+
+                },{
+                    where: {
+                        userName: passedUsername
+                    }
+                });
+                return Promise.resolve('User successfully updated');
+            } else {
+                return Promise.reject('Update unsuccessful');
+            }
+        } catch (err) {
+            return Promise.reject('Update unsuccessful');
         }
     }
 
