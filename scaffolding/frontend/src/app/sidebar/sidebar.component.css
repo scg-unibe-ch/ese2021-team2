@@ -54,6 +54,7 @@
 .user-text a:link {
     color: white;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .user-text a:visited {

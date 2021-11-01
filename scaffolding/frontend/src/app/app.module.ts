@@ -32,6 +32,8 @@ import { HeaderComponent } from './header/header.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 
+import {MatDialogModule} from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +62,7 @@ import { LoginComponent } from './login/login.component';
     MatIconModule,
     MatDividerModule,
     AppRoutingModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -68,6 +71,7 @@ import { LoginComponent } from './login/login.component';
       multi: true
     }
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  entryComponents: [LoginComponent]
 })
 export class AppModule { }
