@@ -97,8 +97,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
                     type: DataTypes.STRING,
                     allowNull: true,
                     defaultValue: ''
-            }
-        },
+                }
+            },
             {
                 sequelize,
                 tableName: 'users',
