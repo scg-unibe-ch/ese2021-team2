@@ -29,7 +29,6 @@ export class SidebarComponent implements OnInit {
     checkUserStatus(): void {
         // Get user data from local storage
         const userToken = localStorage.getItem('userToken');
-        console.log(userToken);
         // Set boolean whether a user is logged in or not
         this.userService.setLoggedIn(!!userToken);
     }

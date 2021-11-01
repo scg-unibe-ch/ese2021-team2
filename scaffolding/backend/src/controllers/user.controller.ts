@@ -28,8 +28,8 @@ userController.post('/login',
 
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
-        userService.getAll()
-            .then(users => res.send(users))
+        userService.getUser(req.body.tokenPayload.userId)
+            .then(user => res.send(user))
             .catch(err => res.status(500).send(err));
     }
 );

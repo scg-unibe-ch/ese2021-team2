@@ -27,12 +27,6 @@ export class UserComponent {
     registrationFeedback: string = '';
     loginFeedback: string | undefined;
 
-    ngOnInit(): void {
-        if (this.user?.username == undefined) {
-            this.logoutUser();
-        }
-    }
-
     constructor(
         public httpClient: HttpClient,
         public userService: UserService
@@ -46,10 +40,16 @@ export class UserComponent {
         this.user = userService.getUser();
     }
 
+    ngOnInit(): void {
+        if (this.user?.userName == undefined) {
+            this.logoutUser();
+        }
+    }
+
     registerUser(): void {
         this.registrationFeedback = '';
         this.httpClient.post(environment.endpointURL + "user/register", {
-            userName: this.userToRegister.username,
+            userName: this.userToRegister.userName,
             password: this.userToRegister.password,
             fname: this.userToRegister.fname,
             lname: this.userToRegister.lname,
@@ -64,7 +64,7 @@ export class UserComponent {
         .subscribe(() => {
             this.userToLogin=this.userToRegister;
             this.loginUser();
-            this.userToRegister.username = this.userToRegister.password = '';
+            this.userToRegister.userName = this.userToRegister.password = '';
         },
         (err: any) => {
             this.registrationFeedback = err.error.message;
@@ -73,13 +73,13 @@ export class UserComponent {
 
     loginUser(): void {
         this.httpClient.post(environment.endpointURL + "user/login", {
-            userName: this.userToLogin.username,
+            userName: this.userToLogin.userName,
             email: this.userToLogin.email,
             password: this.userToLogin.password,
         })
         .subscribe((res: any) => {
             this.falseLogin = false;
-            this.userToLogin.username = this.userToLogin.password = '';
+            this.userToLogin.userName = this.userToLogin.password = '';
 
             localStorage.setItem('userName', res.user.userName);
             localStorage.setItem('userToken', res.token);
@@ -176,7 +176,7 @@ export class UserComponent {
     }
 
     checkIfUsernameEmpty(){
-        if (this.userToLogin.username === "") {
+        if (this.userToLogin.userName === "") {
             this.userNameEmpty = true;
         } else {
             this.userNameEmpty = false;

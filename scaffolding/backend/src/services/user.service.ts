@@ -81,8 +81,12 @@ export class UserService {
         }
     }
 
-    public getAll(): Promise<User[]> {
+    public getAllUsers(): Promise<User[]> {
         return User.findAll();
+    }
+
+    public getUser(userid: number): Promise<User> {
+        return User.findByPk(userid);
     }
 
     public getLikedPosts(userid: number) {

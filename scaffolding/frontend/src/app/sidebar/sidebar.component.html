@@ -7,14 +7,14 @@
     </div>
     <div class="user-text">
         <div *ngIf="loggedIn; else notLoggedIn">
-            <a routerLink="/profile" routerLinkActive="active">{{this.user?.username}}</a>
+            <a routerLink="/profile">{{this.user?.userName}}</a>
             <div>
                 <b style="color: rgb(0, 255, 0);">•</b> Online
             </div>
         </div>
         <ng-template #notLoggedIn>
-            <a routerLink="/login" routerLinkActive="active">Log in</a>
-            <a routerLink="/signup" routerLinkActive="active">Sign up</a>
+            <a routerLink="/login">Log in</a>
+            <a routerLink="/signup">Sign up</a>
         </ng-template>
     </div>
 </div>

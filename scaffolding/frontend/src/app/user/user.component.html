@@ -1,7 +1,7 @@
 <mat-card *ngIf="!loggedIn">
     <h2>Register</h2>
     <mat-form-field>
-        <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.username">
+        <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.userName">
     </mat-form-field>
     <mat-form-field>
         <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
@@ -56,7 +56,7 @@
 
     <div *ngIf="!loggedIn">
         <mat-form-field *ngIf="emailEmpty">
-            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.username" (input)="checkIfUsernameEmpty()" >
+            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" >
         </mat-form-field>
         <mat-form-field *ngIf="userNameEmpty">
             <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()">

@@ -27,11 +27,10 @@ export class AppComponent implements OnInit {
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.user$.subscribe(res => this.user = res);
 
-            // Current value
-            this.loggedIn = userService.getLoggedIn();
-            this.user = userService.getUser();
-            console.log(this.user?.fname);
-        }
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
+    }
 
     ngOnInit() {
         this.readLists();
