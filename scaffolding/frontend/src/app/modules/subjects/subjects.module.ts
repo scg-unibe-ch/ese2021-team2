@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SubjectsComponent } from './pages/subjects/subjects.component';
 import { SubjectsGridComponent } from './components/subjects-grid/subjects-grid.component';
 
+
+
 const routes: Routes = [
     {
         path: '',
@@ -16,7 +18,7 @@ export const routing = RouterModule.forChild(routes);
 @NgModule({
   declarations: [
     SubjectsComponent,
-    SubjectsGridComponent
+    SubjectsGridComponent,
   ],
   imports: [
     CommonModule,
