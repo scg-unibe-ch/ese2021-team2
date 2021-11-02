@@ -80,35 +80,8 @@ export class UserComponent {
             password: this.userToLogin.password,
         })
         .subscribe((res: any) => {
-<<<<<<< HEAD
-            this.falseLogin = false;
-            this.userToLogin.userName = this.userToLogin.password = '';
-
-            localStorage.setItem('userName', res.user.userName);
-            localStorage.setItem('userToken', res.token);
-
-            this.userService.setLoggedIn(true);
-
-            this.userService.setUser(new User(
-                    res.user.userId,
-                    res.user.userName,
-                    res.user.password,
-                    res.user.fname,
-                    res.user.lname,
-                    res.user.email,
-                    res.user.street,
-                    res.user.housenr,
-                    res.user.zipCode,
-                    res.user.city,
-                    res.user.birthday,
-                    res.user.phonenumber,
-                    res.user.admin,
-                    res.user.profile_image,
-                    []
-                ));
-=======
                 this.falseLogin = false;
-                this.userToLogin.username = this.userToLogin.password = '';
+                this.userToLogin.userName = this.userToLogin.password = '';
 
                 localStorage.setItem('userName', res.user.userName);
                 localStorage.setItem('userToken', res.token);
@@ -133,7 +106,6 @@ export class UserComponent {
                         []
                     ));
                 this.dialogRef.close();
->>>>>>> popup
             },
             (err: any) => {
                 console.log(err);
