@@ -2,7 +2,7 @@
 
 <h1>{{title}}</h1>
 
-<button (click)="createPost()">Create new Post</button>
+<button (click)="createPost()" *ngIf="loggedIn">Create new Post</button>
 
 <p>{{description}}</p>
 
@@ -23,7 +23,7 @@
     <button (click)="submitPost()" >Submit Post</button>
 </div>
 
-<app-post-list [boardId]="id">
+<app-post-list [boardId]="id" >
     
 </app-post-list>
 

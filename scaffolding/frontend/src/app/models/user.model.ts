@@ -2,7 +2,7 @@ export class User {
 
   constructor(
     public userId: number,
-    public username: string,
+    public userName: string,
     public password: string,
     public fname : string,
     public lname: string,
@@ -14,8 +14,7 @@ export class User {
     public birthday: string,
     public phonenumber: string,
     public admin: boolean,
+    public profile_image: string,
+    public likedPosts: []
   ) {}
-
-
-
  }

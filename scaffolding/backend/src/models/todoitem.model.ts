@@ -28,33 +28,37 @@ export class TodoItem extends Model<TodoItemAttributes, TodoItemCreationAttribut
 
 
     public static initialize(sequelize: Sequelize) { // definition for database
-        TodoItem.init({
-            todoItemId: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true
+        TodoItem.init(
+            {
+                todoItemId: {
+                    type: DataTypes.INTEGER,
+                    autoIncrement: true,
+                    primaryKey: true
+                },
+                name: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                },
+                done: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false
+                },
+                itemImage: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: true
+                },
+                todoListId: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false
+                }
             },
-            name: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            done: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false
-            },
-            itemImage: {
-                type: DataTypes.BOOLEAN,
-                allowNull: true
-            },
-            todoListId: {
-                type: DataTypes.INTEGER,
-                allowNull: false
+            {
+                sequelize,
+                tableName: 'todoItems'
             }
-        },
-        { sequelize, tableName: 'todoItems' }
         );
-
     }
+
     public static createAssociations() {
         TodoItem.belongsTo(TodoList, {
             targetKey: 'todoListId',

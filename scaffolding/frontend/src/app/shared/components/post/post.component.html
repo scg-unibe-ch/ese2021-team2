@@ -1,5 +1,3 @@
-
-
 <mat-card>
     <h1>
     {{this.post.title}}
@@ -14,6 +12,8 @@
 <p>{{this.post.date}}</p>
 
 <p>likes: {{this.post.likes}}</p>
+
+<p>made by user: {{this.post.creatorId}}</p>
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 <button (click)="downvote()" *ngIf="!voted">downvote</button>

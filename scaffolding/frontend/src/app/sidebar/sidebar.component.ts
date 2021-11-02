@@ -1,49 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
 
-  loggedIn: boolean | undefined;
+    loggedIn: boolean | undefined;
+    user: User | undefined;
 
-  user: User | undefined;
-  
+    constructor(public userService: UserService, private dialog: MatDialog) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
+    }
 
-  constructor(public userService: UserService) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
+    ngOnInit() {
+        this.checkUserStatus();
+    }
 
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
-    console.log(this.user?.fname);
-     }
+    checkUserStatus(): void {
+        // Get user data from local storage
+        const userToken = localStorage.getItem('userToken');
+        // Set boolean whether a user is logged in or not
+        this.userService.setLoggedIn(!!userToken);
+    }
 
-  ngOnInit() {
-    this.checkUserStatus();
-  }
-
-  checkUserStatus(): void {
-    // Get user data from local storage
-    const userToken = localStorage.getItem('userToken');
-
-    // Set boolean whether a user is logged in or not
-    this.userService.setLoggedIn(!!userToken);
-
-  }
-
-  test(){
- 
-      console.log(this.user);
-    
-  }
+    onLogin() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        this.dialog.open(LoginComponent,dialogConfig);
+    }
 
 }

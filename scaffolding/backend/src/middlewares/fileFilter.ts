@@ -1,8 +1,6 @@
 import multer from 'multer';
 
-
 // This is a middleware to handle the incoming files and images.
-
 const storage = multer.diskStorage({
     // where the images are stored
     destination: function (req, file, cb) {

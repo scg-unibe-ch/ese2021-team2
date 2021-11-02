@@ -9,14 +9,13 @@ import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
 
-
 import cors from 'cors';
-import {AdminController} from './controllers/admin.controller';
-import {ItemImage} from './models/itemImage.model';
+import { AdminController } from './controllers/admin.controller';
+import { ItemImage } from './models/itemImage.model';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
-
+import { Like } from './models/like.model';
 
 export class Server {
     private server: Application;
@@ -33,14 +32,11 @@ export class Server {
         Post.initialize(this.sequelize);
         ItemImage.initialize(this.sequelize);
         PostImage.initialize(this.sequelize);
+        Like.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
-
-
-
-
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
