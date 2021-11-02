@@ -13,8 +13,9 @@
             </div>
         </div>
         <ng-template #notLoggedIn>
-            <a routerLink="/login">Log in</a>
-            <a routerLink="/signup">Sign up</a>
+        <!--   <a routerLink="/login" routerLinkActive="active" (click)="onLogin()">Log in</a> -->
+            <a class="link" (click)="onLogin()"> Log in</a>
+            <a class="link" (click)="onLogin()">Sign up</a>
         </ng-template>
     </div>
 </div>
