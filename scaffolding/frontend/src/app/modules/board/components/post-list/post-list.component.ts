@@ -67,15 +67,19 @@ export class PostListComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number): void{
-    let postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [])
-    this.createPostInBackend(postToAdd);
+  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+    var postToAdd: Post;
+    if(file) {
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)
+    } else {
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+    }
+    this.createPostInBackend(postToAdd, file);
     this.posts.push(postToAdd)
-
   }
 
-  createPostInBackend(post: Post): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost", {
+  createPostInBackend(post: Post, image:File | undefined): void {
+    this.httpClient.post(environment.endpointURL + "post/createPost",{ 
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -83,13 +87,26 @@ export class PostListComponent implements OnInit {
       date:post.date,
       boardId:post.boardId,
       creatorId:post.creatorId,
-      semester: post.semester
-    })
-    .subscribe(() => {},
+      semester: post.semester,
+      postImage: post.postImage
+    }).subscribe((response: any) => {
+      this.addImage(image, response.postId);
+    },
       (err: any) => {
         this.postFeedback = err.error.message;
       }
     );
+  }
+
+  addImage(file:File | undefined, postId : number) {
+    if(file === undefined) {
+      return;
+    } else {
+      debugger;
+      const fd = new FormData();
+      fd.append('image', file);
+      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
+    }
   }
 
 }

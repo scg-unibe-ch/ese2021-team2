@@ -2,6 +2,8 @@ import express, { Router, Request, Response } from 'express';
 import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
+import { MulterRequest } from '../models/multerRequest.model';
+import { PostImage } from '../models/postImage.model';
 import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
 
@@ -27,6 +29,24 @@ postController.delete('/delete',
             }
         })
         .catch(err => res.status(500).send(err));
+});
+
+postController.post('/:id/image', (req: MulterRequest, res: Response) => {
+    postService.addImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+    }
+);
+
+postController.get('/:id/image', (req: Request, res: Response) => {
+    PostImage.findOne({
+        where: {
+            postId: req.params.id}
+    }).then(image => {
+        if (image) {
+            res.sendFile('./uploads/' + image.fileName, { root: process.cwd()});
+        } else {
+            res.status(500).send('No image found');
+        }
+    }).catch((err) => res.send(err));
 });
 
 
