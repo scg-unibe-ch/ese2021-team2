@@ -4,6 +4,8 @@ import { verifyToken } from '../middlewares/checkAuth';
 import { checkPassword } from '../middlewares/checkPassword';
 import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
+import { MulterRequest } from '../models/multerRequest.model';
+import { upload } from '../middlewares/fileFilter';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -26,8 +28,8 @@ userController.post('/login',
 
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
-        userService.getAll()
-            .then(users => res.send(users))
+        userService.getUser(req.body.tokenPayload.userId)
+            .then(user => res.send(user))
             .catch(err => res.status(500).send(err));
     }
 );
@@ -39,5 +41,34 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
             .catch(err => res.status(500).send(err));
     }
 );
+
+
+// doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)
+userController.post('/likePost',
+    (req: Request, res: Response) => {
+        userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
+    }
+);
+
+// add image to a todoItem
+userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
+    console.log('file in controller' + req.file);
+    userService.updateProfileImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.get('/:id/image', (req: Request, res: Response) => {
+    userService.getProfileImage(Number(req.params.id)).then(products => {
+        res.sendFile(products, { root: process.cwd()});
+    })
+        .catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.delete('/:id/image', (req: Request, res: Response) => {
+    userService.deleteProfileImage(Number(req.params.id)).then(response => res.send(response))
+        .catch(err => res.status(500).send(err));
+});
+
 
 export const UserController: Router = userController;

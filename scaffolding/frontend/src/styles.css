@@ -1,18 +1,18 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 body {
-  margin: 0px;
+    margin: 0px;
 }
 
 .mat-card {
-  margin: 20px 0;
-  background-color: #EEE;
+    margin: 20px 0;
+    background-color: #EEE;
 }
 
 button, input {
-  margin-left: 15px !important;
-  margin-right: 15px !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
 }
 
 .mat-form-field-wrapper {
-  margin-right: 25px !important;
+    margin-right: 25px !important;
 }

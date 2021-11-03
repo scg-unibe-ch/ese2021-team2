@@ -1,35 +1,42 @@
-
-    <div class="container">
-        <a routerLink="/" routerLinkActive="active"><img src="/assets/images/logo.png" /> </a>
-        <div class="profile">
-            <img class="avatar" src="/assets/images/profile_pic.png" />
-            <div *ngIf="loggedIn; else notShow">
-                <h3 class="h3side"><a class="lin" routerLink="/profile" routerLinkActive="active">{{this.user?.username}}  </a></h3>
-                <h4 class="h4side">{{this.user?.fname}} {{this.user?.lname}}</h4>
+<a class="logo" routerLink="/" routerLinkActive="active">
+    <img src="/assets/images/logo.png" />
+</a>
+<div class="user-info">
+    <div class="avatar-wrapper">
+        <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
+    </div>
+    <div class="user-text">
+        <div *ngIf="loggedIn; else notLoggedIn">
+            <a routerLink="/profile">{{this.user?.userName}}</a>
+            <div>
+                <b style="color: rgb(0, 255, 0);">•</b> Online
             </div>
-            <ng-template #notShow>
-                <h3 class="h3side"><a class="lin" routerLink="/login" routerLinkActive="active">logge dich ein</a></h3>
-                <h4 class="h4side">hier könnte dein name stehen</h4>
-            </ng-template>
         </div>
-        <mat-divider></mat-divider>
-        <button mat-button class="menu-button">
-            <mat-icon>home</mat-icon>
-            <span class="dashboard">Dashboard</span>
-        </button>
-        <button mat-button class="menu-button">
-            <span class="menutext">Subjects</span>
-        </button>
-        <button mat-button class="menu-button">
-            <span class="menutext">My Lectures</span>
-        </button>
-        <button mat-button class="menu-button">
-            <span class="menutext">Bookmark</span>
-        </button>
-        <button mat-button class="menu-button">
-            <span class="menutext">Shop</span>
-        </button>
-        <button mat-button class="menu-button">
-            <span class="menutext">Settings</span>
-        </button> 
-      </div>
+        <ng-template #notLoggedIn>
+        <!--   <a routerLink="/login" routerLinkActive="active" (click)="onLogin()">Log in</a> -->
+            <a class="link" (click)="onLogin()"> Log in</a>
+            <a class="link" (click)="onLogin()">Sign up</a>
+        </ng-template>
+    </div>
+</div>
+<div class="menu-button-wrapper">
+    <button mat-button class="menu-button">
+        <mat-icon>home</mat-icon>
+        <span class="dashboard">Dashboard</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/subjects'">
+        <span class="menu-text">Subjects</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/mylectures'">
+        <span class="menu-text">My Lectures</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/bookmarks'">
+        <span class="menu-text">Bookmark</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/shop'">
+        <span class="menu-text">Shop</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/settings'">
+        <span class="menu-text">Settings</span>
+    </button>
+</div>

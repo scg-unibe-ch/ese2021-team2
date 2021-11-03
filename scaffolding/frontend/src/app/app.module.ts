@@ -28,13 +28,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { BoardComponent } from './board/board.component';
-import { PostListComponent } from './post-list/post-list.component';
-import { PostComponent } from './post-list/post/post.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
-import { ProfileComponent } from './profile/profile.component';
+import { PostComponent } from 'src/app/shared/components/post/post.component';
+import { LoginComponent } from './login/login.component';
+
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -43,13 +41,9 @@ import { ProfileComponent } from './profile/profile.component';
     TodoItemComponent,
     UserComponent,
     SidebarComponent,
-    BoardComponent,
-    PostListComponent,
-    PostComponent,
-    HomeComponent,
-    LoginComponent,
     HeaderComponent,
-    ProfileComponent,
+    PostComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +62,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatIconModule,
     MatDividerModule,
     AppRoutingModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -76,6 +71,7 @@ import { ProfileComponent } from './profile/profile.component';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ],
+  entryComponents: [LoginComponent]
 })
 export class AppModule { }

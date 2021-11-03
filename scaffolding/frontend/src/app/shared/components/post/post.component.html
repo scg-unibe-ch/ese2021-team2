@@ -5,9 +5,15 @@
 
 <p>{{this.post.content}}</p>
 
+<div *ngIf = "post.postImage">
+   <img [src] = "imageURL" >
+</div>
+
 <p>{{this.post.date}}</p>
 
 <p>likes: {{this.post.likes}}</p>
+
+<p>made by user: {{this.post.creatorId}}</p>
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 <button (click)="downvote()" *ngIf="!voted">downvote</button>
