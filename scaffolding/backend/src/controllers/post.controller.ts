@@ -6,9 +6,11 @@ import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage } from '../models/postImage.model';
 import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
+import {verifyToken} from '../middlewares/checkAuth';
 
 const postController: Router = express.Router();
-const postService = new PostService;
+const postService = new PostService();
+const userService = new UserService();
 
 postController.post('/createPost',
     (req: Request, res: Response) => {
@@ -18,15 +20,22 @@ postController.post('/createPost',
     }
 );
 
-postController.delete('/delete',
+postController.delete('/:id/delete', verifyToken,
 (req: Request, res: Response) => {
-    Post.findByPk(req.params.id)
-        .then(found => {
-            if (found != null) {
-                found.destroy().then(() => res.status(200).send());
-            } else {
-                res.sendStatus(404);
-            }
+    userService.getUser(req.body.tokenPayload.userId)
+        .then(user => {
+            Post.findByPk(req.params.id)
+                .then(found => {
+                    if (found != null) {
+                        if ( found.creatorId === user.userId || user.admin === true ) {
+                            found.destroy().then(() => res.status(200).send());
+                        }
+                    } else {
+                        res.sendStatus(404);
+                    }
+                })
+                .catch(err => res.status(500).send(err));
+
         })
         .catch(err => res.status(500).send(err));
 });

@@ -1,4 +1,3 @@
-
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
 
 export interface PostAttributes {
@@ -67,7 +66,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 }
             },
-            
+
             {
                 sequelize,
                 tableName: 'posts'
