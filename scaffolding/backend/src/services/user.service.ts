@@ -20,7 +20,7 @@ export class UserService {
             .catch(err => Promise.reject(err));
     }
 
-    public login(loginRequestee: LoginRequest): Promise<User | LoginResponse> {
+    public login(loginRequestee: LoginRequest): Promise<LoginResponse> {
         const secret = process.env.JWT_SECRET;
         return User.findOne({
             where: {

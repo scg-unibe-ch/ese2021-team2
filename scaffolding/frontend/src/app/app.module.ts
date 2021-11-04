@@ -21,7 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { UserComponent } from './user/user.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,41 +34,46 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
-    UserComponent,
-    SidebarComponent,
-    HeaderComponent,
-    PostComponent,
-    LoginComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatDividerModule,
-    AppRoutingModule,
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [ AppComponent ]
+    declarations: [
+        AppComponent,
+        TodoListComponent,
+        TodoItemComponent,
+        UserComponent,
+        SidebarComponent,
+        HeaderComponent,
+        PostComponent,
+        LoginComponent,
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatListModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatDividerModule,
+        AppRoutingModule,
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }
