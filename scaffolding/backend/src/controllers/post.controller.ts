@@ -7,13 +7,15 @@ import { PostImage } from '../models/postImage.model';
 import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
 import {verifyToken} from '../middlewares/checkAuth';
+import {DeletePostRequest} from '../models/postRequest.model';
 
 const postController: Router = express.Router();
 const postService = new PostService();
 const userService = new UserService();
 
-postController.post('/createPost',
+postController.post('/createPost', verifyToken,
     (req: Request, res: Response) => {
+        req.body.post = req.body;
         postService.createPost(req.body)
             .then(created => res.send(created))
             .catch(err => res.status(500).send(err));
@@ -22,21 +24,9 @@ postController.post('/createPost',
 
 postController.delete('/:id/delete', verifyToken,
 (req: Request, res: Response) => {
-    userService.getUser(req.body.tokenPayload.userId)
-        .then(user => {
-            Post.findByPk(req.params.id)
-                .then(found => {
-                    if (found != null) {
-                        if ( found.creatorId === user.userId || user.admin === true ) {
-                            found.destroy().then(() => res.status(200).send());
-                        }
-                    } else {
-                        res.sendStatus(404);
-                    }
-                })
-                .catch(err => res.status(500).send(err));
-
-        })
+    req.body.postId = req.params.id;
+    postService.delete(req.body)
+        .then(deleted => res.send({message: deleted}))
         .catch(err => res.status(500).send(err));
 });
 
@@ -78,17 +68,11 @@ postController.post('/getPostsByUser',
 );
 
 
-postController.put('/:id', (req: Request, res: Response) => {
-    Post.findByPk(req.params.id)
-        .then(found => {
-            if (found != null) {
-                found.update(req.body).then(updated => {
-                    res.status(200).send(updated);
-                });
-            } else {
-                res.sendStatus(404);
-            }
-        })
+postController.put('/:id', verifyToken, (req: Request, res: Response) => {
+    req.body.postId = req.params.id;
+    req.body.postUpdate = req.body;
+    postService.updatePost(req.body)
+        .then(updated => res.json(updated))
         .catch(err => res.status(500).send(err));
 });
 
