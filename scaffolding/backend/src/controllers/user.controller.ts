@@ -46,14 +46,17 @@ userController.delete('/delete', verifyToken, // pathway can be adapted if neces
 // doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)
 userController.post('/likePost',
     (req: Request, res: Response) => {
-        userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
+        userService.likePost(req.body.userId, req.body.postId)
+            .catch(err => res.status(500).send(err));
     }
 );
 
 // add image to a todoItem
 userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
     console.log('file in controller' + req.file);
-    userService.updateProfileImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+    userService.updateProfileImage(req)
+        .then(created => res.send(created))
+        .catch(err => res.status(500).send(err));
 });
 
 // get the filename of an image

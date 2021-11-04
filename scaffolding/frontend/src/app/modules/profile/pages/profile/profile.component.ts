@@ -9,8 +9,8 @@ import { User } from '../../../../models/user.model';
 })
 export class ProfileComponent implements OnInit {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
 
     constructor(public userService: UserService) {
         // Listen for changes
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
         localStorage.removeItem('userToken');
 
         this.userService.setLoggedIn(false);
-        this.userService.setUser(undefined);
+        this.userService.setUser(null);
     }
 
     test(){

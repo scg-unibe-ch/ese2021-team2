@@ -86,7 +86,17 @@ export class UserService {
     }
 
     public getUser(userid: number): Promise<User> {
-        return User.findByPk(userid);
+        return new Promise((resolve, reject) => {
+            User.findByPk(userid).then((user) =>  {
+                if (user === null) {
+                    reject('Couldn\'t get user with id: ' + userid);
+                } else {
+                    resolve(user);
+                }
+            }).catch((reason) => {
+                reject(reason);
+            });
+        });
     }
 
     public getLikedPosts(userid: number) {

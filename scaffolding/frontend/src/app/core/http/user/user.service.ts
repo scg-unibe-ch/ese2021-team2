@@ -8,14 +8,17 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
+    // TODO: Add a new localstorage item that tracks the expiration date of the token
+    // this means that we will also get the expiration date from the backend on a login call.
+    // In the constructor you can then check for the expiration date and call refreshUser if it is expired.
 
     /*******************************************************************************************************************
      * VARIABLES
      ******************************************************************************************************************/
 
-    private loggedIn: boolean | undefined;
+    private loggedIn: boolean;
 
-    private user: User | undefined;
+    private user: User | null;
 
 
     /*******************************************************************************************************************
@@ -24,7 +27,7 @@ export class UserService {
 
     // Observable Sources
     private loggedInSource = new Subject<boolean>();
-    private userSource = new Subject<User>();
+    private userSource = new Subject<User | null>();
 
     // Observable Streams
     loggedIn$ = this.loggedInSource.asObservable();
@@ -35,11 +38,11 @@ export class UserService {
      * GETTERS
      ******************************************************************************************************************/
 
-    getLoggedIn(): boolean | undefined {
+    getLoggedIn(): boolean {
         return this.loggedIn;
     }
 
-    getUser(): User | undefined {
+    getUser(): User | null {
         return this.user;
     }
 
@@ -48,16 +51,25 @@ export class UserService {
      * SETTERS
      ******************************************************************************************************************/
 
-    setLoggedIn(loggedIn: boolean | undefined): void {
+    setLoggedIn(loggedIn: boolean): void {
         this.loggedInSource.next(loggedIn);
     }
 
-    setUser(user: User | undefined): void {
+    setUser(user: User | null): void {
         this.userSource.next(user);
     }
 
-    refreshUser(): Observable<User> {
-        return this.httpClient.get<User>(environment.endpointURL + "user");
+    refreshUser(): void {
+        this.httpClient.get<User>(environment.endpointURL + "user")
+            .subscribe((res) => {
+                this.userSource.next(res);
+                this.loggedInSource.next(true);
+            }, (err: any) => {
+                this.userSource.next(null);
+                this.loggedInSource.next(false);
+                // TODO: Delete this log when prod ready
+                console.log(err);
+            });
     }
 
     /*******************************************************************************************************************
@@ -65,12 +77,12 @@ export class UserService {
      ******************************************************************************************************************/
 
     constructor(public httpClient: HttpClient) {
-        // Observer
+        this.user = null;
+        this.loggedIn = false;
+
         this.loggedIn$.subscribe(res => this.loggedIn = res);
         this.user$.subscribe(res => this.user = res);
 
-        // Default values
-        this.setLoggedIn(false);
-        this.refreshUser().subscribe(res => this.userSource.next(res));
+        this.refreshUser();
     }
 }

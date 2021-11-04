@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
 
@@ -7,10 +7,10 @@ import { User } from '../models/user.model';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
 
     constructor(public userService: UserService) {
         // Listen for changes
@@ -20,17 +20,6 @@ export class SidebarComponent implements OnInit {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
-    }
-
-    ngOnInit() {
-        this.checkUserStatus();
-    }
-
-    checkUserStatus(): void {
-        // Get user data from local storage
-        const userToken = localStorage.getItem('userToken');
-        // Set boolean whether a user is logged in or not
-        this.userService.setLoggedIn(!!userToken);
     }
 
 }

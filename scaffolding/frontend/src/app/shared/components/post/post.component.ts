@@ -19,9 +19,9 @@ export class PostComponent implements OnInit {
 
   userCanVote= true;
 
-  loggedIn: boolean | undefined;
+  loggedIn: boolean;
 
-  user: User|undefined;
+  user: User | null;
 
   constructor(public userService: UserService, public httpClient: HttpClient) {
     // Listen for changes

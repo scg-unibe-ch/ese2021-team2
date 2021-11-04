@@ -16,8 +16,8 @@ export class AppComponent implements OnInit {
     title = 'frontend';
     todoLists: TodoList[] = [];
     newTodoListName: string = '';
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
 
     constructor(
         public httpClient: HttpClient,

@@ -14,8 +14,8 @@ export class UserComponent {
     userNameEmpty: boolean = true;
     emailEmpty: boolean = true;
     falseLogin: boolean = false;
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean | null;
+    user: User | null;
 
     userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
     userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
@@ -117,7 +117,7 @@ export class UserComponent {
         localStorage.removeItem('userToken');
 
         this.userService.setLoggedIn(false);
-        this.userService.setUser(undefined);
+        this.userService.setUser(null);
     }
 
     accessUserEndpoint(): void {
