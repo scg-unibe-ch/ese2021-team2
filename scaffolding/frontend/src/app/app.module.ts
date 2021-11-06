@@ -33,7 +33,6 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
-import {BoardListComponent} from "./modules/subjects/pages/board-list/board-list.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +44,6 @@ import {BoardListComponent} from "./modules/subjects/pages/board-list/board-list
     HeaderComponent,
     PostComponent,
     LoginComponent,
-    BoardListComponent,
   ],
   imports: [
     BrowserModule,
