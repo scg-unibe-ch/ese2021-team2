@@ -18,6 +18,7 @@ import { Like } from './models/like.model';
 import {Board} from './models/board.model';
 import {Subject} from './models/subject.model';
 
+
 export class Server {
     private server: Application;
     private sequelize: Sequelize;
@@ -33,6 +34,7 @@ export class Server {
         Post.initialize(this.sequelize);
         ItemImage.initialize(this.sequelize);
         Like.initialize(this.sequelize);
+        Subject.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
