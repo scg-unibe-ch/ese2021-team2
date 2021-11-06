@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { TodoList } from './models/todo-list.model';
 import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
-import { UserService } from './services/user.service';
+import { UserService } from './core/http/user/user.service';
 import { User } from './models/user.model';
-
 
 @Component({
   selector: 'app-root',
@@ -13,86 +12,125 @@ import { User } from './models/user.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
 
-  todoLists: TodoList[] = [];
+    title = 'frontend';
+    todoLists: TodoList[] = [];
+    newTodoListName: string = '';
+    loggedIn: boolean | undefined;
+    user: User | undefined;
 
-  newTodoListName: string = '';
+    constructor(
+        public httpClient: HttpClient,
+        public userService: UserService
+    ) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
-  loggedIn: boolean | undefined;
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
+    }
 
-  user: User | undefined;
+    ngOnInit() {
+        this.readLists();
+        this.checkUserStatus();
+    }
 
-  constructor(
-    public httpClient: HttpClient,
-    public userService: UserService
-  ) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
+    // CREATE - TodoList
+    createList(): void {
+        this.httpClient.post(environment.endpointURL + "todolist", {
+                name: this.newTodoListName
+            })
+            .subscribe((list: any) => {
+                this.todoLists.push(new TodoList(list.todoListId, list.name, []));
+                this.newTodoListName = '';
+            })
+    }
 
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
-    console.log(this.user?.fname);
-  }
+    // READ - TodoList, TodoItem
+    readLists(): void {
+        this.httpClient.get(environment.endpointURL + "todolist")
+            .subscribe((lists: any) => {
+                lists.forEach((list: any) => {
+                    const todoItems: TodoItem[] = [];
 
-  ngOnInit() {
-    this.readLists();
-    this.checkUserStatus();
-  }
+                    list.todoItems.forEach((item: any) => {
+                        todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
+                    });
 
-  // CREATE - TodoList
-  createList(): void {
-    this.httpClient.post(environment.endpointURL + "todolist", {
-      name: this.newTodoListName
-    }).subscribe((list: any) => {
-      this.todoLists.push(new TodoList(list.todoListId, list.name, []));
-      this.newTodoListName = '';
-    })
-  }
+                    this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
+                });
+            });
+    }
 
-  // READ - TodoList, TodoItem
-  readLists(): void {
-    this.httpClient.get(environment.endpointURL + "todolist").subscribe((lists: any) => {
-      lists.forEach((list: any) => {
-        const todoItems: TodoItem[] = [];
+    // UPDATE - TodoList
+    updateList(todoList: TodoList): void {
+        this.httpClient.put(environment.endpointURL + "todolist/" + todoList.listId, {
+                name: todoList.name
+            })
+            .subscribe();
+    }
 
-        list.todoItems.forEach((item: any) => {
-          todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
-        });
+    // DELETE - TodoList
+    deleteList(todoList: TodoList): void {
+        this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId)
+            .subscribe(() => {
+                this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
+            });
+    }
 
-        this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
-      });
-    });
-  }
+    checkUserStatus(): void {
+        // Get user data from local storage
+        const userToken = localStorage.getItem('userToken');
 
-  // UPDATE - TodoList
-  updateList(todoList: TodoList): void {
-    this.httpClient.put(environment.endpointURL + "todolist/" + todoList.listId, {
-      name: todoList.name
-    }).subscribe();
-  }
+        // Set boolean whether a user is logged in or not
+        this.userService.setLoggedIn(!!userToken);
+    }
 
-  // DELETE - TodoList
-  deleteList(todoList: TodoList): void {
-    this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId).subscribe(() => {
-      this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
-    });
-  }
+    processFile(imageInputEvent: any) {
+        const f : File = imageInputEvent.target.files[0];
+        this.addProfileImage(f);
+    }
 
-  checkUserStatus(): void {
-    // Get user data from local storage
-    const userToken = localStorage.getItem('userToken');
+    addProfileImage(newPicture: File) {
+        if (newPicture) {
+            const fd = new FormData();
+            fd.append('image', newPicture);
+            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
+                .subscribe((res) => {
 
-    // Set boolean whether a user is logged in or not
-    this.userService.setLoggedIn(!!userToken);
+                },
+                error => {
 
-  }
+                });
+        }
+    }
 
-  test(){
- 
-      console.log(this.user);
-    
-  }
+    deleteProfileImage(){
+        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
+            .subscribe((res) => {
+
+            },
+            error => {
+
+            });
+    }
+
+    getImageSrc(): string {
+        if (this.user?.profile_image) {
+            return environment.endpointURL + 'user/' + this.user?.userId + '/image';
+        } else {
+            return '/assets/images/default_image.jpg';
+        }
+    }
+
+    hasProfileImage(): boolean {
+        return !!this.user?.profile_image;
+    }
+
+    test() {
+        console.log(this.user);
+    }
+
 }

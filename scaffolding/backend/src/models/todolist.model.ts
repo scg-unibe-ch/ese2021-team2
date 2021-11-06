@@ -34,7 +34,10 @@ export class TodoList extends Model<TodoListAttributes, TodoListCreationAttribut
                     allowNull: false
                 }
             },
-            { tableName: 'todolists', sequelize }
+            {
+                sequelize,
+                tableName: 'todolists'
+            }
         );
     }
     public static createAssociations() {

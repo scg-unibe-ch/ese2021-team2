@@ -1,0 +1,95 @@
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo > img {
+    width: 80%;
+    height: auto;
+}
+
+.user-info {
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #1E90FF;
+    border-top: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    color: white;
+    font-family: "Roboto";
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.user-text div {
+    text-align: center;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+.user-text a {
+    margin: 5px;
+}
+
+.user-text a:link {
+    color: white;
+    text-decoration: none;
+}
+
+.user-text a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.user-text a:hover {
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+}
+
+.user-text a:active {
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+}
+
+.menu-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.menu-button {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 5px;
+    left: 0px;
+    color: rgb(200, 200, 200);
+    font-size: 1.2rem;
+}
+
+.menu-text {
+    padding-left: 50px;
+}
+
+.dashboard {
+    padding-left: 26px;
+}

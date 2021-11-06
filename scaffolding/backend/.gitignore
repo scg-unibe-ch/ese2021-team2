@@ -2,3 +2,6 @@ node_modules
 package-lock.json
 build
 *.sqlite
+db.sqlite
+*.sqbpro
+/uploads

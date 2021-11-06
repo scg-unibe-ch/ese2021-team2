@@ -5,9 +5,10 @@ import { TodoList } from '../models/todolist.model';
 const todoListController: Router = express.Router();
 
 todoListController.post('/', (req: Request, res: Response) => {
-    TodoList.create(req.body).then(created => {
-        res.status(201).send(created);
-    })
+    TodoList.create(req.body)
+        .then(created => {
+            res.status(201).send(created);
+        })
         .catch(err => res.status(500).send(err));
 });
 

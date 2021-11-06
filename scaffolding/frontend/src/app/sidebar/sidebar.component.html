@@ -1,0 +1,41 @@
+<a class="logo" routerLink="/" routerLinkActive="active">
+    <img src="/assets/images/logo.png" />
+</a>
+<div class="user-info">
+    <div class="avatar-wrapper">
+        <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
+    </div>
+    <div class="user-text">
+        <div *ngIf="loggedIn; else notLoggedIn">
+            <a routerLink="/profile">{{this.user?.userName}}</a>
+            <div>
+                <b style="color: rgb(0, 255, 0);">•</b> Online
+            </div>
+        </div>
+        <ng-template #notLoggedIn>
+            <a routerLink="/login">Log in</a>
+            <a routerLink="/signup">Sign up</a>
+        </ng-template>
+    </div>
+</div>
+<div class="menu-button-wrapper">
+    <button mat-button class="menu-button">
+        <mat-icon>home</mat-icon>
+        <span class="dashboard">Dashboard</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/subjects'">
+        <span class="menu-text">Subjects</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/mylectures'">
+        <span class="menu-text">My Lectures</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/bookmarks'">
+        <span class="menu-text">Bookmark</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/shop'">
+        <span class="menu-text">Shop</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/settings'">
+        <span class="menu-text">Settings</span>
+    </button>
+</div>

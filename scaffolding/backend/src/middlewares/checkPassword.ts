@@ -28,8 +28,6 @@ export function checkPassword(req: Request, res: Response, next: any) {
             next();
         }
     } catch (err) {
-
-
         res.status(500).send({message: 'Bad Request'});
     }
 }
