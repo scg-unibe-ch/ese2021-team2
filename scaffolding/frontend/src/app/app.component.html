@@ -2,10 +2,14 @@
     <mat-sidenav id="main-sidebar" #sideNav mode="side" opened>
         <app-sidebar (messageEvent)="receiveIsExpanded($event)"></app-sidebar>
     </mat-sidenav>
-    <mat-sidenav id = "dashboard" #sidenav mode="side" [opened]="isExpanded"> 
-    <app-dashboard></app-dashboard>
-    </mat-sidenav> 
         <mat-sidenav-content>
-        <router-outlet></router-outlet>
+            <mat-sidenav-container id="main-sidebar-container">
+                <mat-sidenav id = "dashboard" #sidenav mode="side" [opened]="isExpanded"> 
+                    <app-dashboard></app-dashboard>
+                </mat-sidenav>
+                <mat-sidenav-content>
+                    <router-outlet></router-outlet>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
     </mat-sidenav-content>
 </mat-sidenav-container>
