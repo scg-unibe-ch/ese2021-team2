@@ -1,8 +1,5 @@
-
-
-
     <div *ngFor="let sub of subjects" class="subj">
-        <button mat-button class="menu-button" [routerLink]="'/'">
+        <button mat-button class="menu-button" (click)="transmitSubjectId(sub.subjectId)">
             <span class="menu-text">{{sub.name}}</span>
         </button>
     </div>

@@ -65,7 +65,9 @@ postController.post('/getPostsOfBoard',
 // needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
-        postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+        postService.getPostsbyUser(req.body.userId)
+            .then(posts => res.send(posts))
+            .catch(err => res.status(500).send(err));
     }
 );
 
