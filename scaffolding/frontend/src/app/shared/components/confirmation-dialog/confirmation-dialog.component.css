@@ -1,9 +1,14 @@
 .mat-dialog-title {
     text-align: center;
     color: white;
-    background:  #1e90ff;;
+    background:  #1e90ff;
     width: 100%;
 }
 .mat-dialog-content{
-    font-family:sans-serif
+    font-family:sans-serif;
+}
+
+.mat-dialog-actions{
+    display:flex;
+    justify-content: center;
 }
