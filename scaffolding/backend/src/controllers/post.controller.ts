@@ -8,6 +8,8 @@ import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
 import {verifyToken} from '../middlewares/checkAuth';
 import {DeletePostRequest} from '../models/postRequest.model';
+import { Subject } from '../models/subject.model';
+
 
 const postController: Router = express.Router();
 const postService = new PostService();
@@ -76,6 +78,15 @@ postController.put('/:id', verifyToken, (req: Request, res: Response) => {
         .catch(err => res.status(500).send(err));
 });
 
+postController.post('/getAllSubjects',
+    (req: Request, res: Response) => {
+       Subject.findAll().then(posts => {res.send(posts);
+    }
+
+       ).catch(err => {
+            res.status(500).send(err); });
+    }
+);
 
 
 export const PostController: Router = postController;
