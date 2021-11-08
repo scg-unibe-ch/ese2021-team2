@@ -13,7 +13,6 @@ export class SubjectsGridComponent implements OnInit {
 
   constructor(public httpClient: HttpClient) { }
 
-    boardList: BoardListComponent = new BoardListComponent(this.httpClient);
 
   subjects = [{name: "test", subjectId:4}]
 
@@ -30,7 +29,5 @@ export class SubjectsGridComponent implements OnInit {
 
   }
 
-  transmitSubjectId (subjectId: number): void{
-      this.boardList.setSubjectId(subjectId);
-}
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-board-list',
@@ -9,22 +10,34 @@ import {environment} from "../../../../../environments/environment";
 })
 export class BoardListComponent implements OnInit {
 
-     static subjectId: number = 0;
+     subjectId: number = 0;
      boardList=[{boardName:'placeholder'}];
 
-  constructor(public httpClient: HttpClient) { }
 
-  ngOnInit(): void {}
+  constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute) { 
+    
+
+    this._Activatedroute.paramMap.subscribe(params => { 
+        this.subjectId= parseInt(params.get('subjectId')!); 
+    });
+
+    this.setBoardList()
+  }
+
+  ngOnInit(): void {
+    
+  }
+    
 
   public  setSubjectId(subjectId: number): void{
-      BoardListComponent.subjectId = subjectId;
-      console.log(BoardListComponent.subjectId)
+      this.subjectId = subjectId;
+      console.log(this.subjectId)
       this.setBoardList()
   }
 
    setBoardList(): void{
       console.log('board-list comment')
-      this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: BoardListComponent.subjectId})
+      this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: this.subjectId})
           .subscribe((res: any) => {
                   this.boardList = res;
                   console.log(this.boardList);

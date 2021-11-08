@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SubjectsComponent } from './pages/subjects/subjects.component';
 import { SubjectsGridComponent } from './components/subjects-grid/subjects-grid.component';
 import { BoardListComponent } from './pages/board-list/board-list.component';
+import { BoardComponent } from '../board/pages/board/board.component';
+import { PostComponent } from 'src/app/shared/components/post/post.component';
 
 
 
@@ -11,7 +13,11 @@ const routes: Routes = [
     {
         path: '',
         component: SubjectsComponent
-    }
+    },
+    {
+      path: 'boardList/:subjectId',
+      component: BoardListComponent 
+  }
 ];
 
 export const routing = RouterModule.forChild(routes);

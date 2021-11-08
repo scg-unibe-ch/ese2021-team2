@@ -47,6 +47,9 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
     LoginComponent,
     DashboardComponent,
   ],
+  exports: [
+    PostComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
