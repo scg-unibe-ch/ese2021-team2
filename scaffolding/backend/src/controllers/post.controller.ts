@@ -6,6 +6,7 @@ import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage } from '../models/postImage.model';
 import { UserService } from '../services/user.service';
 import { UserController } from './user.controller';
+import { Subject } from '../models/subject.model';
 
 const postController: Router = express.Router();
 const postService = new PostService;
@@ -83,6 +84,15 @@ postController.put('/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).send(err));
 });
 
+postController.post('/getAllSubjects',
+    (req: Request, res: Response) => {
+       Subject.findAll().then(posts => {res.send(posts);
+    }
+
+       ).catch(err => {
+            res.status(500).send(err); });
+    }
+);
 
 
 export const PostController: Router = postController;

@@ -16,6 +16,7 @@ import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
 import { Like } from './models/like.model';
+import { Subject } from './models/subject.model';
 
 export class Server {
     private server: Application;
@@ -33,6 +34,7 @@ export class Server {
         ItemImage.initialize(this.sequelize);
         PostImage.initialize(this.sequelize);
         Like.initialize(this.sequelize);
+        Subject.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();

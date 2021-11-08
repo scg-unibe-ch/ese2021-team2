@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     newTodoListName: string = '';
     loggedIn: boolean | undefined;
     user: User | undefined;
+    isExpanded: boolean = false;
 
     constructor(
         public httpClient: HttpClient,
@@ -132,5 +133,9 @@ export class AppComponent implements OnInit {
     test() {
         console.log(this.user);
     }
+
+    receiveIsExpanded($event:boolean) {
+        this.isExpanded = $event;
+      }
 
 }

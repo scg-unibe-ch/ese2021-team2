@@ -34,6 +34,7 @@ import { LoginComponent } from './login/login.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
     PostComponent,
     LoginComponent,
     ConfirmationDialogComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

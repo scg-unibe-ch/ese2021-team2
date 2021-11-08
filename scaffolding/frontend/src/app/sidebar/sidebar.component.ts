@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -13,6 +13,8 @@ export class SidebarComponent implements OnInit {
 
     loggedIn: boolean | undefined;
     user: User | undefined;
+    isExpanded: boolean = false;
+    @Output() messageEvent = new EventEmitter<boolean>();
 
     constructor(public userService: UserService, private dialog: MatDialog) {
         // Listen for changes
@@ -41,5 +43,10 @@ export class SidebarComponent implements OnInit {
         dialogConfig.autoFocus = true;
         this.dialog.open(LoginComponent,dialogConfig);
     }
+
+    sendIsExpanded() {
+        this.isExpanded = !this.isExpanded;
+        this.messageEvent.emit(this.isExpanded);
+      }
 
 }
