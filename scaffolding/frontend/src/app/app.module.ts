@@ -37,46 +37,50 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
-    UserComponent,
-    PostComponent,
-    SidebarComponent,
-    HeaderComponent,
-    LoginComponent,
-    DashboardComponent,
-  ],
-  
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatDividerModule,
-    AppRoutingModule,
-    MatDialogModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [ AppComponent ],
-  entryComponents: [LoginComponent]
+    declarations: [
+        AppComponent,
+        TodoListComponent,
+        TodoItemComponent,
+        UserComponent,
+        PostComponent,
+        SidebarComponent,
+        HeaderComponent,
+        LoginComponent,
+        DashboardComponent,
+    ],
+
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatListModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatDividerModule,
+        AppRoutingModule,
+        MatDialogModule,
+
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent],
+    exports: [
+        PostComponent
+    ],
+    entryComponents: [LoginComponent]
 })
 export class AppModule { }

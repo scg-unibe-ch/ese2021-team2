@@ -1,11 +1,8 @@
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
 import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage } from '../models/postImage.model';
-import { UserService } from '../services/user.service';
-import { UserController } from './user.controller';
 import { Subject } from '../models/subject.model';
 
 const postController: Router = express.Router();
@@ -55,6 +52,11 @@ postController.get('/:id/image', (req: Request, res: Response) => {
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
+        /*Post.findAll({
+            where: {
+                boardId: req.body.boardId
+            }
+        })*/
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }

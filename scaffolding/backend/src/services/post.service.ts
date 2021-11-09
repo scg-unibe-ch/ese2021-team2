@@ -1,9 +1,7 @@
-
 import { upload } from '../middlewares/fileFilter';
 import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage, PostImageAttributes } from '../models/postImage.model';
 import { Post } from '../models/post.model';
-const { Op } = require('sequelize');
 
 export class PostService {
     public createPost(post: Post) {
@@ -50,7 +48,7 @@ export class PostService {
         return Post.findAll();
     }
 
-    // returns all posts belongin to a specified forum
+    // returns all posts belonging to a specified forum
     getPostsOfBoard(board: number): Promise<Post[]> {
         return Post.findAll({
             where: {

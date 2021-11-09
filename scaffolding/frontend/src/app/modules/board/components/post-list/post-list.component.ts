@@ -4,7 +4,6 @@ import { UserService } from '../../../../core/http/user/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
-import { BoardComponent } from '../../pages/board/board.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,8 +23,8 @@ export class PostListComponent implements OnInit {
   user: User | undefined;
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
- 
-    
+
+
 
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -35,38 +34,15 @@ export class PostListComponent implements OnInit {
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
 
-    
+
   }
 
 
   ngOnInit(): void {
     console.log("ngOnInit is being executed");
-    
- 
-    if (this.mode==="board") {
-      this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-        boardId: this.boardId
-      }).subscribe((res: any) => {
-          console.log(res);
-          
-          this.posts = res;
-        } ,
-        err => {
-          console.log(err);
-        }
-      );
-    } else if (this.mode==="user") {
-      this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
-        userId: this.user?.userId
-      }).subscribe((res: any) => {
-          this.posts = res;
-        } ,
-        err => {
-          console.log(err);
-        }
-      );
-    }
-    this.checkUserStatus();
+
+
+    this.setPostList()
   }
 
   checkUserStatus(): void {
@@ -89,7 +65,7 @@ export class PostListComponent implements OnInit {
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost",{ 
+    this.httpClient.post(environment.endpointURL + "post/createPost",{
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -119,15 +95,14 @@ export class PostListComponent implements OnInit {
     }
   }
 
-  setPostList(id: number){
+  setPostList(){
 
     if (this.mode==="board") {
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
       }).subscribe((res: any) => {
-          console.log(res);
-          
-          this.posts = res;
+            this.posts = res;
+            console.log(res);
         } ,
         err => {
           console.log(err);
