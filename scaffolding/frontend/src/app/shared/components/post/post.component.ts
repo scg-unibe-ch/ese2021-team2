@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PostComponent implements OnInit {
 
-  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", []);
+  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
 
   voted = false;
 
@@ -22,6 +22,8 @@ export class PostComponent implements OnInit {
   loggedIn: boolean | undefined;
 
   user: User|undefined;
+
+  imageURL: string = "";
 
   constructor(public userService: UserService, public httpClient: HttpClient) {
     // Listen for changes
@@ -34,6 +36,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
   }
 
   canUserVote(){

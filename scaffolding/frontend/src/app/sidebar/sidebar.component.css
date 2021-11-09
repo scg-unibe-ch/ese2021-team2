@@ -54,6 +54,7 @@
 .user-text a:link {
     color: white;
     text-decoration: none;
+
 }
 
 .user-text a:visited {
@@ -64,6 +65,7 @@
 .user-text a:hover {
     color: rgb(200, 200, 200);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .user-text a:active {
@@ -93,3 +95,4 @@
 .dashboard {
     padding-left: 26px;
 }
+

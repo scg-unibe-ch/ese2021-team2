@@ -3,6 +3,7 @@ import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../core/http/user/user.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user',
@@ -29,7 +30,8 @@ export class UserComponent {
 
     constructor(
         public httpClient: HttpClient,
-        public userService: UserService
+        public userService: UserService,
+        public dialogRef: MatDialogRef<UserComponent>
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -78,31 +80,32 @@ export class UserComponent {
             password: this.userToLogin.password,
         })
         .subscribe((res: any) => {
-            this.falseLogin = false;
-            this.userToLogin.userName = this.userToLogin.password = '';
+                this.falseLogin = false;
+                this.userToLogin.userName = this.userToLogin.password = '';
 
-            localStorage.setItem('userName', res.user.userName);
-            localStorage.setItem('userToken', res.token);
+                localStorage.setItem('userName', res.user.userName);
+                localStorage.setItem('userToken', res.token);
 
-            this.userService.setLoggedIn(true);
+                this.userService.setLoggedIn(true);
 
-            this.userService.setUser(new User(
-                    res.user.userId,
-                    res.user.userName,
-                    res.user.password,
-                    res.user.fname,
-                    res.user.lname,
-                    res.user.email,
-                    res.user.street,
-                    res.user.housenr,
-                    res.user.zipCode,
-                    res.user.city,
-                    res.user.birthday,
-                    res.user.phonenumber,
-                    res.user.admin,
-                    res.user.profile_image,
-                    []
-                ));
+                this.userService.setUser(new User(
+                        res.user.userId,
+                        res.user.userName,
+                        res.user.password,
+                        res.user.fname,
+                        res.user.lname,
+                        res.user.email,
+                        res.user.street,
+                        res.user.housenr,
+                        res.user.zipCode,
+                        res.user.city,
+                        res.user.birthday,
+                        res.user.phonenumber,
+                        res.user.admin,
+                        res.user.profile_image,
+                        []
+                    ));
+                this.dialogRef.close();
             },
             (err: any) => {
                 console.log(err);
@@ -190,5 +193,6 @@ export class UserComponent {
             this.emailEmpty = false;
         }
     }
+    
 
 }

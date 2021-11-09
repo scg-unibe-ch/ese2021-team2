@@ -1,9 +1,8 @@
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
-import { UserService } from '../services/user.service';
-import { UserController } from './user.controller';
+import { MulterRequest } from '../models/multerRequest.model';
+import { PostImage } from '../models/postImage.model';
 import { Subject } from '../models/subject.model';
 
 const postController: Router = express.Router();
@@ -30,11 +29,34 @@ postController.delete('/delete',
         .catch(err => res.status(500).send(err));
 });
 
+postController.post('/:id/image', (req: MulterRequest, res: Response) => {
+    postService.addImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+    }
+);
+
+postController.get('/:id/image', (req: Request, res: Response) => {
+    PostImage.findOne({
+        where: {
+            postId: req.params.id}
+    }).then(image => {
+        if (image) {
+            res.sendFile('./uploads/' + image.fileName, { root: process.cwd()});
+        } else {
+            res.status(500).send('No image found');
+        }
+    }).catch((err) => res.send(err));
+});
+
 
 // needs to be changed to get request
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
+        /*Post.findAll({
+            where: {
+                boardId: req.body.boardId
+            }
+        })*/
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
@@ -45,7 +67,9 @@ postController.post('/getPostsOfBoard',
 // needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
-        postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+        postService.getPostsbyUser(req.body.userId)
+            .then(posts => res.send(posts))
+            .catch(err => res.status(500).send(err));
     }
 );
 

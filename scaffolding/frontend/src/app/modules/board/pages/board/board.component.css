@@ -4,3 +4,16 @@
     height: 70%;
     padding: 5px;
 }
+
+.imagePreviewContainer {
+    width: 200px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
