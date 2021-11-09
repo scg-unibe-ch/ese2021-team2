@@ -6,6 +6,9 @@ import { SubjectsGridComponent } from './components/subjects-grid/subjects-grid.
 import { BoardListComponent } from './pages/board-list/board-list.component';
 import { BoardComponent } from '../board/pages/board/board.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
+import { PostListComponent } from '../board/components/post-list/post-list.component';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 
 
@@ -17,7 +20,11 @@ const routes: Routes = [
     {
       path: 'boardList/:subjectId',
       component: BoardListComponent 
-  }
+  },
+  {
+    path: 'board/:boardId',
+    component: BoardComponent 
+}
 ];
 
 export const routing = RouterModule.forChild(routes);
@@ -33,7 +40,7 @@ export const routing = RouterModule.forChild(routes);
     ],
     imports: [
         CommonModule,
-        routing
+        routing,
     ]
 })
 export class SubjectsModule { }

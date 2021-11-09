@@ -34,6 +34,7 @@ import { LoginComponent } from './login/login.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,16 +42,15 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
     TodoListComponent,
     TodoItemComponent,
     UserComponent,
+    PostComponent,
     SidebarComponent,
     HeaderComponent,
-    PostComponent,
     LoginComponent,
     DashboardComponent,
   ],
-  exports: [
-    PostComponent
-  ],
+  
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

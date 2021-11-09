@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { BoardComponent } from '../../pages/board/board.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -14,7 +15,7 @@ import { BoardComponent } from '../../pages/board/board.component';
 export class PostListComponent implements OnInit {
 
   @Input() mode = "board";
-  @Input() boardId: number | undefined;
+  @Input() boardId: number = 4;
 
   postFeedback: string | undefined;
   posts: Post[] = [];
@@ -22,7 +23,10 @@ export class PostListComponent implements OnInit {
   loggedIn: boolean | undefined;
   user: User | undefined;
 
-  constructor(public httpClient: HttpClient, public userService: UserService) {
+  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+ 
+    
+
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
@@ -30,15 +34,21 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
+
+    
   }
 
 
   ngOnInit(): void {
-
+    console.log("ngOnInit is being executed");
+    
+ 
     if (this.mode==="board") {
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
       }).subscribe((res: any) => {
+          console.log(res);
+          
           this.posts = res;
         } ,
         err => {
@@ -107,6 +117,36 @@ export class PostListComponent implements OnInit {
       fd.append('image', file);
       this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
     }
+  }
+
+  setPostList(id: number){
+
+    if (this.mode==="board") {
+      this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
+        boardId: this.boardId
+      }).subscribe((res: any) => {
+          console.log(res);
+          
+          this.posts = res;
+        } ,
+        err => {
+          console.log(err);
+        }
+      );
+    } else if (this.mode==="user") {
+      this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
+        userId: this.user?.userId
+      }).subscribe((res: any) => {
+          this.posts = res;
+        } ,
+        err => {
+          console.log(err);
+        }
+      );
+    }
+    this.checkUserStatus();
+
+
   }
 
 }

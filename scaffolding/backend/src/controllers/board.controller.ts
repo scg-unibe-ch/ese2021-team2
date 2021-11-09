@@ -25,4 +25,17 @@ boardController.post('/getBoardsBySubjectId',
     }
 );
 
+
+boardController.post('/getBoardByBoardId',
+    (req: Request, res: Response) => {
+        Board.findAll({
+            where: {
+                boardId: req.body.boardId}
+        }).then(boards => {
+            res.send(boards);
+        }).catch(err => {
+            res.status(500).send(err); });
+    }
+);
+
 export const BoardController: Router = boardController;

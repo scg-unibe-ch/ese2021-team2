@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class BoardListComponent implements OnInit {
 
      subjectId: number = 0;
-     boardList=[{boardName:'placeholder'}];
+     boardList=[{boardName:'placeholder', boardId:1}];
 
 
   constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute) { 
