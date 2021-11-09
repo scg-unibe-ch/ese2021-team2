@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/core/http/user/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {Post} from "../../../models/post.model";
 
 
 @Component({
@@ -13,9 +13,10 @@ import { environment } from 'src/environments/environment';
 })
 export class PostComponent implements OnInit {
 
-  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
+    @Input()
+    post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
 
-  voted = false;
+    voted = false;
 
   userCanVote= true;
 

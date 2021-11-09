@@ -17,4 +17,6 @@
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 <button (click)="downvote()" *ngIf="!voted">downvote</button>
+    <br>
+    <app-comments-list></app-comments-list>
 </mat-card>
