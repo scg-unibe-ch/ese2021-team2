@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   @ViewChild(PostListComponent) postList: PostListComponent;
   title="Title";
   id = 1;
-  loggedIn: boolean | undefined;
+  loggedIn: boolean =false;
   newTitle: string = "";
   newContent: string = "";
   newSemester: string = "";
@@ -49,7 +49,11 @@ export class BoardComponent implements OnInit {
 
 
     this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
+
+
+  //REINSERT AFTER USER LOGIN IS FIXED!!
+  //SEE BOARD.HTML LINE 6-8
+   // userService.loggedIn$.subscribe(res => this.loggedIn = res);
   }
 
   ngOnInit(): void {

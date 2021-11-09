@@ -20,7 +20,7 @@ export class BoardListComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => { 
         this.subjectId= parseInt(params.get('subjectId')!); 
     });
-
+    
     this.setBoardList()
   }
 

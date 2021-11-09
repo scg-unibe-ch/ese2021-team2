@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PostListComponent implements OnInit {
 
   @Input() mode = "board";
-  @Input() boardId: number = 4;
+  boardId: number = 4;
 
   postFeedback: string | undefined;
   posts: Post[] = [];
@@ -33,7 +33,9 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
-
+    this._Activatedroute.paramMap.subscribe(params => { 
+      this.boardId= parseInt(params.get('boardId')!); 
+  });
 
   }
 
@@ -98,6 +100,10 @@ export class PostListComponent implements OnInit {
   setPostList(){
 
     if (this.mode==="board") {
+
+      console.log("post list id: "+this.boardId);
+      
+
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
       }).subscribe((res: any) => {
