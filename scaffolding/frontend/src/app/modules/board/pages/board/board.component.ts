@@ -2,7 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PostListComponent } from '../../components/post-list/post-list.component';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../../core/http/user/user.service';
-import { User } from '../../../../models/user.model';
+import { CommonModule } from '@angular/common';  
+import { BrowserModule } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-board',
@@ -14,7 +18,7 @@ export class BoardComponent implements OnInit {
   @ViewChild(PostListComponent) postList: PostListComponent;
   title="Title";
   id = 1;
-  loggedIn: boolean | undefined;
+  loggedIn: boolean =false;
   newTitle: string = "";
   newContent: string = "";
   newSemester: string = "";
@@ -23,9 +27,33 @@ export class BoardComponent implements OnInit {
   newFile: File | undefined;
   imageURL: any;
 
-  constructor(httpClient: HttpClient, public userService: UserService) {
-    this.postList = new PostListComponent(httpClient, userService)
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
+  constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+    this._Activatedroute.paramMap.subscribe(params => { 
+      this.id= parseInt(params.get('boardId')!); 
+//this is where th http request to get the board goes
+      this.httpClient.post(environment.endpointURL + "board/getBoardByBoardId", {
+        boardId: this.id
+      }).subscribe((res: any) => {
+          let response = res[0];
+          this.title = response.boardName;
+          this.description = response.description; 
+        } ,
+        err => {
+          console.log(err);
+        }
+      );
+  });
+
+
+
+
+
+    this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
+
+
+  //REINSERT AFTER USER LOGIN IS FIXED!!
+  //SEE BOARD.HTML LINE 6-8
+   // userService.loggedIn$.subscribe(res => this.loggedIn = res);
   }
 
   ngOnInit(): void {
