@@ -5,6 +5,9 @@ import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
 import { UserService } from './core/http/user/user.service';
 import { User } from './models/user.model';
+import { CommonModule } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-root',
