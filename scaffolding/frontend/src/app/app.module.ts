@@ -33,6 +33,7 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 
@@ -47,6 +48,7 @@ import { CommonModule } from '@angular/common';
         HeaderComponent,
         LoginComponent,
         DashboardComponent,
+        ConfirmationDialogComponent
     ],
 
     imports: [

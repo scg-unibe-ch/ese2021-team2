@@ -2,3 +2,7 @@
     height: 900px;
     padding: 30px;
 }
+
+input:disabled{
+    color:black
+}
