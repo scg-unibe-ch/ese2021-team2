@@ -6,7 +6,6 @@ import {CreatePostRequest, DeletePostRequest, UpdatePostRequest} from '../models
 import {UserService} from './user.service';
 import {rejects} from 'assert';
 const { Op } = require('sequelize');
-import { Post } from '../models/post.model';
 
 const userService = new UserService();
 
