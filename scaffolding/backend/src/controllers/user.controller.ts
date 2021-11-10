@@ -37,10 +37,17 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
         userService.delete(req.body)
-            .then(response => res.send(response))
+            .then(response => res.sendStatus(204))
             .catch(err => res.status(500).send(err));
     }
 );
+
+userController.put('/update', verifyToken,
+    (req: Request, res: Response) => {
+        userService.update(req.body)
+            .then(response => {res.send(response); })
+            .catch(err => res.status(500).send(err));
+    });
 
 
 // doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)

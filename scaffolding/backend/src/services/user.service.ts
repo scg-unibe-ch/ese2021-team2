@@ -3,6 +3,7 @@ import { LoginResponse, LoginRequest } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest } from '../models/accountDelete.model';
+import { UpdateRequest, UpdateResponse } from '../models/accountUpdate.model';
 import { MulterRequest } from '../models/multerRequest.model';
 import { upload } from '../middlewares/fileFilter';
 import { like } from 'sequelize/types/lib/operators';
@@ -31,7 +32,6 @@ export class UserService {
             }
         })
         .then(user => {
-            console.log(user);
             if (user != null) {
                 if (bcrypt.compareSync(loginRequestee.password, user.password)) {
                     // compares the hash with the password from the login request
@@ -62,22 +62,66 @@ export class UserService {
     }
 
     // deletes a user from the database
-    public delete(deleteRequestee: DeleteRequest): Promise<string> {
+    public delete(deleteRequestee: DeleteRequest): Promise<number> {
         try {
             const tokenUsername: string = deleteRequestee.tokenPayload.userName;
-            const passedUsername: string = deleteRequestee.userName;
-            if (tokenUsername.normalize() === passedUsername.normalize()) {
-                User.destroy({
-                    where: {
-                        userName: passedUsername
-                    }
-                });
-                return Promise.resolve('User successfully deleted');
-            } else {
-                return Promise.reject('Deletion unsuccessful');
-            }
+            return User.destroy({
+                where: {
+                    userName: tokenUsername
+                }
+            });
         } catch (err) {
             return Promise.reject('Deletion unsuccessful');
+        }
+    }
+
+    public async update(updateRequestee: UpdateRequest ): Promise<User | UpdateResponse> {
+        const secret = process.env.JWT_SECRET;
+        try {
+            const passedUsername: string = updateRequestee.userName;
+             await User.update({
+                fname: updateRequestee.fname,
+                lname: updateRequestee.lname,
+                email: updateRequestee.email,
+                street: updateRequestee.street,
+                housenr: updateRequestee.housenr,
+                zipCode: updateRequestee.zipCode,
+                city: updateRequestee.city,
+                birthday: updateRequestee.birthday,
+                phonenumber: updateRequestee.phonenumber,
+            }, {
+                where: {
+                    userName: passedUsername
+                },
+            }).catch((err) => {
+                 return Promise.reject({ message: err }); }
+                 );
+
+            // create new token with update information
+             return User.findOne({
+                where: {
+                    userName: passedUsername
+                }
+            }).then((user: User) => {
+                const token: string = jwt.sign({
+                    userName: user.userName,
+                    userId: user.userId,
+                    admin: user.admin,
+                    fname: user.fname,
+                    lname: user.lname,
+                    email: user.email,
+                    street: user.street,
+                    housenr: user.housenr,
+                    zipCode: user.zipCode,
+                    city: user.city,
+                    birthday: user.birthday,
+                    phonenumber: user.phonenumber,
+                },
+                secret, { expiresIn: '2h' });
+                return Promise.resolve({ user, token });
+            }).catch((err) => Promise.reject(err));
+        } catch (err) {
+            return Promise.reject('Update unsuccessful');
         }
     }
 

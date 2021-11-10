@@ -1,5 +1,4 @@
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
 import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
 import { MulterRequest } from '../models/multerRequest.model';
@@ -55,6 +54,11 @@ postController.get('/:id/image', (req: Request, res: Response) => {
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
+        /*Post.findAll({
+            where: {
+                boardId: req.body.boardId
+            }
+        })*/
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
@@ -65,7 +69,9 @@ postController.post('/getPostsOfBoard',
 // needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
-        postService.getPostsbyUser(req.body.userId).then(posts => res.send(posts)).catch(err => res.status(500).send(err));
+        postService.getPostsbyUser(req.body.userId)
+            .then(posts => res.send(posts))
+            .catch(err => res.status(500).send(err));
     }
 );
 

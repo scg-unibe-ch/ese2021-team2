@@ -17,6 +17,8 @@ import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
 import { Like } from './models/like.model';
 import { Subject } from './models/subject.model';
+import {Board} from './models/board.model';
+import {BoardController} from './controllers/board.controller';
 
 export class Server {
     private server: Application;
@@ -35,6 +37,7 @@ export class Server {
         PostImage.initialize(this.sequelize);
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
+        Board.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
@@ -73,6 +76,7 @@ export class Server {
             .use('/secured', SecuredController)
             .use('/admin', AdminController)
             .use('/post', PostController)
+            .use('/board', BoardController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
             // this is the message you get if you open http://localhost:3000/ when the server is running

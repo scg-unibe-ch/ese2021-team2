@@ -1,16 +1,23 @@
 
-
 <h1>{{title}}</h1>
 
-<button (click)="createPost()" *ngIf="loggedIn">Create new Post</button>
+
+
+<!-- here we get an error because loggedIn was set to true and now it isn't seen as undefined anymore
+ Error in console: Previous value: 'undefined'. Current value: 'true'..-->
+<button (click)="createPost()">Create new Post</button>
+
+
 
 <p>{{description}}</p>
 
 <div *ngIf="creatingPost" id="postCreator">
     <h1>create post</h1>
-    <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle"> 
+
+    <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle">
     <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
     <input type="text" placeholder="semester" name="semester" [(ngModel)]="newSemester">
+
     <br>
     <br>
     <button type="button" (click)="imageInput.click()">Add a photo</button>
@@ -23,9 +30,5 @@
     <button (click)="submitPost()" >Submit Post</button>
 </div>
 
-<app-post-list [boardId]="id" >
-    
-</app-post-list>
 
-
-
+<app-post-list></app-post-list>

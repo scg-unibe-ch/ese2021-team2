@@ -1,35 +1,60 @@
 <div class="container" *ngIf="loggedIn; else notShow">
     <h1>{{this.user?.userName}}</h1>
-    <label for="">First name:</label>
-    <p>{{this.user?.fname}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder = "First Name" [(ngModel)] = "changedUser.fname"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">Last name:</label>
-    <p>{{this.user?.lname}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder = "Last Name" [(ngModel)] = "changedUser.lname"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">Street:</label>
-    <p>{{this.user?.street}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>Street</mat-label>
+        <input matInput placeholder = "Street" [(ngModel)] = "changedUser.street"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">House Number:</label>
-    <p>{{this.user?.housenr}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>House Number</mat-label>
+        <input matInput placeholder = "House Number" [(ngModel)] = "changedUser.housenr"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">ZIP-Code:</label>
-    <p>{{this.user?.zipCode}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>ZIP-Code</mat-label>
+        <input matInput placeholder = "ZIP-Code" [(ngModel)] = "changedUser.zipCode"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">City:</label>
-    <p>{{this.user?.city}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>City
+        </mat-label>
+        <input matInput placeholder = "City" [(ngModel)] ="changedUser.city" [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">E-mail:</label>
-    <p>{{this.user?.email}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>Email</mat-label>
+        <input matInput type = "email" placeholder = "Email" value = {{changedUser.email}}  [disabled] = "true">
+    </mat-form-field>
     <br>
-    <label for="">Phone Number:</label>
-    <p>{{this.user?.phonenumber}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput placeholder = "Phone Number" [(ngModel)] = "changedUser.phonenumber"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">Last name:</label>
-    <p>{{this.user?.lname}}</p>
+    <mat-form-field appearance= "outline">
+        <mat-label>Birthday</mat-label>
+        <input matInput type = "date" placeholder = "Birthday" [(ngModel)] = "changedUser.birthday"  [disabled] = "!editMode">
+    </mat-form-field>
     <br>
-    <label for="">Birthday:</label>
-    <p>{{this.user?.birthday}}</p>
-    <button mat-flat-button color="warn" (click)="logoutUser()">Logout</button>
+    <div class = "SubmitContainer" *ngIf = "editMode" >
+        <button mat-raised-button (click) = "updateUser()">Submit Changes</button>
+    </div>
+    <br>
+    <div class = "ActionButtonContainer">
+        <button mat-flat-button color="warn" (click)="handleLogout()">Logout</button>
+        <button mat-flat-button color = "warn" (click) = "handleDeletingAccount()">Delete Account</button>
+        <button mat-raised-button (click) = "setEditMode()">{{editTag}}</button>
+    </div>
 </div>
 <ng-template #notShow>
     <div></div>

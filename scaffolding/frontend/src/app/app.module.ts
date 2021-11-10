@@ -33,47 +33,56 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
-    UserComponent,
-    SidebarComponent,
-    HeaderComponent,
-    PostComponent,
-    LoginComponent,
-    DashboardComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatDividerModule,
-    AppRoutingModule,
-    MatDialogModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [ AppComponent ],
-  entryComponents: [LoginComponent]
+    declarations: [
+        AppComponent,
+        TodoListComponent,
+        TodoItemComponent,
+        UserComponent,
+        PostComponent,
+        SidebarComponent,
+        HeaderComponent,
+        LoginComponent,
+        DashboardComponent,
+        ConfirmationDialogComponent
+    ],
+
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatListModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatDividerModule,
+        AppRoutingModule,
+        MatDialogModule,
+
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent],
+    exports: [
+        PostComponent
+    ],
+    entryComponents: [LoginComponent]
 })
 export class AppModule { }

@@ -1,4 +1,3 @@
-
 import { upload } from '../middlewares/fileFilter';
 import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage, PostImageAttributes } from '../models/postImage.model';
@@ -7,6 +6,7 @@ import {CreatePostRequest, DeletePostRequest, UpdatePostRequest} from '../models
 import {UserService} from './user.service';
 import {rejects} from 'assert';
 const { Op } = require('sequelize');
+import { Post } from '../models/post.model';
 
 const userService = new UserService();
 
@@ -117,7 +117,7 @@ export class PostService {
         return Post.findAll();
     }
 
-    // returns all posts belongin to a specified forum
+    // returns all posts belonging to a specified forum
     getPostsOfBoard(board: number): Promise<Post[]> {
         return Post.findAll({
             where: {
