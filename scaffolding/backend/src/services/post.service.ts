@@ -2,9 +2,15 @@ import { upload } from '../middlewares/fileFilter';
 import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage, PostImageAttributes } from '../models/postImage.model';
 import {Post, PostAttributes} from '../models/post.model';
-import {CreatePostRequest, DeletePostRequest, UpdatePostRequest} from '../models/postRequest.model';
+import {
+    BookmarkPostRequest,
+    CreatePostRequest,
+    DeletePostRequest,
+    UpdatePostRequest
+} from '../models/postRequest.model';
 import {UserService} from './user.service';
 import {rejects} from 'assert';
+import {Bookmark} from '../models/bookmark.model';
 const { Op } = require('sequelize');
 
 const userService = new UserService();
@@ -104,6 +110,26 @@ export class PostService {
                                 return Promise.reject('Not authorized to update this post');
                             }
                         } else {
+                            return Promise.reject('Post not found');
+                        }
+                    })
+                    .catch(err => Promise.reject(err));
+            })
+            .catch(err => Promise.reject(err));
+    }
+
+    public bookmarkPost(bookmarkReq: BookmarkPostRequest): Promise<Bookmark> {
+        return userService.getUser(bookmarkReq.tokenPayload.userId)
+            .then((user) => {
+                return Post.findByPk(bookmarkReq.bookmark.postId)
+                    .then(found => {
+                        if (found != null) {
+                                Bookmark.create(bookmarkReq.bookmark)
+                                    .then(bookmark => {
+                                        return Promise.resolve(bookmark);
+                                    })
+                                    .catch(err => Promise.reject(err));
+                            } else {
                             return Promise.reject('Post not found');
                         }
                     })

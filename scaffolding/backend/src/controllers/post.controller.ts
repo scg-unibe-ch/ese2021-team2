@@ -66,6 +66,8 @@ postController.post('/getPostsOfBoard',
 
 
 
+
+
 // needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
@@ -94,5 +96,14 @@ postController.post('/getAllSubjects',
     }
 );
 
+postController.post('/bookmark/:id', verifyToken,
+    (req: Request, res: Response) => {
+        req.body.bookmark.postId = req.params.id;
+        req.body.bookmark.userId = req.body.tokenPayload.userId;
+        postService.bookmarkPost(req.body)
+            .then(created => res.send(created))
+            .catch(err => res.status(500).send(err));
+    }
+);
 
 export const PostController: Router = postController;
