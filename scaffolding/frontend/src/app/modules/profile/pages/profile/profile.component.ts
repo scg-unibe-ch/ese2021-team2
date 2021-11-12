@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
 
     loggedIn: boolean;
     user: User | null;
-    changedUser = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
+    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
     editMode: boolean = false;
     editTag: String = "Edit";
 
@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             maxWidth: '400px',
             closeOnNavigation : true,
-            data: dialogData 
+            data: dialogData
         })
 
         dialogRef.afterClosed().subscribe(dialogResult => {
@@ -99,7 +99,7 @@ export class ProfileComponent implements OnInit {
             localStorage.removeItem('userName');
             localStorage.removeItem('userToken');
             this.userService.setLoggedIn(false);
-            this.userService.setUser(undefined);
+            this.userService.setUser(null);
         })
     }
 
@@ -132,9 +132,8 @@ export class ProfileComponent implements OnInit {
             birthday: this.changedUser.birthday,
             phonenumber: this.changedUser.phonenumber
         }).subscribe((res:any) => {
-            localStorage.setItem('userToken',res.token);
+            localStorage.setItem('userToken', res.token);
             this.userService.setUser(new User(
-                res.user.userId,
                 res.user.userName,
                 res.user.password,
                 res.user.fname,
@@ -148,7 +147,7 @@ export class ProfileComponent implements OnInit {
                 res.user.phonenumber,
                 res.user.admin,
                 res.user.profile_image,
-                []
+                res.user.userId,
             ));
             this.setEditMode();
         })

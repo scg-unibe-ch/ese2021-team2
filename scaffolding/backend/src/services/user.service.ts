@@ -49,7 +49,7 @@ export class UserService {
                         user.city = userData.city;
                         user.birthday = userData.birthday;
                         user.phonenumber = userData.phonenumber;
-                  
+
                     const token: string = jwt.sign({
                         userId: user.userId,
                         userName: user.userName,
