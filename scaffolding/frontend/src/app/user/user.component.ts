@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../core/http/user.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user',
@@ -30,7 +31,8 @@ export class UserComponent {
 
     constructor(
         public httpClient: HttpClient,
-        public userService: UserService
+        public userService: UserService,
+        public dialogRef: MatDialogRef<UserComponent>
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -100,6 +102,7 @@ export class UserComponent {
                     res.user.profile_image,
                     res.user.userId
                 ));
+                this.dialogRef.close();
             },
             (err: any) => {
                 console.log(err);
@@ -195,5 +198,6 @@ export class UserComponent {
             this.emailEmpty = false;
         }
     }
+    
 
 }

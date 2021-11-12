@@ -5,6 +5,7 @@ import { HomeComponent } from './modules/home/pages/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './modules/profile/pages/profile/profile.component';
 import { SubjectsComponent } from './modules/subjects/pages/subjects/subjects.component';
+import { BoardModule } from './modules/board/board.module';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
     {
         path: 'subjects',
         loadChildren: () => import('./modules/subjects/subjects.module').then(m => m.SubjectsModule)
+    }, 
+    {
+        path: 'boards',
+        loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
     },
 ];
 

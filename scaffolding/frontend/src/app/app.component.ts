@@ -5,6 +5,9 @@ import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
 import { UserService } from './core/http/user.service';
 import { User } from './models/user.model';
+import { CommonModule } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-root',
@@ -16,8 +19,10 @@ export class AppComponent implements OnInit {
     title = 'frontend';
     todoLists: TodoList[] = [];
     newTodoListName: string = '';
+
     loggedIn: boolean;
     user: User | null;
+    isExpanded: boolean = false;
 
     constructor(
         public httpClient: HttpClient,
@@ -132,5 +137,9 @@ export class AppComponent implements OnInit {
     test() {
         console.log(this.user);
     }
+
+    receiveIsExpanded($event:boolean) {
+        this.isExpanded = $event;
+      }
 
 }

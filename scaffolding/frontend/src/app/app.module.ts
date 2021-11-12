@@ -32,6 +32,11 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
 import { CoreModule } from './core/core.module';
 
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { CommonModule } from '@angular/common';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -42,6 +47,9 @@ import { CoreModule } from './core/core.module';
         HeaderComponent,
         PostComponent,
         LoginComponent,
+        LoginComponent,
+        DashboardComponent,
+        ConfirmationDialogComponent,
     ],
     imports: [
         CoreModule,
@@ -61,10 +69,13 @@ import { CoreModule } from './core/core.module';
         MatIconModule,
         MatDividerModule,
         AppRoutingModule,
+        MatDialogModule,
     ],
-    providers: [
-
+    providers: [],
+    bootstrap: [AppComponent],
+    exports: [
+        PostComponent
     ],
-    bootstrap: [ AppComponent ]
+    entryComponents: [LoginComponent]
 })
 export class AppModule { }

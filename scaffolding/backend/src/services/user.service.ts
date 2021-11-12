@@ -3,6 +3,8 @@ import { LoginRequest, LoginResponse } from '../models/login.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DeleteRequest, DeleteResponse } from '../models/accountDelete.model';
+import { UpdateRequest, UpdateResponse } from '../models/accountUpdate.model';
+
 import { MulterRequest } from '../models/multerRequest.model';
 import { upload } from '../middlewares/fileFilter';
 import { like } from 'sequelize/types/lib/operators';
@@ -47,7 +49,7 @@ export class UserService {
                         user.city = userData.city;
                         user.birthday = userData.birthday;
                         user.phonenumber = userData.phonenumber;
-
+                  
                     const token: string = jwt.sign({
                         userId: user.userId,
                         userName: user.userName,
@@ -95,6 +97,56 @@ export class UserService {
             }
         } catch (err) {
             return Promise.reject({ message: 'Deletion unsuccessful' });
+        }
+    }
+
+    public async update(updateRequestee: UpdateRequest ): Promise<User | UpdateResponse> {
+        const secret = process.env.JWT_SECRET;
+        try {
+            const passedUsername: string = updateRequestee.userName;
+             await User.update({
+                fname: updateRequestee.fname,
+                lname: updateRequestee.lname,
+                email: updateRequestee.email,
+                street: updateRequestee.street,
+                housenr: updateRequestee.housenr,
+                zipCode: updateRequestee.zipCode,
+                city: updateRequestee.city,
+                birthday: updateRequestee.birthday,
+                phonenumber: updateRequestee.phonenumber,
+            }, {
+                where: {
+                    userName: passedUsername
+                },
+            }).catch((err) => {
+                 return Promise.reject({ message: err }); }
+                 );
+
+            // create new token with update information
+             return User.findOne({
+                where: {
+                    userName: passedUsername
+                }
+            }).then((user: User) => {
+                const token: string = jwt.sign({
+                    userName: user.userName,
+                    userId: user.userId,
+                    admin: user.admin,
+                    fname: user.fname,
+                    lname: user.lname,
+                    email: user.email,
+                    street: user.street,
+                    housenr: user.housenr,
+                    zipCode: user.zipCode,
+                    city: user.city,
+                    birthday: user.birthday,
+                    phonenumber: user.phonenumber,
+                },
+                secret, { expiresIn: '2h' });
+                return Promise.resolve({ user, token });
+            }).catch((err) => Promise.reject(err));
+        } catch (err) {
+            return Promise.reject('Update unsuccessful');
         }
     }
 
