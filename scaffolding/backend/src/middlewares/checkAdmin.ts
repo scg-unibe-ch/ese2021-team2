@@ -10,15 +10,15 @@ export function checkAdmin(req: Request, res: Response, next: any) {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, secret);
         if (decoded == null) {
-            res.status(403).send({ message: 'Unauthorized' });
+            res.status(403).send({ message: 'Forbidden' });
         }
         // adds the field "tokenPayload" to the request enabling following functions to use data from the token
         req.body.tokenPayload = decoded;
         if (!req.body.tokenPayload.admin) {
-            res.status(403).send({ message: 'Unauthorized' });
+            res.status(403).send({ message: 'Forbidden' });
         }
         next();
     } catch (err) {
-        res.status(403).send({ message: 'Unauthorized' });
+        res.status(403).send({ message: 'Forbidden' });
     }
 }

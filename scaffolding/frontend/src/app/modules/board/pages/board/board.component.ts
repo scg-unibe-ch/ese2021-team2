@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PostListComponent } from '../../components/post-list/post-list.component';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../../../../core/http/user/user.service';
+import { UserService } from '../../../../core/http/user.service';
+import { User } from '../../../../models/user.model';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
-
 
 @Component({
   selector: 'app-board',
@@ -43,10 +43,6 @@ export class BoardComponent implements OnInit {
         }
       );
   });
-
-
-
-
 
     this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
 

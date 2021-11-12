@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TodoList } from './models/todo-list.model';
 import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
-import { UserService } from './core/http/user/user.service';
+import { UserService } from './core/http/user.service';
 import { User } from './models/user.model';
 import { CommonModule } from '@angular/common';
 
@@ -19,8 +19,9 @@ export class AppComponent implements OnInit {
     title = 'frontend';
     todoLists: TodoList[] = [];
     newTodoListName: string = '';
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+
+    loggedIn: boolean;
+    user: User | null;
     isExpanded: boolean = false;
 
     constructor(

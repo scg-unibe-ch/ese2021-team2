@@ -1,5 +1,6 @@
+import { Component } from '@angular/core';
+import { UserService } from '../core/http/user.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
@@ -9,10 +10,10 @@ import { LoginComponent } from '../login/login.component';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
     isExpanded: boolean = false;
     @Output() messageEvent = new EventEmitter<boolean>();
 

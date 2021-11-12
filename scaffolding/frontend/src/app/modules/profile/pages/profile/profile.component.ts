@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../../core/http/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogModel } from 'src/app/models/confirmation-dialog.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { environment } from 'src/environments/environment';
-import { UserService } from '../../../../core/http/user/user.service';
 import { User } from '../../../../models/user.model';
 
 
@@ -16,8 +16,8 @@ import { User } from '../../../../models/user.model';
 })
 export class ProfileComponent implements OnInit {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
     changedUser = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
     editMode: boolean = false;
     editTag: String = "Edit";
@@ -26,7 +26,6 @@ export class ProfileComponent implements OnInit {
                  private dialog: MatDialog,
                  public httpClient: HttpClient,
                  private snackBar: MatSnackBar) {
-
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.user$.subscribe(res => {
@@ -59,7 +58,7 @@ export class ProfileComponent implements OnInit {
         localStorage.removeItem('userToken');
 
         this.userService.setLoggedIn(false);
-        this.userService.setUser(undefined);
+        this.userService.setUser(null);
     }
 
     handleDeletingAccount() {
