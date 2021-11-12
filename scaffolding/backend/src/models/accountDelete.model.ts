@@ -1,4 +1,8 @@
 export interface DeleteRequest {
-    userName: string;
+    userId: number;
     tokenPayload: any;
+}
+
+export interface DeleteResponse {
+    message: string;
 }

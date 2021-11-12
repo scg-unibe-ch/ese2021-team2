@@ -14,15 +14,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { UserComponent } from './user/user.component';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -32,6 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { HeaderComponent } from './header/header.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { LoginComponent } from './login/login.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
     declarations: [
@@ -45,6 +44,7 @@ import { LoginComponent } from './login/login.component';
         LoginComponent,
     ],
     imports: [
+        CoreModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -63,16 +63,7 @@ import { LoginComponent } from './login/login.component';
         AppRoutingModule,
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ErrorInterceptor,
-            multi: true
-        }
+
     ],
     bootstrap: [ AppComponent ]
 })

@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
-})
+    providedIn: 'root'
+  })
 export class UserService {
-    // TODO: Implement the expireAt value in the backend and pass it in the call.
+    // TODO: Write tests for the register(), login() and delete() functions
+    // which are all based on each other so when the register() test fails the others shouldn't execute etc.
 
     private loggedIn: boolean;
     private user: User | null;
@@ -21,7 +22,7 @@ export class UserService {
     loggedIn$ = this.loggedInSource.asObservable();
     user$ = this.userSource.asObservable();
 
-    constructor(public httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient) {
         this.user = null;
         this.loggedIn = false;
 
@@ -29,14 +30,40 @@ export class UserService {
         this.user$.subscribe(res => this.user = res);
 
         if (!this.isTokenExpired()) {
-            // TODO: Delete this log when prod ready
-            console.log("Refreshing User...");
             this.refreshUser();
         } else {
             this.logout();
         }
     }
-    // TODO: Test the expiresAt and the JSON.parse();
+
+    register(user: User): Promise<User> {
+        return new Promise((resolve, reject) => {
+            this.httpClient.post(environment.endpointURL + "user/register", user)
+                .subscribe(() => {
+                    resolve(user);
+                },
+                (err: any) => {
+                    reject(err);
+                });
+        });
+    }
+
+    delete(user: User): Promise<User> {
+        return new Promise((resolve, reject) => {
+            this.httpClient.delete<any>(environment.endpointURL + "user/delete", {
+                body: {
+                    userId: user.userId,
+                    tokenPayload: localStorage.getItem("userToken")
+                }
+            }).subscribe(() => {
+                resolve(user);
+            },
+            (err: any) => {
+                reject(err);
+            });
+        });
+    }
+
     login(userName: string, email: string, password: string): Promise<User> {
         return new Promise((resolve, reject) => {
             this.httpClient.post(environment.endpointURL + "user/login", {
@@ -47,17 +74,14 @@ export class UserService {
                 localStorage.setItem("userToken", res.token);
                 localStorage.setItem("expiresAt", res.expiresAt);
 
-                const user: User = JSON.parse(res.user);
-                console.log(user);
+                const user: User = res.user;
                 this.userSource.next(user);
                 this.loggedInSource.next(true);
                 resolve(user);
             }, (err: any) => {
-                // TODO: Delete this log when prod ready
-                console.log(err);
                 reject(err);
             });
-        })
+        });
     }
 
     logout() {
@@ -88,8 +112,8 @@ export class UserService {
         const token = localStorage.getItem("userToken");
         const expirationDate = Number(localStorage.getItem("expiresAt"));
 
-        if (token && isNaN(expirationDate)) {
-            return expirationDate < Date.now();
+        if (token && !isNaN(expirationDate)) {
+            return expirationDate * 1000 < Date.now();
         } else {
             return true;
         }
@@ -100,11 +124,9 @@ export class UserService {
             .subscribe((res) => {
                 this.userSource.next(res);
                 this.loggedInSource.next(true);
-            }, (err: any) => {
+            }, () => {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
-                // TODO: Delete this log when prod ready
-                console.log(err);
             });
     }
 }
