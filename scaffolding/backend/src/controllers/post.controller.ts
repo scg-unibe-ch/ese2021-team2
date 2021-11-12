@@ -96,10 +96,12 @@ postController.post('/getAllSubjects',
     }
 );
 
-postController.post('/bookmark/:id', verifyToken,
+postController.post('/:id/bookmark', verifyToken,
     (req: Request, res: Response) => {
-        req.body.bookmark.postId = req.params.id;
-        req.body.bookmark.userId = req.body.tokenPayload.userId;
+        req.body.bookmark = {
+            postId: req.params.id,
+            userId: req.body.tokenPayload.userId
+        };
         postService.bookmarkPost(req.body)
             .then(created => res.send(created))
             .catch(err => res.status(500).send(err));

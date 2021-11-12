@@ -1,4 +1,6 @@
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
+import {Post} from './post.model';
+import {User} from './user.model';
 
 export interface BookmarkAttributes {
     postId: number;
@@ -28,5 +30,19 @@ export class Bookmark extends Model<BookmarkAttributes> implements BookmarkAttri
                 tableName: 'bookmarks'
             }
         );
+    }
+    public static createAssociations() {
+        Bookmark.belongsTo(Post, {
+            targetKey: 'postId' ,
+            as: 'post',
+            onDelete: 'cascade',
+            foreignKey: 'postId'
+        });
+        Bookmark.belongsTo(User, {
+            targetKey: 'userId',
+            as: 'user',
+            onDelete: 'cascade',
+            foreignKey: 'userId'
+        });
     }
 }

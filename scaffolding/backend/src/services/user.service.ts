@@ -48,6 +48,7 @@ export class UserService {
                             city: user.city,
                             birthday: user.birthday,
                             phonenumber: user.phonenumber,
+                            profile_image: user.profile_image
                         },
                         secret, { expiresIn: '2h' });
                     return Promise.resolve({ user, token });
