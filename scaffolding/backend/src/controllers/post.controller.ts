@@ -108,4 +108,18 @@ postController.post('/:id/bookmark', verifyToken,
     }
 );
 
+postController.get('/bookmarks', verifyToken,
+    (req: Request, res: Response) => {
+        postService.getBookmarkList(req.body.tokenPayload.userId)
+            .then(bookmarkedPosts => res.send(bookmarkedPosts))
+            .catch(err => res.status(500).send(err));
+    });
+
+postController.delete('/:id/bookmark/delete', verifyToken,
+    (req: Request, res: Response) => {
+        postService.deleteBookmark(parseInt(req.params.id, 10), req.body.tokenPayload.userId)
+            .then(deleted => res.send({msg: deleted}))
+            .catch(err => res.status(500).send(err));
+    }
+);
 export const PostController: Router = postController;

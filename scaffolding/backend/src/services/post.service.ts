@@ -138,6 +138,19 @@ export class PostService {
             .catch(err => Promise.reject(err));
     }
 
+    public deleteBookmark(postId: number, userId: number): Promise<string> {
+        return Bookmark.destroy(
+            {
+                where: {
+                    postId: postId,
+                    userId: userId
+                }
+            }
+        )
+            .then(() => Promise.resolve('Delete successful'))
+            .catch((err) => Promise.reject('Something happened wrong when deleting bookmark'));
+    }
+
     public getAll(): Promise<Post[]> {
         return Post.findAll();
     }
@@ -159,6 +172,30 @@ export class PostService {
                 creatorId: userId
             }
         });
+    }
+
+
+    public async getBookmarkList(userId: number): Promise<Post[]> {
+        const bookmarkedPosts: Bookmark[] = await Bookmark.findAll({
+            where: {
+                userId: userId
+            }
+        });
+        const posts: Post[] = [];
+        if (bookmarkedPosts != null) {
+            console.log(bookmarkedPosts.length + ' so many bookmarked posts');
+            for (const bookmark of bookmarkedPosts) {
+                await Post.findByPk(bookmark.postId)
+                    .then(found => {
+                        console.log('found a post');
+                        posts.push(found);
+                    });
+            }
+            console.log(posts.length);
+            return posts;
+        } else {
+            return Promise.reject('no bookmarked posts');
+        }
     }
 
     // returns a post with a specific id
