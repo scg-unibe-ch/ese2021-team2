@@ -56,12 +56,30 @@ export class UserService {
                     tokenPayload: localStorage.getItem("userToken")
                 }
             }).subscribe(() => {
+                this.logout();
                 resolve(user);
             },
             (err: any) => {
                 reject(err);
             });
         });
+    }
+
+    update(user: User): Promise<User> {
+        return new Promise((resolve, reject) => {
+            this.httpClient.put<any>(environment.endpointURL + "user/update", user)
+            .subscribe((res:any) => {
+                localStorage.setItem("userToken", res.token);
+                localStorage.setItem("expiresAt", res.expiresAt);
+
+                const user: User = res.user;
+                this.userSource.next(user);
+                this.loggedInSource.next(true);
+                resolve(user)
+            }, (err: any) => {
+                reject(err);
+            })
+        })
     }
 
     login(userName: string, email: string, password: string): Promise<User> {

@@ -1,7 +1,7 @@
 import { User } from './user.model';
 
 export interface UpdateRequest {
-    userName: string;
+    userId: number;
     fname: string;
     lname: string;
     email: string;
@@ -16,5 +16,6 @@ export interface UpdateRequest {
 export interface UpdateResponse {
     user?: User;
     token?: string;
+    expiresAt?: number;
 }
 
