@@ -19,6 +19,8 @@ export class PostComponent implements OnInit {
 
   userCanVote= true;
 
+  likes: any  = []
+
   loggedIn: boolean | undefined;
 
   user: User|undefined;
@@ -33,10 +35,35 @@ export class PostComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
+
+
+
+
+
+
   }
 
   ngOnInit(): void {
     this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+
+
+    this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+      postId: this.post.postId
+    }).subscribe((res) => {
+      
+      
+      this.likes = res;
+      this.post.likes = this.likes.length;  
+    },(err: any) => {
+      console.log(err);
+    });
+
+    for(let i = 0; i<this.likes.length; i++){
+      if(this.likes.get(i).userId == this.user?.userId){
+        this.userCanVote=false;
+      }
+    }
+
   }
 
   canUserVote(){
@@ -45,18 +72,23 @@ export class PostComponent implements OnInit {
   upvote(){
     this.post.likes++;
     this.voted=true;
+
+    
     this.httpClient.post(environment.endpointURL + "user/likePost", {
-      userId: this.user?.userId,
+      userId: 3,
       postId: this.post.postId
-    }).subscribe(() => {},(err: any) => {
+    }).subscribe((res) => {
+      console.log("LIKE RESPONSE");
+      
+      console.log(res);
+      
+      
+    },(err: any) => {
       console.log(err);
     });
 
   }
 
-  downvote(){
-    this.post.likes--;
-    this.voted=true;
-  }
+  
 
 }
