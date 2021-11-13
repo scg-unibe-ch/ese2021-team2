@@ -176,9 +176,20 @@ export class UserService {
         });
     }
 
-    public likePost(userid: number, postid: number) {
-        return Like.create({userId: userid, postId: postid}).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
+    public likePost(lik: Like) {
+
+        const out =  Like.create(lik)
+            .then(inserted => Promise.resolve(inserted))
+            .catch(err => Promise.reject(err));
+
+
+        return out;
     }
+
+
+
+
+
 
     public updateProfileImage(req: MulterRequest): Promise<User> {
         console.log(req.file + ' PARAMS ID');
