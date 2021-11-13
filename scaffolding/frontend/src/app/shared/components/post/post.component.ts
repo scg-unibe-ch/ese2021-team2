@@ -37,10 +37,6 @@ export class PostComponent implements OnInit {
     this.user = userService.getUser();
 
 
-
-
-
-
   }
 
   ngOnInit(): void {
@@ -78,9 +74,7 @@ export class PostComponent implements OnInit {
       userId: 3,
       postId: this.post.postId
     }).subscribe((res) => {
-      console.log("LIKE RESPONSE");
-      
-      console.log(res);
+      //console.log(res);
       
       
     },(err: any) => {
