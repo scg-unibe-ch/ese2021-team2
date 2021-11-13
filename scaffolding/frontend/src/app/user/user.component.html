@@ -1,4 +1,4 @@
-<mat-card *ngIf="!loggedIn">
+<mat-card *ngIf="!loggedIn && !isLogin">
     <h2>Register</h2>
     <mat-form-field>
         <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.userName">
@@ -51,10 +51,10 @@
 </mat-card>
 
 
-<mat-card>
+<mat-card *ngIf="!loggedIn && isLogin">
     <h3>Login</h3>
 
-    <div *ngIf="!loggedIn">
+    <div >
         <mat-form-field *ngIf="emailEmpty">
             <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" >
         </mat-form-field>
@@ -73,6 +73,7 @@
     </div>
 </mat-card>
 
+<!--
 <mat-card>
     <h3>Secure Endpoints</h3>
     <button mat-flat-button color="primary" (click)="accessUserEndpoint()">User Endpoint</button>
@@ -81,3 +82,4 @@
     <button mat-flat-button color="primary" (click)="accessAdminEndpoint()">Admin Endpoint</button>
     {{ endpointMsgAdmin }}
 </mat-card>
+-->
