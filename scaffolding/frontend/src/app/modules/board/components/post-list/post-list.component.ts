@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Post } from '../../../../models/post.model';
-import { UserService } from '../../../../core/http/user/user.service';
+import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
@@ -19,8 +19,8 @@ export class PostListComponent implements OnInit {
   postFeedback: string | undefined;
   posts: Post[] = [];
   changed= true;
-  loggedIn: boolean | undefined;
-  user: User | undefined;
+  loggedIn: boolean;
+  user: User | null;
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
 

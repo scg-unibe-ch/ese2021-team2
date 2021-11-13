@@ -1,4 +1,3 @@
-
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
 
 export interface PostAttributes {

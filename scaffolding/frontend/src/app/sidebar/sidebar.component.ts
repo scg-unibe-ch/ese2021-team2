@@ -1,20 +1,21 @@
+import { UserService } from '../core/http/user.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../core/http/user/user.service';
 import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
+import { UserComponent } from '../user/user.component';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
     isExpanded: boolean = false;
     @Output() messageEvent = new EventEmitter<boolean>();
+    isLogin: boolean = false;
 
     constructor(public userService: UserService, private dialog: MatDialog) {
         // Listen for changes
@@ -38,10 +39,25 @@ export class SidebarComponent implements OnInit {
     }
 
     onLogin() {
+        this.isLogin = true;
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
+        //dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        this.dialog.open(LoginComponent,dialogConfig);
+        dialogConfig.data = {
+            loginDialog : this.isLogin,
+        }
+        this.dialog.open(UserComponent,dialogConfig);
+    }
+
+    onRegister() {
+        this.isLogin = false;
+        const dialogConfig = new MatDialogConfig();
+        //dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            loginDialog : this.isLogin,
+        }
+        this.dialog.open(UserComponent,dialogConfig);
     }
 
     sendIsExpanded() {

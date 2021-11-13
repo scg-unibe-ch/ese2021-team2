@@ -1,6 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../core/http/user/user.service';
+import { UserService } from '../../../../core/http/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialogModel } from 'src/app/models/confirmation-dialog.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { environment } from 'src/environments/environment';
 import { User } from '../../../../models/user.model';
+
 
 @Component({
     selector: 'app-profile',
@@ -9,21 +16,33 @@ import { User } from '../../../../models/user.model';
 })
 export class ProfileComponent implements OnInit {
 
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean;
+    user: User | null;
+    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    editMode: boolean = false;
+    editTag: String = "Edit";
 
-    constructor(public userService: UserService) {
+    constructor(public userService: UserService,
+                 private dialog: MatDialog,
+                 public httpClient: HttpClient,
+                 private snackBar: MatSnackBar) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
-        userService.user$.subscribe(res => this.user = res);
+        userService.user$.subscribe(res => {
+            this.user = res
+            this.initUser();
+        });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+
+        this.initUser();
     }
 
     ngOnInit() {
         this.checkUserStatus();
+        this.initUser();
     }
 
     checkUserStatus(): void {
@@ -39,11 +58,104 @@ export class ProfileComponent implements OnInit {
         localStorage.removeItem('userToken');
 
         this.userService.setLoggedIn(false);
-        this.userService.setUser(undefined);
+        this.userService.setUser(null);
+    }
+
+    handleDeletingAccount() {
+        const dialogData = new ConfirmationDialogModel("Delete Account", "Are you sure you want to delete your account?");
+        const dialogRef =  this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation : true,
+            data: dialogData
+        })
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult) {
+                this.deleteAccount();
+            }
+        });
+    }
+
+    handleLogout() {
+        const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to logout?");
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation : true,
+            data: dialogData
+        })
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if(dialogResult) {
+                this.logoutUser();
+            }
+        })
+    }
+
+    deleteAccount() {
+        this.httpClient.delete(environment.endpointURL + "user/delete").subscribe(()=>{
+            this.snackBar.open("Account successfully deleted", "Dismiss", {                     //confirm deletion with snackbar
+                duration: 5000
+            });
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userToken');
+            this.userService.setLoggedIn(false);
+            this.userService.setUser(null);
+        })
+    }
+
+    setEditMode() {
+        this.editMode = !this.editMode;
+        if(this.editMode){
+            this.editTag = "Cancel Edit";
+        } else {
+            this.editTag = "Edit";
+            this.initUser();
+        }
+    }
+
+    initUser() {
+        if(this.user){
+            this.changedUser = Object.assign(this.changedUser, this.user);
+        }
+    }
+
+    updateUser() {
+        this.httpClient.put(environment.endpointURL + "user/update", {
+            userName: this.changedUser.userName,
+            fname: this.changedUser.fname,
+            lname: this.changedUser.lname,
+            email: this.changedUser.email,
+            street: this.changedUser.street,
+            housenr: this.changedUser.housenr,
+            zipCode: this.changedUser.zipCode,
+            city: this.changedUser.city,
+            birthday: this.changedUser.birthday,
+            phonenumber: this.changedUser.phonenumber
+        }).subscribe((res:any) => {
+            localStorage.setItem('userToken', res.token);
+            this.userService.setUser(new User(
+                res.user.userName,
+                res.user.password,
+                res.user.fname,
+                res.user.lname,
+                res.user.email,
+                res.user.street,
+                res.user.housenr,
+                res.user.zipCode,
+                res.user.city,
+                res.user.birthday,
+                res.user.phonenumber,
+                res.user.admin,
+                res.user.profile_image,
+                res.user.userId,
+            ));
+            this.setEditMode();
+        })
     }
 
     test(){
         console.log(this.user);
+        console.log(this.changedUser);
     }
 
 }
