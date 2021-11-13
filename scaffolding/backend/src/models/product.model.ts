@@ -7,6 +7,7 @@ export interface ProductAttributes {
     description: string;
     productImage: string;
     categoryId: number;
+    price: number;
 }
 
 export interface ProductCreationAttributes extends Optional<ProductAttributes, 'productId'> { }
@@ -18,6 +19,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     description: string;
     productImage: string;
     categoryId: number;
+    price: number;
 
     public static initialize(sequelize: Sequelize ) {
         Product.init(
@@ -29,6 +31,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 },
                 title: {
                     type: DataTypes.STRING,
+                    allowNull: false
                 },
                 description: {
                     type: DataTypes.STRING,
@@ -41,6 +44,10 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                 productImage : {
                     type: DataTypes.STRING,
                     allowNull: true
+                },
+                price : {
+                    type: DataTypes.FLOAT,
+                    allowNull: false
                 }
             },
             {
