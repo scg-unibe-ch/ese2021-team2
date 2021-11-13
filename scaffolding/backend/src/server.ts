@@ -19,6 +19,8 @@ import { Like } from './models/like.model';
 import { Subject } from './models/subject.model';
 import {Board} from './models/board.model';
 import {BoardController} from './controllers/board.controller';
+import { Product } from './models/product.model';
+import { ProductImage } from './models/productImage.model';
 
 export class Server {
     private server: Application;
@@ -38,10 +40,13 @@ export class Server {
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
         Board.initialize(this.sequelize);
+        Product.initialize(this.sequelize);
+        ProductImage.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
+        ProductImage.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
