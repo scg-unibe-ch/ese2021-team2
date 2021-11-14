@@ -1,9 +1,11 @@
+import { fakeUsers } from './../core/mocks/fake-users';
 import { Component } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { UserService } from '../core/http/user/user.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { UserService } from '../core/http/user.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -15,11 +17,11 @@ export class UserComponent {
     userNameEmpty: boolean = true;
     emailEmpty: boolean = true;
     falseLogin: boolean = false;
-    loggedIn: boolean | undefined;
-    user: User | undefined;
+    loggedIn: boolean | null;
+    user: User | null;
 
-    userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
-    userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '', false, '', []);
+    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
 
     invPwMsgRegistration: string | undefined;
     invalidPassword: boolean | undefined;
@@ -28,10 +30,13 @@ export class UserComponent {
     registrationFeedback: string = '';
     loginFeedback: string | undefined;
 
+    isLogin: boolean = false;
+
     constructor(
         public httpClient: HttpClient,
         public userService: UserService,
-        public dialogRef: MatDialogRef<UserComponent>
+        public dialogRef: MatDialogRef<UserComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -40,12 +45,11 @@ export class UserComponent {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+
+        this.isLogin = data.loginDialog;
     }
 
     ngOnInit(): void {
-        if (this.user?.userName == undefined) {
-            this.logoutUser();
-        }
     }
 
     registerUser(): void {
@@ -80,31 +84,30 @@ export class UserComponent {
             password: this.userToLogin.password,
         })
         .subscribe((res: any) => {
-                this.falseLogin = false;
-                this.userToLogin.userName = this.userToLogin.password = '';
+            console.log(res);
+            this.falseLogin = false;
+            this.userToLogin.userName = this.userToLogin.password = '';
 
-                localStorage.setItem('userName', res.user.userName);
-                localStorage.setItem('userToken', res.token);
+            localStorage.setItem('userToken', res.token);
 
-                this.userService.setLoggedIn(true);
+            this.userService.setLoggedIn(true);
 
-                this.userService.setUser(new User(
-                        res.user.userId,
-                        res.user.userName,
-                        res.user.password,
-                        res.user.fname,
-                        res.user.lname,
-                        res.user.email,
-                        res.user.street,
-                        res.user.housenr,
-                        res.user.zipCode,
-                        res.user.city,
-                        res.user.birthday,
-                        res.user.phonenumber,
-                        res.user.admin,
-                        res.user.profile_image,
-                        []
-                    ));
+            this.userService.setUser(new User(
+                    res.user.userName,
+                    res.user.password,
+                    res.user.fname,
+                    res.user.lname,
+                    res.user.email,
+                    res.user.street,
+                    res.user.housenr,
+                    res.user.zipCode,
+                    res.user.city,
+                    res.user.birthday,
+                    res.user.phonenumber,
+                    res.user.admin,
+                    res.user.profile_image,
+                    res.user.userId
+                ));
                 this.dialogRef.close();
             },
             (err: any) => {
@@ -115,16 +118,23 @@ export class UserComponent {
         );
     }
 
-    logoutUser(): void {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userToken');
-
-        this.userService.setLoggedIn(false);
-        this.userService.setUser(undefined);
-    }
-
+    // I filled this with some pretty ugly pseudo tests, ignore this for now.
+    // You can use and test it if you want though, it should work.
+    // This registers, logins and then deletes a user to see if it all works.
     accessUserEndpoint(): void {
+        const fakeUser = fakeUsers.fillOnlyNeededParameters;
+        this.userService.register(fakeUsers.fillOnlyNeededParameters)
+            .then(() =>
+            this.userService.login(fakeUser.userName, fakeUser.email, fakeUser.password)
+                    .then(res =>
+                        this.userService.delete(res)
+                            .then(() => console.log("It worked!"))
+                            .catch(err => console.log("Something went wrong: " + err))
+                    ).catch(err => console.log("Something went wrong: " + err))
+            ).catch(err => console.log("Something went wrong: " + err));
+        /*
         this.httpClient.get(environment.endpointURL + "secured")
+
         .subscribe(() => {
                 this.endpointMsgUser = "Access granted";
             },
@@ -132,6 +142,7 @@ export class UserComponent {
                 this.endpointMsgUser = "Unauthorized";
             }
         );
+        */
     }
 
     accessAdminEndpoint(): void {

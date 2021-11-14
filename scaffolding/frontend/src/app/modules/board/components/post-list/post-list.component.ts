@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Post } from '../../../../models/post.model';
-import { UserService } from '../../../../core/http/user/user.service';
+import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
@@ -19,8 +19,8 @@ export class PostListComponent implements OnInit {
   postFeedback: string | undefined;
   posts: Post[] = [];
   changed= true;
-  loggedIn: boolean | undefined;
-  user: User | undefined;
+  loggedIn: boolean;
+  user: User | null;
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
 
@@ -57,8 +57,8 @@ export class PostListComponent implements OnInit {
 
   public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
     var postToAdd: Post;
-    if(file) {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)
+    if(file) {                                                                        
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
     } else {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
     }
