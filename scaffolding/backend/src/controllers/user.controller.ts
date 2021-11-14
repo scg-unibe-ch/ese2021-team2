@@ -55,7 +55,7 @@ userController.post('/likePost',
         userService.likePost(req.body).catch(err => {
             console.log(err);
 
-            res.status(500).send(err); 
+            res.status(500).send(err);
         });
 
     }

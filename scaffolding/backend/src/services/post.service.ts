@@ -21,7 +21,7 @@ export class PostService {
             .then(user => {
                 if (user != null) {
                     if (user.admin === false) {
-                        if ( this.postReqIsValid(createReq.post)) {
+                        if (this.postReqIsValid(createReq.post)) {
                             createReq.post.creatorId = user.userId;
                             return Post.create(createReq.post)
                                 .then(inserted => Promise.resolve(inserted))
@@ -42,49 +42,49 @@ export class PostService {
     public addImage(req: MulterRequest): Promise<PostImageAttributes> {
 
         return Post.findByPk(req.params.id)
-        .then(found => {
-            if (!found) {
-                return Promise.reject('Post not found!');
-            } else {
-                return new Promise<PostImageAttributes>((resolve, reject) => {
-                    upload.single('image')(req, null, (error: any) => {
-                        PostImage.create({ fileName: req.file.filename, postId: found.postId })
-                            .then(created => resolve(created))
-                            .catch(err => reject('Could not upload image'));
+            .then(found => {
+                if (!found) {
+                    return Promise.reject('Post not found!');
+                } else {
+                    return new Promise<PostImageAttributes>((resolve, reject) => {
+                        upload.single('image')(req, null, (error: any) => {
+                            PostImage.create({fileName: req.file.filename, postId: found.postId})
+                                .then(created => resolve(created))
+                                .catch(err => reject('Could not upload image'));
+                        });
                     });
-                });
-            }
-        })
-        .catch(err => Promise.reject('Could not upload image'));
-}
+                }
+            })
+            .catch(err => Promise.reject('Could not upload image'));
+    }
 
 
     // deletes a post from the database
     public delete(deleteReq: DeletePostRequest): Promise<string> {
-           return userService.getUser(deleteReq.tokenPayload.userId)
-               .then(user => {
-                   return Post.findByPk(deleteReq.postId)
-                       .then(found => {
-                           if (found != null) {
-                               if (!(found.creatorId - deleteReq.tokenPayload.userId) || user.admin) {
-                                   console.log('Destroying');
-                                   Post.destroy({
-                                           where: {
-                                               postId: found.postId
-                                           }
-                                       }
-                                   ).then(deleted => Promise.resolve('Deleting successful ' + deleted))
-                                   .catch(err => Promise.reject(err));
-                               } else {
-                                   return Promise.reject('not authorized to delete this post');
-                               }
-                           } else {
-                               return Promise.reject('No Post found');
-                           }
-                       })
-                   .catch(err => Promise.reject(err));
-               })
-               .catch(err => Promise.reject(err));
+        return userService.getUser(deleteReq.tokenPayload.userId)
+            .then(user => {
+                return Post.findByPk(deleteReq.postId)
+                    .then(found => {
+                        if (found != null) {
+                            if (!(found.creatorId - deleteReq.tokenPayload.userId) || user.admin) {
+                                console.log('Destroying');
+                                Post.destroy({
+                                        where: {
+                                            postId: found.postId
+                                        }
+                                    }
+                                ).then(deleted => Promise.resolve('Deleting successful ' + deleted))
+                                    .catch(err => Promise.reject(err));
+                            } else {
+                                return Promise.reject({ message: 'not authorized to delete this post' });
+                            }
+                        } else {
+                            return Promise.reject({ message: 'No Post found' });
+                        }
+                    })
+                    .catch(err => Promise.reject(err));
+            })
+            .catch(err => Promise.reject(err));
 
 
     }
@@ -97,20 +97,20 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId) || user.admin ) {
+                            if (!(found.creatorId - user.userId) || user.admin) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}
                                     })
                                     .then(post => {
-                                        return Promise.resolve(post);
+                                        return Promise.resolve({post});
                                     })
                                     .catch(err => Promise.reject(err));
                             } else {
-                                return Promise.reject('Not authorized to update this post');
+                                return Promise.reject({ message: 'Not authorized to update this post' });
                             }
                         } else {
-                            return Promise.reject('Post not found');
+                            return Promise.reject({ message: 'Post not found' });
                         }
                     })
                     .catch(err => Promise.reject(err));
@@ -124,13 +124,26 @@ export class PostService {
                 return Post.findByPk(bookmarkReq.bookmark.postId)
                     .then(found => {
                         if (found != null) {
-                                Bookmark.create(bookmarkReq.bookmark)
-                                    .then(bookmark => {
-                                        return Promise.resolve(bookmark);
-                                    })
-                                    .catch(err => Promise.reject(err));
-                            } else {
-                            return Promise.reject('Post not found');
+                             return Bookmark.findOne({
+                                where: {
+                                    userId: user.userId,
+                                    postId: found.postId
+                                }
+                            })
+                                .then(bookmark => {
+                                    if (bookmark != null) {
+                                        return Promise.reject({ message: 'Already bookmarked'});
+                                    } else {
+                                         Bookmark.create(bookmarkReq.bookmark)
+                                            .then(created => {
+                                                return Promise.resolve({created});
+                                            })
+                                            .catch(err => Promise.reject(err));
+                                    }
+                                })
+                                .catch(err => Promise.reject(err));
+                        } else {
+                            return Promise.reject({ message: 'Post not found' });
                         }
                     })
                     .catch(err => Promise.reject(err));
@@ -161,7 +174,7 @@ export class PostService {
             where: {
                 boardId: board
             },
-            order: [['createdAt', 'DESC' ]]
+            order: [['createdAt', 'DESC']]
         });
     }
 
@@ -198,13 +211,24 @@ export class PostService {
         }
     }
 
-    // returns a post with a specific id
-    getPostsbyId(pId: number): Promise<Post[]> {
-        return Post.findAll({
+    public async getBookmarkStatus(userId: number, postId: number): Promise<boolean> {
+        return Bookmark.findOne({
             where: {
-                postId: pId
+                postId: postId,
+                userId: userId
             }
-        });
+        })
+            .then(found => {
+                if (found) {
+                    return Promise.resolve(true);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                return Promise.reject('Something happened wrong');
+
+            });
     }
 
     postReqIsValid(post: PostAttributes): boolean {

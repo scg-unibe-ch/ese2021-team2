@@ -105,6 +105,14 @@ postController.post('/:id/bookmark', verifyToken,
     }
 );
 
+postController.get('/:id/bookmark', verifyToken,
+    (req: Request, res: Response) => {
+        postService.getBookmarkStatus(req.body.tokenPayload.userId, parseInt(req.params.id, 10))
+            .then((isBookmarked) => res.send(isBookmarked))
+            .catch((err) => res.status(500).send(err));
+    }
+);
+
 postController.get('/bookmarks', verifyToken,
     (req: Request, res: Response) => {
         postService.getBookmarkList(req.body.tokenPayload.userId)
