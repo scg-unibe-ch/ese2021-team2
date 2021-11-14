@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogModel } from 'src/app/models/confirmation-dialog.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { environment } from 'src/environments/environment';
 import { User } from '../../../../models/user.model';
 
 
@@ -53,14 +52,6 @@ export class ProfileComponent implements OnInit {
         this.userService.setLoggedIn(!!userToken);
     }
 
-    logoutUser(): void {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userToken');
-
-        this.userService.setLoggedIn(false);
-        this.userService.setUser(null);
-    }
-
     handleDeletingAccount() {
         const dialogData = new ConfirmationDialogModel("Delete Account", "Are you sure you want to delete your account?");
         const dialogRef =  this.dialog.open(ConfirmationDialogComponent, {
@@ -86,21 +77,19 @@ export class ProfileComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(dialogResult => {
             if(dialogResult) {
-                this.logoutUser();
+                this.userService.logout();
             }
         })
     }
 
     deleteAccount() {
-        this.httpClient.delete(environment.endpointURL + "user/delete").subscribe(()=>{
-            this.snackBar.open("Account successfully deleted", "Dismiss", {                     //confirm deletion with snackbar
-                duration: 5000
-            });
-            localStorage.removeItem('userName');
-            localStorage.removeItem('userToken');
-            this.userService.setLoggedIn(false);
-            this.userService.setUser(null);
-        })
+        if(this.user){
+            this.userService.delete(this.user).then(res => {
+                this.snackBar.open("Account successfully deleted", "Dismiss", {                     //confirm deletion with snackbar
+                    duration: 5000
+                });
+            })
+        }
     }
 
     setEditMode() {
@@ -120,37 +109,7 @@ export class ProfileComponent implements OnInit {
     }
 
     updateUser() {
-        this.httpClient.put(environment.endpointURL + "user/update", {
-            userName: this.changedUser.userName,
-            fname: this.changedUser.fname,
-            lname: this.changedUser.lname,
-            email: this.changedUser.email,
-            street: this.changedUser.street,
-            housenr: this.changedUser.housenr,
-            zipCode: this.changedUser.zipCode,
-            city: this.changedUser.city,
-            birthday: this.changedUser.birthday,
-            phonenumber: this.changedUser.phonenumber
-        }).subscribe((res:any) => {
-            localStorage.setItem('userToken', res.token);
-            this.userService.setUser(new User(
-                res.user.userName,
-                res.user.password,
-                res.user.fname,
-                res.user.lname,
-                res.user.email,
-                res.user.street,
-                res.user.housenr,
-                res.user.zipCode,
-                res.user.city,
-                res.user.birthday,
-                res.user.phonenumber,
-                res.user.admin,
-                res.user.profile_image,
-                res.user.userId,
-            ));
-            this.setEditMode();
-        })
+        this.userService.update(this.changedUser).then(() => this.setEditMode())
     }
 
     test(){
