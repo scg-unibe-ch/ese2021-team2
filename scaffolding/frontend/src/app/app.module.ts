@@ -29,7 +29,7 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { HeaderComponent } from './header/header.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
-import { LoginComponent } from './login/login.component';
+
 import { CoreModule } from './core/core.module';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -46,8 +46,6 @@ import { CommonModule } from '@angular/common';
         SidebarComponent,
         HeaderComponent,
         PostComponent,
-        LoginComponent,
-        LoginComponent,
         DashboardComponent,
         ConfirmationDialogComponent,
     ],
@@ -76,6 +74,5 @@ import { CommonModule } from '@angular/common';
     exports: [
         PostComponent
     ],
-    entryComponents: [LoginComponent]
 })
 export class AppModule { }

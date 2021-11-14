@@ -4,7 +4,8 @@ import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserService } from '../core/http/user.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -29,10 +30,13 @@ export class UserComponent {
     registrationFeedback: string = '';
     loginFeedback: string | undefined;
 
+    isLogin: boolean = false;
+
     constructor(
         public httpClient: HttpClient,
         public userService: UserService,
-        public dialogRef: MatDialogRef<UserComponent>
+        public dialogRef: MatDialogRef<UserComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -41,6 +45,8 @@ export class UserComponent {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+
+        this.isLogin = data.loginDialog;
     }
 
     ngOnInit(): void {

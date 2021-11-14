@@ -103,7 +103,7 @@ export class UserService {
     public async update(updateRequestee: UpdateRequest ): Promise<User | UpdateResponse> {
         const secret = process.env.JWT_SECRET;
         try {
-            const passedUsername: string = updateRequestee.userName;
+            const passedUserId = updateRequestee.userId;
              await User.update({
                 fname: updateRequestee.fname,
                 lname: updateRequestee.lname,
@@ -116,7 +116,7 @@ export class UserService {
                 phonenumber: updateRequestee.phonenumber,
             }, {
                 where: {
-                    userName: passedUsername
+                    userId: passedUserId
                 },
             }).catch((err) => {
                  return Promise.reject({ message: err }); }
@@ -125,12 +125,13 @@ export class UserService {
             // create new token with update information
              return User.findOne({
                 where: {
-                    userName: passedUsername
+                    userId : passedUserId
                 }
             }).then((user: User) => {
                 const token: string = jwt.sign({
-                    userName: user.userName,
                     userId: user.userId,
+                    userName: user.userName,
+                    password: user.password,
                     admin: user.admin,
                     fname: user.fname,
                     lname: user.lname,
@@ -143,7 +144,8 @@ export class UserService {
                     phonenumber: user.phonenumber,
                 },
                 secret, { expiresIn: '2h' });
-                return Promise.resolve({ user, token });
+                const expiresAt = (jwt.verify(token, secret) as any).exp;
+                return Promise.resolve({ user, token, expiresAt });
             }).catch((err) => Promise.reject(err));
         } catch (err) {
             return Promise.reject('Update unsuccessful');
@@ -176,9 +178,20 @@ export class UserService {
         });
     }
 
-    public likePost(userid: number, postid: number) {
-        return Like.create({userId: userid, postId: postid}).then(inserted => Promise.resolve(inserted)).catch(err => Promise.reject(err));
+    public likePost(lik: Like) {
+
+        const out =  Like.create(lik)
+            .then(inserted => Promise.resolve(inserted))
+            .catch(err => Promise.reject(err));
+
+
+        return out;
     }
+
+
+
+
+
 
     public updateProfileImage(req: MulterRequest): Promise<User> {
         console.log(req.file + ' PARAMS ID');

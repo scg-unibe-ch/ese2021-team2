@@ -8,6 +8,7 @@ import { UserController } from './user.controller';
 import {verifyToken} from '../middlewares/checkAuth';
 import {DeletePostRequest} from '../models/postRequest.model';
 import { Subject } from '../models/subject.model';
+import { Like } from '../models/like.model';
 
 
 const postController: Router = express.Router();
@@ -54,11 +55,7 @@ postController.get('/:id/image', (req: Request, res: Response) => {
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
-        /*Post.findAll({
-            where: {
-                boardId: req.body.boardId
-            }
-        })*/
+
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
@@ -90,6 +87,20 @@ postController.post('/getAllSubjects',
     }
 
        ).catch(err => {
+            res.status(500).send(err); });
+    }
+);
+
+postController.post('/getLikesByPostId',
+    (req: Request, res: Response) => {
+        Like.findAll({
+            where: {
+                postId: req.body.postId,
+            }
+        }).then(likes => {
+            res.send(likes);
+            // console.log(likes);
+        }).catch(err => {
             res.status(500).send(err); });
     }
 );
