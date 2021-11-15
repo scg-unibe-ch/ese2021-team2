@@ -37,6 +37,7 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './shared/components/product/product.component';
+import { ProductPageComponent } from './shared/components/product-page/product-page.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { ProductComponent } from './shared/components/product/product.component'
         DashboardComponent,
         ConfirmationDialogComponent,
         ProductComponent,
+        ProductPageComponent,
     ],
     imports: [
         CoreModule,

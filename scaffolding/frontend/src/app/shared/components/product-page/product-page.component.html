@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{product.title}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src] = "imageURL">
+    <mat-card-content>
+        {{product.description}}
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color = "primary" >BUY</button>
+    </mat-card-actions>
+    <mat-card-footer>
+        {{product.category}}
+    </mat-card-footer>
+</mat-card>
