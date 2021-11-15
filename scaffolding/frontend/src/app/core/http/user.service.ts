@@ -163,6 +163,14 @@ export class UserService {
         console.log('load bookmarked posts');
     }
 
+    getBookmarkedPosts(): Post[] {
+        if( this.bookmarkedPosts ) {
+            return this.bookmarkedPosts;
+        } else {
+            return [];
+        }
+    }
+
     isPostBookmarked(postId: number): boolean{
         if( this.bookmarkedPosts ){
             for( const post of this.bookmarkedPosts){

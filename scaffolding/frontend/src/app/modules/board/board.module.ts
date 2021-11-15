@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {AppModule} from "../../app.module";
 import {SubjectsModule} from "../subjects/subjects.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 
@@ -28,7 +29,8 @@ export const routing = RouterModule.forChild(routes);
         routing,
         FormsModule,
         AppModule,
-        SubjectsModule
+        SubjectsModule,
+        SharedModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

@@ -36,6 +36,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -45,9 +46,9 @@ import { CommonModule } from '@angular/common';
         UserComponent,
         SidebarComponent,
         HeaderComponent,
-        PostComponent,
+        // PostComponent,
         DashboardComponent,
-        ConfirmationDialogComponent,
+        // ConfirmationDialogComponent,
     ],
     imports: [
         CoreModule,
@@ -68,11 +69,12 @@ import { CommonModule } from '@angular/common';
         MatDividerModule,
         AppRoutingModule,
         MatDialogModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
     exports: [
-        PostComponent
+        // PostComponent
     ],
 })
 export class AppModule { }

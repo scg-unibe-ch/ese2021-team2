@@ -4,6 +4,9 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {ConfirmationDialogModel} from "../../../models/confirmation-dialog.model";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -14,7 +17,6 @@ import { environment } from 'src/environments/environment';
 export class PostComponent implements OnInit {
 
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
-
   voted = false;
   bookmarked: any = false;
   userCanVote= true;
@@ -31,7 +33,7 @@ export class PostComponent implements OnInit {
 
   imageURL: string = "";
 
-  constructor(public userService: UserService, public httpClient: HttpClient) {
+  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog) {
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
@@ -105,7 +107,19 @@ export class PostComponent implements OnInit {
 
   removeBookmark(): void {
       if( this.post ) {
-          this.userService.removePostFromBookmarks(this.post);
+          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to remove bookmark?");
+          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+              maxWidth: '400px',
+              closeOnNavigation : true,
+              data: dialogData
+          })
+
+          dialogRef.afterClosed().subscribe(dialogResult => {
+              if(dialogResult) {
+                  this.userService.removePostFromBookmarks(this.post);
+              }
+          })
+
       }
   }
 
