@@ -3,29 +3,32 @@ import { PostService } from '../services/post.service';
 import { Post } from '../models/post.model';
 import { MulterRequest } from '../models/multerRequest.model';
 import { PostImage } from '../models/postImage.model';
+import { UserService } from '../services/user.service';
+import { UserController } from './user.controller';
+import {verifyToken} from '../middlewares/checkAuth';
+import {DeletePostRequest} from '../models/postRequest.model';
 import { Subject } from '../models/subject.model';
+import { Like } from '../models/like.model';
+
 
 const postController: Router = express.Router();
-const postService = new PostService;
+const postService = new PostService();
+const userService = new UserService();
 
-postController.post('/createPost',
+postController.post('/createPost', verifyToken,
     (req: Request, res: Response) => {
+        req.body.post = req.body;
         postService.createPost(req.body)
             .then(created => res.send(created))
             .catch(err => res.status(500).send(err));
     }
 );
 
-postController.delete('/delete',
+postController.delete('/:id/delete', verifyToken,
 (req: Request, res: Response) => {
-    Post.findByPk(req.params.id)
-        .then(found => {
-            if (found != null) {
-                found.destroy().then(() => res.status(200).send());
-            } else {
-                res.sendStatus(404);
-            }
-        })
+    req.body.postId = req.params.id;
+    postService.delete(req.body)
+        .then(deleted => res.send({message: deleted}))
         .catch(err => res.status(500).send(err));
 });
 
@@ -52,11 +55,7 @@ postController.get('/:id/image', (req: Request, res: Response) => {
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
         postService.getPostsOfBoard(req.body.boardId)
-        /*Post.findAll({
-            where: {
-                boardId: req.body.boardId
-            }
-        })*/
+
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
@@ -74,17 +73,11 @@ postController.post('/getPostsByUser',
 );
 
 
-postController.put('/:id', (req: Request, res: Response) => {
-    Post.findByPk(req.params.id)
-        .then(found => {
-            if (found != null) {
-                found.update(req.body).then(updated => {
-                    res.status(200).send(updated);
-                });
-            } else {
-                res.sendStatus(404);
-            }
-        })
+postController.put('/:id', verifyToken, (req: Request, res: Response) => {
+    req.body.postId = req.params.id;
+    req.body.postUpdate = req.body;
+    postService.updatePost(req.body)
+        .then(updated => res.json(updated))
         .catch(err => res.status(500).send(err));
 });
 
@@ -94,6 +87,20 @@ postController.post('/getAllSubjects',
     }
 
        ).catch(err => {
+            res.status(500).send(err); });
+    }
+);
+
+postController.post('/getLikesByPostId',
+    (req: Request, res: Response) => {
+        Like.findAll({
+            where: {
+                postId: req.body.postId,
+            }
+        }).then(likes => {
+            res.send(likes);
+            // console.log(likes);
+        }).catch(err => {
             res.status(500).send(err); });
     }
 );

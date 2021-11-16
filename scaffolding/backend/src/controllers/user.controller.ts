@@ -37,23 +37,36 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
         userService.delete(req.body)
-            .then(response => res.send(response))
+            .then(response => res.sendStatus(204))
             .catch(err => res.status(500).send(err));
     }
 );
 
+userController.put('/update', verifyToken,
+    (req: Request, res: Response) => {
+        userService.update(req.body)
+            .then(response => {res.send(response); })
+            .catch(err => res.status(500).send(err));
+    });
 
-// doesnt work yet because like object should be passed through from frontend (or arsenije has a better solution)
 userController.post('/likePost',
     (req: Request, res: Response) => {
-        userService.likePost(req.body.userId, req.body.postId).catch(err => res.status(500).send(err));
+
+        userService.likePost(req.body).catch(err => {
+            console.log(err);
+
+            res.status(500).send(err); 
+        });
+
     }
 );
 
 // add image to a todoItem
 userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
     console.log('file in controller' + req.file);
-    userService.updateProfileImage(req).then(created => res.send(created)).catch(err => res.status(500).send(err));
+    userService.updateProfileImage(req)
+        .then(created => res.send(created))
+        .catch(err => res.status(500).send(err));
 });
 
 // get the filename of an image
