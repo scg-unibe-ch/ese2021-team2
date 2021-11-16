@@ -33,9 +33,6 @@ export class PostComponent implements OnInit {
         this.user = userService.getUser();
     }
 
-
-  }
-
   ngOnInit(): void {
     this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
 
@@ -43,10 +40,10 @@ export class PostComponent implements OnInit {
     this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
       postId: this.post.postId
     }).subscribe((res) => {
-      
-      
+
+
       this.likes = res;
-      this.post.likes = this.likes.length;  
+      this.post.likes = this.likes.length;
     },(err: any) => {
       console.log(err);
     });
@@ -58,24 +55,9 @@ export class PostComponent implements OnInit {
     }
 
   }
-
-  upvote(){
-    this.post.likes++;
-    this.voted=true;
-
-    
-    this.httpClient.post(environment.endpointURL + "user/likePost", {
-      userId: 3,
-      postId: this.post.postId
-    }).subscribe((res) => {
-      //console.log(res);
-      
-      
-    },(err: any) => {
-      console.log(err);
-    });
-
-    upvote() {
+  
+    upvote()
+    {
         this.post.likes++;
         this.voted = true;
         this.httpClient.post(environment.endpointURL + "user/likePost", {
@@ -87,4 +69,5 @@ export class PostComponent implements OnInit {
         });
 
 
+    }
 }
