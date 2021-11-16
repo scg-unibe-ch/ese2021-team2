@@ -10,8 +10,9 @@ import {environment} from "../../../../../environments/environment";
 export class CommentsListComponent implements OnInit {
 
     postId: number = 0;
-    postCommentList=[{postCommentId: 0, postId: 0, commentText: ''}]
+    postCommentList=[{postCommentId: 0, postId: 0, commentText: '', userId: 0}]
     showComments: boolean = false;
+loggedIn: boolean= false;
 
   constructor(public httpClient: HttpClient) { }
 
@@ -32,5 +33,8 @@ export class CommentsListComponent implements OnInit {
   }
     switchShowComments(): void{
         this.showComments=!this.showComments
+    }
+    createComment(): void{
+      console.log('comment created')
     }
 }

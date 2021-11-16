@@ -18,46 +18,48 @@ export class PostComponent implements OnInit {
 
     voted = false;
 
-  userCanVote= true;
+    userCanVote = true;
 
-  loggedIn: boolean | undefined;
 
-  user: User|undefined;
+    loggedIn: boolean | undefined;
 
-  imageURL: string = "";
+    user: User | undefined;
 
-  constructor(public userService: UserService, public httpClient: HttpClient) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
+    imageURL: string = "";
 
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
-  }
+    constructor(public userService: UserService, public httpClient: HttpClient) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
-  ngOnInit(): void {
-    this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
-  }
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
+    }
 
-  canUserVote(){
-  }
+    ngOnInit(): void {
+        this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+    }
 
-  upvote(){
-    this.post.likes++;
-    this.voted=true;
-    this.httpClient.post(environment.endpointURL + "user/likePost", {
-      userId: this.user?.userId,
-      postId: this.post.postId
-    }).subscribe(() => {},(err: any) => {
-      console.log(err);
-    });
+    canUserVote() {
+    }
 
-  }
+    upvote() {
+        this.post.likes++;
+        this.voted = true;
+        this.httpClient.post(environment.endpointURL + "user/likePost", {
+            userId: this.user?.userId,
+            postId: this.post.postId
+        }).subscribe(() => {
+        }, (err: any) => {
+            console.log(err);
+        });
 
-  downvote(){
-    this.post.likes--;
-    this.voted=true;
-  }
+    }
+
+    downvote() {
+        this.post.likes--;
+        this.voted = true;
+    }
 
 }

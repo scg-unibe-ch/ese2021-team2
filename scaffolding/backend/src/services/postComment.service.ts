@@ -6,4 +6,5 @@ export class PostCommentService {
             .then(inserted => Promise.resolve(inserted))
             .catch(err => Promise.reject(err));
     }
+
 }

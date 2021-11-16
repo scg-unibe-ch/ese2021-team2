@@ -1,6 +1,7 @@
 
 <mat-card>
 <button (click)="switchShowComments()">Show/Don't Show Comments</button>
+    <button (click)="createComment()" *ngIf="loggedIn">Create new Comment</button>
     <hr>
 
 <div *ngIf="showComments">

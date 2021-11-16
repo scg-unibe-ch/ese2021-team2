@@ -9,7 +9,7 @@ import {PostCommentModel} from "../../../../../models/post-comment.model";
 export class PostCommentComponent implements OnInit {
 
     @Input()
-    postComment: PostCommentModel = new PostCommentModel(0,0,'');
+    postComment: PostCommentModel = new PostCommentModel(0,0,'',0);
 
   constructor() { }
 
