@@ -36,6 +36,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
+import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,10 @@ import { CommonModule } from '@angular/common';
         HeaderComponent,
         PostComponent,
         DashboardComponent,
+        CommentsListComponent,
+        PostCommentComponent,
         ConfirmationDialogComponent,
+
     ],
     imports: [
         CoreModule,
