@@ -3,7 +3,7 @@
         <mat-card-title>{{product.title}}</mat-card-title>
     </mat-card-header>
     <div class = "image-container">
-        <img mat-card-image [src] = "imageURL" alt = "Could not find image">
+        <img mat-card-image [src] = "imageURL" onerror="this.src='/assets/images/platzhalter.png'">
     </div>
     <mat-card-content>
         CHF {{product.price.toFixed(2)}}
