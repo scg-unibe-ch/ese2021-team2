@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -11,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = []
+  filterarg = 'fashion';
 
   constructor(public httpClient: HttpClient) {}
 
