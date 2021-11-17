@@ -17,6 +17,7 @@
     display: flex;
     justify-content: left;
     align-items: left;
+    min-width: 40%;
 }
 
 .first_column > img {

@@ -19,4 +19,7 @@ export class ProductComponent implements OnInit {
     this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
   }
 
+  navigate() {console.log("clicked")}
+
+
 }

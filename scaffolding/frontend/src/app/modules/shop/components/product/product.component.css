@@ -10,6 +10,9 @@
     margin: 20px
 }
 
+.product-card:hover{
+    cursor: pointer;
+}
 .mat-card-title{
     opacity: 70%;
     font-size: 13pt;
