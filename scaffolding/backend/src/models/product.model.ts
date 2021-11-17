@@ -6,7 +6,7 @@ export interface ProductAttributes {
     title: string;
     description: string;
     productImage: string;
-    categoryId: number;
+    category: string;
     price: number;
 }
 
@@ -18,7 +18,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     title: string;
     description: string;
     productImage: string;
-    categoryId: number;
+    category: string;
     price: number;
 
     public static initialize(sequelize: Sequelize ) {
@@ -37,8 +37,8 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
                     type: DataTypes.STRING,
                     allowNull: true
                 },
-                categoryId: {
-                    type: DataTypes.STRING,
+                category: {
+                    type: DataTypes.ENUM('office', 'fashion', 'lifestyle') ,
                     allowNull: true
                 },
                 productImage : {
