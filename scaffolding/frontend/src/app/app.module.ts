@@ -36,7 +36,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
-import { ProductComponent } from './shared/components/product/product.component';
 import { ProductPageComponent } from './shared/components/product-page/product-page.component';
 
 @NgModule({
@@ -50,7 +49,6 @@ import { ProductPageComponent } from './shared/components/product-page/product-p
         PostComponent,
         DashboardComponent,
         ConfirmationDialogComponent,
-        ProductComponent,
         ProductPageComponent,
     ],
     imports: [
@@ -76,7 +74,7 @@ import { ProductPageComponent } from './shared/components/product-page/product-p
     providers: [],
     bootstrap: [AppComponent],
     exports: [
-        PostComponent
+        PostComponent,
     ],
 })
 export class AppModule { }

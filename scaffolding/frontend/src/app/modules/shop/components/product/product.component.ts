@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.imageURL = environment.endpointURL + "post/" + this.product.productId + "/image";
+    this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
   }
 
 }

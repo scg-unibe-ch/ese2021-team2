@@ -1,5 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import { MulterRequest } from '../models/multerRequest.model';
+import { Product } from '../models/product.model';
 import { ProductImage } from '../models/productImage.model';
 import { ProductService } from '../services/product.service';
 
@@ -33,6 +34,17 @@ productController.get('/:id/image', (req: Request, res: Response) => {
             res.sendFile('./uploads/' + image.fileName, { root: process.cwd()});
         } else {
             res.status(500).send('No image found');
+        }
+    }).catch((err) => res.send(err));
+});
+
+// READ all products
+productController.get('/category/all', (req: Request, res: Response) => {
+    Product.findAll().then(products => {
+        if (products) {
+            res.status(200).send(products);
+        } else {
+            res.status(500).send('No products found');
         }
     }).catch((err) => res.send(err));
 });
