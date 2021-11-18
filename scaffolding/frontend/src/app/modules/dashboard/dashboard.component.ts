@@ -1,33 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DataService } from "../service/data.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class DashboardComponent implements OnInit, OnDestroy  {
+  subscription: Subscription;
   catfilter: string = "";
 
+  constructor(private data: DataService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+  
+
   setAll() {
-  this.catfilter = "";
+    this.data.changeMessage("")
   }
 
   setOffice() {
-    this.catfilter = "office";
+    this.data.changeMessage("office");
   }
 
   setFashion() {
-    this.catfilter = "fashion";
+    this.data.changeMessage("fashion");
   }
 
   setLifestyle() {
-    this.catfilter = "lifestyle";
+    this.data.changeMessage("lifestyle");
   }
 }

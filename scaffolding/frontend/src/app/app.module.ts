@@ -37,6 +37,7 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { ProductPageComponent } from './modules/shop/components/product-page/product-page.component';
+import { DataService } from './modules/service/data.service';
 
 @NgModule({
     declarations: [
@@ -70,7 +71,7 @@ import { ProductPageComponent } from './modules/shop/components/product-page/pro
         AppRoutingModule,
         MatDialogModule,
     ],
-    providers: [],
+    providers: [ DataService],
     bootstrap: [AppComponent],
     exports: [
         PostComponent,
