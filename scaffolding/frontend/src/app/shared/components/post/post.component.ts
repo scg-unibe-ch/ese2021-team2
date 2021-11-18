@@ -115,7 +115,7 @@ export class PostComponent implements OnInit {
           })
 
           dialogRef.afterClosed().subscribe(dialogResult => {
-              if(dialogResult) {
+              if (dialogResult) {
                   this.userService.removePostFromBookmarks(this.post);
               }
           })
@@ -125,4 +125,3 @@ export class PostComponent implements OnInit {
 
 
     }
-}

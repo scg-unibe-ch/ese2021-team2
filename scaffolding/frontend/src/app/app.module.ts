@@ -50,9 +50,6 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
         HeaderComponent,
         // PostComponent,
         DashboardComponent,
-        // ConfirmationDialogComponent,
-        CommentsListComponent,
-        PostCommentComponent,
 
     ],
     imports: [
