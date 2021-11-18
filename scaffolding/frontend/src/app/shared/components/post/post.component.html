@@ -19,4 +19,6 @@
 
     <button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
     <button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
+<app-comments-list></app-comments-list>
+
 </mat-card>

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/core/http/user.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import {ConfirmationDialogModel} from "../../../models/confirmation-dialog.model";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Post} from "../../../models/post.model";
 
 
 @Component({
@@ -124,4 +124,5 @@ export class PostComponent implements OnInit {
   }
 
 
+    }
 }

@@ -37,6 +37,8 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import {SharedModule} from "./shared/shared.module";
+import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
+import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +51,9 @@ import {SharedModule} from "./shared/shared.module";
         // PostComponent,
         DashboardComponent,
         // ConfirmationDialogComponent,
+        CommentsListComponent,
+        PostCommentComponent,
+
     ],
     imports: [
         CoreModule,
