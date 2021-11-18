@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import {BoardListComponent} from "../../pages/board-list/board-list.component";
+import {BoardListComponent} from "../board-list/board-list.component";
 
 
 @Component({

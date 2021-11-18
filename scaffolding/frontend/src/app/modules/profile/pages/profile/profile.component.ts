@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
 
     loggedIn: boolean;
     user: User | null;
-    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
     editMode: boolean = false;
     editTag: String = "Edit";
 

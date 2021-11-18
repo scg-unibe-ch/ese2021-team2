@@ -21,6 +21,7 @@ export class Board extends Model<BoardAttributes, BoardCreationAttributes> imple
             {
                 boardId: {
                     type: DataTypes.INTEGER,
+                    autoIncrement: true,
                     primaryKey: true
                 },
                 subjectId: {

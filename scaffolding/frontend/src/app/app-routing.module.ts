@@ -18,7 +18,7 @@ const routes: Routes = [
     {
         path: 'subjects',
         loadChildren: () => import('./modules/subjects/subjects.module').then(m => m.SubjectsModule)
-    }, 
+    },
     {
         path: 'boards',
         loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
@@ -26,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
+    imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'corrected' }) ],
     exports: [ RouterModule ],
 })
 

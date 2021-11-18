@@ -14,18 +14,13 @@ export class PostService {
         return userService.getUser(createReq.tokenPayload.userId)
             .then(user => {
                 if (user != null) {
-                    if (user.admin === false) {
-                        if ( this.postReqIsValid(createReq.post)) {
-                            createReq.post.creatorId = user.userId;
-                            return Post.create(createReq.post)
-                                .then(inserted => Promise.resolve(inserted))
-                                .catch(err => Promise.reject(err));
-                        } else {
-                            return Promise.reject('wrong post format');
-                        }
+                    if ( this.postReqIsValid(createReq.post)) {
+                        createReq.post.creatorId = user.userId;
+                        return Post.create(createReq.post)
+                            .then(inserted => Promise.resolve(inserted))
+                            .catch(err => Promise.reject(err));
                     } else {
-                        console.log('u r admin');
-                        return Promise.reject('Admins aren\'t allowed to create posts');
+                        return Promise.reject('wrong post format');
                     }
                 } else {
                     return Promise.reject('Something happened wrong');
@@ -60,7 +55,7 @@ export class PostService {
                    return Post.findByPk(deleteReq.postId)
                        .then(found => {
                            if (found != null) {
-                               if (!(found.creatorId - deleteReq.tokenPayload.userId) || user.admin) {
+                               if (!(found.creatorId - deleteReq.tokenPayload.userId)) {
                                    console.log('Destroying');
                                    Post.destroy({
                                            where: {
@@ -91,7 +86,7 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId) || user.admin ) {
+                            if (!(found.creatorId - user.userId)) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}

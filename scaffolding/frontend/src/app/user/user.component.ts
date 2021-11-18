@@ -20,8 +20,8 @@ export class UserComponent {
     loggedIn: boolean | null;
     user: User | null;
 
-    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
-    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
+    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
 
     invPwMsgRegistration: string | undefined;
     invalidPassword: boolean | undefined;
@@ -104,7 +104,6 @@ export class UserComponent {
                     res.user.city,
                     res.user.birthday,
                     res.user.phonenumber,
-                    res.user.admin,
                     res.user.profile_image,
                     res.user.userId
                 ));
@@ -204,6 +203,6 @@ export class UserComponent {
             this.emailEmpty = false;
         }
     }
-    
+
 
 }
