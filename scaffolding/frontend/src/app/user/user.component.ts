@@ -54,69 +54,26 @@ export class UserComponent {
 
     registerUser(): void {
         this.registrationFeedback = '';
-        this.httpClient.post(environment.endpointURL + "user/register", {
-            userName: this.userToRegister.userName,
-            password: this.userToRegister.password,
-            fname: this.userToRegister.fname,
-            lname: this.userToRegister.lname,
-            street: this.userToRegister.street,
-            housenr: this.userToRegister.housenr,
-            zipCode: this.userToRegister.zipCode,
-            city: this.userToRegister.city,
-            email: this.userToRegister.email,
-            birthday: this.userToRegister.birthday,
-            phonenumber: this.userToRegister.phonenumber
-        })
-        .subscribe(() => {
-            this.userToLogin=this.userToRegister;
-            this.loginUser();
-            this.userToRegister.userName = this.userToRegister.password = '';
-        },
-        (err: any) => {
-            this.registrationFeedback = err.error.message;
-        });
+        this.userService.register(this.userToRegister)
+        .then((res) => {
+            this.userToLogin = res;
+            this.loginUser();})
+        .catch((err) => {
+            this.registrationFeedback = err;})
     }
 
     loginUser(): void {
-        this.httpClient.post(environment.endpointURL + "user/login", {
-            userName: this.userToLogin.userName,
-            email: this.userToLogin.email,
-            password: this.userToLogin.password,
-        })
-        .subscribe((res: any) => {
-            console.log(res);
+        this.userService.login(this.userToLogin.userName, this.userToLogin.email, this.userToLogin.password)
+        .then(() => {
             this.falseLogin = false;
-            this.userToLogin.userName = this.userToLogin.password = '';
-
-            localStorage.setItem('userToken', res.token);
-
-            this.userService.setLoggedIn(true);
-            this.userService.loadBookmarkedPosts();
-            this.userService.setUser(new User(
-                    res.user.userName,
-                    res.user.password,
-                    res.user.fname,
-                    res.user.lname,
-                    res.user.email,
-                    res.user.street,
-                    res.user.housenr,
-                    res.user.zipCode,
-                    res.user.city,
-                    res.user.birthday,
-                    res.user.phonenumber,
-                    res.user.admin,
-                    res.user.profile_image,
-                    res.user.userId
-                ));
-                this.dialogRef.close();
-            },
-            (err: any) => {
-                console.log(err);
-                this.loginFeedback = err.error.message.message;
-                this.falseLogin = true;
-            }
-        );
-    }
+            this.userToLogin.userName = this.userToLogin.email = this.userToLogin.password = '';
+            this.dialogRef.close()})
+        .catch((err) => {
+            this.falseLogin = true;
+            console.log(err);
+            this.loginFeedback = err.message;
+        })
+    } 
 
     // I filled this with some pretty ugly pseudo tests, ignore this for now.
     // You can use and test it if you want though, it should work.
@@ -204,6 +161,6 @@ export class UserComponent {
             this.emailEmpty = false;
         }
     }
-
+    
 
 }
