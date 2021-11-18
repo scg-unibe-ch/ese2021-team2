@@ -23,6 +23,10 @@ const routes: Routes = [
         path: 'boards',
         loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
     },
+    {
+        path: 'bookmarks',
+        loadChildren: () => import('./modules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
+    },
 ];
 
 @NgModule({
