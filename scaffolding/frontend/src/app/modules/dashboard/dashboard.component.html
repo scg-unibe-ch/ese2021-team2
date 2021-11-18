@@ -1,7 +1,7 @@
-
-    <div class="filtcat">
+<button mat-button>dashboard works!</button>
+    <div class="filtcat" *ngIf="isShopRoute()">
         <button mat-button (click)="setAll()">All</button>
         <button mat-button (click)="setOffice()">Office</button>
         <button mat-button (click)="setFashion()">Fashion</button>
         <button mat-button (click)="setLifestyle()">Lifestyle</button>
-        </div>
+    </div>

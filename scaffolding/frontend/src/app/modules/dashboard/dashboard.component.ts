@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from "../service/data.service";
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   subscription: Subscription;
   catfilter: string = "";
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, private router: Router) { }
 
   ngOnInit(): void {
     this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message)
@@ -36,5 +37,9 @@ export class DashboardComponent implements OnInit, OnDestroy  {
 
   setLifestyle() {
     this.data.changeMessage("lifestyle");
+  }
+
+  isShopRoute() {
+    return this.router.url === '/shop';
   }
 }
