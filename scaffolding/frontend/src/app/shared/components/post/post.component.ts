@@ -3,6 +3,9 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {ConfirmationDialogModel} from "../../../models/confirmation-dialog.model";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
 
 
@@ -13,61 +16,112 @@ import {Post} from "../../../models/post.model";
 })
 export class PostComponent implements OnInit {
 
-    @Input()
-    post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
-    voted = false;
-    userCanVote = true;
-    loggedIn: boolean ;
-    likes: any  = []
-    user: User | null;
-    imageURL: string = "";
+  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
+  voted = false;
+  bookmarked: any = false;
+  userCanVote= true;
 
 
-    constructor(public userService: UserService, public httpClient: HttpClient) {
-        // Listen for changes
-        userService.loggedIn$.subscribe(res => this.loggedIn = res);
-        userService.user$.subscribe(res => this.user = res);
+  likes: any  = []
 
-        // Current value
-        this.loggedIn = userService.getLoggedIn();
-        this.user = userService.getUser();
-    }
+
+
+  loggedIn: boolean;
+
+
+  user: User | null;
+
+  imageURL: string = "";
+
+  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog) {
+    // Listen for changes
+    userService.loggedIn$.subscribe(res => this.loggedIn = res);
+    userService.user$.subscribe(res => this.user = res);
+
+    // Current value
+    this.loggedIn = userService.getLoggedIn();
+    this.user = userService.getUser();
+
+
+  }
 
   ngOnInit(): void {
-    this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+      this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
 
 
-    this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+      this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+          postId: this.post.postId
+      }).subscribe((res) => {
+
+
+          this.likes = res;
+          this.post.likes = this.likes.length;
+      }, (err: any) => {
+          console.log(err);
+      });
+
+      for (let i = 0; i < this.likes.length; i++) {
+          if (this.likes.get(i).userId == this.user?.userId) {
+              this.userCanVote = false;
+          }
+      }
+
+  }
+
+
+
+  canUserVote(){
+  }
+
+  upvote(){
+    this.post.likes++;
+    this.voted=true;
+
+
+    this.httpClient.post(environment.endpointURL + "user/likePost", {
+      userId: 3,
       postId: this.post.postId
     }).subscribe((res) => {
+      //console.log(res);
 
 
-      this.likes = res;
-      this.post.likes = this.likes.length;
     },(err: any) => {
       console.log(err);
     });
 
-    for(let i = 0; i<this.likes.length; i++){
-      if(this.likes.get(i).userId == this.user?.userId){
-        this.userCanVote=false;
-      }
-    }
-
   }
-  
-    upvote()
-    {
-        this.post.likes++;
-        this.voted = true;
-        this.httpClient.post(environment.endpointURL + "user/likePost", {
-            userId: this.user?.userId,
-            postId: this.post.postId
-        }).subscribe(() => {
-        }, (err: any) => {
-            console.log(err);
-        });
+
+  isBookmarked(): boolean {
+      if( this.post ) {
+          return this.userService.isPostBookmarked(this.post.postId);
+      }
+      else return false;
+  }
+
+
+  bookmark(): void {
+      if( this.post) {
+          this.userService.addPostToBookmarks(this.post);
+      }
+  }
+
+  removeBookmark(): void {
+      if( this.post ) {
+          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to remove bookmark?");
+          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+              maxWidth: '400px',
+              closeOnNavigation : true,
+              data: dialogData
+          })
+
+          dialogRef.afterClosed().subscribe(dialogResult => {
+              if (dialogResult) {
+                  this.userService.removePostFromBookmarks(this.post);
+              }
+          })
+
+      }
+  }
 
 
     }
-}

@@ -91,7 +91,7 @@ export class UserComponent {
             localStorage.setItem('userToken', res.token);
 
             this.userService.setLoggedIn(true);
-
+            this.userService.loadBookmarkedPosts();
             this.userService.setUser(new User(
                     res.user.userName,
                     res.user.password,
@@ -204,6 +204,6 @@ export class UserComponent {
             this.emailEmpty = false;
         }
     }
-    
+
 
 }

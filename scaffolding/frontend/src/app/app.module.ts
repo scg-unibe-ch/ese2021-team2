@@ -36,6 +36,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import {SharedModule} from "./shared/shared.module";
 import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
 import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 
@@ -47,11 +48,8 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
         UserComponent,
         SidebarComponent,
         HeaderComponent,
-        PostComponent,
+        // PostComponent,
         DashboardComponent,
-        CommentsListComponent,
-        PostCommentComponent,
-        ConfirmationDialogComponent,
 
     ],
     imports: [
@@ -73,11 +71,12 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
         MatDividerModule,
         AppRoutingModule,
         MatDialogModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
     exports: [
-        PostComponent
+        // PostComponent
     ],
 })
 export class AppModule { }

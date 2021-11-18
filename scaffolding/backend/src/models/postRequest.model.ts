@@ -1,4 +1,5 @@
 import { PostAttributes} from './post.model';
+import {BookmarkAttributes} from './bookmark.model';
 
 export interface CreatePostRequest {
     post: PostAttributes;
@@ -13,6 +14,11 @@ export interface DeletePostRequest {
 export interface UpdatePostRequest {
     postId: number;
     postUpdate: PostAttributes;
+    tokenPayload: any;
+}
+
+export interface BookmarkPostRequest {
+    bookmark: BookmarkAttributes;
     tokenPayload: any;
 }
 
