@@ -62,49 +62,48 @@ export class PostListComponent implements OnInit {
     } else {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
     }
-    if( this.isValid(postToAdd) && this.createPostInBackend(postToAdd, file) ) {
+      console.log('still trying');
+    if( this.isValid(postToAdd) ) {
+        this.createPostInBackend(postToAdd, file);
         this.postFeedback = "";
+        console.log('no feddback');
         this.posts.push(postToAdd);
         return true;
-    }
-    return false;
-  }
-
-  createPostInBackend(post: Post, image:File | undefined): boolean {
-    this.httpClient.post(environment.endpointURL + "post/createPost",{
-      postId: post.postId,
-      title: post.title,
-      content: post.content,
-      likes:post.likes,
-      date:post.date,
-      boardId:post.boardId,
-      creatorId:post.creatorId,
-      semester: post.semester,
-      postImage: post.postImage
-    }).subscribe((response: any) => {
-      this.addImage(image, response.postId);
-      return true;
-    },
-      (err: any) => {
-          console.log(err);
-        this.postFeedback = err;
+    } else {
         return false;
-      }
-    );
-      return false;
+    }
   }
 
-  addImage(file:File | undefined, postId : number): boolean {
+  createPostInBackend(post: Post, image:File | undefined): void {
+      this.httpClient.post(environment.endpointURL + "post/createPost", {
+          postId: post.postId,
+          title: post.title,
+          content: post.content,
+          likes: post.likes,
+          date: post.date,
+          boardId: post.boardId,
+          creatorId: post.creatorId,
+          semester: post.semester,
+          postImage: post.postImage
+      }).subscribe((response: any) => {
+              this.addImage(image, response.postId);
+
+          },
+          (err: any) => {
+              console.log(err);
+              this.postFeedback = err;
+          }
+      );
+  }
+
+  addImage(file:File | undefined, postId : number): void {
     if(file === undefined) {
-      return true;
+      return;
     } else {
       debugger;
       const fd = new FormData();
       fd.append('image', file);
-      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{
-          return true;
-      });
-      return false;
+      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
     }
   }
 

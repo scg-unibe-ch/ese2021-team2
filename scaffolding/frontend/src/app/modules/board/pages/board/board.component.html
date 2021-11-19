@@ -15,7 +15,9 @@
     <h1>create post</h1>
 
     <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle">
-    <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
+    <br>
+    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="newContent" ></textarea>
+    <br>
     <input type="text" placeholder="semester" name="semester" [(ngModel)]="newSemester">
 
     <br>

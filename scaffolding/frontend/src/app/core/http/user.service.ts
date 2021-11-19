@@ -33,6 +33,7 @@ export class UserService {
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
+            this.loadBookmarkedPosts();
         } else {
             this.logout();
         }

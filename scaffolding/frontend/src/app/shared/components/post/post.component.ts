@@ -17,10 +17,10 @@ import {Post} from "../../../models/post.model";
 export class PostComponent implements OnInit {
 
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
+  changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
   voted = false;
-  bookmarked: any = false;
   userCanVote= true;
-
+  editMode: boolean = false;
 
   likes: any  = []
 
@@ -47,6 +47,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
       this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+      this.changedPost = this.post;
 
 
       this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
@@ -123,5 +124,45 @@ export class PostComponent implements OnInit {
       }
   }
 
+  authorizedToEdit(): boolean {
+      if( this.user && this.user.userId && this.post && this.post.creatorId ){
+          return (this.user.admin || (this.user.userId - this.post.creatorId === 0));
+      } else {
+          return false;
+      }
+  }
+
+  edit(){
+      console.log('edit view');
+      this.editMode = true;
+  }
+
+  updatePost(){
+      if( this.isUpdatedValid() ){
+          this.httpClient.put(environment.endpointURL + "post/" + this.post.postId, {
+              post: this.changedPost
+          }).subscribe((res) => {
+              console.log(res);
+              this.post = this.changedPost;
+
+
+          },(err: any) => {
+              console.log(err);
+          });
+      }
+  }
+
+  isUpdatedValid(): boolean {
+      if( this.changedPost.title ){
+          return !!this.changedPost.content || !!this.changedPost.postImage;
+      }
+      else {
+          return false;
+      }
+  }
+
+  cancelEdit(): void {
+      this.editMode = false;
+  }
 
     }
