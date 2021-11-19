@@ -97,6 +97,7 @@ export class UserService {
                 const user: User = res.user;
                 this.userSource.next(user);
                 this.loggedInSource.next(true);
+                this.loadBookmarkedPosts();
                 resolve(user);
             }, (err: any) => {
                 reject(err);
@@ -189,7 +190,7 @@ export class UserService {
         if( !this.isPostBookmarked(post.postId)){
             this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
                 .subscribe((res) => {
-                    console.log('Added to bookmark: ' + res);
+                    console.log('Added to bookmark: ' + post);
                     this.bookmarkedPosts?.push(post);
                 }, (err: any) => {
                     console.log('Couldnt add post to bookmarks ' + err);
