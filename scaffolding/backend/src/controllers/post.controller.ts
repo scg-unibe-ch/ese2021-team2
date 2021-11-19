@@ -20,7 +20,7 @@ postController.post('/createPost', verifyToken,
         req.body.post = req.body;
         postService.createPost(req.body)
             .then(created => res.send(created))
-            .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).json({message: err}));
     }
 );
 
@@ -80,8 +80,9 @@ postController.put('/:id', verifyToken, (req: Request, res: Response) => {
     req.body.postUpdate = req.body;
     postService.updatePost(req.body)
         .then(updated => res.json(updated))
-        .catch(err => res.status(500).send(err));
-});
+        .catch(err => res.status(500).json({message: err}));
+    }
+);
 
 postController.post('/getAllSubjects',
     (req: Request, res: Response) => {

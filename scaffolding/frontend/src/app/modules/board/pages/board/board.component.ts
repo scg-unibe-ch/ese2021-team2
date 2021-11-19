@@ -3,7 +3,7 @@ import { PostListComponent } from '../../components/post-list/post-list.componen
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../../core/http/user.service';
 import { User } from '../../../../models/user.model';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -28,15 +28,15 @@ export class BoardComponent implements OnInit {
   imageURL: any;
 
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
-    this._Activatedroute.paramMap.subscribe(params => { 
-      this.id= parseInt(params.get('boardId')!); 
+    this._Activatedroute.paramMap.subscribe(params => {
+      this.id= parseInt(params.get('boardId')!);
 //this is where th http request to get the board goes
       this.httpClient.post(environment.endpointURL + "board/getBoardByBoardId", {
         boardId: this.id
       }).subscribe((res: any) => {
           let response = res[0];
           this.title = response.boardName;
-          this.description = response.description; 
+          this.description = response.description;
         } ,
         err => {
           console.log(err);
@@ -60,8 +60,9 @@ export class BoardComponent implements OnInit {
   }
 
   submitPost(){
-    this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id, this.newFile);
-    this.reset();
+    if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id, this.newFile) ){
+        this.reset();
+    }
   }
 
   processFile(imageInputEvent: any) {

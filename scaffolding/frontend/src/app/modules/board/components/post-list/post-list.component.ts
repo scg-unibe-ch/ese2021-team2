@@ -33,8 +33,8 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
-    this._Activatedroute.paramMap.subscribe(params => { 
-      this.boardId= parseInt(params.get('boardId')!); 
+    this._Activatedroute.paramMap.subscribe(params => {
+      this.boardId= parseInt(params.get('boardId')!);
   });
 
   }
@@ -55,18 +55,22 @@ export class PostListComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): boolean{
     var postToAdd: Post;
-    if(file) {                                                                        
+    if(file) {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
     } else {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
     }
-    this.createPostInBackend(postToAdd, file);
-    this.posts.push(postToAdd)
+    if( this.isValid(postToAdd) && this.createPostInBackend(postToAdd, file) ) {
+        this.postFeedback = "";
+        this.posts.push(postToAdd);
+        return true;
+    }
+    return false;
   }
 
-  createPostInBackend(post: Post, image:File | undefined): void {
+  createPostInBackend(post: Post, image:File | undefined): boolean {
     this.httpClient.post(environment.endpointURL + "post/createPost",{
       postId: post.postId,
       title: post.title,
@@ -79,21 +83,28 @@ export class PostListComponent implements OnInit {
       postImage: post.postImage
     }).subscribe((response: any) => {
       this.addImage(image, response.postId);
+      return true;
     },
       (err: any) => {
-        this.postFeedback = err.error.message;
+          console.log(err);
+        this.postFeedback = err;
+        return false;
       }
     );
+      return false;
   }
 
-  addImage(file:File | undefined, postId : number) {
+  addImage(file:File | undefined, postId : number): boolean {
     if(file === undefined) {
-      return;
+      return true;
     } else {
       debugger;
       const fd = new FormData();
       fd.append('image', file);
-      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
+      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{
+          return true;
+      });
+      return false;
     }
   }
 
@@ -102,7 +113,7 @@ export class PostListComponent implements OnInit {
     if (this.mode==="board") {
 
       console.log("post list id: "+this.boardId);
-      
+
 
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
@@ -128,6 +139,30 @@ export class PostListComponent implements OnInit {
     this.checkUserStatus();
 
 
+  }
+
+  isValid(post: Post): boolean {
+      if( post.title ) {
+          if (post.content) {
+              return true;
+          } else if (post.postImage) {
+              return true;
+          } else {
+              this.postFeedback = 'Post requires either an image or some text!';
+              return false;
+          }
+      } else {
+          this.postFeedback = 'Post requires a title!';
+          return false
+          }
+  }
+
+  isAuthorizedToCreate(): boolean {
+      if( this.user ) {
+          return !this.user.admin;
+      } else {
+          return false;
+      }
   }
 
 }
