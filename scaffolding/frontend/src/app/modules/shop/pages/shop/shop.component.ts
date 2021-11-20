@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
+  searchWord:string="";
   constructor() { }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
 import { DataService } from "../../../service/data.service";
@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = []
   filterarg = 'fashion';
   subscription: Subscription;
+  @Input() searchTerm:string="";
 
   constructor(public httpClient: HttpClient,private data: DataService) {}
 
