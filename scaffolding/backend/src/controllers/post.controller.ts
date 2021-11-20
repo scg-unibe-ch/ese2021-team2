@@ -63,6 +63,8 @@ postController.post('/getPostsOfBoard',
 
 
 
+
+
 // needs to be changed to get request
 postController.post('/getPostsByUser',
     (req: Request, res: Response) => {
@@ -91,6 +93,32 @@ postController.post('/getAllSubjects',
     }
 );
 
+postController.post('/:id/bookmark', verifyToken,
+    (req: Request, res: Response) => {
+        req.body.bookmark = {
+            postId: req.params.id,
+            userId: req.body.tokenPayload.userId
+        };
+        postService.bookmarkPost(req.body)
+            .then(created => res.send(created))
+            .catch(err => res.status(500).send(err));
+    }
+);
+
+postController.get('/:id/bookmark', verifyToken,
+    (req: Request, res: Response) => {
+        postService.getBookmarkStatus(req.body.tokenPayload.userId, parseInt(req.params.id, 10))
+            .then((isBookmarked) => res.send(isBookmarked))
+            .catch((err) => res.status(500).send(err));
+    }
+);
+
+postController.get('/bookmarks', verifyToken,
+    (req: Request, res: Response) => {
+        postService.getBookmarkList(req.body.tokenPayload.userId)
+            .then(bookmarkedPosts => res.send(bookmarkedPosts))
+            .catch(err => res.status(500).send(err));
+    });
 postController.post('/getLikesByPostId',
     (req: Request, res: Response) => {
         Like.findAll({
@@ -106,4 +134,11 @@ postController.post('/getLikesByPostId',
 );
 
 
+postController.delete('/:id/bookmark/delete', verifyToken,
+    (req: Request, res: Response) => {
+        postService.deleteBookmark(parseInt(req.params.id, 10), req.body.tokenPayload.userId)
+            .then(deleted => res.send({msg: deleted}))
+            .catch(err => res.status(500).send(err));
+    }
+);
 export const PostController: Router = postController;

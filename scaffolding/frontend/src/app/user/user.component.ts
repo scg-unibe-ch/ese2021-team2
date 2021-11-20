@@ -55,25 +55,25 @@ export class UserComponent {
     registerUser(): void {
         this.registrationFeedback = '';
         this.userService.register(this.userToRegister)
-            .then((res) => {
-                this.userToLogin = res;
-                this.loginUser();})
-            .catch((err) => {
-                this.registrationFeedback = err;})
+        .then((res) => {
+            this.userToLogin = res;
+            this.loginUser();})
+        .catch((err) => {
+            this.registrationFeedback = err;})
     }
 
     loginUser(): void {
         this.userService.login(this.userToLogin.userName, this.userToLogin.email, this.userToLogin.password)
-            .then(() => {
-                this.falseLogin = false;
-                this.userToLogin.userName = this.userToLogin.email = this.userToLogin.password = '';
-                this.dialogRef.close()})
-            .catch((err) => {
-                this.falseLogin = true;
-                console.log(err);
-                this.loginFeedback = err.message;
-            })
-    }
+        .then(() => {
+            this.falseLogin = false;
+            this.userToLogin.userName = this.userToLogin.email = this.userToLogin.password = '';
+            this.dialogRef.close()})
+        .catch((err) => {
+            this.falseLogin = true;
+            console.log(err);
+            this.loginFeedback = err.message;
+        })
+    } 
 
     // I filled this with some pretty ugly pseudo tests, ignore this for now.
     // You can use and test it if you want though, it should work.

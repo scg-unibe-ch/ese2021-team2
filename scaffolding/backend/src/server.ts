@@ -21,6 +21,9 @@ import {Board} from './models/board.model';
 import {PostComment} from './models/postComment.model';
 import {BoardController} from './controllers/board.controller';
 import { PostCommentController} from './controllers/postComment.controller';
+import {Bookmark} from './models/bookmark.model';
+import {CommentController} from './controllers/postComment.controller';
+
 
 export class Server {
     private server: Application;
@@ -40,11 +43,13 @@ export class Server {
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
         Board.initialize(this.sequelize);
+        Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
+        Bookmark.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
