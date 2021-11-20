@@ -17,6 +17,6 @@
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 
-<app-comments-list></app-comments-list>
+<app-comments-list [postId]="this.post.postId"></app-comments-list>
 
 </mat-card>

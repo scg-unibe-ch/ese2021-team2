@@ -27,16 +27,7 @@ export class SidebarComponent {
         this.user = userService.getUser();
     }
 
-    ngOnInit() {
-        this.checkUserStatus();
-    }
-
-    checkUserStatus(): void {
-        // Get user data from local storage
-        const userToken = localStorage.getItem('userToken');
-        // Set boolean whether a user is logged in or not
-        this.userService.setLoggedIn(!!userToken);
-    }
+    ngOnInit() {}
 
     onLogin() {
         this.isLogin = true;
