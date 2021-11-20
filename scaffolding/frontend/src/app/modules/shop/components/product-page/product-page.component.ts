@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit,Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/core/http/user.service';
 import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-page',
@@ -16,7 +19,11 @@ export class ProductPageComponent implements OnInit {
   imageURL: string = "";
   productId: number = 0;
 
-  constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute) { 
+  constructor(public httpClient: HttpClient,
+              private _Activatedroute:ActivatedRoute,
+              public cartService: CartService,
+              public userService : UserService,
+              public snackBar : MatSnackBar) { 
     this._Activatedroute.paramMap.subscribe(params => { 
       this.productId= parseInt(params.get('productId')!); 
       this.httpClient.get( environment.endpointURL + "product/" + this.productId)
@@ -31,4 +38,10 @@ export class ProductPageComponent implements OnInit {
     
   }
 
+  handleAdd(){
+    this.cartService.addProduct(this.product, 1);
+    this.snackBar.open(this.product.title + " successfully added", "Dismiss", {
+      duration : 5000,
+    });
+  }
 }

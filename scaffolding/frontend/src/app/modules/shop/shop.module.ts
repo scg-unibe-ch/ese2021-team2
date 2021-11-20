@@ -10,6 +10,10 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { ProductPageComponent } from 'src/app/modules/shop/components/product-page/product-page.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductfilterPipe } from './productfilter.pipe';
+import { CartComponent } from './components/cart/cart.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 const routes: Routes = [
@@ -20,6 +24,10 @@ const routes: Routes = [
   {
     path: 'product/:productId',
     component: ProductPageComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   }
 ];
 
@@ -32,6 +40,7 @@ export const routing = RouterModule.forChild(routes);
     ShopComponent,
     ProductPageComponent,
     ProductfilterPipe,
+    CartComponent,
 
   ],
   imports: [
@@ -40,7 +49,10 @@ export const routing = RouterModule.forChild(routes);
     MatButtonModule,
     MatToolbarModule,
     MatDividerModule,
-    routing
+    routing,
+    MatIconModule,
+    MatInputModule,
+    MatSnackBarModule,
   ]
 })
 export class ShopModule { }

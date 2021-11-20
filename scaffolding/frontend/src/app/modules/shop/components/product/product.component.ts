@@ -18,8 +18,4 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
   }
-
-  navigate() {console.log("clicked")}
-
-
 }

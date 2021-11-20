@@ -1,0 +1,14 @@
+<div *ngFor = "let product of products.values()" >
+    <mat-card >
+        <mat-card-content>{{product[0].title}} </mat-card-content>
+        <mat-card-actions>
+            <button mat-icon-button (click) = "handleRemove(product[0])">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <input matInput type = "number" value = "{{product[1]}}">
+            <button mat-icon-button (click) = "handleAdd(product[0])">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
