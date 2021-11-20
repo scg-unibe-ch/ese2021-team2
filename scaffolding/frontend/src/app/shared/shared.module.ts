@@ -7,6 +7,7 @@ import {CommentsListComponent} from "./components/post/comments-list/comments-li
 import {PostCommentComponent} from "./components/post/comments-list/post-comment/post-comment.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -22,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatButtonModule,
         CommonModule,
         MatCardModule,
+        FormsModule
     ],
     exports: [
         PostComponent,

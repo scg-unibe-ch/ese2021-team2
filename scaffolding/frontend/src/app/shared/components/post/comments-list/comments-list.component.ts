@@ -54,6 +54,9 @@ export class CommentsListComponent implements OnInit {
      this.creatingComment = true;
      console.log('creating comment');
  }
+ cancelCreateComment(): void{
+        this.creatingComment = false;
+ }
 
  submitComment(): void{
      console.log('submitting comment');

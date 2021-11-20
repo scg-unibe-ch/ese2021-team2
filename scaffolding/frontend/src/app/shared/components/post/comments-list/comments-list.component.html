@@ -3,13 +3,16 @@
 <button (click)="switchShowComments()">Show/Don't Show Comments</button>
     <button (click)="createComment()" *ngIf="loggedIn">Create new Comment</button>
 
+
+
     <hr>
     <div *ngIf="creatingComment" id="postCreator">
-        <h1>create comment</h1>
+        <h3>Create a comment</h3>
 
         <input type="text" placeholder="Text" name="commentText" [(ngModel)]="newCommentText">
 
         <button (click)="submitComment()">Submit Comment</button>
+        <button (click)="cancelCreateComment()" *ngIf="creatingComment">Cancel</button>
         </div>
 
 <div *ngIf="showComments">

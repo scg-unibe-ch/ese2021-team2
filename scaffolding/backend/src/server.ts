@@ -22,7 +22,6 @@ import {PostComment} from './models/postComment.model';
 import {BoardController} from './controllers/board.controller';
 import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
-import {CommentController} from './controllers/postComment.controller';
 
 
 export class Server {
