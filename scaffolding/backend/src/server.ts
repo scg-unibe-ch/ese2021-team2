@@ -20,8 +20,10 @@ import { Subject } from './models/subject.model';
 import {Board} from './models/board.model';
 import {PostComment} from './models/postComment.model';
 import {BoardController} from './controllers/board.controller';
+import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
 import {CommentController} from './controllers/postComment.controller';
+
 
 export class Server {
     private server: Application;
@@ -83,7 +85,7 @@ export class Server {
             .use('/admin', AdminController)
             .use('/post', PostController)
             .use('/board', BoardController)
-            .use('/comment', CommentController)
+            .use('/comment', PostCommentController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
             // this is the message you get if you open http://localhost:3000/ when the server is running

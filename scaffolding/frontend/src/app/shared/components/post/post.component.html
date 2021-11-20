@@ -17,8 +17,12 @@
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 
-    <button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
-    <button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
-<app-comments-list></app-comments-list>
+
+<app-comments-list [postId]="this.post.postId"></app-comments-list>
+
+<button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
+<button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
+
+
 
 </mat-card>
