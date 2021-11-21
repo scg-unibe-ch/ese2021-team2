@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'productsearch',
+  name: 'search',
   pure: false
 })
-export class ProductsearchPipe implements PipeTransform {
+export class searchPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
 

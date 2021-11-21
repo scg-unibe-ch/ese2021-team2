@@ -9,8 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { ProductPageComponent } from 'src/app/modules/shop/components/product-page/product-page.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { ProductfilterPipe } from './productfilter.pipe';
-import { ProductsearchPipe } from './productsearch.pipe';
+import { filterPipe } from '../../shared/components/Pipes/filter.pipe';
+import { searchPipe } from '../../shared/components/Pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 
 
@@ -33,8 +33,8 @@ export const routing = RouterModule.forChild(routes);
     ProductComponent,
     ShopComponent,
     ProductPageComponent,
-    ProductfilterPipe,
-    ProductsearchPipe,
+    filterPipe,
+    searchPipe,
 
   ],
   imports: [
