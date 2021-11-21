@@ -38,6 +38,7 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { ProductPageComponent } from './modules/shop/components/product-page/product-page.component';
 import { DataService } from './modules/service/data.service';
+import { searchPipe } from './shared/components/Pipes/search.pipe';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { DataService } from './modules/service/data.service';
         PostComponent,
         DashboardComponent,
         ConfirmationDialogComponent,
+        searchPipe
     ],
     imports: [
         CoreModule,
@@ -75,6 +77,8 @@ import { DataService } from './modules/service/data.service';
     bootstrap: [AppComponent],
     exports: [
         PostComponent,
+        searchPipe,
+        
     ],
 })
 export class AppModule { }

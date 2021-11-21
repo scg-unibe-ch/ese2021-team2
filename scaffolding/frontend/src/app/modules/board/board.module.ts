@@ -23,14 +23,14 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
     PostListComponent,
     BoardComponent,
-    searchPipe,
+    
   ],
     imports: [
         CommonModule,
         routing,
         FormsModule,
         AppModule,
-        SubjectsModule
+        SubjectsModule,
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

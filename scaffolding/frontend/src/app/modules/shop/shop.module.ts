@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { AppModule } from 'src/app/app.module';
 
 
 const routes: Routes = [
@@ -42,7 +43,6 @@ export const routing = RouterModule.forChild(routes);
     ShopComponent,
     ProductPageComponent,
     filterPipe,
-    searchPipe,
     CartComponent,
 
   ],
@@ -56,7 +56,8 @@ export const routing = RouterModule.forChild(routes);
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
-    FormsModule
-  ]
+    FormsModule,
+    AppModule
+  ],
 })
 export class ShopModule { }
