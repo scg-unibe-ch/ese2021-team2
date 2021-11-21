@@ -28,6 +28,11 @@ figcaption {
     padding-left: 10%;
 }
 
+.headline{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
 .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
     color: black;
 }
@@ -48,9 +53,16 @@ figcaption {
     opacity: 0.8;
 }
 
-.actions{
+.item-actions{
     display: inline-flex;
     flex-wrap: nowrap;
+}
+
+.actions{
+    position: fixed;
+    bottom: 0;
+    background-color:#aeb2b6 ;
+    width: 100%;
 }
 
 #empty-cart-figure {
