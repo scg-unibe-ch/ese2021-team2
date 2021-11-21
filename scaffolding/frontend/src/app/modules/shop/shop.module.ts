@@ -16,9 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
-import { AppModule } from 'src/app/app.module';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatBadgeModule} from '@angular/material/badge';
 
 const routes: Routes = [
   {
@@ -60,6 +59,7 @@ export const routing = RouterModule.forChild(routes);
     MatSnackBarModule,
     FormsModule,
     MatDialogModule,
+    MatBadgeModule,
   ],
   exports: [searchPipe]
 })

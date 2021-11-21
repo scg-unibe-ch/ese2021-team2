@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductItem } from 'src/app/models/product-item.model';
+import { CartService } from '../../services/cart.service';
 
 @Component({
     selector: 'app-shop',
@@ -7,10 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  searchWord:string="";
-  constructor() { }
+    searchWord:string="";
+    productCount;
+
+    constructor(private cartService: CartService) {
+        
+        cartService.products$.subscribe(res => this.productCount = this.getProductCount(res)); 
+
+        this.productCount = this.getProductCount(this.cartService.getProducts()); 
+    }
 
     ngOnInit(): void {
     }
 
+    private getProductCount(products : ProductItem[]): number {
+        var count = 0;
+        products.forEach((item) => {
+            count += item.quantity;
+        });
+        return count;
+    }
 }

@@ -1,4 +1,6 @@
 .mat-toolbar{
+    display: inline-flex;
     font-family: Bahnschrift;
     background-color: #76b3f0;
+    justify-content: center;
 }

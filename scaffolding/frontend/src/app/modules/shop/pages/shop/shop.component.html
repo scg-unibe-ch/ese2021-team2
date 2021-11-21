@@ -1,2 +1,9 @@
-<mat-toolbar>Shop <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search"></mat-toolbar>
+<mat-toolbar>
+    Shop
+    <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
+    <button mat-icon-button [routerLink] = "'/shop/cart'" matBadge = {{productCount}} matBadgeSize = "small" 
+            matBadgeHidden = {{!productCount}} matBadgeColor = "warn"> 
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+</mat-toolbar>
 <app-product-list [searchTerm]="searchWord"></app-product-list>
