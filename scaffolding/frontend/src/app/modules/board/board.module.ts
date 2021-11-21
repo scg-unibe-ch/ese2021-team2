@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {AppModule} from "../../app.module";
 import {SubjectsModule} from "../subjects/subjects.module";
+import { searchPipe } from '../../shared/components/Pipes/search.pipe';
 
 
 
@@ -22,6 +23,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
     PostListComponent,
     BoardComponent,
+    searchPipe,
   ],
     imports: [
         CommonModule,
