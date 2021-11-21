@@ -43,6 +43,7 @@ export const routing = RouterModule.forChild(routes);
     ProductPageComponent,
     ProductfilterPipe,
     CartComponent,
+    ProductsearchPipe
 
   ],
   imports: [
@@ -55,6 +56,7 @@ export const routing = RouterModule.forChild(routes);
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
+    FormsModule
   ]
 })
 export class ShopModule { }
