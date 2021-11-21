@@ -11,6 +11,10 @@ import { ProductPageComponent } from 'src/app/modules/shop/components/product-pa
 import { MatDividerModule } from '@angular/material/divider';
 import { filterPipe } from '../../shared/components/Pipes/filter.pipe';
 import { searchPipe } from '../../shared/components/Pipes/search.pipe';
+import { CartComponent } from './components/cart/cart.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 
 
@@ -22,6 +26,10 @@ const routes: Routes = [
   {
     path: 'product/:productId',
     component: ProductPageComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   }
 ];
 
@@ -35,6 +43,7 @@ export const routing = RouterModule.forChild(routes);
     ProductPageComponent,
     filterPipe,
     searchPipe,
+    CartComponent,
 
   ],
   imports: [
@@ -44,6 +53,9 @@ export const routing = RouterModule.forChild(routes);
     MatToolbarModule,
     MatDividerModule,
     routing,
+    MatIconModule,
+    MatInputModule,
+    MatSnackBarModule,
     FormsModule
   ]
 })

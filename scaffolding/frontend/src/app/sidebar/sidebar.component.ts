@@ -29,6 +29,9 @@ export class SidebarComponent {
 
     ngOnInit() {
         this.checkUserStatus();
+        
+        //otherwise dashboard behaves weird when reloading
+        this.messageEvent.emit(this.isExpanded);
     }
 
     checkUserStatus(): void {

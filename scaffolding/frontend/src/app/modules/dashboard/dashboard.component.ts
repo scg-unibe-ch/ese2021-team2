@@ -40,6 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   }
 
   isShopRoute() {
-    return this.router.url === '/shop';
+    return this.router.url.match(/\/shop\S*/)
   }
 }
