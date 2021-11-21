@@ -14,6 +14,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ProductsearchPipe } from './productsearch.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
