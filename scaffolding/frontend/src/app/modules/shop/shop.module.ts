@@ -44,6 +44,7 @@ export const routing = RouterModule.forChild(routes);
     ShopComponent,
     ProductPageComponent,
     filterPipe,
+    searchPipe,
     CartComponent,
 
   ],
@@ -58,8 +59,8 @@ export const routing = RouterModule.forChild(routes);
     MatInputModule,
     MatSnackBarModule,
     FormsModule,
-    AppModule,
     MatDialogModule,
-  ]
+  ],
+  exports: [searchPipe]
 })
 export class ShopModule { }

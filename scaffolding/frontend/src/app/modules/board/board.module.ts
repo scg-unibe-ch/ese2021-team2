@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {AppModule} from "../../app.module";
 import {SubjectsModule} from "../subjects/subjects.module";
 import { searchPipe } from '../../shared/components/Pipes/search.pipe';
+import { ShopModule } from '../shop/shop.module';
 
 
 
@@ -31,6 +32,7 @@ export const routing = RouterModule.forChild(routes);
         FormsModule,
         AppModule,
         SubjectsModule,
+        ShopModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
