@@ -1,49 +1,78 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ProductItem } from 'src/app/models/product-item.model';
 import { Product } from 'src/app/models/product.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 
 export class CartService {
-  
-  //using the product title as a key because using an object like Product leads to duplicates
-  products : Map<string, [Product, number]> = new Map<string, [Product, number]>();
+    
+    products : ProductItem[] = []
+    private productSource = new Subject<ProductItem[]>();
 
-  private productSource = new Subject<Map<string, [Product, number]>>(); 
+    //Observable streams
+    products$ = this.productSource.asObservable();
 
-  //Observable streams
-  products$ = this.productSource.asObservable();
-
-  constructor() { }
-
-  addProduct(product : Product, amount: number) {
-    if(this.products.has(product.title)) {
-      const tuple = this.products.get(product.title)
-      var prev = 0
-      if(tuple)
-        prev = tuple[1]
-      this.products.set(product.title, [product,amount + prev ]);
+    constructor() {
+        var items = sessionStorage.getItem('cart')
+        if (items) {
+            this.products = JSON.parse(items);
+        }
     }
-    else {
-      this.products.set(product.title, [product, amount]);
+
+    addProduct(product : Product, quantity: number) {
+        var duplicate = false;
+        this.products.forEach(itm => {
+        if(itm.product.productId === product.productId) {
+            duplicate = true;
+            itm.quantity++;
+        }
+        });
+        if(!duplicate){
+            var item = new ProductItem();
+            item.product = product;
+            item.quantity = quantity;
+            this.products.push(item);
+        }
+        sessionStorage.setItem('cart', JSON.stringify(this.products));
     }
-  }
+    
 
-  getProducts(): Map<string, [Product, number]> {
-    return this.products;
-  }
+    getProducts(): ProductItem[] {
+        return this.products;
+    }
 
-  clearCart(){
-    this.products.clear();
-  }
+    clearCart(){
+        this.products = [];
+        sessionStorage.removeItem('cart');
+    }
 
-  decreaseAmount(product : Product) {
+    decreaseAmount(product : ProductItem) {
+        if(product.quantity === 0)
+            return;
+        this.products.forEach(itm => {
+        if(product.product.productId === itm.product.productId)
+            itm.quantity--
+        })
+        sessionStorage.setItem('cart', JSON.stringify(this.products));
+    }
 
-  }
+    increaseAmount(product : ProductItem) {
+        this.products.forEach(itm => {
+        if(product.product.productId === itm.product.productId)
+            itm.quantity++
+        })
+        sessionStorage.setItem('cart', JSON.stringify(this.products));
+    }
 
-  increaseAmount(product : Product) {
-
-  }
+    removeItem(product : ProductItem) {
+        const index = this.products.indexOf(product);
+        debugger;
+        if(index >= 0){
+            this.products.splice(index, 1);
+            sessionStorage.setItem('cart', JSON.stringify(this.products));
+        }
+    }
 }

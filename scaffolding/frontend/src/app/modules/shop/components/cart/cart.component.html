@@ -1,14 +1,26 @@
-<div *ngFor = "let product of products.values()" >
-    <mat-card >
-        <mat-card-content>{{product[0].title}} </mat-card-content>
-        <mat-card-actions>
-            <button mat-icon-button (click) = "handleRemove(product[0])">
-                <mat-icon>remove</mat-icon>
-            </button>
-            <input matInput type = "number" value = "{{product[1]}}">
-            <button mat-icon-button (click) = "handleAdd(product[0])">
-                <mat-icon>add</mat-icon>
-            </button>
-        </mat-card-actions>
-    </mat-card>
+<div class ="no-items" *ngIf = "(products.length == 0); else cartFilled">
+    <figure id = "empty-cart-figure">
+        <img id = "empty-cart" src = "/assets/images/empty_cart.png" >
+        <figcaption>No items in cart</figcaption>
+    </figure>
 </div>
+<ng-template #cartFilled>
+    <div *ngFor = "let product of products" >
+        <div class = "item">
+            <img id = "thumbnail" [src] = "concatURL(product.product.productId)"> 
+            <p class = "name">{{product.product.title}}</p>
+            <div class = "actions">
+                <button mat-icon-button (click) = "handleDecrease(product)" [disabled] = "isDisabled(product)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <input class = "qtyInput" matInput type = "number" min = "1" max = "99" value = "{{product.quantity}}" disabled = "disabled">
+                <button mat-icon-button (click) = "handleIncrease(product)">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button #delete mat-icon-button (click) = "handleRemove(product)">
+                    <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

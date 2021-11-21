@@ -3,19 +3,19 @@ import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
 
-  @Input() product = new Product(0, "", "", "", undefined, 0)
+    @Input() product = new Product(0, "", "", "", undefined, 0)
 
-  imageURL: string = "";
+    imageURL: string = "";
 
-  constructor() {}
+    constructor() {}
 
-  ngOnInit(): void {
-    this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
-  }
+    ngOnInit(): void {
+        this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
+    }
 }
