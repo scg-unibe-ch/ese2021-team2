@@ -36,6 +36,7 @@ export class ProductPageComponent implements OnInit {
     }
 
     handleAdd(){
+        debugger;
         this.cartService.addProduct(this.product, 1);
         this.snackBar.open(this.product.title + " successfully added", "Dismiss", {
         duration : 3000,

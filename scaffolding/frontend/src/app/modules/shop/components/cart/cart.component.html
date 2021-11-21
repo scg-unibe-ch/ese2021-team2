@@ -5,11 +5,12 @@
     </figure>
 </div>
 <ng-template #cartFilled>
+    <h1 class = "headline">Your Items</h1>
     <div *ngFor = "let product of products" >
         <div class = "item">
             <img id = "thumbnail" [src] = "concatURL(product.product.productId)"> 
             <p class = "name">{{product.product.title}}</p>
-            <div class = "actions">
+            <div class = "item-actions">
                 <button mat-icon-button (click) = "handleDecrease(product)" [disabled] = "isDisabled(product)">
                     <mat-icon>remove</mat-icon>
                 </button>
@@ -22,5 +23,11 @@
                 </button>
             </div>
         </div>
+    </div>
+    <div class = "actions">
+        <button id = "trash" mat-icon-button color = "warn" (click) = "handleRemoveAll()">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+        <button class = "checkout" mat-raised-button color = "primary">Go to Checkout</button>
     </div>
 </ng-template>

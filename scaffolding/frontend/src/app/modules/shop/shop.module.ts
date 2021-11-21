@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { AppModule } from 'src/app/app.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 const routes: Routes = [
@@ -57,7 +58,8 @@ export const routing = RouterModule.forChild(routes);
     MatInputModule,
     MatSnackBarModule,
     FormsModule,
-    AppModule
-  ],
+    AppModule,
+    MatDialogModule,
+  ]
 })
 export class ShopModule { }

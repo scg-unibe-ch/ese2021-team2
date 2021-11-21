@@ -47,6 +47,7 @@ export class CartService {
     clearCart(){
         this.products = [];
         sessionStorage.removeItem('cart');
+        this.productSource.next(this.products);
     }
 
     decreaseAmount(product : ProductItem) {
