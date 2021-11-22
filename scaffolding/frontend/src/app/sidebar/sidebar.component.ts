@@ -27,7 +27,9 @@ export class SidebarComponent {
         this.user = userService.getUser();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.messageEvent.emit(this.isExpanded);
+    }
 
     onLogin() {
         this.isLogin = true;

@@ -10,7 +10,6 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { ProductPageComponent } from 'src/app/modules/shop/components/product-page/product-page.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { filterPipe } from '../../shared/components/Pipes/filter.pipe';
-import { searchPipe } from '../../shared/components/Pipes/search.pipe';
 import { CartComponent } from './components/cart/cart.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule} from '@angular/material/badge';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -43,7 +43,6 @@ export const routing = RouterModule.forChild(routes);
     ShopComponent,
     ProductPageComponent,
     filterPipe,
-    searchPipe,
     CartComponent,
 
   ],
@@ -60,7 +59,8 @@ export const routing = RouterModule.forChild(routes);
     FormsModule,
     MatDialogModule,
     MatBadgeModule,
+    SharedModule,
   ],
-  exports: [searchPipe]
+  exports: []
 })
 export class ShopModule { }
