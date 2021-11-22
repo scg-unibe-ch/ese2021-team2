@@ -97,6 +97,7 @@ export class UserService {
                 const user: User = res.user;
                 this.userSource.next(user);
                 this.loggedInSource.next(true);
+                this.loadBookmarkedPosts();
                 resolve(user);
             }, (err: any) => {
                 reject(err);
@@ -144,6 +145,7 @@ export class UserService {
             .subscribe((res) => {
                 this.userSource.next(res);
                 this.loggedInSource.next(true);
+                this.loadBookmarkedPosts();
             }, () => {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
@@ -189,7 +191,7 @@ export class UserService {
         if( !this.isPostBookmarked(post.postId)){
             this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
                 .subscribe((res) => {
-                    console.log('Added to bookmark: ' + res);
+                    console.log('Added to bookmark: ' + post.postId);
                     this.bookmarkedPosts?.push(post);
                 }, (err: any) => {
                     console.log('Couldnt add post to bookmarks ' + err);
@@ -202,8 +204,15 @@ export class UserService {
         if( this.isPostBookmarked(post.postId)) {
             this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/bookmark/delete", {})
                 .subscribe((res) => {
-                    console.log('Deleted from bookmarks: ' + res);
-                    this.bookmarkedPosts?.splice(this.bookmarkedPosts?.indexOf(post), 1);
+                    console.log('Deleted from bookmarks: ' + post.postId);
+                    if( this.bookmarkedPosts ) {
+                        for (let i = 0; i < this.bookmarkedPosts.length; i++) {
+                            if (post.postId - this.bookmarkedPosts[i].postId === 0) {
+                                this.bookmarkedPosts.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
                 }, (err: any) => {
                     console.log('Couldnt delete post from bookmarks ' + err);
                 })
