@@ -1,12 +1,12 @@
 
+<mat-toolbar><input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search"></mat-toolbar>
 <h1>{{title}}</h1>
 
 
 
-<!-- here we get an error because loggedIn was set to true and now it isn't seen as undefined anymore
- Error in console: Previous value: 'undefined'. Current value: 'true'..-->
+<div>
 <button *ngIf="this.postList.isAuthorizedToCreate()" (click)="createPost()"> Create new Post</button>
-
+</div>
 
 
 <p>{{description}}</p>
@@ -34,4 +34,4 @@
 </div>
 
 
-<app-post-list></app-post-list>
+<app-post-list [searchTerm]="searchWord"></app-post-list>

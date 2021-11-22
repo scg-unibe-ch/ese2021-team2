@@ -1,0 +1,23 @@
+<div class="container">
+
+    <div class=first_column>
+        <img [src]= "imageURL" onerror="this.src='/assets/images/platzhalter.png'">
+    </div>
+
+    <div class="second_column">
+        <div class="description">
+        <span>{{product.category}}</span>
+        <h2>{{product.title}}</h2>
+        <p>{{product.description}}</p>
+        </div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="product-price">
+            <span>CHF {{product.price.toFixed(2)}}</span>
+            <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
+        </div>
+
+    </div>
+
+</div>

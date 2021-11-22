@@ -8,26 +8,29 @@ import {PostCommentComponent} from "./components/post/comments-list/post-comment
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {FormsModule} from "@angular/forms";
+import { searchPipe } from './components/Pipes/search.pipe';
 
 
 
 @NgModule({
   declarations: [
-      PostComponent,
-      ConfirmationDialogComponent,
-      CommentsListComponent,
-      PostCommentComponent
+        PostComponent,
+        ConfirmationDialogComponent,
+        CommentsListComponent,
+        PostCommentComponent,
+        searchPipe,
   ],
     imports: [
         MatDialogModule,
         MatButtonModule,
         CommonModule,
         MatCardModule,
-        FormsModule,
+        FormsModule
     ],
     exports: [
         PostComponent,
         ConfirmationDialogComponent,
+        searchPipe,
     ]
 })
 export class SharedModule { }

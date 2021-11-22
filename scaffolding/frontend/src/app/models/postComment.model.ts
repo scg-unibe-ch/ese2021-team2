@@ -4,7 +4,8 @@ export class PostCommentModel {
         public postCommentId: number,
         public postId: number,
         public commentText: string,
-        public userId: number
+        public userId: number,
+        public userName: string
     ){}
 
 }

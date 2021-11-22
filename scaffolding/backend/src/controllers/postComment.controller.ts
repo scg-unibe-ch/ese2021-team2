@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 import {PostComment} from '../models/postComment.model';
 import {PostCommentService} from '../services/postComment.service';
+import {TodoList} from '../models/todolist.model';
 
 const postCommentController: Router = express.Router();
 const postCommentService = new PostCommentService;
@@ -25,4 +26,4 @@ postCommentController.post('/createComment',
     }
 );
 
-export const CommentController: Router = postCommentController;
+export const PostCommentController: Router = postCommentController;

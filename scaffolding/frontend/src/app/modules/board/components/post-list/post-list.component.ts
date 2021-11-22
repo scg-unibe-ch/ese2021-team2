@@ -22,6 +22,8 @@ export class PostListComponent implements OnInit {
   loggedIn: boolean;
   user: User | null;
 
+  @Input() searchTerm:string="";
+
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
 
 

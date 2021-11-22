@@ -16,3 +16,11 @@ button, input {
 .mat-form-field-wrapper {
     margin-right: 25px !important;
 }
+
+.green-snackbar {
+    background-color:green;
+}
+
+.green-snackbar button {
+    color: white
+}

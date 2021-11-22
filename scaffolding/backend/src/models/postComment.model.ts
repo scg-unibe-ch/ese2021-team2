@@ -5,6 +5,7 @@ export interface PostCommentAttributes {
     postId: number;
     commentText: string;
     userId: number;
+    userName: string;
 }
 
 export interface BoardCreationAttributes extends Optional<PostCommentAttributes, 'postCommentId'> { }
@@ -15,24 +16,32 @@ export class PostComment extends Model<PostCommentAttributes, BoardCreationAttri
     postId!: number;
     userId!: number;
     commentText!: string;
+    userName!: string;
 
     public static initialize(sequelize: Sequelize) {
         PostComment.init(
             {
                 postId: {
                     type: DataTypes.INTEGER,
-                    primaryKey: true
+                    primaryKey: false,
+                    allowNull: false
                 },
                 userId: {
                     type: DataTypes.INTEGER,
-                    primaryKey: true,
-                    allowNull: false
+                    allowNull: false,
+                    primaryKey: false
                 },
                 postCommentId: {
                     type: DataTypes.INTEGER,
+                    autoIncrement: true,
                     primaryKey: true
                 },
                 commentText: {
+                    type: DataTypes.STRING,
+                    primaryKey: false,
+                    allowNull: false
+                },
+                userName: {
                     type: DataTypes.STRING,
                     primaryKey: false,
                     allowNull: false

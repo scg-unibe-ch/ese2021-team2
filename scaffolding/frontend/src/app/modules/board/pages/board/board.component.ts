@@ -26,7 +26,8 @@ export class BoardComponent implements OnInit {
   description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   newFile: File | undefined;
   imageURL: any;
-
+  searchWord:string="";
+  
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
@@ -45,11 +46,11 @@ export class BoardComponent implements OnInit {
   });
 
     this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
+      // Listen for changes
+      userService.loggedIn$.subscribe(res => this.loggedIn = res);
+      // Current value
+      this.loggedIn = userService.getLoggedIn();
 
-
-  //REINSERT AFTER USER LOGIN IS FIXED!!
-  //SEE BOARD.HTML LINE 6-8
-   // userService.loggedIn$.subscribe(res => this.loggedIn = res);
   }
 
   ngOnInit(): void {

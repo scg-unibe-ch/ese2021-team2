@@ -17,11 +17,13 @@
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 
+<app-comments-list [postId]="this.post.postId"></app-comments-list>
+
     <button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
     <button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
     <button (click)="edit()" *ngIf="authorizedToEdit()">Edit Post</button>
     <button (click)="deletePost()" *ngIf="authorizedToEdit()">Delete Post</button>
-<app-comments-list></app-comments-list>
+
 
 </mat-card>
 <mat-card *ngIf="editMode">
