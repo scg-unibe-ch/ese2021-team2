@@ -1,1 +1,6 @@
-<p>dashboard works!</p>
+<div class="filtcat" *ngIf="isShopRoute()">
+    <button mat-button (click)="setAll()" [routerLink] = "'shop'">All</button>
+    <button mat-button (click)="setOffice()" [routerLink] = "'shop'">Office</button>
+    <button mat-button (click)="setFashion()" [routerLink] = "'shop'">Fashion</button>
+    <button mat-button (click)="setLifestyle()" [routerLink] = "'shop'">Lifestyle</button>
+</div>

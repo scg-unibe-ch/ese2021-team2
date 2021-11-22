@@ -20,6 +20,9 @@ import { Subject } from './models/subject.model';
 import {Board} from './models/board.model';
 import {PostComment} from './models/postComment.model';
 import {BoardController} from './controllers/board.controller';
+import { Product } from './models/product.model';
+import { ProductImage } from './models/productImage.model';
+import { ProductController } from './controllers/product.controller';
 import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
 
@@ -42,12 +45,15 @@ export class Server {
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
         Board.initialize(this.sequelize);
+        Product.initialize(this.sequelize);
+        ProductImage.initialize(this.sequelize);
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
+        ProductImage.createAssociations();
         Bookmark.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
@@ -84,6 +90,7 @@ export class Server {
             .use('/admin', AdminController)
             .use('/post', PostController)
             .use('/board', BoardController)
+            .use('/product', ProductController)
             .use('/comment', PostCommentController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
