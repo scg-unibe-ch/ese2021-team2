@@ -77,7 +77,9 @@ export class BoardComponent implements OnInit {
 
   reset() {
     this.creatingPost=false;
-    this.ngOnInit();
+      this.newContent = '';
+      this.newSemester = '';
+      this.title = '';
   }
 
 }

@@ -21,7 +21,6 @@ export class PostComponent implements OnInit {
   voted = false;
   userCanVote= true;
   editMode: boolean = false;
-
   likes: any  = []
 
 
@@ -48,7 +47,6 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
       this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
       this.changedPost = this.post;
-
 
       this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
           postId: this.post.postId
@@ -132,18 +130,23 @@ export class PostComponent implements OnInit {
       }
   }
 
-  edit(){
-      console.log('edit view');
-      this.editMode = true;
-  }
 
   updatePost(){
       if( this.isUpdatedValid() ){
           this.httpClient.put(environment.endpointURL + "post/" + this.post.postId, {
-              post: this.changedPost
+              postId: this.changedPost.postId,
+              title: this.changedPost.title,
+              content: this.changedPost.content,
+              likes: this.changedPost.likes,
+              date: this.changedPost.date,
+              boardId: this.changedPost.boardId,
+              creatorId: this.changedPost.creatorId,
+              semester: this.changedPost.semester,
+              postImage: this.changedPost.postImage
           }).subscribe((res) => {
               console.log(res);
               this.post = this.changedPost;
+              this.cancelEdit();
 
 
           },(err: any) => {
@@ -161,8 +164,36 @@ export class PostComponent implements OnInit {
       }
   }
 
+  deletePost(): void {
+      if( this.post ) {
+          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to delete this" +
+              " post?");
+          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+              maxWidth: '400px',
+              closeOnNavigation: true,
+              data: dialogData
+          })
+
+          dialogRef.afterClosed().subscribe(dialogResult => {
+              if (dialogResult) {
+                  this.httpClient.delete(environment.endpointURL + "post/" + this.post.postId + "/delete", {})
+                      .subscribe(res => {
+                          console.log('Successfully deleted this post');
+                      }, (err: any) => {
+                      console.log(err);
+                      });
+              }
+
+      })
+      }
+  }
+  edit(): void{
+        console.log('edit view');
+        this.editMode = true;
+  }
+
   cancelEdit(): void {
       this.editMode = false;
   }
 
-    }
+}
