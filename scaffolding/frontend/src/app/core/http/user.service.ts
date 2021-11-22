@@ -3,6 +3,7 @@ import { User } from '../../models/user.model';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {Post} from "../../models/post.model";
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,7 @@ export class UserService {
 
     private loggedIn: boolean;
     private user: User | null;
+    private bookmarkedPosts: Post[] | undefined;
 
     // Observable Sources
     private loggedInSource = new Subject<boolean>();
@@ -146,5 +148,65 @@ export class UserService {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
             });
+    }
+
+    loadBookmarkedPosts(): void {
+        this.httpClient.get<Post[]>(environment.endpointURL + 'post/bookmarks')
+            .subscribe((res) => {
+                    this.bookmarkedPosts = res;
+                    console.log('Is bookmarked: ' + this.bookmarkedPosts);
+                }, (err: any) => {
+                    console.log(err + ' at initialization');
+
+                }
+            );
+        console.log('load bookmarked posts');
+    }
+
+    getBookmarkedPosts(): Post[] {
+        if( this.bookmarkedPosts ) {
+            return this.bookmarkedPosts;
+        } else {
+            return [];
+        }
+    }
+
+    isPostBookmarked(postId: number): boolean{
+        if( this.bookmarkedPosts ){
+            for( const post of this.bookmarkedPosts){
+                if( post.postId - postId === 0) {
+                    return true;
+                }
+            }
+            return false;
+
+        } else {
+            return false;
+        }
+    }
+
+    addPostToBookmarks(post: Post): void {
+        if( !this.isPostBookmarked(post.postId)){
+            this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
+                .subscribe((res) => {
+                    console.log('Added to bookmark: ' + res);
+                    this.bookmarkedPosts?.push(post);
+                }, (err: any) => {
+                    console.log('Couldnt add post to bookmarks ' + err);
+                })
+
+        }
+    }
+
+    removePostFromBookmarks(post: Post): void {
+        if( this.isPostBookmarked(post.postId)) {
+            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/bookmark/delete", {})
+                .subscribe((res) => {
+                    console.log('Deleted from bookmarks: ' + res);
+                    this.bookmarkedPosts?.splice(this.bookmarkedPosts?.indexOf(post), 1);
+                }, (err: any) => {
+                    console.log('Couldnt delete post from bookmarks ' + err);
+                })
+        }
     }
 }

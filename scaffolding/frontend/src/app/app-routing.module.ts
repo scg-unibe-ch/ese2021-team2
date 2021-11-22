@@ -18,7 +18,7 @@ const routes: Routes = [
     {
         path: 'subjects',
         loadChildren: () => import('./modules/subjects/subjects.module').then(m => m.SubjectsModule)
-    }, 
+    },
     {
         path: 'boards',
         loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
@@ -26,7 +26,11 @@ const routes: Routes = [
     {
         path: 'shop',
         loadChildren: () => import('./modules/shop/shop.module').then(m => m.ShopModule)
-    }
+    },
+    {
+        path: 'bookmarks',
+        loadChildren: () => import('./modules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
+    },
 ];
 
 @NgModule({
