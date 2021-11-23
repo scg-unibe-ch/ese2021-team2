@@ -1,4 +1,6 @@
-<mat-card *ngIf="!editMode">
+<div *ngIf="post">
+
+<mat-card *ngIf="!editMode && !deleted">
     <h1>
     {{this.post.title}}
 </h1>
@@ -45,3 +47,10 @@
     <app-comments-list></app-comments-list>
 
 </mat-card>
+
+<mat-card *ngIf="deleted">
+    <h1>
+        {{this.post.title}} [DELETED]
+    </h1>
+</mat-card>
+</div>

@@ -55,6 +55,7 @@ export class Server {
         PostImage.createAssociations();
         ProductImage.createAssociations();
         Bookmark.createAssociations();
+        Post.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port

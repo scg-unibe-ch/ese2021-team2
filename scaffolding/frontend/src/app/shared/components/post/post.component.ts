@@ -21,7 +21,8 @@ export class PostComponent implements OnInit {
   voted = false;
   userCanVote= true;
   editMode: boolean = false;
-  likes: any  = []
+  likes: any  = [];
+  deleted: boolean = false;
 
 
 
@@ -46,7 +47,6 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
       this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
-      this.changedPost = this.post;
 
       this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
           postId: this.post.postId
@@ -176,12 +176,10 @@ export class PostComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(dialogResult => {
               if (dialogResult) {
-                  this.httpClient.delete(environment.endpointURL + "post/" + this.post.postId + "/delete", {})
-                      .subscribe(res => {
-                          console.log('Successfully deleted this post');
-                      }, (err: any) => {
-                      console.log(err);
-                      });
+                  if( this.post ) {
+                      this.userService.deletePost(this.post);
+                      this.deleted = true;
+                  }
               }
 
       })
@@ -190,6 +188,7 @@ export class PostComponent implements OnInit {
   edit(): void{
         console.log('edit view');
         this.editMode = true;
+      this.changedPost = this.post;
   }
 
   cancelEdit(): void {
