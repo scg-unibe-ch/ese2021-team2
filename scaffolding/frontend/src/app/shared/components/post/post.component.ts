@@ -106,7 +106,7 @@ export class PostComponent implements OnInit {
 
   removeBookmark(): void {
       if( this.post ) {
-          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to remove bookmark?");
+          const dialogData = new ConfirmationDialogModel("Remove Bookmark", "Are you sure you want to remove bookmark?");
           const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
               maxWidth: '400px',
               closeOnNavigation : true,
@@ -166,7 +166,7 @@ export class PostComponent implements OnInit {
 
   deletePost(): void {
       if( this.post ) {
-          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to delete this" +
+          const dialogData = new ConfirmationDialogModel("Delete Post", "Are you sure you want to delete this" +
               " post?");
           const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
               maxWidth: '400px',
