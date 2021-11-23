@@ -1,0 +1,25 @@
+<div *ngIf="loggedIn">
+    <h1>Your Order</h1>
+    <mat-card>
+        <div *ngFor="let product of products">
+            <p>Product: {{product.product.title}}, Amount: {{product.quantity}}</p>
+        </div>
+    </mat-card>
+
+    <p>Please fill in your details below to submit your order.</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Paymentmethod</mat-label>
+        <mat-select [(value)]="paymentMethod">
+            <mat-option value="Invoice" selected>Invoice</mat-option>
+            <mat-option value="CreditCard">Credit Card</mat-option>
+            <mat-option value="Twint">Twint</mat-option>
+            <mat-option value="PayPal">PayPal</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <br>
+    <button (click)="submitOrder()"> Submit Order </button>
+</div>
+<div *ngIf="!loggedIn">
+    <h4>To purchase an order please log in first.</h4>
+</div>

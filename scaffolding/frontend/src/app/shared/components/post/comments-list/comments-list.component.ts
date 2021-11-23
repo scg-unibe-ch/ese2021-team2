@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {UserService} from "../../../../core/http/user.service";
 import {User} from "../../../../models/user.model";
-import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-comments-list',
@@ -20,7 +19,7 @@ export class CommentsListComponent implements OnInit {
     creatingComment: boolean = false;
     newCommentText: string = '';
 
-    constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog) {
+    constructor(public userService: UserService, public httpClient: HttpClient) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.user$.subscribe(res => this.user = res);
