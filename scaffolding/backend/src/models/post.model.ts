@@ -1,4 +1,5 @@
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
+import {Bookmark} from './bookmark.model';
 
 export interface PostAttributes {
     postId: number;
@@ -72,5 +73,11 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                 tableName: 'posts'
             }
         );
+    }
+    public static createAssociations() {
+        Post.hasMany(Bookmark, {
+            foreignKey: 'postId',
+            onDelete: 'cascade'
+        });
     }
 }

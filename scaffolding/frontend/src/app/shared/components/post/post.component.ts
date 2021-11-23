@@ -17,12 +17,12 @@ import {Post} from "../../../models/post.model";
 export class PostComponent implements OnInit {
 
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
+  changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
   voted = false;
-  bookmarked: any = false;
   userCanVote= true;
-
-
-  likes: any  = []
+  editMode: boolean = false;
+  likes: any  = [];
+  deleted: boolean = false;
 
 
 
@@ -47,7 +47,6 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
       this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
-
 
       this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
           postId: this.post.postId
@@ -107,7 +106,7 @@ export class PostComponent implements OnInit {
 
   removeBookmark(): void {
       if( this.post ) {
-          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to remove bookmark?");
+          const dialogData = new ConfirmationDialogModel("Remove Bookmark", "Are you sure you want to remove bookmark?");
           const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
               maxWidth: '400px',
               closeOnNavigation : true,
@@ -123,5 +122,77 @@ export class PostComponent implements OnInit {
       }
   }
 
+  authorizedToEdit(): boolean {
+      if( this.user && this.user.userId && this.post && this.post.creatorId ){
+          return (this.user.admin || (this.user.userId - this.post.creatorId === 0));
+      } else {
+          return false;
+      }
+  }
 
-    }
+
+  updatePost(){
+      if( this.isUpdatedValid() ){
+          this.httpClient.put(environment.endpointURL + "post/" + this.post.postId, {
+              postId: this.changedPost.postId,
+              title: this.changedPost.title,
+              content: this.changedPost.content,
+              likes: this.changedPost.likes,
+              date: this.changedPost.date,
+              boardId: this.changedPost.boardId,
+              creatorId: this.changedPost.creatorId,
+              semester: this.changedPost.semester,
+              postImage: this.changedPost.postImage
+          }).subscribe((res) => {
+              console.log(res);
+              this.post = this.changedPost;
+              this.cancelEdit();
+
+
+          },(err: any) => {
+              console.log(err);
+          });
+      }
+  }
+
+  isUpdatedValid(): boolean {
+      if( this.changedPost.title ){
+          return !!this.changedPost.content || !!this.changedPost.postImage;
+      }
+      else {
+          return false;
+      }
+  }
+
+  deletePost(): void {
+      if( this.post ) {
+          const dialogData = new ConfirmationDialogModel("Delete Post", "Are you sure you want to delete this" +
+              " post?");
+          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+              maxWidth: '400px',
+              closeOnNavigation: true,
+              data: dialogData
+          })
+
+          dialogRef.afterClosed().subscribe(dialogResult => {
+              if (dialogResult) {
+                  if( this.post ) {
+                      this.userService.deletePost(this.post);
+                      this.deleted = true;
+                  }
+              }
+
+      })
+      }
+  }
+  edit(): void{
+        console.log('edit view');
+        this.editMode = true;
+      this.changedPost = this.post;
+  }
+
+  cancelEdit(): void {
+      this.editMode = false;
+  }
+
+}

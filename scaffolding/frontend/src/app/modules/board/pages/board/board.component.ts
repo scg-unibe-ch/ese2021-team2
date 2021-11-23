@@ -61,8 +61,9 @@ export class BoardComponent implements OnInit {
   }
 
   submitPost(){
-    this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id, this.newFile);
-    this.reset();
+    if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id, this.newFile) ){
+        this.reset();
+    }
   }
 
   processFile(imageInputEvent: any) {
@@ -77,7 +78,9 @@ export class BoardComponent implements OnInit {
 
   reset() {
     this.creatingPost=false;
-    this.ngOnInit();
+      this.newContent = '';
+      this.newSemester = '';
+      this.title = '';
   }
 
 }
