@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/app/core/http/user.service';
 import { ProductItem } from 'src/app/models/product-item.model';
 import { Product } from 'src/app/models/product.model';
 
@@ -11,11 +12,16 @@ export class CartService {
     
     products : ProductItem[] = []
     private productSource = new Subject<ProductItem[]>();
+    private loggedIn: boolean;
 
     //Observable streams
     products$ = this.productSource.asObservable();
 
-    constructor() {
+    constructor(private userService: UserService) {
+        userService.loggedIn$.subscribe( res => {
+            this.loggedIn = res;
+            this.checkLogout()
+        });
         var items = sessionStorage.getItem('cart')
         if (items) {
             this.products = JSON.parse(items);
@@ -74,6 +80,12 @@ export class CartService {
         if(index >= 0){
             this.products.splice(index, 1);
             sessionStorage.setItem('cart', JSON.stringify(this.products));
+        }
+    }
+
+    private checkLogout() {
+        if (!this.loggedIn){
+            this.clearCart();
         }
     }
 }

@@ -60,4 +60,16 @@ export class CartComponent implements OnInit {
             }
         });
     }
+
+    getPrice(item : ProductItem) : number {
+        return item.quantity * item.product.price;
+    }
+
+    getTotal() : number {
+        var sum = 0;
+        for ( var item in this.products) {
+            sum += this.getPrice(this.products[item])
+        }
+        return sum;
+    }
 }
