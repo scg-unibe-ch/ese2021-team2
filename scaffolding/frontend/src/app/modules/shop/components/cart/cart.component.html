@@ -1,0 +1,33 @@
+<div class ="no-items" *ngIf = "(products.length == 0); else cartFilled">
+    <figure id = "empty-cart-figure">
+        <img id = "empty-cart" src = "/assets/images/empty_cart.png" >
+        <figcaption>No items in cart</figcaption>
+    </figure>
+</div>
+<ng-template #cartFilled>
+    <h1 class = "headline">Your Items</h1>
+    <div *ngFor = "let product of products" >
+        <div class = "item">
+            <img id = "thumbnail" [src] = "concatURL(product.product.productId)"> 
+            <p class = "name">{{product.product.title}}</p>
+            <div class = "item-actions">
+                <button mat-icon-button (click) = "handleDecrease(product)" [disabled] = "isDisabled(product)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <input class = "qtyInput" matInput type = "number" min = "1" max = "99" value = "{{product.quantity}}" disabled = "disabled">
+                <button mat-icon-button (click) = "handleIncrease(product)">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button #delete mat-icon-button (click) = "handleRemove(product)">
+                    <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class = "actions">
+        <button id = "trash" mat-icon-button color = "warn" (click) = "handleRemoveAll()">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+        <button class = "checkout" mat-raised-button color = "primary">Go to Checkout</button>
+    </div>
+</ng-template>

@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {ConfirmationDialogModel} from "../../../models/confirmation-dialog.model";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {Post} from "../../../models/post.model";
 
 
 @Component({
@@ -14,9 +17,8 @@ import { environment } from 'src/environments/environment';
 export class PostComponent implements OnInit {
 
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
-
   voted = false;
-
+  bookmarked: any = false;
   userCanVote= true;
 
 
@@ -31,7 +33,7 @@ export class PostComponent implements OnInit {
 
   imageURL: string = "";
 
-  constructor(public userService: UserService, public httpClient: HttpClient) {
+  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog) {
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
@@ -44,27 +46,29 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+      this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
 
 
-    this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
-      postId: this.post.postId
-    }).subscribe((res) => {
-      
-      
-      this.likes = res;
-      this.post.likes = this.likes.length;  
-    },(err: any) => {
-      console.log(err);
-    });
+      this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+          postId: this.post.postId
+      }).subscribe((res) => {
 
-    for(let i = 0; i<this.likes.length; i++){
-      if(this.likes.get(i).userId == this.user?.userId){
-        this.userCanVote=false;
+
+          this.likes = res;
+          this.post.likes = this.likes.length;
+      }, (err: any) => {
+          console.log(err);
+      });
+
+      for (let i = 0; i < this.likes.length; i++) {
+          if (this.likes.get(i).userId == this.user?.userId) {
+              this.userCanVote = false;
+          }
       }
-    }
 
   }
+
+
 
   canUserVote(){
   }
@@ -73,20 +77,51 @@ export class PostComponent implements OnInit {
     this.post.likes++;
     this.voted=true;
 
-    
+
     this.httpClient.post(environment.endpointURL + "user/likePost", {
       userId: 3,
       postId: this.post.postId
     }).subscribe((res) => {
       //console.log(res);
-      
-      
+
+
     },(err: any) => {
       console.log(err);
     });
 
   }
 
-  
+  isBookmarked(): boolean {
+      if( this.post ) {
+          return this.userService.isPostBookmarked(this.post.postId);
+      }
+      else return false;
+  }
 
-}
+
+  bookmark(): void {
+      if( this.post) {
+          this.userService.addPostToBookmarks(this.post);
+      }
+  }
+
+  removeBookmark(): void {
+      if( this.post ) {
+          const dialogData = new ConfirmationDialogModel("Logout", "Are you sure you want to remove bookmark?");
+          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+              maxWidth: '400px',
+              closeOnNavigation : true,
+              data: dialogData
+          })
+
+          dialogRef.afterClosed().subscribe(dialogResult => {
+              if (dialogResult) {
+                  this.userService.removePostFromBookmarks(this.post);
+              }
+          })
+
+      }
+  }
+
+
+    }
