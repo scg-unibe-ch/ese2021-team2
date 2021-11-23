@@ -8,7 +8,7 @@
     <h1 class = "headline">Your Items</h1>
     <div *ngFor = "let product of products" >
         <div class = "item">
-            <img id = "thumbnail" [src] = "concatURL(product.product.productId)"> 
+            <img id = "thumbnail" [src] = "concatURL(product.product.productId)">
             <p class = "name">{{product.product.title}}</p>
             <div class = "item-actions">
                 <button mat-icon-button (click) = "handleDecrease(product)" [disabled] = "isDisabled(product)">
@@ -28,6 +28,6 @@
         <button id = "trash" mat-icon-button color = "warn" (click) = "handleRemoveAll()">
             <mat-icon>delete_forever</mat-icon>
         </button>
-        <button class = "checkout" mat-raised-button color = "primary">Go to Checkout</button>
+        <button [routerLink]="'order'" class = "checkout" mat-raised-button color = "primary">Go to Checkout</button>
     </div>
 </ng-template>
