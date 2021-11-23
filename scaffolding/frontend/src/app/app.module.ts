@@ -79,6 +79,7 @@ import {MatSelectModule} from "@angular/material/select";
     providers: [ DataService],
     bootstrap: [AppComponent],
     exports: [
+        UserComponent,
     ],
 })
 export class AppModule { }
