@@ -5,6 +5,7 @@ import {User} from "../../../../models/user.model";
 import {environment} from "../../../../../environments/environment";
 import {ProductItem} from "../../../../models/product-item.model";
 import {CartService} from "../../services/cart.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-order',
@@ -19,6 +20,12 @@ export class OrderComponent implements OnInit {
     products: ProductItem[]=[];
     productIds: number[]=[];
     addressExists: boolean = false;
+    newStreet: string = '';
+    newCity: string = '';
+    newZipCode: string = '';
+    newHouseNr: number = 0;
+    newAddress: string = '';
+    wasOrderSubmitted: boolean = false;
 
 
     constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
@@ -33,7 +40,7 @@ export class OrderComponent implements OnInit {
         this.products = this.cartService.getProducts();
 
         this.setProductIds();
-        //this.setAddressExists();
+        this.setAddressExists();
 
     }
 
@@ -48,30 +55,62 @@ export class OrderComponent implements OnInit {
 
   setAddressExists(): void{
 
-        if(this.user?.city == null || this.user?.zipCode == null || this.user.street == null || this.user?.housenr == null){
+        if(this.user?.city == '' || this.user?.zipCode == '' || this.user?.street == '' || this.user?.housenr == 0){
             this.addressExists = false;
-            console.log('user doesn\'t have a complete address')
         }else{
             this.addressExists = true;
-            console.log('user has a complete address')
         }
 
   }
-
+    setNewAddress():void{
+        this.newAddress = this.newStreet+ ','+this.newHouseNr+ ','+this.newCity+ ','+this.newZipCode+''
+        console.log('this is the new Street:'+this.newStreet)
+}
     submitOrder(): void{
-        this.httpClient.post(environment.endpointURL + "order/createOrder",{
-            customerId: this.user?.userId,
-            customerName: this.user?.userName,
-            paymentMethod: this.paymentMethod,
-            deliveryAddress: this.user?.street + ','+ this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode,
-            status: 'pending',
-            productIds: this.productIds
-        }).subscribe((response: any) => {
-            },
-            (err: any) => {
+
+        var submittedAddress='';
+
+        if(this.addressExists){
+            submittedAddress = this.user?.street + ','+ this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode
+        }
+        else{
+            this.setNewAddress();
+            submittedAddress = this.newAddress;
+            console.log(submittedAddress)
+        }
+
+        if(!this.addressExists){
+            if(window.confirm('Are sure you have filled in correct inputs for the address?')){
+                this.httpClient.post(environment.endpointURL + "order/createOrder",{
+                    customerId: this.user?.userId,
+                    customerName: this.user?.userName,
+                    paymentMethod: this.paymentMethod,
+                    deliveryAddress: submittedAddress,
+                    status: 'pending',
+                    productIds: this.productIds
+                }).subscribe((response: any) => {
+                    },
+                    (err: any) => {
+                    }
+                );
+                console.log('submitted order')
             }
-        );
-        console.log('submitted order')
+        }else{
+            this.httpClient.post(environment.endpointURL + "order/createOrder",{
+                customerId: this.user?.userId,
+                customerName: this.user?.userName,
+                paymentMethod: this.paymentMethod,
+                deliveryAddress: submittedAddress,
+                status: 'pending',
+                productIds: this.productIds
+            }).subscribe((response: any) => {
+                },
+                (err: any) => {
+                }
+            );
+            console.log('submitted order')
+            this.wasOrderSubmitted = true;
+        }
   }
 
 }

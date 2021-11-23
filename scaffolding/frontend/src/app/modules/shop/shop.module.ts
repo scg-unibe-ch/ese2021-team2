@@ -20,6 +20,7 @@ import { MatBadgeModule} from '@angular/material/badge';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OrderComponent } from './components/order/order.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 const routes: Routes = [
   {
@@ -68,6 +69,7 @@ export const routing = RouterModule.forChild(routes);
         MatBadgeModule,
         SharedModule,
         MatSelectModule,
+        MatFormFieldModule,
     ],
   exports: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
