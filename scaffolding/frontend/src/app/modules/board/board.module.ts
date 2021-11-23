@@ -5,7 +5,6 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { BoardComponent } from './pages/board/board.component';
 import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
-import {AppModule} from "../../app.module";
 import {SubjectsModule} from "../subjects/subjects.module";
 import { ShopModule } from '../shop/shop.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -30,7 +29,6 @@ export const routing = RouterModule.forChild(routes);
         CommonModule,
         routing,
         FormsModule,
-        AppModule,
         SubjectsModule,
         ShopModule,
         SharedModule
