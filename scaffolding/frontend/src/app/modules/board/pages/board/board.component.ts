@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DataService } from "../../../service/data.service";
 
 @Component({
   selector: 'app-board',
@@ -28,7 +29,7 @@ export class BoardComponent implements OnInit {
   imageURL: any;
   searchWord:string="";
   
-  constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+  constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
 //this is where th http request to get the board goes
@@ -45,7 +46,7 @@ export class BoardComponent implements OnInit {
       );
   });
 
-    this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
+    this.postList = new PostListComponent(httpClient, userService, _Activatedroute, data)
       // Listen for changes
       userService.loggedIn$.subscribe(res => this.loggedIn = res);
       // Current value

@@ -9,6 +9,7 @@ export interface PostAttributes {
     boardId: number;
     creatorId: number;
     semester: string;
+    category: string;
     postImage: string;
 }
 
@@ -24,6 +25,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
     boardId: number;
     creatorId: number;
     semester: string;
+    category: string;
     postImage: string;
 
     public static initialize(sequelize: Sequelize) {
@@ -59,6 +61,10 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                 },
                 semester: {
                     type: DataTypes.STRING,
+                    allowNull: true
+                },
+                category: {
+                    type: DataTypes.ENUM('technial', 'programming', 'theoretical', 'other') ,
                     allowNull: true
                 },
                 postImage : {
