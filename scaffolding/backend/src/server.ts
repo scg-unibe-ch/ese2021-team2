@@ -8,6 +8,7 @@ import { Sequelize } from 'sequelize';
 import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
+import { Order } from './models/order.model';
 
 import cors from 'cors';
 import { AdminController } from './controllers/admin.controller';
@@ -25,6 +26,7 @@ import { ProductImage } from './models/productImage.model';
 import { ProductController } from './controllers/product.controller';
 import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
+import {OrderController} from './controllers/order.controller';
 
 
 export class Server {
@@ -49,6 +51,7 @@ export class Server {
         ProductImage.initialize(this.sequelize);
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
+        Order.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
@@ -93,6 +96,7 @@ export class Server {
             .use('/board', BoardController)
             .use('/product', ProductController)
             .use('/comment', PostCommentController)
+            .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
             // this is the message you get if you open http://localhost:3000/ when the server is running

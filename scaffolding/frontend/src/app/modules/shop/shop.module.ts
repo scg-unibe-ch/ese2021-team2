@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { ProductComponent } from 'src/app/modules/shop/components/product/product.component';
 import { MatCardModule } from '@angular/material/card';
 import { ShopComponent } from './pages/shop/shop.component';
@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule} from '@angular/material/badge';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { OrderComponent } from './components/order/order.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 const routes: Routes = [
   {
@@ -31,10 +34,14 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent
-  }
+  },
+    {
+    path: 'cart/order',
+    component: OrderComponent
+    }
 ];
 
-export const routing = RouterModule.forChild(routes); 
+export const routing = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -44,23 +51,27 @@ export const routing = RouterModule.forChild(routes);
     ProductPageComponent,
     filterPipe,
     CartComponent,
+    OrderComponent,
 
   ],
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatDividerModule,
-    routing,
-    MatIconModule,
-    MatInputModule,
-    MatSnackBarModule,
-    FormsModule,
-    MatDialogModule,
-    MatBadgeModule,
-    SharedModule,
-  ],
-  exports: []
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatDividerModule,
+        routing,
+        MatIconModule,
+        MatInputModule,
+        MatSnackBarModule,
+        FormsModule,
+        MatDialogModule,
+        MatBadgeModule,
+        SharedModule,
+        MatSelectModule,
+        MatFormFieldModule,
+    ],
+  exports: [],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ShopModule { }

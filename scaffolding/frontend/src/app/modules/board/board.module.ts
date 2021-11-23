@@ -30,7 +30,6 @@ export const routing = RouterModule.forChild(routes);
         CommonModule,
         routing,
         FormsModule,
-        AppModule,
         SubjectsModule,
         ShopModule,
         SharedModule
