@@ -30,7 +30,6 @@ export const routing = RouterModule.forChild(routes);
         routing,
         FormsModule,
         SubjectsModule,
-        ShopModule,
         SharedModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

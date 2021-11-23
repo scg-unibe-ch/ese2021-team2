@@ -5,9 +5,9 @@
     <button mat-button (click)="setLifestyle()" [routerLink] = "'shop'">Lifestyle</button>
 </div>
 <div class="filtcat" *ngIf="isBoardRoute()">
-    <button mat-button (click)="setAll()" [routerLink] = "'board'">All</button>
-    <button mat-button (click)="setTech()" [routerLink] = "'board'">technical</button>
-    <button mat-button (click)="setProg()" [routerLink] = "'board'">programming</button>
-    <button mat-button (click)="setTheo()" [routerLink] = "'board'">theoretical</button>
-    <button mat-button (click)="setOther()" [routerLink] = "'board'">other</button>
+    <button mat-button (click)="setAll()" >All</button>
+    <button mat-button (click)="setTech()" >technical</button>
+    <button mat-button (click)="setProg()" [routerLink] = "'boards'">programming</button>
+    <button mat-button (click)="setTheo()" [routerLink] = "'boards'">theoretical</button>
+    <button mat-button (click)="setOther()" [routerLink] = "'boards'">other</button>
 </div>
