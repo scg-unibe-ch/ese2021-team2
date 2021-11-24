@@ -6,7 +6,6 @@ import { BoardComponent } from './pages/board/board.component';
 import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {SubjectsModule} from "../subjects/subjects.module";
-import { ShopModule } from '../shop/shop.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 

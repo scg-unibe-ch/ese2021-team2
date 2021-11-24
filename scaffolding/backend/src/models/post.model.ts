@@ -44,7 +44,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 likes: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.INTEGER,
                     allowNull: true
                 },
                 date: {
