@@ -14,20 +14,20 @@ export class BoardListComponent implements OnInit {
      boardList=[{boardName:'placeholder', boardId:1}];
 
 
-  constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute) { 
-    
+  constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute) {
 
-    this._Activatedroute.paramMap.subscribe(params => { 
-        this.subjectId= parseInt(params.get('subjectId')!); 
+
+    this._Activatedroute.paramMap.subscribe(params => {
+        this.subjectId= parseInt(params.get('subjectId')!);
     });
-    
+
     this.setBoardList()
   }
 
   ngOnInit(): void {
-    
+
   }
-    
+
 
   public  setSubjectId(subjectId: number): void{
       this.subjectId = subjectId;
@@ -36,7 +36,7 @@ export class BoardListComponent implements OnInit {
   }
 
    setBoardList(): void{
-      console.log('board-list comment')
+
       this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: this.subjectId})
           .subscribe((res: any) => {
                   this.boardList = res;
@@ -47,4 +47,6 @@ export class BoardListComponent implements OnInit {
               }
           );
   }
+
+
 }

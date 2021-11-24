@@ -1,0 +1,39 @@
+.product-card{
+    display: inline-block;
+    vertical-align: top;
+    font-family: Bahnschrift Light;
+    background-color: white;
+    height: 390px;
+    width: 240px;
+    text-align: center;
+    padding: 0px;
+    margin: 20px
+}
+
+.product-card:hover{
+    cursor: pointer;
+}
+.mat-card-title{
+    opacity: 70%;
+    font-size: 13pt;
+    min-height: 45px;
+    min-width: 200px;
+}
+
+.image-container{
+    display: flex;
+    height:min-content;
+}
+
+.mat-card-image{
+    padding: 5px;
+    height: 240px;
+    object-fit: contain;
+    overflow: hidden;
+    margin: 0;
+    max-width: 100%;
+}
+
+.mat-card-image:hover{
+    transform: scale(1.1)
+}

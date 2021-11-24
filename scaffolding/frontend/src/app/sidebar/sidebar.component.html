@@ -6,16 +6,15 @@
         <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
     </div>
     <div class="user-text">
-        <div *ngIf="loggedIn; else notLoggedIn">
+        <div *ngIf="loggedIn else notLoggedIn">
             <a routerLink="/profile">{{this.user?.userName}}</a>
             <div>
                 <b style="color: rgb(0, 255, 0);">•</b> Online
             </div>
         </div>
         <ng-template #notLoggedIn>
-        <!--   <a routerLink="/login" routerLinkActive="active" (click)="onLogin()">Log in</a> -->
-            <a class="link" (click)="onLogin()"> Log in</a>
-            <a class="link" (click)="onLogin()">Sign up</a>
+        <a class="link" (click)="onLogin()"> Log in</a>
+        <a class="link" (click)="onRegister()">Sign up</a>
         </ng-template>
     </div>
 </div>

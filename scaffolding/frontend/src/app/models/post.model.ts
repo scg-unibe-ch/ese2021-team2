@@ -1,6 +1,3 @@
-import { User } from "./user.model";
-
-
 export class Post {
 
     constructor(
@@ -14,8 +11,6 @@ export class Post {
         public semester: string,
         public tags: string[],
         public postImage: string | undefined
-    ) {
-    
+    ){}
 
-    }
    }

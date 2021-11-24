@@ -14,14 +14,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { UserComponent } from './user/user.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -30,11 +29,19 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { HeaderComponent } from './header/header.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
-import { LoginComponent } from './login/login.component';
+
+import { CoreModule } from './core/core.module';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import { DataService } from './modules/service/data.service';
+
+import {SharedModule} from "./shared/shared.module";
+import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
+import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
     declarations: [
@@ -42,15 +49,14 @@ import { CommonModule } from '@angular/common';
         TodoListComponent,
         TodoItemComponent,
         UserComponent,
-        PostComponent,
         SidebarComponent,
         HeaderComponent,
-        LoginComponent,
+        // PostComponent,
         DashboardComponent,
-    ],
 
+    ],
     imports: [
-        CommonModule,
+        CoreModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -68,19 +74,12 @@ import { CommonModule } from '@angular/common';
         MatDividerModule,
         AppRoutingModule,
         MatDialogModule,
-
+        SharedModule,
     ],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        }
-    ],
+    providers: [ DataService],
     bootstrap: [AppComponent],
     exports: [
-        PostComponent
+        UserComponent,
     ],
-    entryComponents: [LoginComponent]
 })
 export class AppModule { }

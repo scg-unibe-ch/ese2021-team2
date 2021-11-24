@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Post } from '../../../../models/post.model';
-import { UserService } from '../../../../core/http/user/user.service';
+import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
@@ -19,8 +19,10 @@ export class PostListComponent implements OnInit {
   postFeedback: string | undefined;
   posts: Post[] = [];
   changed= true;
-  loggedIn: boolean | undefined;
-  user: User | undefined;
+  loggedIn: boolean;
+  user: User | null;
+
+  @Input() searchTerm:string="";
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
 
@@ -33,8 +35,8 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
-    this._Activatedroute.paramMap.subscribe(params => { 
-      this.boardId= parseInt(params.get('boardId')!); 
+    this._Activatedroute.paramMap.subscribe(params => {
+      this.boardId= parseInt(params.get('boardId')!);
   });
 
   }
@@ -55,38 +57,48 @@ export class PostListComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): boolean{
     var postToAdd: Post;
     if(file) {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], undefined)
     }
-    this.createPostInBackend(postToAdd, file);
-    this.posts.push(postToAdd)
+      console.log('still trying');
+    if( this.isValid(postToAdd) ) {
+        this.createPostInBackend(postToAdd, file);
+        this.postFeedback = "";
+        console.log('no feddback');
+        this.posts.push(postToAdd);
+        return true;
+    } else {
+        return false;
+    }
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost",{
-      postId: post.postId,
-      title: post.title,
-      content: post.content,
-      likes:post.likes,
-      date:post.date,
-      boardId:post.boardId,
-      creatorId:post.creatorId,
-      semester: post.semester,
-      postImage: post.postImage
-    }).subscribe((response: any) => {
-      this.addImage(image, response.postId);
-    },
-      (err: any) => {
-        this.postFeedback = err.error.message;
-      }
-    );
+      this.httpClient.post(environment.endpointURL + "post/createPost", {
+          postId: post.postId,
+          title: post.title,
+          content: post.content,
+          likes: post.likes,
+          date: post.date,
+          boardId: post.boardId,
+          creatorId: post.creatorId,
+          semester: post.semester,
+          postImage: post.postImage
+      }).subscribe((response: any) => {
+              this.addImage(image, response.postId);
+
+          },
+          (err: any) => {
+              console.log(err);
+              this.postFeedback = err;
+          }
+      );
   }
 
-  addImage(file:File | undefined, postId : number) {
+  addImage(file:File | undefined, postId : number): void {
     if(file === undefined) {
       return;
     } else {
@@ -102,7 +114,7 @@ export class PostListComponent implements OnInit {
     if (this.mode==="board") {
 
       console.log("post list id: "+this.boardId);
-      
+
 
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
@@ -128,6 +140,30 @@ export class PostListComponent implements OnInit {
     this.checkUserStatus();
 
 
+  }
+
+  isValid(post: Post): boolean {
+      if( post.title ) {
+          if (post.content) {
+              return true;
+          } else if (post.postImage) {
+              return true;
+          } else {
+              this.postFeedback = 'Post requires either an image or some text!';
+              return false;
+          }
+      } else {
+          this.postFeedback = 'Post requires a title!';
+          return false
+          }
+  }
+
+  isAuthorizedToCreate(): boolean {
+      if( this.user ) {
+          return !this.user.admin;
+      } else {
+          return false;
+      }
   }
 
 }

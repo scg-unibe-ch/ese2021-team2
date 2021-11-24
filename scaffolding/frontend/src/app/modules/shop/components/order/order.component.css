@@ -1,0 +1,21 @@
+
+.headline{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+*{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+/*
+mat-form-field{
+    margin-left: 5%;
+}
+*/
