@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -31,7 +32,8 @@ export const routing = RouterModule.forChild(routes);
         FormsModule,
         SubjectsModule,
         SharedModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatToolbarModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
