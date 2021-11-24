@@ -1,12 +1,16 @@
 <div *ngIf="loggedIn">
-    <h1>Your Order</h1>
+    <h1 class = "headline">Your Order</h1>
     <mat-card>
+        <mat-label>
+            <mat-card-title>Summary of your order</mat-card-title>
+        </mat-label>
         <div *ngFor="let product of products">
-            <p>Product: {{product.product.title}}, Amount: {{product.quantity}}</p>
+            <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
         </div>
     </mat-card>
+    <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
+    <div *ngIf="addressExists"><p>Please pick a payment method to submit your order.</p></div>
 
-    <p>Please fill in your details below to submit your order.</p>
     <div *ngIf="!addressExists">
         <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
         If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page.</p>
@@ -30,27 +34,35 @@
             <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode">
         </mat-form-field>
 
+        <mat-form-field appearance="fill">
+            <mat-label>Paymentmethod</mat-label>
+            <mat-select [(value)]="paymentMethod">
+                <mat-option value="Invoice" selected>Invoice</mat-option>
+                <mat-option value="CreditCard">Credit Card</mat-option>
+                <mat-option value="Twint">Twint</mat-option>
+                <mat-option value="PayPal">PayPal</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
+
     <div *ngIf="addressExists">
         <p>Since you have filled in your address in your profile details already we will use that address.</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Paymentmethod</mat-label>
+            <mat-select [(value)]="paymentMethod">
+                <mat-option value="Invoice" selected>Invoice</mat-option>
+                <mat-option value="CreditCard">Credit Card</mat-option>
+                <mat-option value="Twint">Twint</mat-option>
+                <mat-option value="PayPal">PayPal</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Paymentmethod</mat-label>
-        <mat-select [(value)]="paymentMethod">
-            <mat-option value="Invoice" selected>Invoice</mat-option>
-            <mat-option value="CreditCard">Credit Card</mat-option>
-            <mat-option value="Twint">Twint</mat-option>
-            <mat-option value="PayPal">PayPal</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <br>
-    <br>
-    <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
 
+    <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
     <div *ngIf="wasOrderSubmitted">Your order has been successfully submitted.</div>
 
 </div>
+
 <div *ngIf="!loggedIn">
-    <h4>To purchase an order please log in first.</h4>
+    <h1 class = "headline">To purchase an order please log in first.</h1>
 </div>

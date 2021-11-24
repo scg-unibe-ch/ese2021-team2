@@ -2,10 +2,11 @@
 <mat-toolbar><input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search"></mat-toolbar>
 <h1>{{title}}</h1>
 
-<div *ngIf="loggedIn">
-    <button (click)="createPost()"> Create new Post</button>
-</div>
 
+
+<div>
+<button *ngIf="this.postList.isAuthorizedToCreate()" (click)="createPost()"> Create new Post</button>
+</div>
 
 
 <p>{{description}}</p>
@@ -14,7 +15,9 @@
     <h1>create post</h1>
 
     <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle">
-    <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
+    <br>
+    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="newContent" ></textarea>
+    <br>
 
     <select [(ngModel)]="newSemester">
         <option value="" disabled>Semester</option>
@@ -36,6 +39,7 @@
     </div>
     <br>
     <button (click)="submitPost()" >Submit Post</button>
+    <div *ngIf="this.postList.postFeedback">{{this.postList.postFeedback}}</div>
 </div>
 
 

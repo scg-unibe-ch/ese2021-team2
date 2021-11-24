@@ -33,6 +33,7 @@ export class UserService {
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
+            this.loadBookmarkedPosts();
         } else {
             this.logout();
         }
@@ -176,7 +177,7 @@ export class UserService {
     isPostBookmarked(postId: number): boolean{
         if( this.bookmarkedPosts ){
             for( const post of this.bookmarkedPosts){
-                if( post.postId - postId === 0) {
+                if( post && post.postId - postId === 0) {
                     return true;
                 }
             }
@@ -216,6 +217,18 @@ export class UserService {
                 }, (err: any) => {
                     console.log('Couldnt delete post from bookmarks ' + err);
                 })
+        }
+    }
+
+    deletePost(post: Post): void {
+        if ( post ) {
+            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/delete", {})
+                .subscribe(res => {
+                    this.removePostFromBookmarks(post);
+                    console.log('Successfully deleted this post');
+                }, (err: any) => {
+                    console.log(err);
+                });
         }
     }
 }

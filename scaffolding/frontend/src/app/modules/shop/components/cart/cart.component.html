@@ -22,7 +22,12 @@
                     <mat-icon>remove_shopping_cart</mat-icon>
                 </button>
             </div>
+            <p class = "price">CHF {{getPrice(product).toFixed(2)}}</p>
         </div>
+    </div>
+    <div class = "total">
+        <p>Total</p>
+        <p>CHF {{getTotal().toFixed(2)}}</p>
     </div>
     <div class = "actions">
         <button id = "trash" mat-icon-button color = "warn" (click) = "handleRemoveAll()">
