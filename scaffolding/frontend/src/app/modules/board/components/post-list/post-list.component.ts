@@ -1,17 +1,19 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Post } from '../../../../models/post.model';
 import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from "../../../service/data.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
 
   @Input() mode = "board";
   boardId: number = 4;
@@ -23,10 +25,12 @@ export class PostListComponent implements OnInit {
   user: User | null;
 
   @Input() searchTerm:string="";
+  filterarg = 'technical';
+  subscription: Subscription;
 
-  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
 
-
+    
 
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -47,6 +51,12 @@ export class PostListComponent implements OnInit {
 
 
     this.setPostList()
+
+    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   checkUserStatus(): void {
@@ -57,12 +67,12 @@ export class PostListComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+  public createPost(title: string, content: string, semester:string, category:string, boardId: number, file: File | undefined): void{
     var postToAdd: Post;
     if(file) {                                                                        
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
     }
     this.createPostInBackend(postToAdd, file);
     this.posts.push(postToAdd)
@@ -78,6 +88,7 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester,
+      category:post.category,
       postImage: post.postImage
     }).subscribe((response: any) => {
       this.addImage(image, response.postId);

@@ -9,7 +9,7 @@ export class Post {
         public boardId: number,
         public creatorId: number | undefined,
         public semester: string,
-        public tags: string[],
+        public category: string,
         public postImage: string | undefined
     ){}
 
