@@ -15,7 +15,11 @@
 
     <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle">
     <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
-    <input type="text" placeholder="semester" name="semester" [(ngModel)]="newSemester">
+
+    <select [(ngModel)]="newSemester">
+        <option value="" disabled>Semester</option>
+        <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+     </select>
 
     <br>
     <br>

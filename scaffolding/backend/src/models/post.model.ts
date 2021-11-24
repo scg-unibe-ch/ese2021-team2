@@ -60,7 +60,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 semester: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.ENUM('1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'),
                     allowNull: true
                 },
                 category: {

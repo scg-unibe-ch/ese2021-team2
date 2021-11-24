@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -29,7 +30,8 @@ export const routing = RouterModule.forChild(routes);
         routing,
         FormsModule,
         SubjectsModule,
-        SharedModule
+        SharedModule,
+        ReactiveFormsModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

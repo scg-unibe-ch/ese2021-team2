@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   newFile: File | undefined;
   imageURL: any;
   searchWord:string="";
+  SemesterAuswahl: any = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
   
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
@@ -81,4 +82,7 @@ export class BoardComponent implements OnInit {
     this.ngOnInit();
   }
 
+  changeSemester(e:string) {
+    this.newSemester = e;
+  }
 }
