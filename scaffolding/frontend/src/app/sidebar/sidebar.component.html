@@ -19,7 +19,7 @@
     </div>
 </div>
 <div class="menu-button-wrapper">
-    <button mat-button class="menu-button" (click)="sendIsExpanded()">
+    <button mat-button class="menu-button" *ngIf="isShopRoute() || isBoardRoute()" (click)="sendIsExpanded()">
         <mat-icon>home</mat-icon>
         <span class="dashboard">Dashboard</span>
     </button>
