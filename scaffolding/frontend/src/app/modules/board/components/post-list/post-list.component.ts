@@ -60,9 +60,9 @@ export class PostListComponent implements OnInit {
   public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): boolean{
     var postToAdd: Post;
     if(file) {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], undefined)
     }
       console.log('still trying');
     if( this.isValid(postToAdd) ) {
