@@ -34,27 +34,35 @@
             <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode">
         </mat-form-field>
 
+        <mat-form-field appearance="fill">
+            <mat-label>Paymentmethod</mat-label>
+            <mat-select [(value)]="paymentMethod">
+                <mat-option value="Invoice" selected>Invoice</mat-option>
+                <mat-option value="CreditCard">Credit Card</mat-option>
+                <mat-option value="Twint">Twint</mat-option>
+                <mat-option value="PayPal">PayPal</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
+
     <div *ngIf="addressExists">
         <p>Since you have filled in your address in your profile details already we will use that address.</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Paymentmethod</mat-label>
+            <mat-select [(value)]="paymentMethod">
+                <mat-option value="Invoice" selected>Invoice</mat-option>
+                <mat-option value="CreditCard">Credit Card</mat-option>
+                <mat-option value="Twint">Twint</mat-option>
+                <mat-option value="PayPal">PayPal</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Paymentmethod</mat-label>
-        <mat-select [(value)]="paymentMethod">
-            <mat-option value="Invoice" selected>Invoice</mat-option>
-            <mat-option value="CreditCard">Credit Card</mat-option>
-            <mat-option value="Twint">Twint</mat-option>
-            <mat-option value="PayPal">PayPal</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <br>
-    <br>
-    <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
 
+    <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
     <div *ngIf="wasOrderSubmitted">Your order has been successfully submitted.</div>
 
 </div>
+
 <div *ngIf="!loggedIn">
     <h1 class = "headline">To purchase an order please log in first.</h1>
 </div>
