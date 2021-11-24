@@ -67,12 +67,12 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+  public createPost(title: string, content: string, semester:string, category:string, boardId: number, file: File | undefined): void{
     var postToAdd: Post;
     if(file) {                                                                        
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
     }
     this.createPostInBackend(postToAdd, file);
     this.posts.push(postToAdd)
@@ -88,6 +88,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester,
+      category:post.category,
       postImage: post.postImage
     }).subscribe((response: any) => {
       this.addImage(image, response.postId);

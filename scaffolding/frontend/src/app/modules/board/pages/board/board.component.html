@@ -19,6 +19,11 @@
     <select [(ngModel)]="newSemester">
         <option value="" disabled>Semester</option>
         <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+    </select>
+    &nbsp;
+    <select [(ngModel)]="newCategory">
+        <option value="" disabled>Category</option>
+        <option *ngFor="let kategorie of KategorieAuswahl" [ngValue]="kategorie">{{kategorie}}</option>
      </select>
 
     <br>
