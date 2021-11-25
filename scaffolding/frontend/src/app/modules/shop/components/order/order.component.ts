@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {UserService} from "../../../../core/http/user.service";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../../../../models/user.model";
@@ -23,9 +23,17 @@ export class OrderComponent implements OnInit {
     newStreet: string = '';
     newCity: string = '';
     newZipCode: string = '';
-    newHouseNr: number = 0;
+    newHouseNr: number = 1;
     newAddress: string = '';
     wasOrderSubmitted: boolean = false;
+    userAddress?: string  = '';
+    invalidZipCodeMsg: string= '';
+    isZipCodeInvalid: boolean = true;
+    isCityInvalid: boolean = true;
+    invalidCityMsg: string = '';
+    isStreetInvalid: boolean = true;
+    invalidStreetMsg: string = '';
+    isAddressInvalid: boolean = true;
 
 
     constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
@@ -41,16 +49,27 @@ export class OrderComponent implements OnInit {
 
         this.setProductIds();
         this.setAddressExists();
+        if(this.user != null){
+            this.setUserAddress();
+        }
 
     }
 
   ngOnInit(): void {
+        if(this.addressExists){
+            this.isAddressInvalid = false;
+        }
   }
+
 
   setProductIds(): void{
       for (var val of this.products){
           this.productIds.push(val.product.productId);
       }
+  }
+
+  setUserAddress(): void{
+        this.userAddress = this.user?.street + ' ' + this.user?.housenr + ', ' + this.user?.city + ', ' + this.user?.zipCode
   }
 
   setAddressExists(): void{
@@ -112,6 +131,62 @@ export class OrderComponent implements OnInit {
             this.wasOrderSubmitted = true;
         }
   }
+    checkNewZipCode(): void{
+        this.isZipCodeInvalid = false;
+        let invalidFormat = false;
+        const toCheck: string = this.newZipCode;
 
+        try {
+            if (toCheck.trim().length >= 5 || toCheck.length <= 3) {
+                invalidFormat = true;
+                this.invalidZipCodeMsg = 'The Zip Code should be 4 Digits!';
+            }
+            else if (isNaN(+toCheck)) {
+                invalidFormat = true;
+                this.invalidZipCodeMsg = 'The Zip Code may only contain Numbers!';
+            }
+
+        } finally {
+            this.isZipCodeInvalid = invalidFormat;
+            this.checkNewAddress();
+        }
+    }
+
+    checkNewCity(): void{
+        this.isCityInvalid = false;
+        let invalidFormat = false;
+        const toCheck: string = this.newCity;
+
+        try {
+            if ((/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~1234567890]/.test(toCheck))) {
+                invalidFormat = true;
+                this.invalidCityMsg = 'The city should only contain letters!';
+            }
+
+        } finally {
+            this.isCityInvalid = invalidFormat;
+            this.checkNewAddress();
+        }
+    }
+    checkNewStreet(): void{
+        this.isStreetInvalid = false;
+        let invalidFormat = false;
+        const toCheck: string = this.newStreet;
+
+        try {
+            if ((/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~1234567890]/.test(toCheck))) {
+                invalidFormat = true;
+                this.invalidStreetMsg = 'The city should only contain letters!';
+            }
+
+        } finally {
+            this.isStreetInvalid = invalidFormat;
+            this.checkNewAddress();
+        }
+    }
+
+    checkNewAddress(): void{
+        this.isAddressInvalid = this.isCityInvalid || this.isStreetInvalid || this.isZipCodeInvalid
+    }
 }
 
