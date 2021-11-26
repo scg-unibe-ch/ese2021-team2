@@ -81,10 +81,9 @@ export class OrderComponent implements OnInit {
         }
 
   }
-    setNewAddress():void{
-        this.newAddress = this.newStreet+ ','+this.newHouseNr+ ','+this.newCity+ ','+this.newZipCode+''
-        console.log('this is the new Street:'+this.newStreet)
-}
+  setNewAddress():void{
+    this.newAddress = this.newStreet+ ','+this.newHouseNr+ ','+this.newCity+ ','+this.newZipCode+''
+  }
     submitOrder(): void{
 
         var submittedAddress='';
@@ -95,26 +94,8 @@ export class OrderComponent implements OnInit {
         else{
             this.setNewAddress();
             submittedAddress = this.newAddress;
-            console.log(submittedAddress)
         }
 
-        if(!this.addressExists){
-            if(window.confirm('Are sure you have filled in correct inputs for the address?')){
-                this.httpClient.post(environment.endpointURL + "order/createOrder",{
-                    customerId: this.user?.userId,
-                    customerName: this.user?.userName,
-                    paymentMethod: this.paymentMethod,
-                    deliveryAddress: submittedAddress,
-                    status: 'pending',
-                    productIds: this.productIds
-                }).subscribe((response: any) => {
-                    },
-                    (err: any) => {
-                    }
-                );
-                console.log('submitted order')
-            }
-        }else{
             this.httpClient.post(environment.endpointURL + "order/createOrder",{
                 customerId: this.user?.userId,
                 customerName: this.user?.userName,
@@ -130,7 +111,7 @@ export class OrderComponent implements OnInit {
             console.log('submitted order')
             this.wasOrderSubmitted = true;
         }
-  }
+
     checkNewZipCode(): void{
         this.isZipCodeInvalid = false;
         let invalidFormat = false;

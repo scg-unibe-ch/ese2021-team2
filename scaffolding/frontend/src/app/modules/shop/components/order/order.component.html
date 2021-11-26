@@ -79,7 +79,9 @@
     </div>
 
     <button mat-stroked-button (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
-    <div *ngIf="wasOrderSubmitted">Your order has been successfully submitted.</div>
+    <div *ngIf="wasOrderSubmitted">
+        <p>Your order has been successfully submitted.</p>
+    </div>
 
 </div>
 
