@@ -42,6 +42,7 @@ import {SharedModule} from "./shared/shared.module";
 import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
 import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 import {MatSelectModule} from "@angular/material/select";
+import {NgxStripeModule} from "ngx-stripe";
 
 @NgModule({
     declarations: [
@@ -75,6 +76,8 @@ import {MatSelectModule} from "@angular/material/select";
         AppRoutingModule,
         MatDialogModule,
         SharedModule,
+        NgxStripeModule.forRoot('pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJW' +
+            'LfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO'),
     ],
     providers: [ DataService],
     bootstrap: [AppComponent],

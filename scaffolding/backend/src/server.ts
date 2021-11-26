@@ -27,6 +27,7 @@ import { ProductController } from './controllers/product.controller';
 import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
 import {OrderController} from './controllers/order.controller';
+import {env} from 'process';
 
 
 export class Server {

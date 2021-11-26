@@ -20,6 +20,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { OrderComponent } from './components/order/order.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {NgxStripeModule} from "ngx-stripe";
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
     {
     path: 'cart/order',
     component: OrderComponent
-    }
+    },
+
 ];
 
 export const routing = RouterModule.forChild(routes);
@@ -68,6 +70,8 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         MatSelectModule,
         MatFormFieldModule,
+        NgxStripeModule.forRoot('pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJW' +
+            'LfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO'),
     ],
   exports: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -59,6 +59,10 @@
     </div>
 
     <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
+    <button (click)="payOrder()">Pay order</button>
+    <div *ngIf="paymentMethod==='cc'">
+        <p>Cc payment</p>
+    </div>
     <div *ngIf="wasOrderSubmitted">Your order has been successfully submitted.</div>
 
 </div>

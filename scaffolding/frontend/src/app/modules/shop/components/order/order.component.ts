@@ -6,6 +6,7 @@ import {environment} from "../../../../../environments/environment";
 import {ProductItem} from "../../../../models/product-item.model";
 import {CartService} from "../../services/cart.service";
 import {FormControl} from "@angular/forms";
+import {formatCurrency} from "@angular/common";
 
 @Component({
   selector: 'app-order',
@@ -26,6 +27,7 @@ export class OrderComponent implements OnInit {
     newHouseNr: number = 0;
     newAddress: string = '';
     wasOrderSubmitted: boolean = false;
+    totalPrice: number = 0;
 
 
     constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
@@ -41,6 +43,8 @@ export class OrderComponent implements OnInit {
 
         this.setProductIds();
         this.setAddressExists();
+        this.computeTotalPrice();
+        this.invokeStripe();
 
     }
 
@@ -113,5 +117,59 @@ export class OrderComponent implements OnInit {
         }
   }
 
+  payOrder(){
+      this.makePayment();
+  }
+
+    makePayment() {
+        const totalPrice = this.totalPrice;
+        const httpClient = this.httpClient;
+        const paymentHandler = (<any>window).StripeCheckout.configure({
+            key: 'pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJWLfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO',
+            locale: 'auto',
+            token: function (stripeToken: any) {
+                console.log(stripeToken.card);
+                httpClient.post(environment.endpointURL + 'order/payment/stripe', {
+                    amount: totalPrice,
+                    token: stripeToken
+                })
+                    .subscribe( (res: any) => {
+                        if (res.success) {
+                            alert(res.status);
+                        }
+                }, (err: any) => {
+                        alert('Unknown error while paying');
+                    }
+                );
+
+            },
+        });
+        paymentHandler.open({
+            name: 'InSync Payment',
+            description: 'Pay your order',
+            amount: this.totalPrice * 100,
+            currency: 'chf',
+
+        });
+        console.log('Paid amount');
+    }
+
+    invokeStripe(){
+        if(!window.document.getElementById('stripe-script')){
+            const script = window.document.createElement('script');
+            script.id = 'stripe.script';
+            script.type = 'text/javascript';
+            script.src = 'http://checkout.stripe.com/checkout.js';
+            window.document.body.appendChild(script);
+        }
+    }
+
+    computeTotalPrice(): void {
+        let price = 0;
+        for (const product of this.products ){
+            price += product.quantity * product.product.price;
+        }
+        this.totalPrice = price;
+    }
 }
 

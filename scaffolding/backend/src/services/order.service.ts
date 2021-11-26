@@ -9,5 +9,12 @@ export class OrderService {
     }
 
 
-
+    public getOrders(userId: number): Promise<Order[]> {
+        return Order.findAll({
+            where: {
+                customerId: userId
+            },
+            order: [['createdAt', 'DESC']]
+        });
+    }
 }
