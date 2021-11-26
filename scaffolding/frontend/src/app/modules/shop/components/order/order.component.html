@@ -6,6 +6,7 @@
         </mat-label>
         <div *ngFor="let product of products">
             <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
+            <p>Total price: {{this.totalPrice}} CHF</p>
         </div>
     </mat-card>
     <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>

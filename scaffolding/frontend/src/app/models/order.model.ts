@@ -1,6 +1,4 @@
-import {Product} from "../../../../backend/src/models/product.model";
-
-export class OrderModel {
+export class Order {
 
     constructor(
         orderId: number,
@@ -9,7 +7,8 @@ export class OrderModel {
         paymentMethod: string,
         deliveryAddress: string,
         status: string,
-        products: Product[]
+        products: number[],
+        price: number
     ){}
 
 }

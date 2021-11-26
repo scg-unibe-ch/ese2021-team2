@@ -34,6 +34,7 @@ export class OrderComponent implements OnInit {
     isStreetInvalid: boolean = true;
     invalidStreetMsg: string = '';
     isAddressInvalid: boolean = true;
+    totalPrice: number;
 
 
     constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
@@ -52,6 +53,7 @@ export class OrderComponent implements OnInit {
         if(this.user != null){
             this.setUserAddress();
         }
+        this.computeTotalPrice();
 
     }
 
@@ -64,7 +66,9 @@ export class OrderComponent implements OnInit {
 
   setProductIds(): void{
       for (var val of this.products){
-          this.productIds.push(val.product.productId);
+          for(let i = 1; i<=val.quantity;i++){
+              this.productIds.push(val.product.productId);
+          }
       }
   }
 
@@ -102,7 +106,8 @@ export class OrderComponent implements OnInit {
                 paymentMethod: this.paymentMethod,
                 deliveryAddress: submittedAddress,
                 status: 'pending',
-                productIds: this.productIds
+                productIds: this.productIds,
+                price: this.totalPrice
             }).subscribe((response: any) => {
                 },
                 (err: any) => {
@@ -169,5 +174,13 @@ export class OrderComponent implements OnInit {
     checkNewAddress(): void{
         this.isAddressInvalid = this.isCityInvalid || this.isStreetInvalid || this.isZipCodeInvalid
     }
+    computeTotalPrice(): void {
+        let price = 0;
+        for (const product of this.products ){
+            price += product.quantity * product.product.price;
+        }
+        this.totalPrice = price;
+    }
+
 }
 
