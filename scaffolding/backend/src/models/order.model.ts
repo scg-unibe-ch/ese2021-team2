@@ -10,6 +10,7 @@ export interface OrderAttributes {
     deliveryAddress: string;
     status: string;
     productIds: number[];
+    price: number;
 }
 
 export interface OrderCreationAttributes extends Optional<OrderAttributes, 'orderId'> { }
@@ -23,6 +24,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
     deliveryAddress: string;
     status: string;
     productIds: number[];
+    price: number;
 
     public static initialize(sequelize: Sequelize ) {
         Order.init(
@@ -33,6 +35,9 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                     primaryKey: true
                 },
                 customerId: {
+                    type: DataTypes.INTEGER
+                },
+                price: {
                     type: DataTypes.INTEGER
                 },
                 customerName: {

@@ -6,17 +6,24 @@
         </mat-label>
         <div *ngFor="let product of products">
             <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
+            <p>Total price: {{this.totalPrice}} CHF</p>
         </div>
     </mat-card>
     <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
-    <div *ngIf="addressExists"><p>Please pick a payment method to submit your order.</p></div>
+
 
     <div *ngIf="!addressExists">
         <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
-        If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page.</p>
+        If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page here:
+            <a [routerLink]="'/profile'">Profile</a>
+        </p>
         <mat-form-field appearance="fill">
             <mat-label>Street</mat-label>
-            <input matInput placeholder="Street" [(ngModel)]="newStreet">
+            <input matInput placeholder="Street" [(ngModel)]="newStreet" (ngModelChange)="checkNewStreet()">
+            <div *ngIf="isStreetInvalid">
+                <br>
+                {{invalidStreetMsg}}
+            </div>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -26,18 +33,26 @@
 
         <mat-form-field appearance="fill">
             <mat-label>City</mat-label>
-            <input matInput placeholder="City" [(ngModel)]="newCity">
+            <input matInput placeholder="City" [(ngModel)]="newCity" (ngModelChange)="checkNewCity()">
+            <div *ngIf="isCityInvalid">
+                <br>
+                {{invalidCityMsg}}
+            </div>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>ZipCode</mat-label>
-            <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode">
+            <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode" (ngModelChange)="checkNewZipCode()">
+            <div *ngIf="isZipCodeInvalid">
+                <br>
+                {{invalidZipCodeMsg}}
+            </div>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Paymentmethod</mat-label>
             <mat-select [(value)]="paymentMethod">
-                <mat-option value="Invoice" selected>Invoice</mat-option>
+                <mat-option value="Invoice">Invoice</mat-option>
                 <mat-option value="CreditCard">Credit Card</mat-option>
                 <mat-option value="Twint">Twint</mat-option>
                 <mat-option value="PayPal">PayPal</mat-option>
@@ -46,7 +61,13 @@
     </div>
 
     <div *ngIf="addressExists">
-        <p>Since you have filled in your address in your profile details already we will use that address.</p>
+        <p>Since you have filled in your address in your profile details already we will use that address.
+        Please pick a payment method to submit your order.</p>
+        <p class="userAdress">{{this.userAddress}}</p>
+        <p>If this Address is incorrect please change it in your:
+            <a [routerLink]="'/profile'">Profile</a>
+        </p>
+
         <mat-form-field appearance="fill">
             <mat-label>Paymentmethod</mat-label>
             <mat-select [(value)]="paymentMethod">
@@ -58,12 +79,10 @@
         </mat-form-field>
     </div>
 
-    <button mat-stroked-button (click)="submitOrder()"> Submit Order </button>
-    <button (click)="payOrder()">Pay order</button>
-    <div *ngIf="paymentMethod==='cc'">
-        <p>Cc payment</p>
+    <button mat-stroked-button (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
+    <div *ngIf="wasOrderSubmitted">
+        <p>Your order has been successfully submitted.</p>
     </div>
-    <div *ngIf="wasOrderSubmitted">Your order has been successfully submitted.</div>
 
 </div>
 

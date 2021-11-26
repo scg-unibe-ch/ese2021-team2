@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
 
-    
+
 
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -47,9 +47,6 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log("ngOnInit is being executed");
-
-
     this.setPostList()
 
     this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
