@@ -205,7 +205,7 @@ export class OrderComponent implements OnInit {
                             alert(res.status);
                         }
                 }, (err: any) => {
-                        alert('Unknown error while paying');
+                        alert(err);
                     }
                 );
 

@@ -23,7 +23,7 @@ orderController.post('/payment/stripe',
         });
         res.status(200).json({success: true, status: 'Successfully paid ' + req.body.amount});
     } catch ( err ) {
-        res.status(500).json({success: false, status: err});
+        res.status(500).json({success: false, message: err.raw.message});
     }
     });
 
