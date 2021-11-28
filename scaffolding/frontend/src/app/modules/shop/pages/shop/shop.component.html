@@ -1,4 +1,7 @@
 <mat-toolbar>
+    <div class = "creation-container" *ngIf = "isAdmin">
+        <button mat-button (click) = "handleCreateProduct()">Add a product</button>
+    </div>
     Shop
     <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
     <button mat-icon-button [routerLink] = "'/shop/cart'" matBadge = {{productCount}} matBadgeSize = "small" 
