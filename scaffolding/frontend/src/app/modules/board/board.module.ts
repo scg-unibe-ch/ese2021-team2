@@ -9,6 +9,7 @@ import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 
 
 
@@ -24,6 +25,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
     PostListComponent,
     BoardComponent,
+    PostPreviewComponent,
     
   ],
     imports: [
