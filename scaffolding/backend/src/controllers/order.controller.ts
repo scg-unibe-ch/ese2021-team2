@@ -15,24 +15,41 @@ orderController.post('/createOrder', (req: Request, res: Response) => {
 orderController.post('/payment/stripe',
     async (req, res, next) => {
     try {
-        await stripe.charges.create({
+        const stripeToken = await stripe.charges.create({
             amount: req.body.amount * 100,
             currency: 'CHF',
             description: 'one time fee',
-            source: req.body.token.id
+            source: req.body.token.id,
         });
         res.status(200).json({success: true, status: 'Successfully paid ' + req.body.amount});
     } catch ( err ) {
-        res.status(500).json({success: false, status: err});
+        res.status(500).send({message: err.raw.message});
     }
     });
 
-orderController.get(':id/orders', (req: Request, res: Response) => {
-    orderService.getOrders(parseInt(req.params.id, 10))
+orderController.get('/:id/orders', (req: Request, res: Response) => {
+    orderService.getOrdersOfUser(parseInt(req.params.id, 10))
         .then(orders => {
             res.status(200).json({orders: orders});
         })
         .catch(err => res.status(500).send(err));
 });
 
+orderController.get('/:id', (req: Request, res: Response) => {
+    orderService.getOrder(parseInt(req.params.id, 10))
+        .then(order => {
+            res.status(200).json({order: order});
+        })
+        .catch(err => res.status(500).send(err));
+});
+
+orderController.put('', (req: Request, res: Response) => {
+    console.log(req.body);
+    orderService.updateOrder(req.body)
+        .then(order => {
+            console.log('working');
+            res.status(200).json({order: order});
+        })
+        .catch(err => res.status(500).send({message: err}));
+});
 export const OrderController: Router = orderController;

@@ -1,4 +1,4 @@
-<div *ngIf="loggedIn">
+<div *ngIf="loggedIn && !wasOrderSubmitted">
     <h1 class = "headline">Your Order</h1>
     <mat-card>
         <mat-label>
@@ -10,7 +10,6 @@
         </div>
     </mat-card>
     <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
-
 
     <div *ngIf="!addressExists">
         <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
@@ -84,6 +83,10 @@
         <p>Your order has been successfully submitted.</p>
     </div>
 
+</div>
+<div *ngIf="wasOrderSubmitted">
+    <h1>Thanks for your order</h1>
+    <a *ngIf="!paymentSuccessful" [routerLink]="'/profile'">Link to Order to make payment </a>
 </div>
 
 <div *ngIf="!loggedIn">

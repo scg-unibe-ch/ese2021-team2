@@ -7,6 +7,9 @@ import {ProductItem} from "../../../../models/product-item.model";
 import {CartService} from "../../services/cart.service";
 import {FormControl} from "@angular/forms";
 import {formatCurrency} from "@angular/common";
+import {getMatIconFailedToSanitizeUrlError} from "@angular/material/icon";
+import * as Stripe from "stripe";
+import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-order',
@@ -36,7 +39,8 @@ export class OrderComponent implements OnInit {
     invalidStreetMsg: string = '';
     isAddressInvalid: boolean = true;
     totalPrice: number;
-
+    paymentHandler: any = null;
+    paymentSuccessful: boolean = false;
 
     constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
         // Listen for changes
@@ -51,7 +55,6 @@ export class OrderComponent implements OnInit {
 
         this.setProductIds();
         this.setAddressExists();
-        this.invokeStripe();
         if(this.user != null){
             this.setUserAddress();
         }
@@ -63,6 +66,9 @@ export class OrderComponent implements OnInit {
         if(this.addressExists){
             this.isAddressInvalid = false;
         }
+
+      this.invokeStripe();
+      this.waitForScript();
   }
 
 
@@ -90,34 +96,37 @@ export class OrderComponent implements OnInit {
   setNewAddress():void{
     this.newAddress = this.newStreet+ ','+this.newHouseNr+ ','+this.newCity+ ','+this.newZipCode+''
   }
-    submitOrder(): void{
+     submitOrder(): void{
 
-        var submittedAddress='';
+         var submittedAddress = '';
 
-        if(this.addressExists){
-            submittedAddress = this.user?.street + ','+ this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode
-        }
-        else{
-            this.setNewAddress();
-            submittedAddress = this.newAddress;
-        }
+         if (this.addressExists) {
+             submittedAddress = this.user?.street + ',' + this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode
+         } else {
+             this.setNewAddress();
+             submittedAddress = this.newAddress;
+         }
 
-            this.httpClient.post(environment.endpointURL + "order/createOrder",{
-                customerId: this.user?.userId,
-                customerName: this.user?.userName,
-                paymentMethod: this.paymentMethod,
-                deliveryAddress: submittedAddress,
-                status: 'pending',
-                productIds: this.productIds,
-                price: this.totalPrice
-            }).subscribe((response: any) => {
-                },
-                (err: any) => {
-                }
-            );
-            console.log('submitted order')
-            this.wasOrderSubmitted = true;
-        }
+         if (this.paymentMethod === 'CreditCard') {
+             this.payWithCC(submittedAddress);
+         } else {
+             this.httpClient.post(environment.endpointURL + "order/createOrder", {
+                 customerId: this.user?.userId,
+                 customerName: this.user?.userName,
+                 paymentMethod: this.paymentMethod,
+                 deliveryAddress: submittedAddress,
+                 status: 'pending',
+                 productIds: this.productIds,
+                 price: this.totalPrice
+             }).subscribe((response: any) => {
+                     alert('Successfully with order. Keep shopping or pay your order.');
+                     this.wasOrderSubmitted = true;
+                 },
+                 (err: any) => {
+                 }
+             );
+         }
+     }
 
     checkNewZipCode(): void{
         this.isZipCodeInvalid = false;
@@ -184,52 +193,97 @@ export class OrderComponent implements OnInit {
         this.totalPrice = price;
     }
 
-  payOrder(){
-      this.makePayment();
+
+   payWithCC(submittedAddress: string): void{
+            const paymentHandler = (<any>window).StripeCheckout.configure({
+           key: 'pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJWLfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO',
+           locale: 'auto',
+           token: (stripeToken: any) => {
+               console.log(stripeToken.card);
+               this.httpClient.post(environment.endpointURL + 'order/payment/stripe', {
+                   amount: this.totalPrice,
+                   token: stripeToken,
+               })
+                   .subscribe((res: any) => {
+                           console.log('Successfully Paid');
+                            this.httpClient.post(environment.endpointURL + "order/createOrder", {
+                           customerId: this.user?.userId,
+                           customerName: this.user?.userName,
+                           paymentMethod: this.paymentMethod,
+                           deliveryAddress: submittedAddress,
+                           status: 'paid',
+                           productIds: this.productIds,
+                           price: this.totalPrice
+                       }).subscribe((response: any) => {
+                                    alert('Thanks for your payment');
+                                    this.paymentSuccessful = true;
+                                    this.wasOrderSubmitted = true;
+                           },
+                           (err: any) => {
+                               this.paymentSuccessful = true;
+                               alert('Something happened wrong submitting with your order... Please reach out to us!');
+                           }
+                       );
+
+                       }, (err: any) => {
+                       alert('Could not pay ' + err + '\nTry again or choose another payment option');
+
+                       }
+                   );
+
+           },
+       });
+             paymentHandler.open({
+                name: 'InSync Payment',
+                description: 'Pay your order',
+                amount: this.totalPrice * 100,
+                currency: 'chf',
+
+            });
+
   }
-
-    makePayment() {
-        const totalPrice = this.totalPrice;
-        const httpClient = this.httpClient;
-        const paymentHandler = (<any>window).StripeCheckout.configure({
-            key: 'pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJWLfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO',
-            locale: 'auto',
-            token: function (stripeToken: any) {
-                console.log(stripeToken.card);
-                httpClient.post(environment.endpointURL + 'order/payment/stripe', {
-                    amount: totalPrice,
-                    token: stripeToken
-                })
-                    .subscribe( (res: any) => {
-                        if (res.success) {
-                            alert(res.status);
-                        }
-                }, (err: any) => {
-                        alert('Unknown error while paying');
-                    }
-                );
-
-            },
-        });
-        paymentHandler.open({
-            name: 'InSync Payment',
-            description: 'Pay your order',
-            amount: this.totalPrice * 100,
-            currency: 'chf',
-
-        });
-        console.log('Paid amount');
-    }
 
     invokeStripe(){
         if(!window.document.getElementById('stripe-script')){
             const script = window.document.createElement('script');
-            script.id = 'stripe.script';
+            script.defer = true;
+            script.id = 'stripe-script';
             script.type = 'text/javascript';
             script.src = 'http://checkout.stripe.com/checkout.js';
+            script.onload = () => {
+                this.paymentHandler = (<any>window).StripeCheckout.configure({
+                    key: 'pk_test_51H7bbSE2RcKvfXD4DZhu',
+                    locale: 'auto',
+                    token: function (stripeToken: any) {
+                        console.log(stripeToken)
+                        alert('Payment has been successfull!');
+                    }
+                });
+            }
             window.document.body.appendChild(script);
         }
     }
+
+
+   async waitForScript(): Promise<void> {
+       var i = 0;
+        while(!window.document.getElementById('stripe-script') && i < 12){
+            i++;
+            await this.sleep(1000);
+            console.log(i + 's');
+        }
+        if( !window.document.getElementById('stripe-script')) {
+            alert('Could not load script!!');
+        }
+
+    }
+
+    sleep(ms: number) {
+        return new Promise(
+            resolve => setTimeout(resolve, ms)
+        );
+    }
+
 
 }
 
