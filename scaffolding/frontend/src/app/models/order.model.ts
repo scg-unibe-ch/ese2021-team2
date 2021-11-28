@@ -1,4 +1,5 @@
 export class Order {
+    products: number[];
 
     constructor(
         orderId: number,
@@ -9,6 +10,6 @@ export class Order {
         status: string,
         products: number[],
         price: number
-    ){}
+    ){this.products=products;}
 
 }

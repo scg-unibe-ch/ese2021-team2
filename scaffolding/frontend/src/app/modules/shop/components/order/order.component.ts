@@ -6,6 +6,8 @@ import {environment} from "../../../../../environments/environment";
 import {ProductItem} from "../../../../models/product-item.model";
 import {CartService} from "../../services/cart.service";
 import {FormControl} from "@angular/forms";
+import {Order} from "../../../../models/order.model";
+import {Product} from "../../../../models/product.model";
 
 @Component({
   selector: 'app-order',
@@ -180,6 +182,42 @@ export class OrderComponent implements OnInit {
             price += product.quantity * product.product.price;
         }
         this.totalPrice = price;
+    }
+
+    orderProducts: ProductItem[]=[];
+    order: Order = new Order(2,2,'Peter','Twint','Baarerstrasse,2,6300,Zug','pending',[1,1,2,1,1,1],69)
+    gettingProds: boolean=false;
+
+    getProdIdsFromOrder(order: Order): void{
+        this.gettingProds=true;
+        let prodIds: number[]= []
+        let countsProdIds: number[] = [];
+
+        //count occurences of a prodId in order
+        for (const num of order.products) {
+            countsProdIds[num] = countsProdIds[num] ? countsProdIds[num] + 1 : 1;
+        }
+
+        //add the productIds from the order
+        for (let i=0; i<order.products.length; i++){
+            if(!prodIds.includes(order.products[i])){
+                prodIds.push(order.products[i]);
+            }
+        }
+
+        //get all the products with the correspondent productId and add them to productItem array with the correspondent quantity
+        for(let j=0; j<prodIds.length; j++){
+            this.httpClient.get(environment.endpointURL + "product/" + prodIds[j])
+                .subscribe((res: any) => {
+                    this.orderProducts.push({product:res, quantity:countsProdIds[j]});
+                },
+                err => {
+                    console.log(err);
+                }
+            );
+        }
+
+
     }
 
 }

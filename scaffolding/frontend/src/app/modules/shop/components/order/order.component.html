@@ -6,8 +6,8 @@
         </mat-label>
         <div *ngFor="let product of products">
             <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
-            <p>Total price: {{this.totalPrice}} CHF</p>
         </div>
+        <p>Total price: {{this.totalPrice}} CHF</p>
     </mat-card>
     <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
 
@@ -88,4 +88,10 @@
 
 <div *ngIf="!loggedIn">
     <h1 class = "headline">To purchase an order please log in first.</h1>
+</div>
+<button (click)="this.getProdIdsFromOrder(this.order)">Get Prod Id's from given Order</button>
+<div *ngIf="this.gettingProds">
+    <div *ngFor="let prod of this.orderProducts">
+        <p>title: {{prod.product.title}}, {{prod.quantity}}</p>
+    </div>
 </div>
