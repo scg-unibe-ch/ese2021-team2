@@ -1,0 +1,5 @@
+<mat-card *ngIf="this.order.orderId" [routerLink] = "['order', this.order.orderId]">
+<p>order-summary works!</p>
+<p>{{this.order.price}}</p>
+<p>Status: {{this.order.status}}</p>
+</mat-card>

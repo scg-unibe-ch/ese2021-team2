@@ -1,0 +1,3 @@
+<p>order-list works!</p>
+<h1 *ngIf="this.orders.length <= 0">No orders to show</h1>
+<app-order-summary *ngFor="let order of orders" [order]= "order"> </app-order-summary>
