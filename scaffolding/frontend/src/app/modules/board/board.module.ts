@@ -5,10 +5,10 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { BoardComponent } from './pages/board/board.component';
 import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
-import {AppModule} from "../../app.module";
 import {SubjectsModule} from "../subjects/subjects.module";
-import { ShopModule } from '../shop/shop.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReactiveFormsModule} from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -31,8 +31,9 @@ export const routing = RouterModule.forChild(routes);
         routing,
         FormsModule,
         SubjectsModule,
-        ShopModule,
-        SharedModule
+        SharedModule,
+        ReactiveFormsModule,
+        MatToolbarModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

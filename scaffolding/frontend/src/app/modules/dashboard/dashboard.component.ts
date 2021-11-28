@@ -3,6 +3,7 @@ import { DataService } from "../service/data.service";
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,5 +42,25 @@ export class DashboardComponent implements OnInit, OnDestroy  {
 
   isShopRoute() {
     return this.router.url.match(/\/shop\S*/)
+  }
+
+  isBoardRoute() {
+    return this.router.url.match(/\/board\S*/)
+  }
+
+  setTech() {
+    this.data.changeMessage("technical");
+  }
+
+  setProg() {
+    this.data.changeMessage("programming");
+  }
+
+  setTheo() {
+    this.data.changeMessage("theoretical");
+  }
+
+  setOther() {
+    this.data.changeMessage("other");
   }
 }

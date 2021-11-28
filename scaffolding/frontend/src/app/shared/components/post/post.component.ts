@@ -16,8 +16,8 @@ import {Post} from "../../../models/post.model";
 })
 export class PostComponent implements OnInit {
 
-  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
-  changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "", [], "");
+  @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
+  changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
   voted = false;
   userCanVote= true;
   editMode: boolean = false;

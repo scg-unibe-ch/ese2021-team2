@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {FormsModule} from "@angular/forms";
 import { searchPipe } from './components/Pipes/search.pipe';
+import { filterPipe } from './components/Pipes/filter.pipe';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -19,6 +21,7 @@ import { searchPipe } from './components/Pipes/search.pipe';
         CommentsListComponent,
         PostCommentComponent,
         searchPipe,
+        filterPipe
   ],
     imports: [
         MatDialogModule,
@@ -31,6 +34,7 @@ import { searchPipe } from './components/Pipes/search.pipe';
         PostComponent,
         ConfirmationDialogComponent,
         searchPipe,
+        filterPipe
     ]
 })
 export class SharedModule { }

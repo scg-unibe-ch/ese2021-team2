@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DataService } from "../../../service/data.service";
 
 @Component({
   selector: 'app-board',
@@ -22,13 +23,16 @@ export class BoardComponent implements OnInit {
   newTitle: string = "";
   newContent: string = "";
   newSemester: string = "";
+  newCategory: string = "";
   creatingPost: boolean = false;
   description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   newFile: File | undefined;
   imageURL: any;
   searchWord:string="";
+  SemesterAuswahl: any = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
+  KategorieAuswahl: any = ['technical', 'programming', 'theoretical', 'other'];
   
-  constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+  constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
 //this is where th http request to get the board goes
@@ -45,7 +49,7 @@ export class BoardComponent implements OnInit {
       );
   });
 
-    this.postList = new PostListComponent(httpClient, userService, _Activatedroute)
+    this.postList = new PostListComponent(httpClient, userService, _Activatedroute, data)
       // Listen for changes
       userService.loggedIn$.subscribe(res => this.loggedIn = res);
       // Current value
@@ -61,7 +65,7 @@ export class BoardComponent implements OnInit {
   }
 
   submitPost(){
-    if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.id, this.newFile) ){
+    if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.newCategory, this.id, this.newFile) ){
         this.reset();
     }
   }
