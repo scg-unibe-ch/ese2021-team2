@@ -79,7 +79,6 @@
     </div>
 
     <button mat-stroked-button (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
-    <button mat-stroked-button (click)="makePayment()"> Test Stripe </button>
 
     <div *ngIf="wasOrderSubmitted">
         <p>Your order has been successfully submitted.</p>
