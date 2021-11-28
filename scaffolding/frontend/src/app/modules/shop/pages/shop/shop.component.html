@@ -8,7 +8,7 @@
             matBadgeHidden = {{!productCount}} matBadgeColor = "warn"> 
         <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button *ngIf="this.userService.getUser()"mat-icon-button [routerLink] = "'/shop/orders/'">
+    <button *ngIf="loggedIn" mat-icon-button [routerLink] = "'/shop/orders/'">
         <mat-icon>reorder</mat-icon>
     </button>
 </mat-toolbar>
