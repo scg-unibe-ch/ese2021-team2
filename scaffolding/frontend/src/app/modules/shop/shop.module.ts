@@ -21,6 +21,9 @@ import { OrderComponent } from './components/order/order.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { ProductCreationComponent } from './components/product-creation/product-creation.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderPageComponent } from './components/order-list/order-page/order-page.component';
+import { OrderSummaryComponent } from './components/order-list/order-summary/order-summary.component';
 
 const routes: Routes = [
   {
@@ -39,6 +42,14 @@ const routes: Routes = [
     path: 'cart/order',
     component: OrderComponent
     },
+    {
+    path:'orders',
+    component: OrderListComponent
+    },
+    {
+    path: 'orders/order/:id',
+    component: OrderPageComponent
+    },
 
 ];
 
@@ -53,6 +64,9 @@ export const routing = RouterModule.forChild(routes);
     CartComponent,
     OrderComponent,
     ProductCreationComponent,
+    OrderListComponent,
+    OrderPageComponent,
+    OrderSummaryComponent,
 
   ],
     imports: [
