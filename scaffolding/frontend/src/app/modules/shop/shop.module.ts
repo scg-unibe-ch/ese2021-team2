@@ -21,6 +21,7 @@ import { OrderComponent } from './components/order/order.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {NgxStripeModule} from "ngx-stripe";
+import { ProductCreationComponent } from './components/product-creation/product-creation.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ export const routing = RouterModule.forChild(routes);
     ProductPageComponent,
     CartComponent,
     OrderComponent,
+    ProductCreationComponent,
 
   ],
     imports: [

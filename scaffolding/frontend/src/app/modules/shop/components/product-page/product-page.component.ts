@@ -8,6 +8,8 @@ import { Product } from 'src/app/models/product.model';
 import { UserComponent } from 'src/app/user/user.component';
 import { environment } from 'src/environments/environment';
 import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { ProductCreationComponent } from '../product-creation/product-creation.component';
 
 @Component({
     selector: 'app-product-page',
@@ -20,9 +22,17 @@ export class ProductPageComponent implements OnInit {
 
     imageURL: string = "";
     productId: number = 0;
+    isAdmin: boolean | undefined;
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public cartService: CartService,
         public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog) {
+
+            this.userService.user$.subscribe((user) => {
+                this.isAdmin = user?.admin
+            });
+
+            this.isAdmin = this.userService.getUser()?.admin;
+
             this._Activatedroute.paramMap.subscribe(params => { 
                 this.productId= parseInt(params.get('productId')!); 
                 this.httpClient.get( environment.endpointURL + "product/" + this.productId)
@@ -53,5 +63,16 @@ export class ProductPageComponent implements OnInit {
             }
             this.dialog.open(UserComponent,dialogConfig);
         }
+    }
+
+    handleUpdate(){        
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            isUpdate : true,
+            product : this.product
+        }
+        this.dialog.open(ProductCreationComponent, dialogConfig);
     }
 }

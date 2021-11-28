@@ -15,7 +15,12 @@
         <br>
         <div class="product-price">
             <span>CHF {{product.price.toFixed(2)}}</span>
-            <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
+            <div *ngIf = "!isAdmin; else admin">
+                <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
+            </div>
+            <ng-template #admin>
+                <button mat-raised-button color = "primary" (click) = "handleUpdate()">Update Product</button>
+            </ng-template>
         </div>
 
     </div>
