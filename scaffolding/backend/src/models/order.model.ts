@@ -9,7 +9,7 @@ export interface OrderAttributes {
     paymentMethod: string;
     deliveryAddress: string;
     status: string;
-    productIds: number[];
+    // productIds: number[];
     price: number;
 }
 
@@ -23,7 +23,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
     paymentMethod: string;
     deliveryAddress: string;
     status: string;
-    productIds: number[];
+    // productIds: number[];
     price: number;
 
     public static initialize(sequelize: Sequelize ) {
@@ -56,10 +56,10 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                     type: DataTypes.STRING,
                     allowNull: true
                 },
-                productIds : {
-                    type: DataTypes.ARRAY(DataTypes.INTEGER),
-                    allowNull: false
-                }
+                // productIds : {
+                //     type: DataTypes.ARRAY(DataTypes.INTEGER),
+                //     allowNull: false
+                // }
             },
             {
                 sequelize,

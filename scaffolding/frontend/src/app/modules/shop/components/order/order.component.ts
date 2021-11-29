@@ -22,7 +22,6 @@ export class OrderComponent implements OnInit {
     user: User | null;
     paymentMethod: string = 'Invoice';
     products: ProductItem[]=[];
-    productIds: number[]=[];
     addressExists: boolean = false;
     newStreet: string = '';
     newCity: string = '';
@@ -53,7 +52,6 @@ export class OrderComponent implements OnInit {
         this.user = userService.getUser();
         this.products = this.cartService.getProducts();
 
-        this.setProductIds();
         this.setAddressExists();
         if(this.user != null){
             this.setUserAddress();
@@ -72,13 +70,7 @@ export class OrderComponent implements OnInit {
   }
 
 
-  setProductIds(): void{
-      for (var val of this.products){
-          for(let i = 1; i<=val.quantity;i++){
-              this.productIds.push(val.product.productId);
-          }
-      }
-  }
+
 
   setUserAddress(): void{
         this.userAddress = this.user?.street + ' ' + this.user?.housenr + ', ' + this.user?.city + ', ' + this.user?.zipCode
@@ -111,13 +103,16 @@ export class OrderComponent implements OnInit {
              this.payWithCC(submittedAddress);
          } else {
              this.httpClient.post(environment.endpointURL + "order/createOrder", {
-                 customerId: this.user?.userId,
-                 customerName: this.user?.userName,
-                 paymentMethod: this.paymentMethod,
-                 deliveryAddress: submittedAddress,
-                 status: 'pending',
-                 productIds: this.productIds,
-                 price: this.totalPrice
+                 order: {
+                     customerId: this.user?.userId,
+                    customerName: this.user?.userName,
+                    paymentMethod: this.paymentMethod,
+                    deliveryAddress: submittedAddress,
+                    status: 'pending',
+                    price: this.totalPrice
+                 },
+                 productItems: this.products
+
              }).subscribe((response: any) => {
                      alert('Successfully with order. Keep shopping or pay your order.');
                      this.wasOrderSubmitted = true;
@@ -207,13 +202,15 @@ export class OrderComponent implements OnInit {
                    .subscribe((res: any) => {
                            console.log('Successfully Paid');
                             this.httpClient.post(environment.endpointURL + "order/createOrder", {
-                           customerId: this.user?.userId,
-                           customerName: this.user?.userName,
-                           paymentMethod: this.paymentMethod,
-                           deliveryAddress: submittedAddress,
-                           status: 'paid',
-                           productIds: this.productIds,
-                           price: this.totalPrice
+                                order: {
+                                    customerId: this.user?.userId,
+                                    customerName: this.user?.userName,
+                                    paymentMethod: this.paymentMethod,
+                                    deliveryAddress: submittedAddress,
+                                    status: 'paid',
+                                    price: this.totalPrice
+                                },
+                                productItems: this.products
                        }).subscribe((response: any) => {
                                     alert('Thanks for your payment');
                                     this.paymentSuccessful = true;

@@ -1,3 +1,5 @@
+import {ProductItem} from "./product-item.model";
+
 export class Order {
 
     constructor(
@@ -7,7 +9,7 @@ export class Order {
         public paymentMethod: string,
         public deliveryAddress: string,
         public status: string,
-        public products: number[],
+        public productItems: ProductItem[],
         public price: number
     ){}
 

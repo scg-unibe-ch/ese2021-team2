@@ -28,6 +28,7 @@ import { PostCommentController} from './controllers/postComment.controller';
 import {Bookmark} from './models/bookmark.model';
 import {OrderController} from './controllers/order.controller';
 import {env} from 'process';
+import {ProductOrder} from './models/ProductOrder.model';
 
 
 export class Server {
@@ -53,6 +54,7 @@ export class Server {
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
         Order.initialize(this.sequelize);
+        ProductOrder.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
@@ -60,6 +62,7 @@ export class Server {
         ProductImage.createAssociations();
         Bookmark.createAssociations();
         Post.createAssociations();
+        ProductOrder.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
