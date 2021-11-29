@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Order} from "../../../../models/order.model";
 import {environment} from "../../../../../environments/environment";
 import {UserService} from "../../../../core/http/user.service";
+import {User} from "../../../../models/user.model";
 
 @Component({
   selector: 'app-order-list',
@@ -11,11 +12,11 @@ import {UserService} from "../../../../core/http/user.service";
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-    userId: number | undefined;
+    user: User | null;
     orders: Order[] = [];
 
   constructor(public httpClient: HttpClient, public userService: UserService) {
-      this.userId = this.userService.getUser()?.userId;
+      this.user = this.userService.getUser();
       this.initializeOrders();
   }
 
@@ -25,13 +26,22 @@ export class OrderListComponent implements OnInit {
   }
 
     initializeOrders(): void {
-        if (this.userId) {
-            this.httpClient.get(environment.endpointURL + 'order/' + this.userId + '/orders')
-                .subscribe((res: any) => {
-                    console.log('Received orders');
-                    console.log(res);
-                    this.orders = res.orders;
-                }, (error => console.log(error)));
+        if (this.user) {
+            if( this.user.admin ){
+                this.httpClient.get(environment.endpointURL + 'order/all')
+                    .subscribe((res: any) => {
+                        console.log('Received orders');
+                        console.log(res);
+                        this.orders = res.orders;
+                    }, (error => console.log(error)));
+            } else {
+                this.httpClient.get(environment.endpointURL + 'order/' + this.user.userId + '/orders')
+                    .subscribe((res: any) => {
+                        console.log('Received orders');
+                        console.log(res);
+                        this.orders = res.orders;
+                    }, (error => console.log(error)));
+            }
         }
     }
 }

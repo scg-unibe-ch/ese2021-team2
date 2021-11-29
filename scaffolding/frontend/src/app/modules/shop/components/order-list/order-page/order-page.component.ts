@@ -5,6 +5,8 @@ import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../../../core/http/user.service";
 import {User} from "../../../../../models/user.model";
 import {environment} from "../../../../../../environments/environment";
+import {ProductItem} from "../../../../../models/product-item.model";
+import {Product} from "../../../../../models/product.model";
 
 @Component({
   selector: 'app-order-page',
@@ -16,7 +18,8 @@ export class OrderPageComponent implements OnInit {
     authorized: boolean = false;
     user: User | null;
     order: Order = new Order(0,-1,"","","","", [],0);
-
+    productItems: ProductItem[] = [];
+    productIds: string = '';
     constructor(public httpClient: HttpClient, private _Activatedroute: ActivatedRoute,
                 public userService: UserService) {
         this._Activatedroute.paramMap.subscribe(params => {
@@ -41,9 +44,10 @@ export class OrderPageComponent implements OnInit {
   }
 
   initializeOrder(): void {
-      this.httpClient.get(environment.endpointURL + 'order/' + this.order.orderId)
+      this.httpClient.get<Order>(environment.endpointURL + 'order/' + this.order.orderId)
           .subscribe((res: any) => {
-              this.order = res.order;
+              this.order = res;
+              this.loadProductItems();
           }, (err: any) => {
               console.log(err);
           });
@@ -61,6 +65,17 @@ export class OrderPageComponent implements OnInit {
                 alert('Successfully Paid your order.\nWill be delivered soon');
             }, error => {
                 alert(error);
+            });
+    }
+
+
+
+    loadProductItems() {
+        this.httpClient.get<ProductItem[]>(environment.endpointURL + 'order/' + this.order.orderId + '/products')
+            .subscribe((res: any) => {
+                this.productItems = res;
+            }, (err: any) => {
+                console.log(err);
             });
     }
 }

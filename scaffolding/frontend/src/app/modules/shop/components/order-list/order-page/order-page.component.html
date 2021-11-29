@@ -8,4 +8,17 @@
     <button mat-raised-button color="primary" *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
     <button mat-raised-button [routerLink]="['../..']">View all orders</button>
     <p *ngIf="this.order.status==='paid'">You have paid</p>
+    <h1 class = "headline">Your Items</h1>
+
+    <div *ngFor = "let productItem of this.productItems" >
+        <div class = "item">
+            <p class = "name">{{productItem.product.title}}</p>
+             <p>{{productItem.quantity}}</p>
+            <p class = "price">CHF {{productItem.product.price.toFixed(2)}}</p>
+        </div>
+    </div>
+    <div class = "total">
+        <p>Total</p>
+        <p>CHF {{this.order.price.toFixed(2)}}</p>
+    </div>
 </div>
