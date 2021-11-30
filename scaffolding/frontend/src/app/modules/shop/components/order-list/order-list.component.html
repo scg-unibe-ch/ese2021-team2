@@ -1,3 +1,5 @@
-<p>order-list works!</p>
-<h1 *ngIf="this.orders.length <= 0">No orders to show</h1>
+<h1 *ngIf="this.orders.length <= 0" class="headline">No orders to show</h1>
+<h1 *ngIf="!(this.orders.length <= 0)&&this.user?.admin==false" class="headline">Your Orders</h1>
+<h1 *ngIf="!(this.orders.length <= 0)&&this.user?.admin==true" class="headline">Customer's Orders</h1>
+    <button mat-raised-button [routerLink]="['..']">Back to Shop</button>
 <app-order-summary *ngFor="let order of orders" [order]= "order"> </app-order-summary>

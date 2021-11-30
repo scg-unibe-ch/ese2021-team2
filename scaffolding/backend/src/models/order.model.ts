@@ -49,7 +49,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                     allowNull: true
                 },
                 status: {
-                    type: DataTypes.ENUM('pending', 'shipped', 'cancelled') ,
+                    type: DataTypes.ENUM('pending', 'shipped', 'cancelled', 'paid') ,
                     allowNull: true
                 },
                 deliveryAddress : {

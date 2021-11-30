@@ -6,8 +6,8 @@
         </mat-label>
         <div *ngFor="let product of products">
             <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
-            <p>Total price: {{this.totalPrice}} CHF</p>
         </div>
+        <p>Total price: {{this.totalPrice}} CHF</p>
     </mat-card>
     <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
 
@@ -86,8 +86,8 @@
 
 </div>
 <div *ngIf="wasOrderSubmitted">
-    <h1>Thanks for your order</h1>
-    <a *ngIf="!paymentSuccessful" [routerLink]="'/profile'">Link to Order to make payment </a>
+    <h1 class="headline">Thanks for your order</h1>
+    <a *ngIf="!paymentSuccessful" [routerLink]="'/shop/orders'">Link to Order to make payment </a>
 </div>
 
 <div *ngIf="!loggedIn">

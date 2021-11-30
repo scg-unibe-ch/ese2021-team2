@@ -7,6 +7,7 @@ import {User} from "../../../../../models/user.model";
 import {environment} from "../../../../../../environments/environment";
 import {ProductItem} from "../../../../../models/product-item.model";
 import {Product} from "../../../../../models/product.model";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-order-page',
@@ -20,6 +21,8 @@ export class OrderPageComponent implements OnInit {
     order: Order = new Order(0,-1,"","","","", [],0);
     productItems: ProductItem[] = [];
     productIds: string = '';
+    status: string = this.order.status;
+
     constructor(public httpClient: HttpClient, private _Activatedroute: ActivatedRoute,
                 public userService: UserService) {
         this._Activatedroute.paramMap.subscribe(params => {
@@ -27,7 +30,7 @@ export class OrderPageComponent implements OnInit {
         });
         this.initializeOrder();
         this.user = this.userService.getUser();
-    }
+            }
 
   ngOnInit(): void {
   }
@@ -35,10 +38,8 @@ export class OrderPageComponent implements OnInit {
   checkAuthorizationStatus(): boolean {
       this.user = this.userService.getUser();
       if( this.user && this.user.userId ) {
-          console.log('if case');
           return (this.user.admin || this.user.userId - this.order.customerId === 0);
       } else {
-          console.log('else case');
           return false;
       }
   }
@@ -47,6 +48,7 @@ export class OrderPageComponent implements OnInit {
       this.httpClient.get<Order>(environment.endpointURL + 'order/' + this.order.orderId)
           .subscribe((res: any) => {
               this.order = res;
+              this.status=res.status;
               this.loadProductItems();
           }, (err: any) => {
               console.log(err);
@@ -55,17 +57,18 @@ export class OrderPageComponent implements OnInit {
 
 
     payOrder() {
-        this.order.status = 'paid';
-        this.httpClient.put(environment.endpointURL + 'order', {
-            orderId: this.order.orderId,
-            status: 'paid',
+        if(confirm("Are you sure you have paid the order?")){
+            this.order.status = 'paid';
+            this.httpClient.put(environment.endpointURL + 'order', {
+                orderId: this.order.orderId,
+                status: 'paid',
 
-        })
-            .subscribe(update => {
-                alert('Successfully Paid your order.\nWill be delivered soon');
-            }, error => {
-                alert(error);
-            });
+            }).subscribe(update => {
+                    alert('Successfully Paid your order.\nWill be delivered soon');
+                }, error => {
+                    alert(error);
+                });
+        }
     }
 
 
@@ -77,5 +80,38 @@ export class OrderPageComponent implements OnInit {
             }, (err: any) => {
                 console.log(err);
             });
+    }
+
+    cancelOrder(): void{
+        if(confirm("Are you sure you want to cancel the order?")) {
+            this.order.status = 'cancelled';
+            this.httpClient.put(environment.endpointURL + "order", {
+                orderId: this.order.orderId,
+                status: 'cancelled',
+
+            }).subscribe(update => {
+                    alert('Your order was cancelled successfully.');
+                },
+                error => {
+                    alert(error);
+                });
+        }
+    }
+
+    changeStatus(): void{
+        if(confirm("Are you sure you want to change the status?")){
+            this.order.status = this.status;
+            console.log(this.status);
+            this.httpClient.put(environment.endpointURL + "order", {
+                orderId: this.order.orderId,
+                status: this.status,
+            }).subscribe(update => {
+                    alert('Order updated successfully.');
+
+                },
+                error => {
+                    alert(error);
+                });
+        }
     }
 }

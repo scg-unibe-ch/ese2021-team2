@@ -8,7 +8,6 @@ import {CartService} from "../../services/cart.service";
 import {FormControl} from "@angular/forms";
 import {formatCurrency} from "@angular/common";
 import {getMatIconFailedToSanitizeUrlError} from "@angular/material/icon";
-import * as Stripe from "stripe";
 import {delay} from "rxjs/operators";
 
 @Component({
@@ -114,7 +113,7 @@ export class OrderComponent implements OnInit {
                  productItems: this.products
 
              }).subscribe((response: any) => {
-                     alert('Successfully with order. Keep shopping or pay your order.');
+                     alert('Order was successful. Keep shopping or pay your order.');
                      this.wasOrderSubmitted = true;
                  },
                  (err: any) => {
