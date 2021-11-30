@@ -13,8 +13,9 @@ import { CartService } from '../../services/cart.service';
 export class ShopComponent implements OnInit {
 
     searchWord:string="";
-    productCount;
-    isAdmin: boolean | undefined
+    productCount: any;
+    isAdmin: boolean | undefined;
+    loggedIn: boolean | undefined;
 
     constructor(private cartService: CartService, private userService : UserService, private dialog : MatDialog) {
         
@@ -22,6 +23,7 @@ export class ShopComponent implements OnInit {
         cartService.products$.subscribe(res => this.productCount = this.getProductCount(res)); 
 
         this.isAdmin = this.userService.getUser()?.admin;
+        this.loggedIn = this.userService.getLoggedIn();
         this.productCount = this.getProductCount(this.cartService.getProducts()); 
     }
 

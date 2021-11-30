@@ -1,15 +1,16 @@
-import {Product} from "../../../../backend/src/models/product.model";
+import {ProductItem} from "./product-item.model";
 
-export class OrderModel {
+export class Order {
 
     constructor(
-        orderId: number,
-        customerId: number,
-        customerName: string,
-        paymentMethod: string,
-        deliveryAddress: string,
-        status: string,
-        products: Product[]
+        public orderId: number,
+        public customerId: number,
+        public customerName: string,
+        public paymentMethod: string,
+        public deliveryAddress: string,
+        public status: string,
+        public productItems: ProductItem[],
+        public price: number
     ){}
 
 }
