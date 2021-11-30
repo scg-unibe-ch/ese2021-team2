@@ -87,40 +87,42 @@ export class OrderComponent implements OnInit {
   setNewAddress():void{
     this.newAddress = this.newStreet+ ','+this.newHouseNr+ ','+this.newCity+ ','+this.newZipCode+''
   }
-     submitOrder(): void{
 
-         var submittedAddress = '';
+ submitOrder(): void{
 
-         if (this.addressExists) {
-             submittedAddress = this.user?.street + ',' + this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode
-         } else {
-             this.setNewAddress();
-             submittedAddress = this.newAddress;
-         }
+     var submittedAddress = '';
 
-         if (this.paymentMethod === 'CreditCard') {
-             this.payWithCC(submittedAddress);
-         } else {
-             this.httpClient.post(environment.endpointURL + "order/createOrder", {
-                 order: {
-                     customerId: this.user?.userId,
-                    customerName: this.user?.userName,
-                    paymentMethod: this.paymentMethod,
-                    deliveryAddress: submittedAddress,
-                    status: 'pending',
-                    price: this.totalPrice
-                 },
-                 productItems: this.products
-
-             }).subscribe((response: any) => {
-                     alert('Order was successful. Keep shopping or pay your order.');
-                     this.wasOrderSubmitted = true;
-                 },
-                 (err: any) => {
-                 }
-             );
-         }
+     if (this.addressExists) {
+         submittedAddress = this.user?.street + ',' + this.user?.housenr + ',' + this.user?.city + ',' + this.user?.zipCode
+     } else {
+         this.setNewAddress();
+         submittedAddress = this.newAddress;
      }
+
+     if (this.paymentMethod === 'CreditCard') {
+         this.payWithCC(submittedAddress);
+     } else {
+         this.httpClient.post(environment.endpointURL + "order/createOrder", {
+             order: {
+                 customerId: this.user?.userId,
+                customerName: this.user?.userName,
+                paymentMethod: this.paymentMethod,
+                deliveryAddress: submittedAddress,
+                status: 'pending',
+                price: this.totalPrice
+             },
+             productItems: this.products
+
+         }).subscribe((response: any) => {
+                 alert('Order was successful. Keep shopping or pay your order.');
+                 this.cartService.clearCart();
+                 this.wasOrderSubmitted = true;
+             },
+             (err: any) => {
+             }
+         );
+     }
+ }
 
     checkNewZipCode(): void{
         this.isZipCodeInvalid = false;
