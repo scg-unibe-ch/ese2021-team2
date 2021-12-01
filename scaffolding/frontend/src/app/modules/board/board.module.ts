@@ -10,6 +10,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
+import {MatCardModule} from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -17,7 +20,7 @@ const routes: Routes = [
 {
   path: 'board/:boardId',
   component: BoardComponent
-}
+},
 ];
 export const routing = RouterModule.forChild(routes);
 
@@ -35,7 +38,9 @@ export const routing = RouterModule.forChild(routes);
         SubjectsModule,
         SharedModule,
         ReactiveFormsModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatCardModule,
+        MatIconModule,
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

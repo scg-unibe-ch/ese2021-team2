@@ -10,9 +10,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {FormsModule} from "@angular/forms";
 import { searchPipe } from './components/Pipes/search.pipe';
 import { filterPipe } from './components/Pipes/filter.pipe';
-import { filter } from 'rxjs/operators';
+import { RouterModule, Routes } from '@angular/router';
 
+const routes: Routes = [
+    {
+      path: 'post/:posttId',
+      component: PostComponent,
+    },
+  ];
 
+export const routing = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -21,14 +28,15 @@ import { filter } from 'rxjs/operators';
         CommentsListComponent,
         PostCommentComponent,
         searchPipe,
-        filterPipe
+        filterPipe,
   ],
     imports: [
         MatDialogModule,
         MatButtonModule,
         CommonModule,
         MatCardModule,
-        FormsModule
+        FormsModule,
+        routing,
     ],
     exports: [
         PostComponent,
