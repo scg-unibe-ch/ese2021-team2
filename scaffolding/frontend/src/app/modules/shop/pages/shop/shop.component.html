@@ -4,9 +4,12 @@
     </div>
     Shop
     <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
-    <button mat-icon-button [routerLink] = "'/shop/cart'" matBadge = {{productCount}} matBadgeSize = "small" 
-            matBadgeHidden = {{!productCount}} matBadgeColor = "warn"> 
+    <button mat-icon-button [routerLink] = "'/shop/cart'" matBadge = {{productCount}} matBadgeSize = "small"
+            matBadgeHidden = {{!productCount}} matBadgeColor = "warn">
         <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button *ngIf="loggedIn" mat-icon-button [routerLink] = "'/shop/orders/'">
+        All Orders
     </button>
 </mat-toolbar>
 <app-product-list [searchTerm]="searchWord"></app-product-list>

@@ -58,13 +58,14 @@ export class SidebarComponent {
         this.isExpanded = !this.isExpanded;
         this.messageEvent.emit(this.isExpanded);
     }
-    
+
     isShopRoute() {
         return this.router.url.match(/\/shop\S*/)
     }
-    
-    
+
+
     isBoardRoute() {
         return this.router.url.match(/\/board\S*/)
-      }
+    }
+
 }
