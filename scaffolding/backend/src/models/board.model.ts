@@ -25,7 +25,7 @@ export class Board extends Model<BoardAttributes, BoardCreationAttributes> imple
                 },
                 subjectId: {
                     type: DataTypes.INTEGER,
-                    primaryKey: true
+
                 },
                 boardName: {
                     type: DataTypes.STRING,

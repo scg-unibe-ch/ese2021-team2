@@ -23,6 +23,8 @@ export class UserService {
     // Observable Streams
     loggedIn$ = this.loggedInSource.asObservable();
     user$ = this.userSource.asObservable();
+    
+
 
     constructor(private httpClient: HttpClient) {
         this.user = null;

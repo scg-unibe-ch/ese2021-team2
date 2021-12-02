@@ -54,7 +54,7 @@ postController.get('/:id/image', (req: Request, res: Response) => {
 // needs to be changed to get request
 postController.post('/getPostsOfBoard',
     (req: Request, res: Response) => {
-        postService.getPostsOfBoard(req.body.boardId)
+        PostService.getPostsOfBoard(req.body.boardId)
 
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));

@@ -20,7 +20,7 @@ export class SubjectsGridComponent implements OnInit {
 
     this.httpClient.post(environment.endpointURL + "post/getAllSubjects", {}).subscribe((res: any) => {
         this.subjects = res;
-        console.log(this.subjects);
+      
       } ,
       err => {
         console.log(err);

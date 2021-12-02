@@ -30,8 +30,6 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
 
-    
-
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
@@ -74,11 +72,11 @@ export class PostListComponent implements OnInit, OnDestroy {
     } else {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
     }
-      console.log('still trying');
+
     if( this.isValid(postToAdd) ) {
         this.createPostInBackend(postToAdd, file);
         this.postFeedback = "";
-        console.log('no feddback');
+
         this.posts.push(postToAdd);
         return true;
     } else {
@@ -130,7 +128,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         boardId: this.boardId
       }).subscribe((res: any) => {
             this.posts = res;
-            console.log(res);
+           
         } ,
         err => {
           console.log(err);
@@ -147,6 +145,8 @@ export class PostListComponent implements OnInit, OnDestroy {
         }
       );
     }
+
+      
     this.checkUserStatus();
 
 
