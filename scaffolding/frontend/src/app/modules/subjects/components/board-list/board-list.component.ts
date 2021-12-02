@@ -37,7 +37,6 @@ export class BoardListComponent implements OnInit {
         this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: this.subjectId})
             .subscribe((res: any) => {
                     this.boardList = res;
-                    console.log(this.boardList);
                 } ,
                 err => {
                     console.log(err);
