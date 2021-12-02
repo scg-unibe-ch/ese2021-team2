@@ -24,8 +24,16 @@ const routes: Routes = [
         loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
     },
     {
+        path: 'shop',
+        loadChildren: () => import('./modules/shop/shop.module').then(m => m.ShopModule)
+    },
+    {
         path: 'bookmarks',
         loadChildren: () => import('./modules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
+    },
+    {
+        path: 'myLectures',
+        loadChildren: () => import('src/app/modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
     },
 ];
 

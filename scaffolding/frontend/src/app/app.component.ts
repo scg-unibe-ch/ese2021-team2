@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
     loggedIn: boolean;
     user: User | null;
-    isExpanded: boolean = false;
+    isExpanded: boolean = true;
 
     constructor(
         public httpClient: HttpClient,

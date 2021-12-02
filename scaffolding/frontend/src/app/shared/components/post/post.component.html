@@ -1,4 +1,6 @@
-<mat-card>
+<div *ngIf="post">
+
+<mat-card *ngIf="!editMode && !deleted">
     <h1>
     {{this.post.title}}
 </h1>
@@ -17,8 +19,38 @@
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 
+<app-comments-list [postId]="this.post.postId"></app-comments-list>
+
     <button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
     <button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
-<app-comments-list></app-comments-list>
+    <button (click)="edit()" *ngIf="authorizedToEdit()">Edit Post</button>
+    <button (click)="deletePost()" *ngIf="authorizedToEdit()">Delete Post</button>
+
 
 </mat-card>
+<mat-card *ngIf="editMode">
+
+    <input type="text" placeholder="title" name="title" [(ngModel)]="this.changedPost.title">
+    <br>
+    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
+    <br>
+    <input type="text" placeholder="semester" name="semester" [(ngModel)]="this.changedPost.semester">
+
+
+    <div class = "imagePreviewContainer" *ngIf = "this.post.postImage" >
+        <img [src] = "this.post.postImage">
+    </div>
+    <br>
+
+    <button (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
+    <button (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
+    <app-comments-list></app-comments-list>
+
+</mat-card>
+
+<mat-card *ngIf="deleted">
+    <h1>
+        {{this.post.title}} [DELETED]
+    </h1>
+</mat-card>
+</div>

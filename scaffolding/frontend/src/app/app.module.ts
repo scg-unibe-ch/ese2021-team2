@@ -36,9 +36,13 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import { DataService } from './modules/service/data.service';
+
 import {SharedModule} from "./shared/shared.module";
 import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
 import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
+import {MatSelectModule} from "@angular/material/select";
+
 
 @NgModule({
     declarations: [
@@ -48,8 +52,8 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
         UserComponent,
         SidebarComponent,
         HeaderComponent,
-        // PostComponent,
         DashboardComponent,
+    
 
     ],
     imports: [
@@ -73,10 +77,10 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
         MatDialogModule,
         SharedModule,
     ],
-    providers: [],
+    providers: [ DataService],
     bootstrap: [AppComponent],
     exports: [
-        // PostComponent
+        UserComponent,
     ],
 })
 export class AppModule { }

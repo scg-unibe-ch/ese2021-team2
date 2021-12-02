@@ -11,11 +11,43 @@ import {
 import {UserService} from './user.service';
 import {rejects} from 'assert';
 import {Bookmark} from '../models/bookmark.model';
+import { Subscription } from '../models/subscription.model';
 const { Op } = require('sequelize');
 
 const userService = new UserService();
 
 export class PostService {
+
+
+    public static getSubscribedBoardByUserId(uId: number) {
+        return Subscription.findAll({
+            where: {
+                userId: uId
+            },
+        });
+    }
+
+    // returns all posts belonging to a specified forum
+    static getPostsOfBoard(board: number): Promise<Post[]> {
+        return Post.findAll({
+            where: {
+                boardId: board
+            },
+            order: [['createdAt', 'DESC']]
+        });
+    }
+
+    public static async getPostsbyBoardIds(boardids: Subscription[]) {
+        const out = [];
+        for (let i = 0; i < boardids.length; i++) {
+            let postsOfBoard;
+            postsOfBoard = await this.getPostsOfBoard(boardids[i].boardId);
+            for (let j = 0; j < postsOfBoard.length; j++) {
+                out.push(postsOfBoard[j]);
+            }
+        }
+        return out;
+    }
 
     public createPost(createReq: CreatePostRequest): Promise<PostAttributes> {
         return userService.getUser(createReq.tokenPayload.userId)
@@ -170,16 +202,6 @@ export class PostService {
         return Post.findAll();
     }
 
-    // returns all posts belonging to a specified forum
-    getPostsOfBoard(board: number): Promise<Post[]> {
-        return Post.findAll({
-            where: {
-                boardId: board
-            },
-            order: [['createdAt', 'DESC']]
-        });
-    }
-
     // returns all posts belongin to a User
     getPostsbyUser(userId: number): Promise<Post[]> {
         return Post.findAll({
@@ -232,6 +254,7 @@ export class PostService {
 
             });
     }
+
 
     postReqIsValid(post: PostAttributes): boolean {
         return !!post.title;

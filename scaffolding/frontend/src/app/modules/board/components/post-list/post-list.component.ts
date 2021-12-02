@@ -1,17 +1,19 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Post } from '../../../../models/post.model';
 import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from "../../../service/data.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
 
   @Input() mode = "board";
   boardId: number = 4;
@@ -22,8 +24,11 @@ export class PostListComponent implements OnInit {
   loggedIn: boolean;
   user: User | null;
 
-  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+  @Input() searchTerm:string="";
+  filterarg = 'technical';
+  subscription: Subscription;
 
+  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
 
 
     // Listen for changes
@@ -33,18 +38,21 @@ export class PostListComponent implements OnInit {
     // Current value
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
-    this._Activatedroute.paramMap.subscribe(params => { 
-      this.boardId= parseInt(params.get('boardId')!); 
+    this._Activatedroute.paramMap.subscribe(params => {
+      this.boardId= parseInt(params.get('boardId')!);
   });
 
   }
 
 
   ngOnInit(): void {
-    console.log("ngOnInit is being executed");
-
-
     this.setPostList()
+
+    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   checkUserStatus(): void {
@@ -55,15 +63,23 @@ export class PostListComponent implements OnInit {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): void{
+  public createPost(title: string, content: string, semester:string,category:string, boardId: number, file: File | undefined): boolean{
     var postToAdd: Post;
-    if(file) {                                                                        
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], file.name)  //creator id needs to be crrected (default value 2)
+    if(file) {
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, [], undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
     }
-    this.createPostInBackend(postToAdd, file);
-    this.posts.push(postToAdd)
+
+    if( this.isValid(postToAdd) ) {
+        this.createPostInBackend(postToAdd, file);
+        this.postFeedback = "";
+
+        this.posts.push(postToAdd);
+        return true;
+    } else {
+        return false;
+    }
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
@@ -76,17 +92,19 @@ export class PostListComponent implements OnInit {
       boardId:post.boardId,
       creatorId:post.creatorId,
       semester: post.semester,
+      category:post.category,
       postImage: post.postImage
     }).subscribe((response: any) => {
       this.addImage(image, response.postId);
     },
       (err: any) => {
-        this.postFeedback = err.error.message;
+        console.log(err);
+        this.postFeedback = err;
       }
     );
   }
 
-  addImage(file:File | undefined, postId : number) {
+  addImage(file:File | undefined, postId : number): void {
     if(file === undefined) {
       return;
     } else {
@@ -102,13 +120,13 @@ export class PostListComponent implements OnInit {
     if (this.mode==="board") {
 
       console.log("post list id: "+this.boardId);
-      
+
 
       this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
         boardId: this.boardId
       }).subscribe((res: any) => {
             this.posts = res;
-            console.log(res);
+           
         } ,
         err => {
           console.log(err);
@@ -125,9 +143,35 @@ export class PostListComponent implements OnInit {
         }
       );
     }
+
+      
     this.checkUserStatus();
 
 
+  }
+
+  isValid(post: Post): boolean {
+      if( post.title ) {
+          if (post.content) {
+              return true;
+          } else if (post.postImage) {
+              return true;
+          } else {
+              this.postFeedback = 'Post requires either an image or some text!';
+              return false;
+          }
+      } else {
+          this.postFeedback = 'Post requires a title!';
+          return false
+          }
+  }
+
+  isAuthorizedToCreate(): boolean {
+      if( this.user ) {
+          return !this.user.admin;
+      } else {
+          return false;
+      }
   }
 
 }

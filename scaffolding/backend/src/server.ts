@@ -11,6 +11,7 @@ import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
 import { Admin } from './models/admin.model';
+import { Order } from './models/order.model';
 
 import cors from 'cors';
 import { AdminController } from './controllers/admin.controller';
@@ -20,11 +21,21 @@ import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
 import { Like } from './models/like.model';
 import { Subject } from './models/subject.model';
-import {Board} from './models/board.model';
-import {PostComment} from './models/postComment.model';
-import {BoardController} from './controllers/board.controller';
-import {Bookmark} from './models/bookmark.model';
-import {CommentController} from './controllers/postComment.controller';
+import { Board } from './models/board.model';
+import { PostComment } from './models/postComment.model';
+import { BoardController } from './controllers/board.controller';
+import { Product } from './models/product.model';
+import { ProductImage } from './models/productImage.model';
+import { ProductController } from './controllers/product.controller';
+import { CommentController} from './controllers/postComment.controller';
+import { Bookmark } from './models/bookmark.model';
+import { OrderController } from './controllers/order.controller';
+import { Subscription } from './models/subscription.model';
+
+import {env} from 'process';
+import {ProductOrder} from './models/ProductOrder.model';
+
+
 
 export class Server {
     private server: Application;
@@ -44,17 +55,25 @@ export class Server {
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
         Board.initialize(this.sequelize);
+        Product.initialize(this.sequelize);
+        ProductImage.initialize(this.sequelize);
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
         Admin.initialize(this.sequelize);
         Moderator.initialize(this.sequelize);
+        Subscription.initialize(this.sequelize);
+        Order.initialize(this.sequelize);
+        ProductOrder.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
+        ProductImage.createAssociations();
         Bookmark.createAssociations();
         Admin.createAssociations();
         Moderator.createAssociations();
+        Post.createAssociations();
+        ProductOrder.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
@@ -92,7 +111,9 @@ export class Server {
             .use('/subject', SubjectController)
             .use('/board/:boardId/post', PostController)
             .use('/board', BoardController)
+            .use('/product', ProductController)
             .use('/comment', CommentController)
+            .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
             // this is the message you get if you open http://localhost:3000/ when the server is running

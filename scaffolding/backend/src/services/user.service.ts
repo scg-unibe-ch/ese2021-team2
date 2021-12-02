@@ -10,9 +10,27 @@ import { upload } from '../middlewares/fileFilter';
 import { like } from 'sequelize/types/lib/operators';
 import { Like } from '../models/like.model';
 import path from 'path';
+import { Subscription } from '../models/subscription.model';
 const { Op } = require('sequelize');
 
 export class UserService {
+
+    public static isUserSubscribed(uId, bId) {
+        let out: boolean;
+        Subscription.findAll({
+            where: {
+                userId: uId,
+                boardId: bId
+            }
+        }).then(subs => {
+            if (subs.length > 0) {
+                out = true;
+            } else {
+                out = false;
+            }
+        });
+        return out;
+    }
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;

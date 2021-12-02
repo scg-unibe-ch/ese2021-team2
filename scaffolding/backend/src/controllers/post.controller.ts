@@ -20,7 +20,7 @@ postController.post('/createPost', verifyToken,
         req.body.post = req.body;
         postService.createPost(req.body)
             .then(created => res.send(created))
-            .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).json({message: err}));
     }
 );
 
@@ -55,7 +55,6 @@ postController.get('/:postId/image',
         }).catch((err) => res.send(err));
     }
 );
-
 
 // needs to be changed to get request
 postController.post('/getPostsOfBoard',

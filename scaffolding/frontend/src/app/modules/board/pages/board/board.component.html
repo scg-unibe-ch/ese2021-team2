@@ -1,12 +1,17 @@
 
+<mat-toolbar>
+    Board
+    <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
+</mat-toolbar>
+
 <h1>{{title}}</h1>
 
+<button *ngIf="loggedIn && unsubscribed" (click)="subscribe()">Subscribe</button>
 
 
-<!-- here we get an error because loggedIn was set to true and now it isn't seen as undefined anymore
- Error in console: Previous value: 'undefined'. Current value: 'true'..-->
-<button (click)="createPost()"> Create new Post</button>
-
+<div>
+<button *ngIf="this.postList.isAuthorizedToCreate()" (click)="createPost()"> Create new Post</button>
+</div>
 
 
 <p>{{description}}</p>
@@ -15,8 +20,19 @@
     <h1>create post</h1>
 
     <input type="text" placeholder="title" name="title" [(ngModel)]="newTitle">
-    <input type="text" placeholder="content" name="content" [(ngModel)]="newContent">
-    <input type="text" placeholder="semester" name="semester" [(ngModel)]="newSemester">
+    <br>
+    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="newContent" ></textarea>
+    <br>
+
+    <select [(ngModel)]="newSemester">
+        <option value="" disabled>Semester</option>
+        <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+    </select>
+    &nbsp;
+    <select [(ngModel)]="newCategory">
+        <option value="" disabled>Category</option>
+        <option *ngFor="let kategorie of KategorieAuswahl" [ngValue]="kategorie">{{kategorie}}</option>
+     </select>
 
     <br>
     <br>
@@ -28,7 +44,8 @@
     </div>
     <br>
     <button (click)="submitPost()" >Submit Post</button>
+    <div *ngIf="this.postList.postFeedback">{{this.postList.postFeedback}}</div>
 </div>
 
 
-<app-post-list></app-post-list>
+<app-post-list [searchTerm]="searchWord"></app-post-list>
