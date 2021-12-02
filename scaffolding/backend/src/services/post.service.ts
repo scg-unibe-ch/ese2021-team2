@@ -18,30 +18,29 @@ const userService = new UserService();
 
 export class PostService {
 
-
-    public static getSubscribedBoardByUserId(uId: number) {
+    public getSubscribedBoardByUserId(userId: number) {
         return Subscription.findAll({
             where: {
-                userId: uId
+                userId: userId
             },
         });
     }
 
     // returns all posts belonging to a specified forum
-    static getPostsOfBoard(board: number): Promise<Post[]> {
+    public getPostsOfBoard(boardId: number): Promise<Post[]> {
         return Post.findAll({
             where: {
-                boardId: board
+                boardId: boardId
             },
             order: [['createdAt', 'DESC']]
         });
     }
 
-    public static async getPostsbyBoardIds(boardids: Subscription[]) {
+    public async getPostsbyBoardIds(boardIds: Subscription[]) {
         const out = [];
-        for (let i = 0; i < boardids.length; i++) {
+        for (let i = 0; i < boardIds.length; i++) {
             let postsOfBoard;
-            postsOfBoard = await this.getPostsOfBoard(boardids[i].boardId);
+            postsOfBoard = await this.getPostsOfBoard(boardIds[i].boardId);
             for (let j = 0; j < postsOfBoard.length; j++) {
                 out.push(postsOfBoard[j]);
             }
