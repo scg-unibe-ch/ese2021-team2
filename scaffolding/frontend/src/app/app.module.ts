@@ -52,8 +52,8 @@ import {MatSelectModule} from "@angular/material/select";
         UserComponent,
         SidebarComponent,
         HeaderComponent,
-        // PostComponent,
         DashboardComponent,
+    
 
     ],
     imports: [

@@ -26,7 +26,9 @@
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>
+
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/mylectures'">
+
         <span class="menu-text">My Lectures</span>
     </button>
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/bookmarks'">

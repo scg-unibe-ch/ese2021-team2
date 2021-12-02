@@ -31,6 +31,10 @@ const routes: Routes = [
         path: 'bookmarks',
         loadChildren: () => import('./modules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
     },
+    {
+        path: 'myLectures',
+        loadChildren: () => import('./modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
+    },
 ];
 
 @NgModule({

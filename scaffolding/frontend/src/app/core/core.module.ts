@@ -4,8 +4,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
 @NgModule({
-  declarations: [],
+  declarations: [
+ 
+  ],
   imports: [
     CommonModule
   ],

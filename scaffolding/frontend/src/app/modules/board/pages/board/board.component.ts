@@ -19,7 +19,9 @@ export class BoardComponent implements OnInit {
   @ViewChild(PostListComponent) postList: PostListComponent;
   title="Title";
   id = 1;
+  user: User| null;
   loggedIn: boolean =false;
+  unsubscribed: boolean = false;
   newTitle: string = "";
   newContent: string = "";
   newSemester: string = "";
@@ -54,7 +56,18 @@ export class BoardComponent implements OnInit {
       userService.loggedIn$.subscribe(res => this.loggedIn = res);
       // Current value
       this.loggedIn = userService.getLoggedIn();
+      if(this.loggedIn){
+        this.user = userService.getUser();
+      }
 
+    if(this.loggedIn){
+    httpClient.post(environment.endpointURL + "board/isUserNotSubscribed", {
+      boardId: this.id,
+      userId: userService.getUser()?.userId
+    }).subscribe((res: any) => {
+     this.unsubscribed=res
+    })
+    }
   }
 
   ngOnInit(): void {
@@ -87,4 +100,24 @@ export class BoardComponent implements OnInit {
       this.title = '';
   }
 
+  subscribe(){
+    this.unsubscribed=false;
+
+    this.httpClient.post(environment.endpointURL + "board/subscribe", {
+      boardId: this.id,
+      userId: this.userService.getUser()!.userId
+    }).subscribe((res: any) => {
+        let response = res[0];
+        this.title = response.boardName;
+        this.description = response.description;
+
+      
+      } ,
+      err => {
+        console.log(err);
+      }
+    );
 }
+}
+
+

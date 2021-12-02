@@ -1,7 +1,6 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from './components/post-list/post-list.component';
-import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { BoardComponent } from './pages/board/board.component';
 import { RouterModule, Routes } from '@angular/router';
 import {FormsModule} from "@angular/forms";
@@ -39,8 +38,10 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         ReactiveFormsModule,
         MatToolbarModule,
+
         MatCardModule,
         MatIconModule,
+
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
