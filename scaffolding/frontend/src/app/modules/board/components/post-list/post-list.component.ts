@@ -22,6 +22,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   changed= true;
   loggedIn: boolean;
+  admin: boolean;
   user: User | null;
 
   @Input() searchTerm:string="";
@@ -29,14 +30,14 @@ export class PostListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
-
-
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
+    userService.admin$.subscribe(res => this.admin = res);
     userService.user$.subscribe(res => this.user = res);
 
     // Current value
     this.loggedIn = userService.getLoggedIn();
+    this.admin = userService.isAdmin();
     this.user = userService.getUser();
     this._Activatedroute.paramMap.subscribe(params => {
       this.boardId= parseInt(params.get('boardId')!);
@@ -71,7 +72,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
     }
 
-    if( this.isValid(postToAdd) ) {
+    if(this.isValid(postToAdd)) {
         this.createPostInBackend(postToAdd, file);
         this.postFeedback = "";
 
@@ -104,51 +105,39 @@ export class PostListComponent implements OnInit, OnDestroy {
     );
   }
 
-  addImage(file:File | undefined, postId : number): void {
-    if(file === undefined) {
-      return;
-    } else {
-      debugger;
-      const fd = new FormData();
-      fd.append('image', file);
-      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
-    }
-  }
-
-  setPostList(){
-
-    if (this.mode==="board") {
-
-      console.log("post list id: "+this.boardId);
-
-
-      this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-        boardId: this.boardId
-      }).subscribe((res: any) => {
-            this.posts = res;
-           
-        } ,
-        err => {
-          console.log(err);
+    addImage(file:File | undefined, postId : number): void {
+        if(file === undefined) {
+            return;
+        } else {
+            const fd = new FormData();
+            fd.append('image', file);
+            this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd);
         }
-      );
-    } else if (this.mode==="user") {
-      this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
-        userId: this.user?.userId
-      }).subscribe((res: any) => {
-          this.posts = res;
-        } ,
-        err => {
-          console.log(err);
-        }
-      );
     }
 
-      
-    this.checkUserStatus();
+    setPostList() {
+        if (this.mode==="board") {
+            console.log("post list id: "+this.boardId);
 
-
-  }
+            this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
+                boardId: this.boardId
+            }).subscribe((res: any) => {
+                    this.posts = res;
+                },
+                err => console.log(err)
+            );
+        } else if (this.mode === "user") {
+            this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
+                userId: this.user?.userId
+            })
+            .subscribe((res: any) => {
+                    this.posts = res;
+                },
+                err => console.log(err)
+            );
+        }
+        this.checkUserStatus();
+    }
 
   isValid(post: Post): boolean {
       if( post.title ) {
@@ -166,12 +155,12 @@ export class PostListComponent implements OnInit, OnDestroy {
           }
   }
 
-  isAuthorizedToCreate(): boolean {
-      if( this.user ) {
-          return !this.user.admin;
-      } else {
-          return false;
-      }
-  }
+    isAuthorizedToCreate(): boolean {
+        if (this.user) {
+            return !this.admin;
+        } else {
+            return false;
+        }
+    }
 
 }

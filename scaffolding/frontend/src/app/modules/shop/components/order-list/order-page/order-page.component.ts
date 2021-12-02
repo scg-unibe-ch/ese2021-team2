@@ -17,20 +17,29 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class OrderPageComponent implements OnInit {
 
     authorized: boolean = false;
+    loggedIn: boolean;
+    admin: boolean;
     user: User | null;
     order: Order = new Order(0,-1,"","","","", [],0);
     productItems: ProductItem[] = [];
     productIds: string = '';
     status: string = this.order.status;
 
-    constructor(public httpClient: HttpClient, private _Activatedroute: ActivatedRoute,
-                public userService: UserService) {
+    constructor(public httpClient: HttpClient, private _Activatedroute: ActivatedRoute, public userService: UserService) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.admin$.subscribe(res => this.admin = res);
+        userService.user$.subscribe(res => this.user = res);
+
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.admin = userService.isAdmin();
+        this.user = userService.getUser();
         this._Activatedroute.paramMap.subscribe(params => {
             this.order.orderId = parseInt(params.get('id')!);
         });
         this.initializeOrder();
-        this.user = this.userService.getUser();
-            }
+    }
 
   ngOnInit(): void {
   }
@@ -38,7 +47,7 @@ export class OrderPageComponent implements OnInit {
   checkAuthorizationStatus(): boolean {
       this.user = this.userService.getUser();
       if( this.user && this.user.userId ) {
-          return (this.user.admin || this.user.userId - this.order.customerId === 0);
+          return (this.admin || this.user.userId - this.order.customerId === 0);
       } else {
           return false;
       }

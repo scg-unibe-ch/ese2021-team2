@@ -48,7 +48,7 @@ boardController.post('/getSubscribedPostsByUserId',
             const boardIds: Subscription[] = await postService.getSubscribedBoardByUserId(req.body.userId);
             res.send(await postService.getPostsbyBoardIds(boardIds));
         } catch (err) {
-            res.status(500).send(err); 
+            res.status(500).send(err);
         }
     }
 );
