@@ -23,7 +23,7 @@ export const routing = RouterModule.forChild(routes);
         CommonModule,
         routing,
         SharedModule,
-        SubjectsModule
+       // SubjectsModule
     ],
     schemas: [ 
       CUSTOM_ELEMENTS_SCHEMA

@@ -33,7 +33,7 @@ const routes: Routes = [
     },
     {
         path: 'myLectures',
-        loadChildren: () => import('./modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
+        loadChildren: () => import('src/app/modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
     },
 ];
 

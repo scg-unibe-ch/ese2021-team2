@@ -19,9 +19,7 @@ export class MyLecturesComponent implements OnInit {
     }).subscribe((response: any) => {
       console.log(response);
       let res=response
-      for(let i = 0; i<res.length; i++){
-        this.boardList.push(res[i])
-      }
+      this.boardList = res
     },
       (err: any) => {
         console.log(err);

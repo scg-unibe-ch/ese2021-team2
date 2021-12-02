@@ -21,14 +21,10 @@ export class HomeComponent implements OnInit {
   constructor(public userService: UserService, private httpClient: HttpClient) { 
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
-
     if(this.userService.getUser()!=null){
       this.loggedIn=true;
     }
     
-    
-
-
     this.httpClient.post(environment.endpointURL + "board/getSubscribedPostsByUserId", {
       userId: this.userService.getUser()!.userId
     }).subscribe((res: any) => {
@@ -39,9 +35,7 @@ export class HomeComponent implements OnInit {
       err => {
         console.log(err);
       }
-    );
-
-    
+    );    
   }
     
   
