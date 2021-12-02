@@ -63,6 +63,6 @@ export class SidebarComponent {
     sendIsExpanded() {
         this.isExpanded = !this.isExpanded;
         this.messageEvent.emit(this.isExpanded);
-      }
+    }
 
 }

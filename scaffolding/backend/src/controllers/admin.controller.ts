@@ -14,14 +14,12 @@ adminController.get('/',
     }
 );
 
-adminController.post('/subject/create',
+adminController.post('/',
     (req: Request, res: Response) => {
-        adminService.createSubject(req.body)
-            .then(subject => res.send(subject))
+        adminService.makeAdmin(req.body.userId)
+            .then(() => res.status(200).send())
             .catch(err => res.status(500).send(err));
     }
 );
-
-// TODO: Add delete and modify functions for the subjects in here.
 
 export const AdminController: Router = adminController;

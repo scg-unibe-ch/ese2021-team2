@@ -14,7 +14,7 @@ export class UserService {
 
     private user: User | null;
     private loggedIn: boolean;
-    private isAdmin: boolean;
+    private admin: boolean;
     private bookmarkedPosts: Post[] | undefined;
 
     // Observable Sources
@@ -25,16 +25,16 @@ export class UserService {
     // Observable Streams
     user$ = this.userSource.asObservable();
     loggedIn$ = this.loggedInSource.asObservable();
-    isAdmin$ = this.isAdminSource.asObservable();
+    admin$ = this.isAdminSource.asObservable();
 
     constructor(private httpClient: HttpClient) {
         this.user = null;
         this.loggedIn = false;
-        this.isAdmin = false;
+        this.admin = false;
 
         this.user$.subscribe(res => this.user = res);
         this.loggedIn$.subscribe(res => this.loggedIn = res);
-        this.isAdmin$.subscribe(res => this.isAdmin = res);
+        this.admin$.subscribe(res => this.admin = res);
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
@@ -115,6 +115,10 @@ export class UserService {
 
         this.userSource.next(null);
         this.loggedInSource.next(false);
+    }
+
+    isAdmin() {
+        return this.admin;
     }
 
     getLoggedIn(): boolean {

@@ -8,6 +8,7 @@ import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { PostListComponent } from '../board/components/post-list/post-list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BoardsComponent } from './pages/boards/boards.component';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
     {
@@ -33,6 +34,7 @@ export const routing = RouterModule.forChild(routes);
         BoardListComponent
     ],
     imports: [
+        MatButtonModule,
         CommonModule,
         routing,
     ]

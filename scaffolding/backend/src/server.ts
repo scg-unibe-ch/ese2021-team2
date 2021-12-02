@@ -1,3 +1,5 @@
+import { Moderator } from './models/moderator.model';
+import { SubjectController } from './controllers/subject.controller';
 import express, { Application , Request, Response } from 'express';
 import morgan from 'morgan';
 import { TodoItemController } from './controllers/todoitem.controller';
@@ -8,6 +10,7 @@ import { Sequelize } from 'sequelize';
 import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
+import { Admin } from './models/admin.model';
 
 import cors from 'cors';
 import { AdminController } from './controllers/admin.controller';
@@ -43,11 +46,15 @@ export class Server {
         Board.initialize(this.sequelize);
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
+        Admin.initialize(this.sequelize);
+        Moderator.initialize(this.sequelize);
         TodoItem.createAssociations();
         TodoList.createAssociations();
         ItemImage.createAssociations();
         PostImage.createAssociations();
         Bookmark.createAssociations();
+        Admin.createAssociations();
+        Moderator.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
             this.server.listen(this.port, () => {                                   // start server on specified port
@@ -72,6 +79,7 @@ export class Server {
             preflightContinue: false,
         };
 
+        // TODO: Remove the todoitem and todolist as well as the secured endpoint stuff
         return express()
             .use(cors())
             .use(express.json())                    // parses an incoming json to an object
@@ -81,7 +89,8 @@ export class Server {
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/admin', AdminController)
-            .use('/post', PostController)
+            .use('/subject', SubjectController)
+            .use('/board/:boardId/post', PostController)
             .use('/board', BoardController)
             .use('/comment', CommentController)
             .options('*', cors(options))

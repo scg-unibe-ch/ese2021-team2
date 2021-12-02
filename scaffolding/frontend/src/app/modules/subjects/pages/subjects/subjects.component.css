@@ -1,0 +1,22 @@
+h1 {
+    font-family: "Roboto";
+    font-weight: 800;
+    font-size: 2.6rem;
+    padding-left: 4rem;
+}
+
+#admin-panel {
+    width: 40rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(228, 237, 255);
+    padding: 15px 15px 15px 15px;
+    margin: 10px 40px 10px 40px;
+    border-radius: 0.4rem;
+}
+
+.mat-button {
+    font-size: 1.2rem;
+    background-color: rgb(250, 252, 255);
+}

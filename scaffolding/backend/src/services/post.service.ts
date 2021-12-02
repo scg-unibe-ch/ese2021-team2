@@ -16,6 +16,7 @@ const { Op } = require('sequelize');
 const userService = new UserService();
 
 export class PostService {
+
     public createPost(createReq: CreatePostRequest): Promise<PostAttributes> {
         return userService.getUser(createReq.tokenPayload.userId)
             .then(user => {
@@ -34,9 +35,17 @@ export class PostService {
             });
     }
 
+    public getCreatorId(postId: number): Promise<number> {
+        return new Promise((resolve, reject) => {
+            Post.findByPk(postId)
+            .then(post => resolve(post.creatorId))
+            .catch(reason => reject(reason));
+        });
+    }
+
     public addImage(req: MulterRequest): Promise<PostImageAttributes> {
 
-        return Post.findByPk(req.params.id)
+        return Post.findByPk(req.params.postId)
             .then(found => {
                 if (!found) {
                     return Promise.reject('Post not found!');
@@ -55,7 +64,7 @@ export class PostService {
 
 
     // deletes a post from the database
-    public delete(deleteReq: DeletePostRequest): Promise<string> {
+    public deletePost(deleteReq: DeletePostRequest): Promise<string> {
            return userService.getUser(deleteReq.tokenPayload.userId)
                .then(user => {
                    return Post.findByPk(deleteReq.postId)

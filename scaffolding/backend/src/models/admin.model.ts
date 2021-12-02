@@ -1,3 +1,4 @@
+import { User } from './user.model';
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
 
 export interface AdminAttributes {
@@ -33,6 +34,12 @@ export class Admin extends Model<AdminAttributes, AdminCreationAttributes> imple
             }
         );
     }
-
-    // TODO: Create association and add both the class and association to the server.ts
+    public static createAssociations() {
+        Admin.belongsTo(User, {
+            targetKey: 'userId',
+            as: 'user',
+            onDelete: 'cascade',
+            foreignKey: 'userId'
+        });
+    }
 }

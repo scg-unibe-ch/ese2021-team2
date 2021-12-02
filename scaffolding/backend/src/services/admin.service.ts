@@ -1,4 +1,3 @@
-import { Subject } from './../models/subject.model';
 import { Admin } from './../models/admin.model';
 const { Op } = require('sequelize');
 
@@ -22,16 +21,14 @@ export class AdminService {
         });
     }
 
-    // TODO: When the subjects get an icon it also has to be added right here.
-    public createSubject(name: string): Promise<Subject> {
+    public makeAdmin(userId: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            Subject.create({
-                name: name
-            }).then(res => {
-                resolve(res);
-            }).catch(err => {
-                reject(err);
-            });
+            Admin.create({
+                userId: userId
+            })
+            .then(() => resolve())
+            .catch(err => reject(err));
         });
     }
+
 }
