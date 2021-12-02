@@ -1,0 +1,52 @@
+textarea{
+    font-family: inherit;
+}
+
+.creation-container{
+    min-width: 240px;
+    min-height: 390px;
+    justify-content: space-around;
+    border-radius: 3px;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title-input{
+    border: 1px  solid black;
+    border-radius: 3px;
+    width:max-content;
+    margin-bottom: 5px;
+}
+
+.description-input{
+    margin-bottom: 5px;
+    min-height: 100px;
+}
+
+.actions{
+    display:flex;
+    flex-direction: column;
+}
+
+.category{
+    margin-bottom: 5px;
+}
+
+.image-upload{
+    display: inline-flex;
+    justify-content: center;
+}
+
+#image-preview{
+    object-fit: contain;
+    overflow: hidden;
+    height: 40px;
+    width: 40px;
+}
+
+#upload{
+    align-self: center;
+}

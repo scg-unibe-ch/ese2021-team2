@@ -26,16 +26,21 @@
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>
-    <button mat-button class="menu-button" [routerLink]="'/myLectures'">
+
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/mylectures'">
+
         <span class="menu-text">My Lectures</span>
     </button>
-    <button mat-button class="menu-button" [routerLink]="'/bookmarks'">
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/bookmarks'">
         <span class="menu-text">Bookmark</span>
     </button>
     <button mat-button class="menu-button" [routerLink]="'/shop'">
         <span class="menu-text">Shop</span>
     </button>
-    <button mat-button class="menu-button" [routerLink]="'/settings'">
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/settings'">
         <span class="menu-text">Settings</span>
+    </button>
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
+        <span class="menu-text">Orders</span>
     </button>
 </div>

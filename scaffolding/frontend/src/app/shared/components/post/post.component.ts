@@ -7,6 +7,7 @@ import {ConfirmationDialogModel} from "../../../models/confirmation-dialog.model
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class PostComponent implements OnInit {
   editMode: boolean = false;
   likes: any  = [];
   deleted: boolean = false;
+  postId: number = 0;
 
 
 
@@ -33,7 +35,7 @@ export class PostComponent implements OnInit {
 
   imageURL: string = "";
 
-  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog) {
+  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
@@ -42,8 +44,15 @@ export class PostComponent implements OnInit {
     this.loggedIn = userService.getLoggedIn();
     this.user = userService.getUser();
 
-
-  }
+    this._Activatedroute.paramMap.subscribe(params => { 
+        this.postId= parseInt(params.get('postId')!); 
+        this.httpClient.get( environment.endpointURL + "post/" + this.postId)
+        .subscribe((post: any) => {
+            this.post = post;
+            this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+        })
+    });
+}
 
   ngOnInit(): void {
       this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";

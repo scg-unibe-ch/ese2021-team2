@@ -13,13 +13,18 @@ import { CartComponent } from './components/cart/cart.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule} from '@angular/material/badge';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OrderComponent } from './components/order/order.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { ProductCreationComponent } from './components/product-creation/product-creation.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderPageComponent } from './components/order-list/order-page/order-page.component';
+import { OrderSummaryComponent } from './components/order-list/order-summary/order-summary.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 const routes: Routes = [
   {
@@ -37,7 +42,16 @@ const routes: Routes = [
     {
     path: 'cart/order',
     component: OrderComponent
-    }
+    },
+    {
+    path:'orders',
+    component: OrderListComponent
+    },
+    {
+    path: 'orders/order/:id',
+    component: OrderPageComponent
+    },
+
 ];
 
 export const routing = RouterModule.forChild(routes);
@@ -50,6 +64,10 @@ export const routing = RouterModule.forChild(routes);
     ProductPageComponent,
     CartComponent,
     OrderComponent,
+    ProductCreationComponent,
+    OrderListComponent,
+    OrderPageComponent,
+    OrderSummaryComponent,
 
   ],
     imports: [
@@ -68,6 +86,8 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         MatSelectModule,
         MatFormFieldModule,
+        MatButtonToggleModule,
+        ReactiveFormsModule,
     ],
   exports: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

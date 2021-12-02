@@ -34,6 +34,11 @@
     max-width: 100%;
 }
 
+.mat-card-actions{
+    display:inline-flex;
+    justify-content: right;
+}
+
 .mat-card-image:hover{
     transform: scale(1.1)
 }

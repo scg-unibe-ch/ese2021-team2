@@ -1,0 +1,22 @@
+#post-preview {
+    position:relative;
+    padding-top:4px;
+}
+
+.mat-icon {
+    position:relative;
+}
+
+.post-att {
+    position:absolute;
+    padding-top:2px;
+}
+
+#post-tit {
+    cursor: pointer; 
+
+}
+
+#post-tit:hover{
+    color: grey;
+}
