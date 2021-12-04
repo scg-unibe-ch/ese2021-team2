@@ -40,6 +40,11 @@ textarea{
     justify-content: center;
 }
 
+.error-message{
+    text-align: center;
+    color: red;
+}
+
 #image-preview{
     object-fit: contain;
     overflow: hidden;
