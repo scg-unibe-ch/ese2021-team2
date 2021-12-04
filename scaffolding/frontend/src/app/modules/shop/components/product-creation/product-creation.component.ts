@@ -74,6 +74,11 @@ export class ProductCreationComponent implements OnInit {
             return false;
         }
 
+        if(!this.newFile){
+            this.errMessage = "Please add a Photo";
+            return false;
+        }
+
         return true;
     }
 }
