@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-import { environment } from 'src/environments/environment';
 import { DataService } from "../../../service/data.service";
 import { Subscription } from 'rxjs';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
@@ -13,31 +13,22 @@ import { Subscription } from 'rxjs';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
-  products: Product[] = []
-  filterarg = 'fashion';
-  subscription: Subscription;
-  @Input() searchTerm:string="";
+    products: Product[] = []
+    filterarg = 'fashion';
+    subscription: Subscription;
+    @Input() searchTerm:string="";
 
-  constructor(public httpClient: HttpClient,private data: DataService) {}
+    constructor(public httpClient: HttpClient,private data: DataService,
+                private productService : ProductService) {
+                    this.productService.product$.subscribe(res => this.products = res);
+                }
 
-  ngOnInit(): void {
-    this.getProducts();
-    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
-  }
+    ngOnInit(): void {
+        this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
+        this.products = this.productService.getProducts();
+    }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  getProducts(): void{
-    this.httpClient.get(environment.endpointURL + "product/category/all")
-    .subscribe((res: any) => {
-          this.products = res
-      } ,
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 }
