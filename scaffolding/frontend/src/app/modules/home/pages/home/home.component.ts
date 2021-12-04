@@ -13,10 +13,8 @@ export class HomeComponent implements OnInit {
   loggedIn: boolean;
   user: User | null;
   home = "home";
-  posts = []
+  posts = [{postId: 0, title:"", content:"", likes:0, date:"",boardId:0,creatorId:0,semester:"",category:"",postImage:""}]
   
-
-
 
   constructor(public userService: UserService, private httpClient: HttpClient) { 
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -28,9 +26,7 @@ export class HomeComponent implements OnInit {
     this.httpClient.post(environment.endpointURL + "board/getSubscribedPostsByUserId", {
       userId: this.userService.getUser()!.userId
     }).subscribe((res: any) => {
-        
         this.posts = res;
-    
       } ,
       err => {
         console.log(err);

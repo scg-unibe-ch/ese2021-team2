@@ -118,6 +118,15 @@ export class BoardComponent implements OnInit {
       }
     );
 }
+
+  unsubscribe(){
+    console.log("unsubscribe");
+    
+  }
+
+  cancelCreate(){
+    this.creatingPost=false;
+  }
 }
 
 

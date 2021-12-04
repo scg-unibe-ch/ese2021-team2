@@ -8,6 +8,7 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-d
 import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
 import { ActivatedRoute } from '@angular/router';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 
 @Component({
@@ -25,15 +26,10 @@ export class PostComponent implements OnInit {
   likes: any  = [];
   deleted: boolean = false;
   postId: number = 0;
-
-
-
   loggedIn: boolean;
-
-
   user: User | null;
-
   imageURL: string = "";
+  creator = ""
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     // Listen for changes
@@ -45,58 +41,84 @@ export class PostComponent implements OnInit {
     this.user = userService.getUser();
 
     this._Activatedroute.paramMap.subscribe(params => { 
-        this.postId= parseInt(params.get('postId')!); 
-        this.httpClient.get( environment.endpointURL + "post/" + this.postId)
-        .subscribe((post: any) => {
+        this.postId= parseInt(params.get('posttId')!); 
+       
+        
+        
+        this.httpClient.post( environment.endpointURL + "post/getPostById",{
+            postId: this.postId
+        }
+        ).subscribe((post: any) => {
             this.post = post;
+            this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+                postId: this.post.postId
+            }).subscribe((res) => {
+              this.likes = res;
+              this.post.likes = this.likes.length;
+              this.canUserVote();
+            }, (err: any) => {
+                console.log(err);
+            });
+      
+            for (let i = 0; i < this.likes.length; i++) {
+                if (this.likes.get(i).userId == this.user?.userId) {
+                    this.userCanVote = false;
+                }
+            }
+            
+            this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
+                postId: this.postId
+            }).subscribe(res => {
+                console.log(res);
+                
+            })
+
             this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
         })
     });
+
+    this.httpClient.post(environment.endpointURL+"user/getUserById",{
+        userId: this.post.creatorId
+    }).subscribe(res=>{
+        console.log(res);
+        
+    })
+
+
+
+
+
 }
 
   ngOnInit(): void {
-      this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
-
-      this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
-          postId: this.post.postId
-      }).subscribe((res) => {
-
-
-          this.likes = res;
-          this.post.likes = this.likes.length;
-      }, (err: any) => {
-          console.log(err);
-      });
-
-      for (let i = 0; i < this.likes.length; i++) {
-          if (this.likes.get(i).userId == this.user?.userId) {
-              this.userCanVote = false;
-          }
-      }
-
+     
   }
 
-
-
-  canUserVote(){
+  canUserVote(){  
+    for(var i=0; i<this.post.likes; i++){  
+        if(this.likes[i].userId==this.user?.userId){
+            this.voted=true;
+        }
+    }
   }
 
   upvote(){
+    if(!this.voted){
     this.post.likes++;
     this.voted=true;
 
 
     this.httpClient.post(environment.endpointURL + "user/likePost", {
-      userId: 3,
+      userId: this.user?.userId,
       postId: this.post.postId
     }).subscribe((res) => {
-      //console.log(res);
+      console.log(res);
 
 
     },(err: any) => {
       console.log(err);
     });
-
+    }
   }
 
   isBookmarked(): boolean {

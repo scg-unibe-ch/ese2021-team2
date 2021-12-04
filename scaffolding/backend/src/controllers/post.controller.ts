@@ -24,6 +24,11 @@ postController.post('/createPost', verifyToken,
     }
 );
 
+postController.post('/getPostById', (req: Request, res: Response) => {
+    Post.findByPk(req.body.postId).then(post => res.send(post)
+    ).catch((err) => res.send(err));
+});
+
 postController.delete('/:id/delete', verifyToken,
 (req: Request, res: Response) => {
     req.body.postId = req.params.id;
@@ -37,10 +42,10 @@ postController.post('/:id/image', (req: MulterRequest, res: Response) => {
     }
 );
 
-postController.get('/:id/image', (req: Request, res: Response) => {
+postController.post('/:id/image', (req: Request, res: Response) => {
     PostImage.findOne({
         where: {
-            postId: req.params.id}
+            postId: req.body.id}
     }).then(image => {
         if (image) {
             res.sendFile('./uploads/' + image.fileName, { root: process.cwd()});

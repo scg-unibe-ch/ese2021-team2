@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SubjectsModule } from '../subjects/subjects.module';
+import { BoardModule } from '../board/board.module';
+import { PostPreviewComponent } from '../board/components/post-preview/post-preview.component';
 
 
 const routes: Routes = [
@@ -23,7 +25,6 @@ export const routing = RouterModule.forChild(routes);
         CommonModule,
         routing,
         SharedModule,
-       // SubjectsModule
     ],
     schemas: [ 
       CUSTOM_ELEMENTS_SCHEMA

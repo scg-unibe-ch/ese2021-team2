@@ -15,11 +15,16 @@ export class PostPreviewComponent implements OnInit {
   constructor(public httpClient: HttpClient) { }
 
   ngOnInit(): void {
+
+    
+
     this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
       postId: this.post.postId
   }).subscribe((res) => {
 
-
+      console.log(res);
+     
+      
       this.likes = res;
       this.post.likes = this.likes.length;
   }, (err: any) => {

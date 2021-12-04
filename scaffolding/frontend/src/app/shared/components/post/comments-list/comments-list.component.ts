@@ -13,7 +13,7 @@ export class CommentsListComponent implements OnInit {
 
     @Input() postId: number | null = null;
     postCommentList = [{postCommentId: 0, postId: 0, commentText: '', userId: 0, userName: ''}]
-    showComments: boolean = false;
+    showComments: boolean = true;
     loggedIn: boolean = false;
     user: User | null;
     creatingComment: boolean = false;

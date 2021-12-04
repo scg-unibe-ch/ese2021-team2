@@ -1,9 +1,76 @@
 mat-card{
-    border: 2px solid black;
-    border-radius: 20px;
+    border-left: 7px solid rgb(25, 159, 90);
+    border-radius: 5px;
 }
 
 img{
    max-width: 100%;
    height: auto;
+}
+
+#background{
+    height: 100%;
+    width: 100%;
+    background-color:  rgb(222,230,243);
+    padding-top: 2%;
+}
+
+#frame{
+    margin: 2%;
+    margin-top: 0px;
+    height: auto;
+    background-color: white;
+}
+
+#info{
+    display: flex;
+}
+
+#info p{
+    margin-left: 10px
+}
+
+
+
+#likes{
+    position: relative;
+    margin-top: 12px;
+    margin-right: 10px;
+}
+
+#like-count{
+    position: relative;
+    bottom: 6px;
+}
+
+#post-meta{
+    display: flex;
+    position: absolute;
+    right: 20px;
+}
+
+#votedIcon{
+    color: red;
+}
+
+#bookmarkedIcon{
+    color: green;
+}
+
+.bm{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 10px;
+}
+
+#edit{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 25px;
+}
+
+#delete{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 25px;
 }

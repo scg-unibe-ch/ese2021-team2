@@ -14,7 +14,7 @@ export class SidebarComponent {
 
     loggedIn: boolean;
     user: User | null;
-    isExpanded: boolean = true;
+    isExpanded: boolean = false;
     @Output() messageEvent = new EventEmitter<boolean>();
     isLogin: boolean = false;
 

@@ -93,7 +93,7 @@ boardController.post('/getMyLectures',
             }).then(
                 async boards => {
                     const out = [];
-                    console.log(boards);
+
                     for (let i = 0; i < boards.length; i++) {
                         const board = await Board.findByPk(boards[i].boardId);
                         out.push(board);
