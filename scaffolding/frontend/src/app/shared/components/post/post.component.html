@@ -14,8 +14,8 @@
 <div id="info">
 
 
-<div id="likes"><mat-icon (click)="upvote()" *ngIf="!voted">favorite_outline</mat-icon>
-<mat-icon  *ngIf="voted" id="votedIcon">favorite_outline</mat-icon>
+<div id="likes"><mat-icon (click)="like()" *ngIf="!voted">favorite_outline</mat-icon>
+<mat-icon  *ngIf="voted" id="votedIcon" (click)="unlike()">favorite_outline</mat-icon>
 <span id="like-count"> {{this.post.likes}}</span></div>
 <mat-icon class="bm" (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark_border</mat-icon>
 <mat-icon class="bm" (click)="removeBookmark()" *ngIf="isBookmarked()" id="bookmarkedIcon">bookmark_border</mat-icon>
@@ -25,7 +25,7 @@
 
 <div id="post-meta">
 <p>{{this.post.date}}</p>
-<p>made by user: {{this.post.creatorId}}</p>
+<p>made by: {{this.creator.userName}}</p>
 </div>
 </div>
 

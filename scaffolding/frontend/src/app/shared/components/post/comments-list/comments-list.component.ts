@@ -13,7 +13,7 @@ export class CommentsListComponent implements OnInit {
 
     @Input() postId: number | null = null;
     postCommentList = [{postCommentId: 0, postId: 0, commentText: '', userId: 0, userName: ''}]
-    showComments: boolean = true;
+    showComments: boolean = false;
     loggedIn: boolean = false;
     user: User | null;
     creatingComment: boolean = false;
@@ -27,6 +27,7 @@ export class CommentsListComponent implements OnInit {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+     
     }
 
     ngOnInit(): void {
@@ -34,10 +35,11 @@ export class CommentsListComponent implements OnInit {
     }
 
     getComments(): void {
+        console.log("postId: "+this.postId);
+        
         this.httpClient.post(environment.endpointURL + 'comment/getCommentsByPostId', {postId: this.postId})
             .subscribe((res: any) => {
                     this.postCommentList = res;
-                    console.log(this.postCommentList);
                 },
                 err => {
                     console.log(err);
@@ -46,6 +48,7 @@ export class CommentsListComponent implements OnInit {
     }
 
     switchShowComments(): void {
+        this.getComments()
         this.showComments = !this.showComments
     }
 

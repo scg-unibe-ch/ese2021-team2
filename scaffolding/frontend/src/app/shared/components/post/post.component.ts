@@ -29,7 +29,7 @@ export class PostComponent implements OnInit {
   loggedIn: boolean;
   user: User | null;
   imageURL: string = "";
-  creator = ""
+  creator:any = {userName: ""}
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     // Listen for changes
@@ -42,8 +42,6 @@ export class PostComponent implements OnInit {
 
     this._Activatedroute.paramMap.subscribe(params => { 
         this.postId= parseInt(params.get('posttId')!); 
-       
-        
         
         this.httpClient.post( environment.endpointURL + "post/getPostById",{
             postId: this.postId
@@ -70,28 +68,23 @@ export class PostComponent implements OnInit {
                 postId: this.postId
             }).subscribe(res => {
                 console.log(res);
-                
             })
 
             this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+
+            this.httpClient.post(environment.endpointURL+"user/getUserById",{
+                userId: this.post.creatorId
+            }).subscribe(res=>{
+                this.creator=res
+            })   
+            
         })
     });
-
-    this.httpClient.post(environment.endpointURL+"user/getUserById",{
-        userId: this.post.creatorId
-    }).subscribe(res=>{
-        console.log(res);
-        
-    })
-
-
-
-
 
 }
 
   ngOnInit(): void {
-     
+
   }
 
   canUserVote(){  
@@ -102,23 +95,36 @@ export class PostComponent implements OnInit {
     }
   }
 
-  upvote(){
+  like(){
     if(!this.voted){
     this.post.likes++;
     this.voted=true;
-
 
     this.httpClient.post(environment.endpointURL + "user/likePost", {
       userId: this.user?.userId,
       postId: this.post.postId
     }).subscribe((res) => {
       console.log(res);
-
-
     },(err: any) => {
       console.log(err);
     });
     }
+  }
+
+  unlike(){
+      if(this.voted){
+          this.post.likes--;
+          this.voted=false;
+
+          this.httpClient.post(environment.endpointURL+"post/unlike", {
+              userId: this.user?.userId,
+              postId: this.post.postId
+          }).subscribe((res) => {
+            console.log(res);
+          },(err: any) => {
+            console.log(err);
+          });
+      }
   }
 
   isBookmarked(): boolean {

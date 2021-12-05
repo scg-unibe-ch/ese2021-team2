@@ -147,4 +147,19 @@ postController.delete('/:id/bookmark/delete', verifyToken,
             .catch(err => res.status(500).send(err));
     }
 );
+
+postController.post('/unlike',
+    (req: Request, res: Response) => {
+        Like.destroy({
+            where: {
+                userId: req.body.userId,
+                postId: req.body.postId
+            }
+        }).catch(
+           err => res.send(err)
+        );
+    }
+);
+
+
 export const PostController: Router = postController;

@@ -1,4 +1,4 @@
-import express, { Router, Request, Response } from 'express';
+import express, { Router, Request, Response, request } from 'express';
 import {Board} from '../models/board.model';
 import { Subscription } from '../models/subscription.model';
 import { PostService } from '../services/post.service';
@@ -107,12 +107,17 @@ boardController.post('/getMyLectures',
     }
 );
 
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
+boardController.post('/unsubscribe',
+    (req: Request, res: Response) => {
+        Subscription.destroy({
+            where: {
+                userId: req.body.userId,
+                boardId: req.body.boardId
+            }
+        }).catch(
+            err => res.send(err)
+        );
+    }
+);
 
 export const BoardController: Router = boardController;

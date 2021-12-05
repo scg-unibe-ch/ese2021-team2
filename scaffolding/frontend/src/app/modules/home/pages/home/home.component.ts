@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
     if(this.userService.getUser()!=null){
       this.loggedIn=true;
     }
+
+   
     
     this.httpClient.post(environment.endpointURL + "board/getSubscribedPostsByUserId", {
       userId: this.userService.getUser()!.userId

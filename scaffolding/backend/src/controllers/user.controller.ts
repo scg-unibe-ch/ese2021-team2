@@ -85,10 +85,11 @@ userController.delete('/:id/image', (req: Request, res: Response) => {
 });
 
 userController.post('/getUserById',
-    (req: Request, res: Response) => {
-        User.findByPk(req.body.userId).then(
-            user => res.send(user)
-        );
+    async (req: Request, res: Response) => {
+
+        const u = await userService.getUser(req.body.userId);
+        res.send(u);
+
     }
 );
 

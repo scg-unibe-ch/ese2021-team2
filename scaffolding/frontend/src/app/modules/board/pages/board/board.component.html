@@ -8,7 +8,7 @@
 <div id="info">
 <h1 id="title">{{title}}</h1>
 <button *ngIf="loggedIn && unsubscribed" (click)="subscribe()" id="subbtn">Subscribe</button>
-<button *ngIf="loggedIn && !unsubscribed" (click)="subscribe()" id="unsubbtn">Unsubscribe</button>
+<button *ngIf="loggedIn && !unsubscribed" (click)="unsubscribe()" id="unsubbtn">Unsubscribe</button>
 <p id="description">{{description}}</p>
 </div>
 
