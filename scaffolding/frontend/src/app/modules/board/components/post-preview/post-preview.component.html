@@ -9,6 +9,13 @@
               <p>{{(this.post.content.length>200)? (this.post.content | slice:0:200)+'...':(this.post.content)}}</p>
               
             
-            <div id="post-preview" ><div><mat-icon>favorite_outline </mat-icon><span class="post-att"> {{this.post.likes}}</span></div></div>
- 
+            <div id="post-preview" >
+                  <div>
+                        <mat-icon (click)="like()" *ngIf="!voted">favorite_outline</mat-icon>
+                        <mat-icon  *ngIf="voted" id="votedIcon" (click)="unlike()">favorite_outline</mat-icon>
+                        <span class="post-att"> {{this.post.likes}}</span>
+                  </div>
+            </div>
+            
+
 </mat-card>

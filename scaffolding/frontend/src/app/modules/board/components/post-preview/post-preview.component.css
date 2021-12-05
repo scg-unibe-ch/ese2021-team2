@@ -42,3 +42,7 @@ h1{
     position: absolute;
     right: 90px;
 }
+
+#votedIcon{
+    color: red;
+}
