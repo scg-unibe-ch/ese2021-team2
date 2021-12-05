@@ -246,4 +246,40 @@ export class UserService {
                 });
         }
     }
+
+    getProfileImageURL(): string {
+        debugger;
+        if(this.user?.profile_image){
+            return environment.endpointURL + "user/"  + this.user.userId + "/image";
+        } else {
+            return '/assets/images/no_user.jpg';
+        }
+    }
+
+    deleteProfileImage(){
+        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
+            .subscribe((res) => {
+
+            },
+            error => {
+
+            });
+    }
+
+    addProfileImage(newPicture: File) {
+        if (newPicture) {
+            const fd = new FormData();
+            fd.append('image', newPicture);
+            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
+                .subscribe((res: any) => {
+                    if(this.user){
+                        this.user.profile_image = res.profile_image;
+                        this.userSource.next(this.user);
+                    }
+                },
+                error => {
+
+                });
+        }
+    }
 }

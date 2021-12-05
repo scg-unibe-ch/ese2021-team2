@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-sidebar',
@@ -17,11 +18,17 @@ export class SidebarComponent {
     isExpanded: boolean = true;
     @Output() messageEvent = new EventEmitter<boolean>();
     isLogin: boolean = false;
+    imageURL : string;
 
     constructor(public userService: UserService, private dialog: MatDialog, private router: Router) {
         // Listen for changes
-        userService.loggedIn$.subscribe(res => this.loggedIn = res);
-        userService.user$.subscribe(res => this.user = res);
+        userService.loggedIn$.subscribe(res => {
+            this.loggedIn = res
+            this.imageURL = this.userService.getProfileImageURL()});
+        userService.user$.subscribe(res => {
+            this.user = res;
+            this.imageURL = this.userService.getProfileImageURL();
+        });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();

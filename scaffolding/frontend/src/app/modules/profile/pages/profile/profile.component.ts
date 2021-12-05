@@ -20,13 +20,17 @@ export class ProfileComponent implements OnInit {
     changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
     editMode: boolean = false;
     editTag: String = "Edit";
+    imageURL: string;
 
     constructor(public userService: UserService,
-                 private dialog: MatDialog,
-                 public httpClient: HttpClient,
-                 private snackBar: MatSnackBar) {
+                private dialog: MatDialog,
+                public httpClient: HttpClient,
+                private snackBar: MatSnackBar) {
         // Listen for changes
-        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.loggedIn$.subscribe(res => {
+            this.loggedIn = res;
+            this.imageURL = this.userService.getProfileImageURL()
+        });
         userService.user$.subscribe(res => {
             this.user = res
             this.initUser();
@@ -111,6 +115,17 @@ export class ProfileComponent implements OnInit {
     updateUser() {
         this.userService.update(this.changedUser).then(() => this.setEditMode())
     }
+
+    processFile(imageInputEvent: any) {
+        const f : File = imageInputEvent.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(f)
+        reader.onload = event =>{
+            this.imageURL = <string> reader.result;
+        }
+        this.userService.addProfileImage(f);
+    }
+
 
     test(){
         console.log(this.user);

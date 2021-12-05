@@ -66,6 +66,7 @@ export class UserService {
                         user.city = userData.city;
                         user.birthday = userData.birthday;
                         user.phonenumber = userData.phonenumber;
+                        user.profile_image = userData.profile_image;
 
                     const token: string = jwt.sign({
                         userId: user.userId,
