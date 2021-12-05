@@ -1,0 +1,9 @@
+<div *ngIf="exists">
+<p>user-page works!</p>
+
+<h1>Posts</h1>
+<app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
+</div>
+<div *ngIf="!exists">
+    <h1>ERROR 404: User Not Found</h1>
+</div>

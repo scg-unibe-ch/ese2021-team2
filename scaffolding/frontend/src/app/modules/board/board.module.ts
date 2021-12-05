@@ -22,12 +22,12 @@ const routes: Routes = [
 export const routing = RouterModule.forChild(routes);
 
 @NgModule({
-  declarations: [
-    PostListComponent,
-    BoardComponent,
-    PostPreviewComponent,
+    declarations: [
+        PostListComponent,
+        BoardComponent,
+        PostPreviewComponent,
 
-  ],
+    ],
     imports: [
         CommonModule,
         routing,
@@ -41,5 +41,8 @@ export const routing = RouterModule.forChild(routes);
         MatIconModule,
 
     ],
+    exports: [
+        PostPreviewComponent
+    ]
 })
 export class BoardModule { }

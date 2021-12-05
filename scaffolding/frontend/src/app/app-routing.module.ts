@@ -35,6 +35,10 @@ const routes: Routes = [
         path: 'myLectures',
         loadChildren: () => import('src/app/modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
     },
+    {
+        path: 'user',
+        loadChildren: () => import('src/app/modules/user/user.module').then(m => m.UserModule)
+    }
 ];
 
 @NgModule({
