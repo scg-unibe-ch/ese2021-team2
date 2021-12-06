@@ -41,6 +41,13 @@ postController.post('/:postId/image',
     }
 );
 
+postController.get('/:postId',
+    (req: Request, res: Response) => {
+        postService.getPost(parseInt(req.params.postId, 10))
+            .then(post => res.send(post))
+            .catch(err => res.status(500).send(err));
+    });
+
 postController.get('/:postId/image',
     (req: Request, res: Response) => {
         PostImage.findOne({
@@ -68,8 +75,12 @@ postController.post('/getPostsOfBoard',
 // needs to be changed to get request
 postController.get('/getPostsByUser/:userId',
     (req: Request, res: Response) => {
+        console.log('Getting user posts');
         postService.getPostsbyUser(parseInt(req.params.userId, 10))
-            .then(posts => res.send(posts))
+            .then(posts => {
+                console.log('Found posts');
+                res.send(posts);
+            })
             .catch(err => res.status(500).send(err));
     }
 );

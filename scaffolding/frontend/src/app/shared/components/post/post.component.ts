@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PostComponent implements OnInit {
 
-    @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
+    post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
     changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
     voted = false;
     userCanVote= true;

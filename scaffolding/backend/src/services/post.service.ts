@@ -66,6 +66,9 @@ export class PostService {
             });
     }
 
+    public getPost(postId: number): Promise<Post> {
+        return Post.findByPk(postId);
+    }
     public getCreatorId(postId: number): Promise<number> {
         return new Promise((resolve, reject) => {
             Post.findByPk(postId)

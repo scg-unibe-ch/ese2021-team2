@@ -2,6 +2,7 @@
 <p>user-page works!</p>
 
 <h1>Posts</h1>
+    <p>{{this.createdPosts}} so many Ps</p>
 <app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
 </div>
 <div *ngIf="!exists">

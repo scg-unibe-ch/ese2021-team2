@@ -57,8 +57,8 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 creatorId: {
-                    type: DataTypes.STRING,
-                    allowNull: true
+                    type: DataTypes.INTEGER,
+                    allowNull: false
                 },
                 semester: {
                     type: DataTypes.ENUM('1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'),

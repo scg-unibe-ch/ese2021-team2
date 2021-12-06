@@ -22,6 +22,7 @@ export const routing = RouterModule.forChild(routes);
     ],
     imports: [
         CommonModule,
+        BoardModule,
         routing,
         SharedModule
     ]

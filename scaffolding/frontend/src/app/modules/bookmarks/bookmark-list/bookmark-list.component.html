@@ -1,6 +1,6 @@
 <div *ngIf="loggedIn">
    <div *ngIf="refreshBookmarks().length>0; else empty">
-    <app-post  *ngFor="let poste of refreshBookmarks()" [post]="poste"></app-post>
+    <app-post-preview  *ngFor="let poste of refreshBookmarks()" [post]="poste"></app-post-preview>
    </div>
     <ng-template #empty>
        <p>No bookmarks to show</p>
