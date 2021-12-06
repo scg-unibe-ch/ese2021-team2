@@ -27,7 +27,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
     PostListComponent,
     BoardComponent,
-    PostPreviewComponent,
+    PostPreviewComponent
     
   ],
     imports: [
@@ -38,10 +38,8 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         ReactiveFormsModule,
         MatToolbarModule,
-
         MatCardModule,
         MatIconModule,
-
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

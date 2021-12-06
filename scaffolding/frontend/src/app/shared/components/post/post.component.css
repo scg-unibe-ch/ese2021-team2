@@ -1,6 +1,8 @@
 mat-card{
     border-left: 7px solid rgb(25, 159, 90);
     border-radius: 5px;
+    
+   
 }
 
 img{
@@ -47,15 +49,38 @@ img{
     display: flex;
     position: absolute;
     right: 20px;
+  
 }
 
 #votedIcon{
     color: red;
+    
 }
+
+#voteIcon{
+    overflow: hidden;
+}
+
+
 
 #bookmarkedIcon{
     color: green;
+    overflow: hidden;
+    height: 2rem;
+    animation-name: anim1;
+    animation-duration: 3s;
+    animation-delay: -1.5s;
 }
+
+#bookmarkIcon{
+    overflow: hidden;
+    height: 2rem;
+    overflow: hidden;
+    animation-name: anim1;
+    animation-duration: 3s;
+    animation-delay: -1.5s;
+}
+
 
 .bm{
     position: relative;
@@ -74,3 +99,13 @@ img{
     margin-top: 12px;
     margin-left: 25px;
 }
+
+@keyframes anim1 {
+    0% {height: 2rem}
+    50%{height: 0rem}
+    100% {height: 2rem}
+}
+
+  #comList{
+    height: 100%;
+  }

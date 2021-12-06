@@ -12,6 +12,8 @@ import { searchPipe } from './components/Pipes/search.pipe';
 import { filterPipe } from './components/Pipes/filter.pipe';
 import { RouterModule, Routes } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { PostPreviewComponent } from '../modules/board/components/post-preview/post-preview.component';
+import { BoardModule } from '../modules/board/board.module';
 
 const routes: Routes = [
     {
@@ -30,6 +32,7 @@ export const routing = RouterModule.forChild(routes);
         PostCommentComponent,
         searchPipe,
         filterPipe,
+        //PostPreviewComponent
   ],
     imports: [
         MatDialogModule,
@@ -38,7 +41,7 @@ export const routing = RouterModule.forChild(routes);
         MatCardModule,
         FormsModule,
         routing,
-        MatIconModule,
+        MatIconModule
     ],
     exports: [
         PostComponent,

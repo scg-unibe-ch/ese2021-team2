@@ -14,10 +14,11 @@
 <div id="info">
 
 
-<div id="likes"><mat-icon (click)="like()" *ngIf="!voted">favorite_outline</mat-icon>
+<div id="likes">
+<mat-icon (click)="like()" *ngIf="!voted" id="voteIcon">favorite_outline</mat-icon>
 <mat-icon  *ngIf="voted" id="votedIcon" (click)="unlike()">favorite_outline</mat-icon>
 <span id="like-count"> {{this.post.likes}}</span></div>
-<mat-icon class="bm" (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark_border</mat-icon>
+<mat-icon class="bm" (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()" id="bookmarkIcon">bookmark_border</mat-icon>
 <mat-icon class="bm" (click)="removeBookmark()" *ngIf="isBookmarked()" id="bookmarkedIcon">bookmark_border</mat-icon>
 <mat-icon id="edit" (click)="edit()"  *ngIf="authorizedToEdit()">edit</mat-icon>
 <mat-icon id="delete" (click)="deletePost()"  *ngIf="authorizedToEdit()">delete_outline</mat-icon>
@@ -51,7 +52,7 @@
 
     <button (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
     <button (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
-    <app-comments-list></app-comments-list>
+    <app-comments-list id="comList"></app-comments-list>
 
 </mat-card>
 
