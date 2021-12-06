@@ -27,7 +27,6 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
     PostListComponent,
     BoardComponent,
-    PostPreviewComponent
     
   ],
     imports: [

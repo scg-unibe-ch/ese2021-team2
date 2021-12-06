@@ -32,7 +32,7 @@ export const routing = RouterModule.forChild(routes);
         PostCommentComponent,
         searchPipe,
         filterPipe,
-        //PostPreviewComponent
+        PostPreviewComponent
   ],
     imports: [
         MatDialogModule,
@@ -47,7 +47,8 @@ export const routing = RouterModule.forChild(routes);
         PostComponent,
         ConfirmationDialogComponent,
         searchPipe,
-        filterPipe
+        filterPipe,
+        PostPreviewComponent,
     ]
 })
 export class SharedModule { }
