@@ -12,23 +12,23 @@
     <br>
     <mat-form-field appearance= "outline">
         <mat-label>Street</mat-label>
-        <input matInput placeholder = "Street" [(ngModel)] = "changedUser.street"  [disabled] = "!editMode">
+        <input matInput placeholder = "Street" [(ngModel)] = "changedUser.street"  [disabled] = "!editMode" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <br>
     <mat-form-field appearance= "outline">
         <mat-label>House Number</mat-label>
-        <input matInput placeholder = "House Number" [(ngModel)] = "changedUser.housenr"  [disabled] = "!editMode">
+        <input matInput placeholder = "House Number" [(ngModel)] = "changedUser.housenr"  [disabled] = "!editMode" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <br>
     <mat-form-field appearance= "outline">
         <mat-label>ZIP-Code</mat-label>
-        <input matInput placeholder = "ZIP-Code" [(ngModel)] = "changedUser.zipCode"  [disabled] = "!editMode">
+        <input matInput placeholder = "ZIP-Code" [(ngModel)] = "changedUser.zipCode"  [disabled] = "!editMode" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <br>
     <mat-form-field appearance= "outline">
         <mat-label>City
         </mat-label>
-        <input matInput placeholder = "City" [(ngModel)] ="changedUser.city" [disabled] = "!editMode">
+        <input matInput placeholder = "City" [(ngModel)] ="changedUser.city" [disabled] = "!editMode" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <br>
     <mat-form-field appearance= "outline">
@@ -38,7 +38,7 @@
     <br>
     <mat-form-field appearance= "outline">
         <mat-label>Phone Number</mat-label>
-        <input matInput placeholder = "Phone Number" [(ngModel)] = "changedUser.phonenumber"  [disabled] = "!editMode">
+        <input matInput placeholder = "Phone Number" [(ngModel)] = "changedUser.phonenumber"  [disabled] = "!editMode" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <br>
     <mat-form-field appearance= "outline">
@@ -47,7 +47,10 @@
     </mat-form-field>
     <br>
     <div class = "SubmitContainer" *ngIf = "editMode" >
-        <button mat-raised-button (click) = "updateUser()">Submit Changes</button>
+        <button mat-raised-button (click) = "updateUser()" [disabled]="!activeSaveButton">Submit Changes</button>
+    </div>
+    <div *ngIf="!activeSaveButton">
+        <p class="warnMsg">{{invEditDataMsg}}</p>
     </div>
     <br>
     <div class = "ActionButtonContainer">
