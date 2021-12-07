@@ -135,7 +135,7 @@ export class PostComponent implements OnInit {
 
     updatePost(){
         if (this.isUpdatedValid()) {
-            this.httpClient.put(environment.endpointURL + "post/" + this.post.postId, {
+            this.httpClient.put(environment.endpointURL + "board/1/post/" + this.post.postId, {
                 postId: this.changedPost.postId,
                 title: this.changedPost.title,
                 content: this.changedPost.content,

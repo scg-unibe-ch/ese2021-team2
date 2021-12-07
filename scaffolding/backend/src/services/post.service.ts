@@ -133,7 +133,7 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId)) {
+                            if (!(found.creatorId - user.userId) ) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}

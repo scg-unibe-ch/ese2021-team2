@@ -8,7 +8,7 @@ import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PostPreviewComponent } from './components/post-preview/post-preview.component';
+import { PostPreviewComponent } from '../../shared/components/post/post-preview/post-preview.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -25,7 +25,6 @@ export const routing = RouterModule.forChild(routes);
     declarations: [
         PostListComponent,
         BoardComponent,
-        PostPreviewComponent,
 
     ],
     imports: [
@@ -42,7 +41,6 @@ export const routing = RouterModule.forChild(routes);
 
     ],
     exports: [
-        PostPreviewComponent
     ]
 })
 export class BoardModule { }

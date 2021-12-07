@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BookmarkListComponent } from './bookmark-list/bookmark-list.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../shared/shared.module";
-import {BoardModule} from "../board/board.module";
 
 const routes: Routes = [
     {
@@ -20,7 +19,6 @@ export const routing = RouterModule.forChild(routes);
     ],
     imports: [
         CommonModule,
-        BoardModule,
         routing,
         SharedModule
     ]
