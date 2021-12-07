@@ -11,6 +11,7 @@ import {FormsModule} from "@angular/forms";
 import { searchPipe } from './components/Pipes/search.pipe';
 import { filterPipe } from './components/Pipes/filter.pipe';
 import { RouterModule, Routes } from '@angular/router';
+import { SortPipe } from './components/Pipes/sort.pipe';
 
 const routes: Routes = [
     {
@@ -29,6 +30,7 @@ export const routing = RouterModule.forChild(routes);
         PostCommentComponent,
         searchPipe,
         filterPipe,
+        SortPipe,
   ],
     imports: [
         MatDialogModule,
@@ -42,7 +44,8 @@ export const routing = RouterModule.forChild(routes);
         PostComponent,
         ConfirmationDialogComponent,
         searchPipe,
-        filterPipe
+        filterPipe,
+        SortPipe
     ]
 })
 export class SharedModule { }
