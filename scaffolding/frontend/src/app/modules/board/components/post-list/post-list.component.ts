@@ -84,7 +84,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost",{
+    this.httpClient.post(environment.endpointURL + "board/" + this.boardId + "post/createPost",{
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -111,7 +111,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         } else {
             const fd = new FormData();
             fd.append('image', file);
-            this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd);
+            this.httpClient.post(environment.endpointURL + "board/" + this.boardId + 'post/' + postId + '/image', fd);
         }
     }
 
@@ -119,17 +119,14 @@ export class PostListComponent implements OnInit, OnDestroy {
         if (this.mode==="board") {
             console.log("post list id: "+this.boardId);
 
-            this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-                boardId: this.boardId
-            }).subscribe((res: any) => {
+            this.httpClient.get(environment.endpointURL + "board/" + this.boardId + "/post/getPostsOfBoard/" + this.boardId
+        ).subscribe((res: any) => {
                     this.posts = res;
                 },
                 err => console.log(err)
             );
         } else if (this.mode === "user") {
-            this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
-                userId: this.user?.userId
-            })
+            this.httpClient.get(environment.endpointURL + "board/1/post/getPostsByUser" + this.user?.userId)
             .subscribe((res: any) => {
                     this.posts = res;
                 },

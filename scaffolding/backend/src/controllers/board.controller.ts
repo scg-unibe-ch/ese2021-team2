@@ -10,18 +10,18 @@ const boardController: Router = express.Router();
 const boardService: BoardService = new BoardService();
 const postService: PostService = new PostService();
 
-boardController.get('/bySubjectId',
+boardController.get('/bySubjectId/:subjectId',
     (req: Request, res: Response) => {
-        boardService.getBoardsBySubjectId(req.body.subjectId)
+        boardService.getBoardsBySubjectId(parseInt(req.params.subjectId, 10))
             .then(boards => res.send(boards))
             .catch(err => res.status(500).send(err));
     }
 );
 
-boardController.get('/byBoardId',
+boardController.get('/byBoardId/:boardId',
     (req: Request, res: Response) => {
-        boardService.getBoardByBoardId(req.body.boardId)
-            .then(boards => res.send(boards))
+        boardService.getBoardByBoardId(parseInt(req.params.boardId, 10))
+            .then(board => res.send(board))
             .catch(err => res.status(500).send(err));
     }
 );

@@ -169,7 +169,7 @@ export class UserService {
     }
 
     loadBookmarkedPosts(): void {
-        this.httpClient.get<Post[]>(environment.endpointURL + 'post/bookmarks')
+        this.httpClient.get<Post[]>(environment.endpointURL + 'board/1/post/bookmarks/all')
             .subscribe((res) => {
                     this.bookmarkedPosts = res;
                     console.log('Is bookmarked: ' + this.bookmarkedPosts);
@@ -205,7 +205,7 @@ export class UserService {
 
     addPostToBookmarks(post: Post): void {
         if( !this.isPostBookmarked(post.postId)){
-            this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
+            this.httpClient.post(environment.endpointURL + "board/1/post/" + post.postId + "/bookmark", {})
                 .subscribe((res) => {
                     console.log('Added to bookmark: ' + post.postId);
                     this.bookmarkedPosts?.push(post);
@@ -218,7 +218,7 @@ export class UserService {
 
     removePostFromBookmarks(post: Post): void {
         if( this.isPostBookmarked(post.postId)) {
-            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/bookmark/delete", {})
+            this.httpClient.delete(environment.endpointURL + "board/1/post/" + post.postId + "/bookmark/delete", {})
                 .subscribe((res) => {
                     console.log('Deleted from bookmarks: ' + post.postId);
                     if( this.bookmarkedPosts ) {
@@ -237,7 +237,7 @@ export class UserService {
 
     deletePost(post: Post): void {
         if ( post ) {
-            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/delete", {})
+            this.httpClient.delete(environment.endpointURL + "board/1/post/" + post.postId + "/delete", {})
                 .subscribe(res => {
                     this.removePostFromBookmarks(post);
                     console.log('Successfully deleted this post');

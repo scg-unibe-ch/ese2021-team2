@@ -45,18 +45,18 @@ export class PostComponent implements OnInit {
 
         this._Activatedroute.paramMap.subscribe(params => {
             this.postId= parseInt(params.get('postId')!);
-            this.httpClient.get( environment.endpointURL + "post/" + this.postId)
+            this.httpClient.get( environment.endpointURL + "board/1/post/" + this.postId)
             .subscribe((post: any) => {
                 this.post = post;
-                this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+                this.imageURL = environment.endpointURL + "board/1/post/" + this.post.postId + "/image";
             })
         });
     }
 
     ngOnInit(): void {
-        this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+        this.imageURL = environment.endpointURL + "board/1/post/" + this.post.postId + "/image";
 
-        this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+        this.httpClient.post(environment.endpointURL + "board/1/post/getLikesByPostId", {
             postId: this.post.postId
         }).subscribe((res) => {
 

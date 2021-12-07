@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
 {
-  path: 'board/:boardId',
+  path: ':boardId',
   component: BoardComponent
 },
 ];

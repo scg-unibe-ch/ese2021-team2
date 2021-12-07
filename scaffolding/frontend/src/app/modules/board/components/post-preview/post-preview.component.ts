@@ -15,7 +15,7 @@ export class PostPreviewComponent implements OnInit {
   constructor(public httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+    this.httpClient.post(environment.endpointURL + "board/1/post/getLikesByPostId", {
       postId: this.post.postId
   }).subscribe((res) => {
 

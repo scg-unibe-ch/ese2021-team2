@@ -29,23 +29,24 @@ export class UserPageComponent implements OnInit {
         // // Current value
         // this.user = userService.getUser();
 
-        this._Activatedroute.paramMap.subscribe(params => {
-            this.userId= parseInt(params.get('userId')!);
-            this.httpClient.get( environment.endpointURL + "user/user/" + this.userId)
-                .subscribe((user: any) => {
-                    this.userName = user.username;
-                    this.exists = true;
-                    //this.imageURL = environment.endpointURL + "user/" + this.userId + "/image";
-                })
-        });
-        this.initializePostList();
+
     }
 
   ngOnInit(): void {
+      this._Activatedroute.paramMap.subscribe(params => {
+          this.userId= parseInt(params.get('userId')!);
+          this.httpClient.get( environment.endpointURL + "user/user/" + this.userId)
+              .subscribe((user: any) => {
+                  this.userName = user.username;
+                  this.exists = true;
+                  //this.imageURL = environment.endpointURL + "user/" + this.userId + "/image";
+              })
+      });
+      this.initializePostList();
   }
 
     private initializePostList(): void {
-        this.httpClient.get<Post[]>(environment.endpointURL + 'post/getPostsByUser/' + this.userId)
+        this.httpClient.get<Post[]>(environment.endpointURL + 'board/1/post/getPostsByUser/' + this.userId)
             .subscribe((posts: any) => {
                 this.createdPosts = posts;
             }, (err: any) => {

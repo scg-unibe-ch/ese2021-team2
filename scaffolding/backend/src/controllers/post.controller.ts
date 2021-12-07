@@ -41,7 +41,7 @@ postController.post('/:postId/image',
     }
 );
 
-postController.get('/:postId',
+postController.get('/:postId/',
     (req: Request, res: Response) => {
         postService.getPost(parseInt(req.params.postId, 10))
             .then(post => res.send(post))
@@ -64,9 +64,9 @@ postController.get('/:postId/image',
 );
 
 // needs to be changed to get request
-postController.post('/getPostsOfBoard',
+postController.get('/getPostsOfBoard/:boardId',
     (req: Request, res: Response) => {
-        postService.getPostsOfBoard(req.body.boardId)
+        postService.getPostsOfBoard(parseInt(req.params.boardId, 10))
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
@@ -107,7 +107,7 @@ postController.post('/:postId/bookmark', verifyToken,
     }
 );
 
-postController.get('/:postId/bookmark', verifyToken,
+postController.get('/:postId/bookmark/', verifyToken,
     (req: Request, res: Response) => {
         postService.getBookmarkStatus(req.body.tokenPayload.userId, parseInt(req.params.postId, 10))
             .then((isBookmarked) => res.send(isBookmarked))
@@ -115,7 +115,7 @@ postController.get('/:postId/bookmark', verifyToken,
     }
 );
 
-postController.get('/bookmarks', verifyToken,
+postController.get('/bookmarks/all', verifyToken,
     (req: Request, res: Response) => {
         postService.getBookmarkList(req.body.tokenPayload.userId)
             .then(bookmarkedPosts => res.send(bookmarkedPosts))

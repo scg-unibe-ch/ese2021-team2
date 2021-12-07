@@ -34,7 +34,7 @@ export class BoardListComponent implements OnInit {
     }
 
     setBoardList(): void{
-        this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: this.subjectId})
+        this.httpClient.get(environment.endpointURL + "board/bySubjectId/" + this.subjectId)
             .subscribe((res: any) => {
                     this.boardList = res;
                 } ,

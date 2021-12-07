@@ -1,5 +1,5 @@
 <div *ngFor="let sub of subjects" class="subj">
-    <button mat-button class="menu-button" [routerLink]="['/subjects/boards/', sub.subjectId]" >
+    <button mat-button class="menu-button" [routerLink]="['/subjects/' + sub.subjectId + '/boards']" >
         <span class="menu-text">{{sub.name}}</span>
     </button>
 </div>

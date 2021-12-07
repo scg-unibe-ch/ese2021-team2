@@ -53,7 +53,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 boardId: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.INTEGER,
                     allowNull: true
                 },
                 creatorId: {
@@ -65,7 +65,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 category: {
-                    type: DataTypes.ENUM('technial', 'programming', 'theoretical', 'other') ,
+                    type: DataTypes.ENUM('technical', 'programming', 'theoretical', 'other') ,
                     allowNull: true
                 },
                 postImage : {
