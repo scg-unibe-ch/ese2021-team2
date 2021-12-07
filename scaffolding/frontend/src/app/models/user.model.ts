@@ -12,7 +12,6 @@ export class User {
     public city?: string,
     public birthday?: string,
     public phonenumber?: string,
-    public admin: boolean = false,
     public profile_image?: string,
     public userId?: number,
   ) {}

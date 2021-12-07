@@ -8,6 +8,9 @@ import { Product } from 'src/app/models/product.model';
 import { UserComponent } from 'src/app/user/user.component';
 import { environment } from 'src/environments/environment';
 import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { User } from 'src/app/models/user.model';
+import { ProductCreationComponent } from '../product-creation/product-creation.component';
 
 @Component({
     selector: 'app-product-page',
@@ -20,21 +23,35 @@ export class ProductPageComponent implements OnInit {
 
     imageURL: string = "";
     productId: number = 0;
+    loggedIn: boolean;
+    admin: boolean;
+    user: User | null;
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public cartService: CartService,
-        public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog) {
-            this._Activatedroute.paramMap.subscribe(params => { 
-                this.productId= parseInt(params.get('productId')!); 
-                this.httpClient.get( environment.endpointURL + "product/" + this.productId)
-                .subscribe((product: any) => {
-                    this.product = product;
-                    this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
+        public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog
+    ) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.admin$.subscribe(res => this.admin = res);
+        userService.user$.subscribe(res => this.user = res);
+
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.admin = userService.isAdmin();
+        this.user = userService.getUser();
+
+        this._Activatedroute.paramMap.subscribe(params => {
+            this.productId= parseInt(params.get('productId')!);
+            this.httpClient.get( environment.endpointURL + "product/" + this.productId)
+            .subscribe((product: any) => {
+                this.product = product;
+                this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
             })
         });
-}
+    }
 
     ngOnInit(): void {
-        
+
     }
 
     handleAdd(){
@@ -53,5 +70,16 @@ export class ProductPageComponent implements OnInit {
             }
             this.dialog.open(UserComponent,dialogConfig);
         }
+    }
+
+    handleUpdate(){
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            isUpdate : true,
+            product : this.product
+        }
+        this.dialog.open(ProductCreationComponent, dialogConfig);
     }
 }

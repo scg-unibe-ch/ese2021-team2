@@ -12,24 +12,29 @@ export class UserService {
     // TODO: Write tests for the register(), login() and delete() functions
     // which are all based on each other so when the register() test fails the others shouldn't execute etc.
 
-    private loggedIn: boolean;
     private user: User | null;
+    private loggedIn: boolean;
+    private admin: boolean;
     private bookmarkedPosts: Post[] | undefined;
 
     // Observable Sources
-    private loggedInSource = new Subject<boolean>();
     private userSource = new Subject<User | null>();
+    private loggedInSource = new Subject<boolean>();
+    private isAdminSource = new Subject<boolean>();
 
     // Observable Streams
-    loggedIn$ = this.loggedInSource.asObservable();
     user$ = this.userSource.asObservable();
+    loggedIn$ = this.loggedInSource.asObservable();
+    admin$ = this.isAdminSource.asObservable();
 
     constructor(private httpClient: HttpClient) {
         this.user = null;
         this.loggedIn = false;
+        this.admin = false;
 
-        this.loggedIn$.subscribe(res => this.loggedIn = res);
         this.user$.subscribe(res => this.user = res);
+        this.loggedIn$.subscribe(res => this.loggedIn = res);
+        this.admin$.subscribe(res => this.admin = res);
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
@@ -114,6 +119,10 @@ export class UserService {
         this.loggedInSource.next(false);
     }
 
+    isAdmin() {
+        return this.admin;
+    }
+
     getLoggedIn(): boolean {
         return this.loggedIn;
     }
@@ -150,6 +159,12 @@ export class UserService {
             }, () => {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
+            });
+        this.httpClient.get<boolean>(environment.endpointURL + "admin")
+            .subscribe((res) => {
+                this.isAdminSource.next(res);
+            }, () => {
+                this.isAdminSource.next(false);
             });
     }
 

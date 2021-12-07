@@ -1,5 +1,2 @@
 
-<h3>post list</h3>
-
-
-<app-post *ngFor="let poste of posts |search:searchTerm" [post]="poste"></app-post>
+<app-post-preview *ngFor="let post of posts |search:searchTerm|filter:filterarg" [post]="post"></app-post-preview>
