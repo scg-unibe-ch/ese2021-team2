@@ -31,14 +31,10 @@ const routes: Routes = [
         path: 'bookmarks',
         loadChildren: () => import('./modules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
     },
-    {
-        path: 'myLectures',
-        loadChildren: () => import('src/app/modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
-    },
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'corrected' }) ],
+    imports: [ RouterModule.forRoot(routes) ],
     exports: [ RouterModule ],
 })
 

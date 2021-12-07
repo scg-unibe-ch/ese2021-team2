@@ -1,6 +1,0 @@
-<mat-card *ngIf="this.order.orderId" [routerLink] = "['order', this.order.orderId]">
-    <h1>Order Id: #{{this.order.orderId}}</h1>
-    <p>Ordered by {{this.order.customerName}} to {{this.showAddress()}}</p>
-    <p>Total Price: CHF {{this.order.price.toFixed(2)}}</p>
-    <p>Status: {{this.order.status}}</p>
-</mat-card>

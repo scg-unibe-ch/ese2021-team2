@@ -10,27 +10,9 @@ import { upload } from '../middlewares/fileFilter';
 import { like } from 'sequelize/types/lib/operators';
 import { Like } from '../models/like.model';
 import path from 'path';
-import { Subscription } from '../models/subscription.model';
 const { Op } = require('sequelize');
 
 export class UserService {
-
-    public static isUserSubscribed(uId, bId) {
-        let out: boolean;
-        Subscription.findAll({
-            where: {
-                userId: uId,
-                boardId: bId
-            }
-        }).then(subs => {
-            if (subs.length > 0) {
-                out = true;
-            } else {
-                out = false;
-            }
-        });
-        return out;
-    }
 
     public register(user: UserAttributes): Promise<UserAttributes> {
         const saltRounds = 12;
@@ -57,6 +39,7 @@ export class UserService {
                         user.userId = userData.userId;
                         user.userName = userData.userName;
                         user.password = userData.password;
+                        user.admin = userData.admin;
                         user.fname = userData.fname;
                         user.lname = userData.lname;
                         user.email = userData.email;
@@ -71,6 +54,7 @@ export class UserService {
                         userId: user.userId,
                         userName: user.userName,
                         password: user.password,
+                        admin: user.admin,
                         fname: user.fname,
                         lname: user.lname,
                         email: user.email,
@@ -139,7 +123,7 @@ export class UserService {
                  );
 
             // create new token with update information
-            return User.findOne({
+             return User.findOne({
                 where: {
                     userId : passedUserId
                 }
@@ -148,6 +132,7 @@ export class UserService {
                     userId: user.userId,
                     userName: user.userName,
                     password: user.password,
+                    admin: user.admin,
                     fname: user.fname,
                     lname: user.lname,
                     email: user.email,
@@ -199,8 +184,14 @@ export class UserService {
             .then(inserted => Promise.resolve(inserted))
             .catch(err => Promise.reject(err));
 
+
         return out;
     }
+
+
+
+
+
 
     public updateProfileImage(req: MulterRequest): Promise<User> {
         console.log(req.file + ' PARAMS ID');

@@ -1,19 +1,17 @@
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Post } from '../../../../models/post.model';
 import { UserService } from '../../../../core/http/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from "../../../service/data.service";
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit, OnDestroy {
+export class PostListComponent implements OnInit {
 
   @Input() mode = "board";
   boardId: number = 4;
@@ -22,22 +20,20 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   changed= true;
   loggedIn: boolean;
-  admin: boolean;
   user: User | null;
 
   @Input() searchTerm:string="";
-  filterarg = 'technical';
-  subscription: Subscription;
 
-  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
+  constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute) {
+
+
+
     // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.admin$.subscribe(res => this.admin = res);
     userService.user$.subscribe(res => this.user = res);
 
     // Current value
     this.loggedIn = userService.getLoggedIn();
-    this.admin = userService.isAdmin();
     this.user = userService.getUser();
     this._Activatedroute.paramMap.subscribe(params => {
       this.boardId= parseInt(params.get('boardId')!);
@@ -47,13 +43,10 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    console.log("ngOnInit is being executed");
+
+
     this.setPostList()
-
-    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   checkUserStatus(): void {
@@ -64,18 +57,18 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.userService.setLoggedIn(!!userToken);
   }
 
-  public createPost(title: string, content: string, semester:string,category:string, boardId: number, file: File | undefined): boolean{
+  public createPost(title: string, content: string, semester:string, boardId: number, file: File | undefined): boolean{
     var postToAdd: Post;
     if(file) {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, file.name)  //creator id needs to be crrected (default value 2)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], file.name)  //creator id needs to be crrected (default value 2)
     } else {
-      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, 2, semester, category, undefined)
+      postToAdd = new Post(0, title, content, 0, new Date().toLocaleDateString(), boardId, this.user?.userId, semester, [], undefined)
     }
-
-    if(this.isValid(postToAdd)) {
+      console.log('still trying');
+    if( this.isValid(postToAdd) ) {
         this.createPostInBackend(postToAdd, file);
         this.postFeedback = "";
-
+        console.log('no feddback');
         this.posts.push(postToAdd);
         return true;
     } else {
@@ -84,60 +77,70 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
-    this.httpClient.post(environment.endpointURL + "post/createPost",{
-      postId: post.postId,
-      title: post.title,
-      content: post.content,
-      likes:post.likes,
-      date:post.date,
-      boardId:post.boardId,
-      creatorId:post.creatorId,
-      semester: post.semester,
-      category:post.category,
-      postImage: post.postImage
-    }).subscribe((response: any) => {
-      this.addImage(image, response.postId);
-    },
-      (err: any) => {
-        console.log(err);
-        this.postFeedback = err;
-      }
-    );
+      this.httpClient.post(environment.endpointURL + "post/createPost", {
+          postId: post.postId,
+          title: post.title,
+          content: post.content,
+          likes: post.likes,
+          date: post.date,
+          boardId: post.boardId,
+          creatorId: post.creatorId,
+          semester: post.semester,
+          postImage: post.postImage
+      }).subscribe((response: any) => {
+              this.addImage(image, response.postId);
+
+          },
+          (err: any) => {
+              console.log(err);
+              this.postFeedback = err;
+          }
+      );
   }
 
-    addImage(file:File | undefined, postId : number): void {
-        if(file === undefined) {
-            return;
-        } else {
-            const fd = new FormData();
-            fd.append('image', file);
-            this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd);
-        }
+  addImage(file:File | undefined, postId : number): void {
+    if(file === undefined) {
+      return;
+    } else {
+      debugger;
+      const fd = new FormData();
+      fd.append('image', file);
+      this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd).subscribe(()=>{});
     }
+  }
 
-    setPostList() {
-        if (this.mode==="board") {
-            console.log("post list id: "+this.boardId);
+  setPostList(){
 
-            this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-                boardId: this.boardId
-            }).subscribe((res: any) => {
-                    this.posts = res;
-                },
-                err => console.log(err)
-            );
-        } else if (this.mode === "user") {
-            this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
-                userId: this.user?.userId
-            })
-            .subscribe((res: any) => {
-                    this.posts = res;
-                },
-                err => console.log(err)
-            );
+    if (this.mode==="board") {
+
+      console.log("post list id: "+this.boardId);
+
+
+      this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
+        boardId: this.boardId
+      }).subscribe((res: any) => {
+            this.posts = res;
+            console.log(res);
+        } ,
+        err => {
+          console.log(err);
         }
-        this.checkUserStatus();
+      );
+    } else if (this.mode==="user") {
+      this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
+        userId: this.user?.userId
+      }).subscribe((res: any) => {
+          this.posts = res;
+        } ,
+        err => {
+          console.log(err);
+        }
+      );
     }
+    this.checkUserStatus();
+
+
+  }
 
   isValid(post: Post): boolean {
       if( post.title ) {
@@ -155,12 +158,12 @@ export class PostListComponent implements OnInit, OnDestroy {
           }
   }
 
-    isAuthorizedToCreate(): boolean {
-        if (this.user) {
-            return !this.admin;
-        } else {
-            return false;
-        }
-    }
+  isAuthorizedToCreate(): boolean {
+      if( this.user ) {
+          return !this.user.admin;
+      } else {
+          return false;
+      }
+  }
 
 }

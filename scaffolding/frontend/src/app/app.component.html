@@ -3,8 +3,8 @@
         <app-sidebar (messageEvent)="receiveIsExpanded($event)"></app-sidebar>
     </mat-sidenav>
         <mat-sidenav-content>
-            <mat-sidenav-container id="main-sidebar-container" autosize>
-                <mat-sidenav id = "dashboard" #sidenav mode="side" [opened]="isExpanded">
+            <mat-sidenav-container id="main-sidebar-container">
+                <mat-sidenav id = "dashboard" #sidenav mode="side" [opened]="isExpanded"> 
                     <app-dashboard></app-dashboard>
                 </mat-sidenav>
                 <mat-sidenav-content>

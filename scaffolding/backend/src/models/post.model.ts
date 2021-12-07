@@ -10,7 +10,6 @@ export interface PostAttributes {
     boardId: number;
     creatorId: number;
     semester: string;
-    category: string;
     postImage: string;
 }
 
@@ -26,7 +25,6 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
     boardId: number;
     creatorId: number;
     semester: string;
-    category: string;
     postImage: string;
 
     public static initialize(sequelize: Sequelize) {
@@ -45,7 +43,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 likes: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.STRING,
                     allowNull: true
                 },
                 date: {
@@ -61,11 +59,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 semester: {
-                    type: DataTypes.ENUM('1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'),
-                    allowNull: true
-                },
-                category: {
-                    type: DataTypes.ENUM('technial', 'programming', 'theoretical', 'other') ,
+                    type: DataTypes.STRING,
                     allowNull: true
                 },
                 postImage : {

@@ -1,9 +1,8 @@
 import { Optional, Model, Sequelize, DataTypes } from 'sequelize';
 
-// TODO: Add an icon to this at some point?
 export interface SubjectAttributes {
-    subjectId: number;
     name: String;
+    subjectId: number;
 }
 
 export interface SubjectCreationAttributes extends Optional<SubjectAttributes, 'subjectId'> { }

@@ -1,5 +1,4 @@
 import express, { Router, Request, Response } from 'express';
-import { request } from 'http';
 import { MulterRequest } from '../models/multerRequest.model';
 import { Product } from '../models/product.model';
 import { ProductImage } from '../models/productImage.model';
@@ -48,17 +47,6 @@ productController.get('/category/all', (req: Request, res: Response) => {
             res.status(500).send('No products found');
         }
     }).catch((err) => res.send(err));
-});
-
-productController.delete('/:id', (req: Request, res: Response) => {
-    productService.delete(req).then(() => res.sendStatus(204))
-    .catch((err) => res.status(500).send(err));
-});
-
-productController.put('/:id', (req: Request, res: Response) => {
-    productService.update(req)
-    .then(() => res.sendStatus(204))
-    .catch((err) => res.status(500).send(err));
 });
 
 export const ProductController: Router = productController;

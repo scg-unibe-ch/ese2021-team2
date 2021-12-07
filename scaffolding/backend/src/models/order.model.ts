@@ -9,8 +9,7 @@ export interface OrderAttributes {
     paymentMethod: string;
     deliveryAddress: string;
     status: string;
-    // productIds: number[];
-    price: number;
+    productIds: number[];
 }
 
 export interface OrderCreationAttributes extends Optional<OrderAttributes, 'orderId'> { }
@@ -23,8 +22,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
     paymentMethod: string;
     deliveryAddress: string;
     status: string;
-    // productIds: number[];
-    price: number;
+    productIds: number[];
 
     public static initialize(sequelize: Sequelize ) {
         Order.init(
@@ -37,9 +35,6 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                 customerId: {
                     type: DataTypes.INTEGER
                 },
-                price: {
-                    type: DataTypes.INTEGER
-                },
                 customerName: {
                     type: DataTypes.STRING,
                     allowNull: false
@@ -49,17 +44,17 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
                     allowNull: true
                 },
                 status: {
-                    type: DataTypes.ENUM('pending', 'shipped', 'cancelled', 'paid') ,
+                    type: DataTypes.ENUM('pending', 'shipped', 'cancelled') ,
                     allowNull: true
                 },
                 deliveryAddress : {
                     type: DataTypes.STRING,
                     allowNull: true
                 },
-                // productIds : {
-                //     type: DataTypes.ARRAY(DataTypes.INTEGER),
-                //     allowNull: false
-                // }
+                productIds : {
+                    type: DataTypes.ARRAY(DataTypes.INTEGER),
+                    allowNull: false
+                }
             },
             {
                 sequelize,

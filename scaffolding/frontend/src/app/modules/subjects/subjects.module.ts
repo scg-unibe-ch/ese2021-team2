@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { SubjectsComponent } from './pages/subjects/subjects.component';
 import { SubjectsGridComponent } from './components/subjects-grid/subjects-grid.component';
-import { BoardListComponent } from './components/board-list/board-list.component';
+import { BoardListComponent } from './pages/board-list/board-list.component';
+import { BoardComponent } from '../board/pages/board/board.component';
 import { PostComponent } from 'src/app/shared/components/post/post.component';
 import { PostListComponent } from '../board/components/post-list/post-list.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { BoardsComponent } from './pages/boards/boards.component';
-import { MatButtonModule } from '@angular/material/button';
+
+
+
 
 const routes: Routes = [
     {
@@ -16,9 +18,13 @@ const routes: Routes = [
         component: SubjectsComponent
     },
     {
-        path: 'boards/:subjectId',
-        component: BoardsComponent
-    }
+      path: 'boardList/:subjectId',
+      component: BoardListComponent 
+  },
+  {
+    path: 'board/:boardId',
+    component: BoardComponent 
+}
 ];
 
 export const routing = RouterModule.forChild(routes);
@@ -28,13 +34,11 @@ export const routing = RouterModule.forChild(routes);
         SubjectsComponent,
         SubjectsGridComponent,
         BoardListComponent,
-        BoardsComponent,
     ],
     exports: [
         BoardListComponent
     ],
     imports: [
-        MatButtonModule,
         CommonModule,
         routing,
     ]

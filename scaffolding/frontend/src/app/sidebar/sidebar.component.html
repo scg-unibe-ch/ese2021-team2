@@ -19,28 +19,23 @@
     </div>
 </div>
 <div class="menu-button-wrapper">
-    <button mat-button class="menu-button" *ngIf="isShopRoute() || isBoardRoute()" (click)="sendIsExpanded()">
+    <button mat-button class="menu-button" (click)="sendIsExpanded()">
         <mat-icon>home</mat-icon>
         <span class="dashboard">Dashboard</span>
     </button>
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>
-
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/myLectures'">
-
+    <button mat-button class="menu-button" [routerLink]="'/mylectures'">
         <span class="menu-text">My Lectures</span>
     </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/bookmarks'">
+    <button mat-button class="menu-button" [routerLink]="'/bookmarks'">
         <span class="menu-text">Bookmark</span>
     </button>
     <button mat-button class="menu-button" [routerLink]="'/shop'">
         <span class="menu-text">Shop</span>
     </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/settings'">
+    <button mat-button class="menu-button" [routerLink]="'/settings'">
         <span class="menu-text">Settings</span>
-    </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
-        <span class="menu-text">Orders</span>
     </button>
 </div>

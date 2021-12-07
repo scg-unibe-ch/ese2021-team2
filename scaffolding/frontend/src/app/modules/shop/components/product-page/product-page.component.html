@@ -1,6 +1,6 @@
 <div class="container">
 
-    <div class="first_column">
+    <div class=first_column>
         <img [src]= "imageURL" onerror="this.src='/assets/images/platzhalter.png'">
     </div>
 
@@ -15,12 +15,7 @@
         <br>
         <div class="product-price">
             <span>CHF {{product.price.toFixed(2)}}</span>
-            <div *ngIf = "!admin; else isAdmin">
-                <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
-            </div>
-            <ng-template #isAdmin>
-                <button mat-raised-button color = "primary" (click) = "handleUpdate()">Update Product</button>
-            </ng-template>
+            <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
         </div>
 
     </div>

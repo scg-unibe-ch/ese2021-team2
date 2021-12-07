@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 import { UserService } from '../core/http/user.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
-import {isNumeric} from "rxjs/internal-compatibility";
 
 @Component({
   selector: 'app-user',
@@ -21,8 +20,8 @@ export class UserComponent {
     loggedIn: boolean | null;
     user: User | null;
 
-    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
-    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
+    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
 
     invPwMsgRegistration: string | undefined;
     invalidPassword: boolean | undefined;
@@ -30,8 +29,6 @@ export class UserComponent {
     endpointMsgAdmin: string = '';
     registrationFeedback: string = '';
     loginFeedback: string | undefined;
-    activeRegButton: boolean = false;
-    invRegDataMsg: string = '';
 
     isLogin: boolean = false;
 
@@ -50,11 +47,9 @@ export class UserComponent {
         this.user = userService.getUser();
 
         this.isLogin = data.loginDialog;
-        this.checkStatusButton();
     }
 
     ngOnInit(): void {
-
     }
 
     registerUser(): void {
@@ -65,10 +60,6 @@ export class UserComponent {
             this.loginUser();})
         .catch((err) => {
             this.registrationFeedback = err;})
-    }
-
-    checkStatusButton(){
-        this.isValidNewUserInput();
     }
 
     loginUser(): void {
@@ -82,63 +73,7 @@ export class UserComponent {
             console.log(err);
             this.loginFeedback = err.message;
         })
-    }
-
-    isValidNewUserInput(){
-        if(this.areMandatoryFieldsNull()){
-           this.invRegDataMsg = 'The First 5 Fields with a (*) are mandatory to fill in for a Registration.'
-            this.activeRegButton = false;
-        }else if(this.userToRegister.street!=''&&!this.checkOnlyText(this.userToRegister.street!)){
-            this.invRegDataMsg = 'The street should only contain letters.'
-            this.activeRegButton = false;
-        }else if(this.userToRegister.city!=''&&!this.checkOnlyText(this.userToRegister.city!)){
-            this.invRegDataMsg = 'The city should only contain letters.'
-            this.activeRegButton = false;
-        }else if(this.userToRegister.phonenumber!=''&&!this.checkPhoneNumb(this.userToRegister.phonenumber!)){
-            this.invRegDataMsg = 'The phonenumber is invalid.'
-            this.activeRegButton = false;
-        }else if(this.userToRegister.zipCode!=''&&(!this.checkOnlyNum(this.userToRegister.zipCode!)||this.userToRegister.zipCode!.length!=4)){
-            this.invRegDataMsg = 'The ZipCode may only contain 4 numbers.'
-            this.activeRegButton = false;
-        }else if((this.userToRegister.housenr!)!=0&&0>=this.userToRegister.housenr!){
-            this.invRegDataMsg = 'The House Number must be at least 1.'
-            this.activeRegButton = false;
-        }else {this.activeRegButton = true;}
-
-    }
-
-    areMandatoryFieldsNull(): boolean{
-        return (this.userToRegister.userName==''||this.userToRegister.password==''||this.userToRegister.fname==''||this.userToRegister.lname==''||this.userToRegister.email=='')
-    }
-
-    checkOnlyText(toCheck: string): boolean{
-        let isValid = true;
-        if ((/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~1234567890]/.test(toCheck))) {
-            isValid = false;
-        }
-        return isValid
-    }
-    checkOnlyNum(toCheck: string): boolean{
-        let isValid = false;
-        if (isNumeric(toCheck)) {
-            isValid = true;
-        }
-        return isValid
-    }
-
-    checkPhoneNumb(toCheck: string): boolean{
-        let isValid = true;
-        if ((/[0-9\+\-\ ]/.test(toCheck))) {
-            isValid = true;
-        }
-        if ((/[`!@#$%^ç&*()_=\]{};':"\\|/,.<>?~a-z]/.test(toCheck))) {
-            isValid = false;
-        }
-        if(toCheck.trim()==''){
-            isValid=false;
-        }
-        return isValid
-    }
+    } 
 
     // I filled this with some pretty ugly pseudo tests, ignore this for now.
     // You can use and test it if you want though, it should work.

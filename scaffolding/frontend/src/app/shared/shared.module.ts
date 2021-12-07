@@ -9,17 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {FormsModule} from "@angular/forms";
 import { searchPipe } from './components/Pipes/search.pipe';
-import { filterPipe } from './components/Pipes/filter.pipe';
-import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-    {
-      path: 'post/:posttId',
-      component: PostComponent,
-    },
-  ];
 
-export const routing = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -28,21 +19,18 @@ export const routing = RouterModule.forChild(routes);
         CommentsListComponent,
         PostCommentComponent,
         searchPipe,
-        filterPipe,
   ],
     imports: [
         MatDialogModule,
         MatButtonModule,
         CommonModule,
         MatCardModule,
-        FormsModule,
-        routing,
+        FormsModule
     ],
     exports: [
         PostComponent,
         ConfirmationDialogComponent,
         searchPipe,
-        filterPipe
     ]
 })
 export class SharedModule { }

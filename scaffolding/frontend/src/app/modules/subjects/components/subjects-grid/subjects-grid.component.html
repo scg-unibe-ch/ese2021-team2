@@ -1,6 +1,8 @@
-<div *ngFor="let sub of subjects" class="subj">
-    <button mat-button class="menu-button" [routerLink]="['/subjects/boards/', sub.subjectId]" >
-        <span class="menu-text">{{sub.name}}</span>
-    </button>
-</div>
-<span>{{subjects}}</span>
+
+
+
+    <div *ngFor="let sub of subjects" class="subj">
+        <button mat-button class="menu-button" [routerLink]="['/subjects/boardList',sub.subjectId]" >
+            <span class="menu-text">{{sub.name}}</span>
+        </button>
+    </div>

@@ -1,10 +1,10 @@
 <mat-card *ngIf="!loggedIn && !isLogin">
     <h2>Register</h2>
     <mat-form-field>
-        <input matInput type="text" required placeholder="User Name"  name="name" [(ngModel)]="userToRegister.userName" (ngModelChange)="checkStatusButton()">
+        <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToRegister.userName">
     </mat-form-field>
     <mat-form-field>
-        <input matInput type="password" required placeholder="Password" name="password"  [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
+        <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
         <div *ngIf="invalidPassword">
         <br>
         {{invPwMsgRegistration}}
@@ -12,29 +12,29 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input matInput type="text" required placeholder="First Name" name="fname"  [(ngModel)]="userToRegister.fname" (ngModelChange)="checkStatusButton()">
+        <input matInput type="text" placeholder="First Name" name="fname" [(ngModel)]="userToRegister.fname">
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput type="text" required placeholder="Last Name" name="lname" [(ngModel)]="userToRegister.lname" (ngModelChange)="checkStatusButton()" >
+        <input matInput type="text" placeholder="Last Name" name="lname" [(ngModel)]="userToRegister.lname">
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input matInput type="email" required placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email" (ngModelChange)="checkStatusButton()" >
+        <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email">
     </mat-form-field>
     <br>
     <h3>Adress</h3>
     <mat-form-field>
-        <input matInput type="text" placeholder="Street Name" name="street" [(ngModel)]="userToRegister.street" (ngModelChange)="checkStatusButton()">
+        <input matInput type="text" placeholder="Street Name" name="street" [(ngModel)]="userToRegister.street">
     </mat-form-field>
     <mat-form-field>
-        <input matInput type="number" placeholder="House Number" name="housenr" [(ngModel)]="userToRegister.housenr" (ngModelChange)="checkStatusButton()">
+        <input matInput type="number" placeholder="House Number" name="housenr" [(ngModel)]="userToRegister.housenr">
     </mat-form-field>
     <mat-form-field>
-        <input matInput type="test" min="1" placeholder="ZIP Code" name="zipCode" [(ngModel)]="userToRegister.zipCode" (ngModelChange)="checkStatusButton()">
+        <input matInput type="test" placeholder="ZIP Code" name="zipCode" [(ngModel)]="userToRegister.zipCode">
     </mat-form-field>
     <mat-form-field>
-        <input matInput type="text" placeholder="City" name="city" [(ngModel)]="userToRegister.city" (ngModelChange)="checkStatusButton()">
+        <input matInput type="text" placeholder="City" name="city" [(ngModel)]="userToRegister.city">
     </mat-form-field>
 
     <br>
@@ -43,12 +43,9 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input matInput type="tel" placeholder="Phone Number" name="phonenumber" [(ngModel)]="userToRegister.phonenumber" (ngModelChange)="checkStatusButton()">
+        <input matInput type="text" placeholder="Phone Number" name="phonenumber" [(ngModel)]="userToRegister.phonenumber">
     </mat-form-field>
-    <button mat-flat-button color="primary" [disabled]="!activeRegButton" (click)="registerUser()">Register</button>
-    <div *ngIf="!activeRegButton">
-        <p class="warnMsg">{{invRegDataMsg}}</p>
-    </div>
+    <button mat-flat-button color="primary" (click)="registerUser()">Register</button>
     <br>
     <span style="color:red" *ngIf="!!registrationFeedback"> {{ registrationFeedback  }}</span>
 </mat-card>
@@ -75,3 +72,14 @@
         <button mat-flat-button color="warn" (click)="userService.logout()">Logout</button>
     </div>
 </mat-card>
+
+<!--
+<mat-card>
+    <h3>Secure Endpoints</h3>
+    <button mat-flat-button color="primary" (click)="accessUserEndpoint()">User Endpoint</button>
+    {{ endpointMsgUser }}
+    <hr>
+    <button mat-flat-button color="primary" (click)="accessAdminEndpoint()">Admin Endpoint</button>
+    {{ endpointMsgAdmin }}
+</mat-card>
+-->

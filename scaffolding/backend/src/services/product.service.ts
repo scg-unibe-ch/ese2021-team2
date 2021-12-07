@@ -3,8 +3,6 @@ import {Request} from 'express';
 import { MulterRequest } from '../models/multerRequest.model';
 import { ProductImage, ProductImageAttributes } from '../models/productImage.model';
 import { upload } from '../middlewares/fileFilter';
-import { DeleteResponse } from '../models/accountDelete.model';
-import { unlinkSync } from 'fs';
 
 export class ProductService {
 
@@ -44,48 +42,5 @@ export class ProductService {
             }
         })
         .catch(err => Promise.reject({message: 'Could not upload image'}));
-    }
-
-    public async delete(req: any): Promise<DeleteResponse> {
-        try {
-            const id = req.params.id;
-            const imageName = await ProductImage.findOne({
-                attributes: ['fileName'],
-                where: {productId : id}
-            });
-            Product.destroy({
-                where: {productId : id}
-            }).then(async () => {
-                await unlinkSync('./uploads/' + imageName.fileName);
-                return Promise.resolve({message: 'Deletion Successful'});
-            }).catch((err) => {
-                return Promise.reject(err);
-            });
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    }
-
-    public async update(req: any) {
-        try {
-            const id = req.params.id;
-            await Product.update({
-                title : req.body.title,
-                description : req.body.description,
-                productImage : req.body.productImage,
-                category: req.body.category,
-                price : req.body.price,
-            }, {
-                where : {
-                    productId : id,
-                }
-            }).catch((err) => {
-                return Promise.reject();
-            });
-            return Promise.resolve();
-
-        } catch (err) {
-            return Promise.reject(err);
-        }
     }
 }

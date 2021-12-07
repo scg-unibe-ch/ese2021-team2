@@ -26,6 +26,4 @@ postCommentController.post('/createComment',
     }
 );
 
-// TODO: Delete comments? Use the checkModOrCommentCreator middleware to check if the user has permissions to delete a comment
-
-export const CommentController: Router = postCommentController;
+export const PostCommentController: Router = postCommentController;

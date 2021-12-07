@@ -3,7 +3,6 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -14,11 +13,11 @@ export class SidebarComponent {
 
     loggedIn: boolean;
     user: User | null;
-    isExpanded: boolean = true;
+    isExpanded: boolean = false;
     @Output() messageEvent = new EventEmitter<boolean>();
     isLogin: boolean = false;
 
-    constructor(public userService: UserService, private dialog: MatDialog, private router: Router) {
+    constructor(public userService: UserService, private dialog: MatDialog) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.user$.subscribe(res => this.user = res);
@@ -57,15 +56,6 @@ export class SidebarComponent {
     sendIsExpanded() {
         this.isExpanded = !this.isExpanded;
         this.messageEvent.emit(this.isExpanded);
-    }
-
-    isShopRoute() {
-        return this.router.url.match(/\/shop\S*/)
-    }
-
-
-    isBoardRoute() {
-        return this.router.url.match(/\/board\S*/)
-    }
+      }
 
 }

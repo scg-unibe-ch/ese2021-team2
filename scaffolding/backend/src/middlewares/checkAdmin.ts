@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { AdminService } from '../services/admin.service';
 
 // this way you can just define a function and export it instead of a whole class
 export function checkAdmin(req: Request, res: Response, next: any) {
@@ -13,17 +12,12 @@ export function checkAdmin(req: Request, res: Response, next: any) {
         if (decoded == null) {
             res.status(403).send({ message: 'Forbidden' });
         }
+        // adds the field "tokenPayload" to the request enabling following functions to use data from the token
         req.body.tokenPayload = decoded;
-        const adminService: AdminService = new AdminService();
-        adminService.isAdmin(req.body.tokenPayload.userId)
-            .then(isAdmin => {
-                if (isAdmin) {
-                    next();
-                } else {
-                    res.status(403).send({ message: 'Forbidden' });
-                }
-            })
-            .catch(err => res.status(500).send(err));
+        if (!req.body.tokenPayload.admin) {
+            res.status(403).send({ message: 'Forbidden' });
+        }
+        next();
     } catch (err) {
         res.status(403).send({ message: 'Forbidden' });
     }
