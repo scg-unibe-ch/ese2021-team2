@@ -8,7 +8,6 @@ import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PostPreviewComponent } from '../../shared/components/post/post-preview/post-preview.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
