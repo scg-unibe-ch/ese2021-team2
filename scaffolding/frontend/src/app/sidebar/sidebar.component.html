@@ -37,9 +37,6 @@
     <button mat-button class="menu-button" [routerLink]="'/shop'">
         <span class="menu-text">Shop</span>
     </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/settings'">
-        <span class="menu-text">Settings</span>
-    </button>
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
         <span class="menu-text">Orders</span>
     </button>

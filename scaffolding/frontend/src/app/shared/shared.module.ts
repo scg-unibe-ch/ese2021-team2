@@ -13,6 +13,7 @@ import { filterPipe } from './components/Pipes/filter.pipe';
 import { RouterModule, Routes } from '@angular/router';
 import {PostPreviewComponent} from "./components/post/post-preview/post-preview.component";
 import {MatIconModule} from "@angular/material/icon";
+import { SortPipe } from './components/Pipes/sort.pipe';
 
 const routes: Routes = [
     {
@@ -32,6 +33,7 @@ export const routing = RouterModule.forChild(routes);
         searchPipe,
         filterPipe,
         PostPreviewComponent,
+        SortPipe,
   ],
     imports: [
         MatDialogModule,
@@ -47,7 +49,8 @@ export const routing = RouterModule.forChild(routes);
         ConfirmationDialogComponent,
         searchPipe,
         filterPipe,
-        PostPreviewComponent
+        PostPreviewComponent,
+        SortPipe
     ]
 })
 export class SharedModule { }

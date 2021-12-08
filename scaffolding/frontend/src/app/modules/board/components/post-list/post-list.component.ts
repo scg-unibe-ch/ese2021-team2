@@ -28,6 +28,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   @Input() searchTerm:string="";
   filterarg = 'technical';
   subscription: Subscription;
+  sortarg = 'like';
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
     // Listen for changes
