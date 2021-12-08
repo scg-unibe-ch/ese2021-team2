@@ -11,10 +11,12 @@ import {FormsModule} from "@angular/forms";
 import { searchPipe } from './components/Pipes/search.pipe';
 import { filterPipe } from './components/Pipes/filter.pipe';
 import { RouterModule, Routes } from '@angular/router';
+import {PostPreviewComponent} from "./components/post/post-preview/post-preview.component";
+import {MatIconModule} from "@angular/material/icon";
 
 const routes: Routes = [
     {
-      path: 'post/:posttId',
+      path: 'post/:postId',
       component: PostComponent,
     },
   ];
@@ -29,6 +31,7 @@ export const routing = RouterModule.forChild(routes);
         PostCommentComponent,
         searchPipe,
         filterPipe,
+        PostPreviewComponent,
   ],
     imports: [
         MatDialogModule,
@@ -37,12 +40,14 @@ export const routing = RouterModule.forChild(routes);
         MatCardModule,
         FormsModule,
         routing,
+        MatIconModule,
     ],
     exports: [
         PostComponent,
         ConfirmationDialogComponent,
         searchPipe,
-        filterPipe
+        filterPipe,
+        PostPreviewComponent
     ]
 })
 export class SharedModule { }

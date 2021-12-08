@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-            <h1 id="post-tit" [routerLink] = "['/post', post.postId]">
+            <h1 id="post-tit" [routerLink] = "['/post/', this.post.postId]">
                   {{this.post.title}}
             </h1>
               <p>{{(this.post.content.length>200)? (this.post.content | slice:0:200)+'...':(this.post.content)}}</p>

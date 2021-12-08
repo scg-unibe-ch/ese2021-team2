@@ -66,6 +66,9 @@ export class PostService {
             });
     }
 
+    public getPost(postId: number): Promise<Post> {
+        return Post.findByPk(postId);
+    }
     public getCreatorId(postId: number): Promise<number> {
         return new Promise((resolve, reject) => {
             Post.findByPk(postId)
@@ -130,7 +133,7 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId)) {
+                            if (!(found.creatorId - user.userId) ) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}

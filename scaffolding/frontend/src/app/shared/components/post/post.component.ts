@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PostComponent implements OnInit {
 
-    @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
+    post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
     changedPost: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
     voted = false;
     userCanVote= true;
@@ -45,18 +45,18 @@ export class PostComponent implements OnInit {
 
         this._Activatedroute.paramMap.subscribe(params => {
             this.postId= parseInt(params.get('postId')!);
-            this.httpClient.get( environment.endpointURL + "post/" + this.postId)
+            this.httpClient.get( environment.endpointURL + "board/1/post/" + this.postId)
             .subscribe((post: any) => {
                 this.post = post;
-                this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+                this.imageURL = environment.endpointURL + "board/1/post/" + this.post.postId + "/image";
             })
         });
     }
 
     ngOnInit(): void {
-        this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
+        this.imageURL = environment.endpointURL + "board/1/post/" + this.post.postId + "/image";
 
-        this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+        this.httpClient.post(environment.endpointURL + "board/1/post/getLikesByPostId", {
             postId: this.post.postId
         }).subscribe((res) => {
 
@@ -135,7 +135,7 @@ export class PostComponent implements OnInit {
 
     updatePost(){
         if (this.isUpdatedValid()) {
-            this.httpClient.put(environment.endpointURL + "post/" + this.post.postId, {
+            this.httpClient.put(environment.endpointURL + "board/1/post/" + this.post.postId, {
                 postId: this.changedPost.postId,
                 title: this.changedPost.title,
                 content: this.changedPost.content,
