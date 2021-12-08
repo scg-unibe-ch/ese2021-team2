@@ -21,19 +21,30 @@ export class ProfileComponent implements OnInit {
     changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
     editMode: boolean = false;
     editTag: String = "Edit";
+    imageURL: string;
     invEditDataMsg = '';
     activeSaveButton = false;
 
-    constructor(public userService: UserService, private dialog: MatDialog, public httpClient: HttpClient, private snackBar: MatSnackBar) {
-        // Listen for changes
-        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+    constructor(public userService: UserService,
+                private dialog: MatDialog,
+                public httpClient: HttpClient,
+                private snackBar: MatSnackBar) {
+        userService.loggedIn$.subscribe(res => {
+            this.loggedIn = res;
+            this.imageURL = this.userService.getProfileImageURL()
+        });
         userService.user$.subscribe(res => {
             this.user = res
             this.initUser();
         });
+        userService.imageURL$.subscribe(res => {
+            this.imageURL = res
+        });
+
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+        this.imageURL = userService.getProfileImageURL();
 
         this.initUser();
         this.checkStatusButton();
@@ -111,6 +122,24 @@ export class ProfileComponent implements OnInit {
     updateUser() {
         this.userService.update(this.changedUser).then(() => this.setEditMode())
     }
+
+    processFile(imageInputEvent: any) {
+        const f : File = imageInputEvent.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(f)
+        reader.onload = event =>{
+            this.userService.setProfileImageURL( <string> reader.result);
+        }
+        this.userService.addProfileImage(f);
+    }
+
+    handleDelete(){
+        this.userService.deleteProfileImage();
+    }
+
+    isDefaultPicture(): boolean {
+        return this.imageURL === '/assets/images/no_user.jpg';
+    } 
 
     test(){
         console.log(this.user);

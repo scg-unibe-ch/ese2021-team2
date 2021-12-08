@@ -1,6 +1,46 @@
-.container {
+.master {
     height: 900px;
     padding: 30px;
+}
+
+.mat-card{
+    background-color: white;
+}
+
+.mat-card-header{
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.image-container{
+    position: relative;
+    display: flex;
+    align-content:flex-end;
+}
+
+.mat-button{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.685); 
+    position:absolute;
+    top: 80%;
+    left: 60%;
+    margin: 0 !important;
+}
+
+.mat-icon-button{
+    position: absolute;
+    top:80%;
+    left: 10%;
+    margin: 0 !important;
+}
+
+.profile-picture{
+    background-color: black;
+    height: 140px;
+    width: 140px;
+    object-fit: contain;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 input:disabled{

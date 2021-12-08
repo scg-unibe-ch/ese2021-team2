@@ -5,6 +5,8 @@
     <button mat-button (click)="setLifestyle()" [routerLink] = "'shop'">Lifestyle</button>
 </div>
 <div class="filtcat" *ngIf="isBoardRoute()">
+    <button mat-button (click)="setfiltarg(0)">most popular</button>
+    <button mat-button (click)="setfiltarg(1)">newest</button>
     <button mat-button (click)="setAll()">All</button>
     <button mat-button (click)="setTech()">technical</button>
     <button mat-button (click)="setProg()">programming</button>

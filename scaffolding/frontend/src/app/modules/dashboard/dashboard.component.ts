@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   constructor(private data: DataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message)
+    this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message);
   }
 
   ngOnDestroy() {
@@ -62,5 +62,14 @@ export class DashboardComponent implements OnInit, OnDestroy  {
 
   setOther() {
     this.data.changeMessage("other");
+  }
+
+  setfiltarg(filt:number){
+    if(filt == 0){
+      this.data.changeMessage("date");
+    }
+    else {
+      this.data.changeMessage("likes");
+    }
   }
 }

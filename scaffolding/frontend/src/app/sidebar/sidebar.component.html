@@ -3,7 +3,7 @@
 </a>
 <div class="user-info">
     <div class="avatar-wrapper">
-        <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
+        <img class="avatar" [src]="loggedIn ? imageURL: '/assets/images/no_user.jpg'" />
     </div>
     <div class="user-text">
         <div *ngIf="loggedIn else notLoggedIn">
