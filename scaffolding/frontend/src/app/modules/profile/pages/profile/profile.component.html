@@ -62,3 +62,13 @@
             <p class="warnMsg">{{invEditDataMsg}}</p>
         </div>
     </mat-card>
+    </div>
+    <div class = "ActionButtonContainer">
+        <button mat-flat-button color="warn" (click)="handleLogout()">Logout</button>
+        <button mat-flat-button color = "warn" (click) = "handleDeletingAccount()">Delete Account</button>
+        <button mat-raised-button (click) = "setEditMode()">{{editTag}}</button>
+    </div>
+</div>
+<ng-template #notShow>
+
+</ng-template>
