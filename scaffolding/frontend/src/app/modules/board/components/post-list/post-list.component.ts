@@ -26,9 +26,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   user: User | null;
 
   @Input() searchTerm:string="";
-  filterarg = 'technical';
+  filterarg: string;
   subscription: Subscription;
-  sortarg = '';
+  sortarg: string;
+  
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
     // Listen for changes
@@ -48,9 +49,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.setPostList()
+    this.setPostList();
 
-    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
+    this.subscription = this.data.currentMessage.subscribe(message => (["date","likes"].includes(message)) ? this.sortarg = message : this.filterarg = message);
   }
 
   ngOnDestroy() {
