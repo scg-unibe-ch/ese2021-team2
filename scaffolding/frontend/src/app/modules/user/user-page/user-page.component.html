@@ -1,10 +1,27 @@
+<div *ngIf="loading">Loading ...</div>
+<div *ngIf="!loading">
 <div *ngIf="exists">
-<p>user-page works!</p>
 
-<h1>Posts</h1>
-    <p>{{this.createdPosts}} so many Ps</p>
+    <div class = "user-info">
+        <mat-card>
+            <mat-card-header>
+                <div class = "image-container">
+                    <img class = "profile-picture" [src] = "this.imageURL">
+                    <p class = "user-name">{{this.userName}}</p>
+                </div>
+
+            </mat-card-header>
+        </mat-card>
+    </div>
+<h2>Subscriptions</h2>
+<div *ngFor="let subject of this.lectures">
+    <h1>{{subject.boardName}}</h1>
+</div>
+<h2>Posts</h2>
+<h2 *ngIf="!this.createdPosts">This User hasn't posted anything yet</h2>
 <app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
 </div>
 <div *ngIf="!exists">
     <h1>ERROR 404: User Not Found</h1>
 </div>
+</div>n

@@ -1,0 +1,21 @@
+.user-name{
+    float: right;
+    margin-left: 20px;
+    margin-top: 100px;
+
+}
+.profile{
+    display: inline-block;
+    vertical-align: top;
+}
+.profile-picture{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    height: 200px;
+    width: 200px;
+    object-fit: fill;
+    border-radius: 20%;
+    flex-shrink: 0;
+    float: left;
+}

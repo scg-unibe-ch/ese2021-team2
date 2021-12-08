@@ -29,6 +29,7 @@ export class PostComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    creatorName: string = "";
 
     imageURL: string = "";
 
@@ -49,6 +50,7 @@ export class PostComponent implements OnInit {
             .subscribe((post: any) => {
                 this.post = post;
                 this.imageURL = environment.endpointURL + "board/1/post/" + this.post.postId + "/image";
+                this.getCreator();
             })
         });
     }
@@ -194,4 +196,10 @@ export class PostComponent implements OnInit {
         this.editMode = false;
     }
 
+    getCreator(): void {
+        this.httpClient.get( environment.endpointURL + "user/user/" + this.post.creatorId)
+            .subscribe((user: any) => {
+                this.creatorName = user.username;
+            })
+    }
 }

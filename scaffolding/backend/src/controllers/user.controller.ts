@@ -37,7 +37,7 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
 userController.get('/user/:userId',
     (req: Request, res: Response) => {
         userService.getUser(parseInt(req.params.userId, 10))
-            .then(user => res.send({username: user.userName}))
+            .then(user => res.send({username: user.userName, image: user.profile_image}))
             .catch(err => res.status(500).send(err));
     }
 );

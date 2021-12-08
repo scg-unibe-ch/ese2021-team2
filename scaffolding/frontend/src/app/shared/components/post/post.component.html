@@ -15,7 +15,7 @@
 
 <p>likes: {{this.post.likes}}</p>
 
-<p>made by user: {{this.post.creatorId}}</p>
+<p [routerLink]="'../../user/' + this.post.creatorId">made by user: {{this.creatorName}}</p>
 
 <button (click)="upvote()" *ngIf="!voted">upvote</button>
 

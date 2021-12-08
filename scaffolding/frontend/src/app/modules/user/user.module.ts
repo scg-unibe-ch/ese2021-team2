@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {UserPageComponent} from "./user-page/user-page.component";
 import {SharedModule} from "../../shared/shared.module";
+import {MatCardModule} from "@angular/material/card";
 
 const routes: Routes = [
     {
@@ -18,10 +19,11 @@ export const routing = RouterModule.forChild(routes);
   declarations: [
       UserPageComponent,
   ],
-  imports: [
-    CommonModule,
-      SharedModule,
-      routing,
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        routing,
+        MatCardModule,
+    ]
 })
 export class UserModule { }

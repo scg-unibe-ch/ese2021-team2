@@ -8,6 +8,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../../../environments/environment";
 import {Post} from "../../../models/post.model";
+import {Subject} from "../../../models/subject.model";
+import {Board} from "../../../models/board.model";
 
 @Component({
   selector: 'app-user-page',
@@ -16,33 +18,30 @@ import {Post} from "../../../models/post.model";
 })
 export class UserPageComponent implements OnInit {
 
+    loading: boolean;
     userId: number;
     userName: string;
     imageURL: string;
     createdPosts: Post[] | null;
+    lectures: Board[] | null;
     exists: boolean = false;
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public userService : UserService
     ) {
-        // // Listen for changes
-        // userService.user$.subscribe(res => this.user = res);
-        // // Current value
-        // this.user = userService.getUser();
-
-
+        this._Activatedroute.paramMap.subscribe(params => {
+            this.userId= parseInt(params.get('userId')!);
+            this.httpClient.get( environment.endpointURL + "user/user/" + this.userId)
+                .subscribe((user: any) => {
+                    this.userName = user.username;
+                    this.exists = true;
+                    this.imageURL = user.image ? (environment.endpointURL + 'user/'+ this.userId + '/image') : '/assets/images/no_user.jpg';
+                })
+        });
+        this.initializePostList();
+        this.initializeSubscriptions();
     }
 
   ngOnInit(): void {
-      this._Activatedroute.paramMap.subscribe(params => {
-          this.userId= parseInt(params.get('userId')!);
-          this.httpClient.get( environment.endpointURL + "user/user/" + this.userId)
-              .subscribe((user: any) => {
-                  this.userName = user.username;
-                  this.exists = true;
-                  //this.imageURL = environment.endpointURL + "user/" + this.userId + "/image";
-              })
-      });
-      this.initializePostList();
   }
 
     private initializePostList(): void {
@@ -52,5 +51,17 @@ export class UserPageComponent implements OnInit {
             }, (err: any) => {
 
             });
+    }
+
+    private initializeSubscriptions(): void {
+        this.httpClient.post<Board[]>( environment.endpointURL + 'board/getMyLectures', {
+            userId: this.userId
+        })
+            .subscribe((lectures: any) => {
+                this.lectures = lectures;
+            }
+
+        )
+
     }
 }
