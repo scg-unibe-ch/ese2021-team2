@@ -3,6 +3,11 @@
         <mat-card>
             <mat-card-header>
                 <div class = "image-container">
+                    <div class = "delete-image" *ngIf = "!isDefaultPicture()">
+                        <button mat-icon-button color = "warn" (click) = "handleDelete()">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </div>
                     <img class = "profile-picture" [src] = "imageURL">
                     <button mat-button (click) = "imageInput.click()">
                         <mat-icon>create</mat-icon>

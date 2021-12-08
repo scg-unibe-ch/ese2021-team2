@@ -79,7 +79,7 @@ userController.get('/:id/image', (req: Request, res: Response) => {
 
 // get the filename of an image
 userController.delete('/:id/image', (req: Request, res: Response) => {
-    userService.deleteProfileImage(Number(req.params.id)).then(response => res.send(response))
+    userService.deleteProfileImage(Number(req.params.id)).then(response => res.status(204).send(response))
         .catch(err => res.status(500).send(err));
 });
 

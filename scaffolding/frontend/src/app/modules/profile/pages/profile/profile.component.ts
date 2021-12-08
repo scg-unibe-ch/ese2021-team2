@@ -35,10 +35,14 @@ export class ProfileComponent implements OnInit {
             this.user = res
             this.initUser();
         });
+        userService.imageURL$.subscribe(res => {
+            this.imageURL = res
+        });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+        this.imageURL = userService.getProfileImageURL();
 
         this.initUser();
     }
@@ -121,11 +125,18 @@ export class ProfileComponent implements OnInit {
         const reader = new FileReader();
         reader.readAsDataURL(f)
         reader.onload = event =>{
-            this.imageURL = <string> reader.result;
+            this.userService.setProfileImageURL( <string> reader.result);
         }
         this.userService.addProfileImage(f);
     }
 
+    handleDelete(){
+        this.userService.deleteProfileImage();
+    }
+
+    isDefaultPicture(): boolean {
+        return this.imageURL === '/assets/images/no_user.jpg';
+    } 
 
     test(){
         console.log(this.user);

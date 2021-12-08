@@ -1,5 +1,5 @@
 import { UserService } from '../core/http/user.service';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { User } from '../models/user.model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
@@ -24,15 +24,20 @@ export class SidebarComponent {
         // Listen for changes
         userService.loggedIn$.subscribe(res => {
             this.loggedIn = res
-            this.imageURL = this.userService.getProfileImageURL()});
+        });
+
         userService.user$.subscribe(res => {
             this.user = res;
-            this.imageURL = this.userService.getProfileImageURL();
+        });
+
+        userService.imageURL$.subscribe(res => {
+            this.imageURL = res
         });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+        this.imageURL = userService.getProfileImageURL();
     }
 
     ngOnInit() {
