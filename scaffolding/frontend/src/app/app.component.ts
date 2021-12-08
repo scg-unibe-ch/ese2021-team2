@@ -93,47 +93,6 @@ export class AppComponent implements OnInit {
         this.userService.setLoggedIn(!!userToken);
     }
 
-    processFile(imageInputEvent: any) {
-        const f : File = imageInputEvent.target.files[0];
-        this.addProfileImage(f);
-    }
-
-    addProfileImage(newPicture: File) {
-        if (newPicture) {
-            const fd = new FormData();
-            fd.append('image', newPicture);
-            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
-                .subscribe((res) => {
-
-                },
-                error => {
-
-                });
-        }
-    }
-
-    deleteProfileImage(){
-        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
-            .subscribe((res) => {
-
-            },
-            error => {
-
-            });
-    }
-
-    getImageSrc(): string {
-        if (this.user?.profile_image) {
-            return environment.endpointURL + 'user/' + this.user?.userId + '/image';
-        } else {
-            return '/assets/images/default_image.jpg';
-        }
-    }
-
-    hasProfileImage(): boolean {
-        return !!this.user?.profile_image;
-    }
-
     test() {
         console.log(this.user);
     }

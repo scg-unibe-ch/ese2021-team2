@@ -11,6 +11,7 @@ import { like } from 'sequelize/types/lib/operators';
 import { Like } from '../models/like.model';
 import path from 'path';
 import { Subscription } from '../models/subscription.model';
+import { unlinkSync } from 'fs';
 const { Op } = require('sequelize');
 
 export class UserService {
@@ -66,6 +67,7 @@ export class UserService {
                         user.city = userData.city;
                         user.birthday = userData.birthday;
                         user.phonenumber = userData.phonenumber;
+                        user.profile_image = userData.profile_image;
 
                     const token: string = jwt.sign({
                         userId: user.userId,
@@ -210,7 +212,14 @@ export class UserService {
                 if (!found) {
                     return Promise.reject('User not found!');
                 } else {
-                    return new Promise<User>((resolve, reject) => {
+                    return new Promise<User>(async (resolve, reject) => {
+
+                        // when user already has photo delete it from uploady folder
+                        const old_photo = found.profile_image;
+                        if (old_photo) {
+                            await unlinkSync('./uploads/' + old_photo);
+                        }
+
                         upload.single('image')(req, null, async (error: any) => {
                             found.profile_image = req.file.filename;
                             await found.save()
@@ -245,6 +254,7 @@ export class UserService {
     deleteProfileImage(userId: number): Promise<string> {
         return User.findByPk(userId)
             .then(async found => {
+                    await unlinkSync('./uploads/' + found.profile_image);
                     found.profile_image = '';
                     await found.save();
                     return Promise.resolve('Profile Image deleted');
