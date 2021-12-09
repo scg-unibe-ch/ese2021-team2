@@ -1,6 +1,46 @@
+.mat-raised-button{
+    border: 0px;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28,53,161); 
+    color: white;
+    font-weight: bold;
+    cursor:pointer;
+    box-shadow: none;
+}
+
+.mat-icon-button{
+    color: black;
+    background-color: transparent;
+    justify-self: flex-start;
+    font-size: 13pt
+}
+
+.mat-icon-button .material-icons{
+    font-size: 35px;
+}
+
 .mat-toolbar{
     display: inline-flex;
     font-family: Bahnschrift;
-    background-color: #76b3f0;
+    background-color: inherit;
     justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+#searchBar{
+    border: 0px;
+    outline: 0px;
+    width :30%;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left:1rem;
+}
+
+#background{
+    background-color: rgb(222,230,243);
+    height: 100%;
 }

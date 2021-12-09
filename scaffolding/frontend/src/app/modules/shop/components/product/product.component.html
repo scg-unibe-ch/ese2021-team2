@@ -1,4 +1,4 @@
-<mat-card class="product-card">
+<mat-card [ngStyle]="{'border-color': borderColor}" class="product-card">
     <mat-card-header [routerLink]="['product', product.productId]">
         <mat-card-title>
             {{product.title}}
@@ -11,9 +11,11 @@
         CHF {{product.price.toFixed(2)}}
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button [routerLink]="['product', product.productId]">Details</button>
+        <button mat-icon-button id = "details" [routerLink]="['product', product.productId]" title = "See details">
+            <mat-icon>add</mat-icon>
+        </button>
         <div *ngIf="admin">
-            <button  mat-icon-button color="warn" (click)="handleDelete()">
+            <button id = "delete" mat-icon-button (click)="handleDelete()" title = "Remove from Store">
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </div>
