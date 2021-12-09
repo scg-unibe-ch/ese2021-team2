@@ -9,6 +9,7 @@ import {FormControl} from "@angular/forms";
 import {formatCurrency} from "@angular/common";
 import {getMatIconFailedToSanitizeUrlError} from "@angular/material/icon";
 import {delay} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-order',
@@ -40,7 +41,7 @@ export class OrderComponent implements OnInit {
     paymentHandler: any = null;
     paymentSuccessful: boolean = false;
 
-    constructor(public cartService: CartService, public userService: UserService, public httpClient: HttpClient) {
+    constructor(public cartService: CartService, public snackBar : MatSnackBar, public userService: UserService, public httpClient: HttpClient) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.user$.subscribe(res => this.user = res);
@@ -114,7 +115,10 @@ export class OrderComponent implements OnInit {
              productItems: this.products
 
          }).subscribe((response: any) => {
-                 alert('Order was successful. Keep shopping or pay your order.');
+                 this.snackBar.open('Order was successful. Keep shopping or pay your order.', "Dismiss", {
+                     duration : 3000,
+                     panelClass: ['green-snackbar'],
+                 });
                  this.cartService.clearCart();
                  this.wasOrderSubmitted = true;
              },
@@ -213,19 +217,27 @@ export class OrderComponent implements OnInit {
                                 },
                                 productItems: this.products
                        }).subscribe((response: any) => {
-                                    alert('Thanks for your payment');
+                                    this.snackBar.open('Thank you for your payment', "Dismiss", {
+                                        duration : 3000,
+                                        panelClass: ['green-snackbar'],
+                                    });
                                     this.paymentSuccessful = true;
                                     this.wasOrderSubmitted = true;
                            },
                            (err: any) => {
                                this.paymentSuccessful = true;
-                               alert('Something happened wrong submitting with your order... Please reach out to us!');
+                               this.snackBar.open('Something happened wrong submitting with your order... Please reach out to us!', "Dismiss", {
+                                   duration : 3000,
+                                   panelClass: ['green-snackbar'],
+                               });
                            }
                        );
 
                        }, (err: any) => {
-                       alert('Could not pay ' + err + '\nTry again or choose another payment option');
-
+                       this.snackBar.open('Could not pay ' + err + '\nTry again or choose another payment option', "Dismiss", {
+                           duration : 3000,
+                           panelClass: ['green-snackbar'],
+                       });
                        }
                    );
 
@@ -254,7 +266,10 @@ export class OrderComponent implements OnInit {
                     locale: 'auto',
                     token: function (stripeToken: any) {
                         console.log(stripeToken)
-                        alert('Payment has been successfull!');
+                        this.snackBar.open('Payment has been successful!', "Dismiss", {
+                            duration : 3000,
+                            panelClass: ['green-snackbar'],
+                        });
                     }
                 });
             }
@@ -271,7 +286,10 @@ export class OrderComponent implements OnInit {
             console.log(i + 's');
         }
         if( !window.document.getElementById('stripe-script')) {
-            alert('Could not load script!!');
+            this.snackBar.open('Could not load script!', "Dismiss", {
+                duration : 3000,
+                panelClass: ['green-snackbar'],
+            });
         }
 
     }
