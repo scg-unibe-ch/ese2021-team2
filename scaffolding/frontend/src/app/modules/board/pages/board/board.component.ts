@@ -116,6 +116,26 @@ export class BoardComponent implements OnInit {
       }
     );
 }
+
+  unsubscribe(){
+    this.unsubscribed=true;
+
+    this.httpClient.post(environment.endpointURL+"board/unsubscribe",{
+      boardId: this.id,
+      userId: this.userService.getUser()!.userId
+    }).subscribe(res=>{
+      console.log(res);
+    },
+    err=>{
+      console.log(err);
+    }
+  );
+    
+  }
+
+  cancelCreate(){
+    this.creatingPost=false;
+  }
 }
 
 

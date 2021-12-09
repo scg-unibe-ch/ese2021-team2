@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+
 const routes: Routes = [
 {
   path: ':boardId',
@@ -21,11 +22,11 @@ const routes: Routes = [
 export const routing = RouterModule.forChild(routes);
 
 @NgModule({
-    declarations: [
-        PostListComponent,
-        BoardComponent,
-
-    ],
+  declarations: [
+    PostListComponent,
+    BoardComponent,
+    
+  ],
     imports: [
         CommonModule,
         routing,
@@ -34,10 +35,9 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         ReactiveFormsModule,
         MatToolbarModule,
-
         MatCardModule,
         MatIconModule,
-
+       
     ],
     exports: [
     ]

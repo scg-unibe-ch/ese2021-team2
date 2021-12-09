@@ -197,7 +197,7 @@ export class PostService {
             }
         )
             .then(() => Promise.resolve('Delete successful'))
-            .catch((err) => Promise.reject('Something happened wrong when deleting bookmark'));
+            .catch((err) => Promise.reject('Something happened wrong when deleting the bookmark'));
     }
 
     public getAll(): Promise<Post[]> {

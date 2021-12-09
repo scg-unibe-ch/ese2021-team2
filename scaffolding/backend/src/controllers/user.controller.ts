@@ -6,6 +6,7 @@ import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
 import { MulterRequest } from '../models/multerRequest.model';
 import { upload } from '../middlewares/fileFilter';
+import { User } from '../models/user.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -90,6 +91,15 @@ userController.delete('/:id/image', (req: Request, res: Response) => {
     userService.deleteProfileImage(Number(req.params.id)).then(response => res.status(204).send(response))
         .catch(err => res.status(500).send(err));
 });
+
+userController.post('/getUserById',
+    async (req: Request, res: Response) => {
+
+        const u = await userService.getUser(req.body.userId);
+        res.send(u);
+
+    }
+);
 
 
 export const UserController: Router = userController;
