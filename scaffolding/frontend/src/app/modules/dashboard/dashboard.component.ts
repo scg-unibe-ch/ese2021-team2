@@ -48,16 +48,16 @@ export class DashboardComponent implements OnInit, OnDestroy  {
     return this.router.url.match(/\/board\S*/)
   }
 
-  setTech() {
-    this.data.changeMessage("technical");
+  setOrg() {
+    this.data.changeMessage("organization");
   }
 
-  setProg() {
-    this.data.changeMessage("programming");
+  setExer() {
+    this.data.changeMessage("exercises");
   }
 
-  setTheo() {
-    this.data.changeMessage("theoretical");
+  setExam() {
+    this.data.changeMessage("exams");
   }
 
   setOther() {
