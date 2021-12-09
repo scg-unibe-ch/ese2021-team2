@@ -1,3 +1,5 @@
+import { Moderator } from './models/moderator.model';
+import { SubjectController } from './controllers/subject.controller';
 import express, { Application , Request, Response } from 'express';
 import morgan from 'morgan';
 import { TodoItemController } from './controllers/todoitem.controller';
@@ -8,6 +10,7 @@ import { Sequelize } from 'sequelize';
 import { TodoList } from './models/todolist.model';
 import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
+import { Admin } from './models/admin.model';
 import { Order } from './models/order.model';
 
 import cors from 'cors';
@@ -18,15 +21,15 @@ import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
 import { Like } from './models/like.model';
 import { Subject } from './models/subject.model';
-import {Board} from './models/board.model';
-import {PostComment} from './models/postComment.model';
-import {BoardController} from './controllers/board.controller';
+import { Board } from './models/board.model';
+import { PostComment } from './models/postComment.model';
+import { BoardController } from './controllers/board.controller';
 import { Product } from './models/product.model';
 import { ProductImage } from './models/productImage.model';
 import { ProductController } from './controllers/product.controller';
-import { PostCommentController} from './controllers/postComment.controller';
-import {Bookmark} from './models/bookmark.model';
-import {OrderController} from './controllers/order.controller';
+import { CommentController} from './controllers/postComment.controller';
+import { Bookmark } from './models/bookmark.model';
+import { OrderController } from './controllers/order.controller';
 import { Subscription } from './models/subscription.model';
 
 import {env} from 'process';
@@ -56,6 +59,8 @@ export class Server {
         ProductImage.initialize(this.sequelize);
         Bookmark.initialize(this.sequelize);
         PostComment.initialize(this.sequelize);
+        Admin.initialize(this.sequelize);
+        Moderator.initialize(this.sequelize);
         Subscription.initialize(this.sequelize);
         Order.initialize(this.sequelize);
         ProductOrder.initialize(this.sequelize);
@@ -65,6 +70,8 @@ export class Server {
         PostImage.createAssociations();
         ProductImage.createAssociations();
         Bookmark.createAssociations();
+        Admin.createAssociations();
+        Moderator.createAssociations();
         Post.createAssociations();
         ProductOrder.createAssociations();
 
@@ -91,6 +98,7 @@ export class Server {
             preflightContinue: false,
         };
 
+        // TODO: Remove the todoitem and todolist as well as the secured endpoint stuff
         return express()
             .use(cors())
             .use(express.json())                    // parses an incoming json to an object
@@ -100,10 +108,11 @@ export class Server {
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/admin', AdminController)
-            .use('/post', PostController)
+            .use('/subject', SubjectController)
+            .use('/board/:boardId/post', PostController)
             .use('/board', BoardController)
             .use('/product', ProductController)
-            .use('/comment', PostCommentController)
+            .use('/comment', CommentController)
             .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))

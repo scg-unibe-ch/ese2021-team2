@@ -29,16 +29,18 @@ export class PostComponent implements OnInit {
   loggedIn: boolean;
   user: User | null;
   imageURL: string = "";
+  admin: boolean;
   creator:any = {userName: ""}
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
-    // Listen for changes
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
+        userService.admin$.subscribe(res => this.admin = res);
+        userService.user$.subscribe(res => this.user = res);
 
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.admin = userService.isAdmin();
+        this.user = userService.getUser();
 
     this._Activatedroute.paramMap.subscribe(params => { 
         this.postId= parseInt(params.get('posttId')!); 
@@ -58,11 +60,6 @@ export class PostComponent implements OnInit {
                 console.log(err);
             });
       
-            for (let i = 0; i < this.likes.length; i++) {
-                if (this.likes.get(i).userId == this.user?.userId) {
-                    this.userCanVote = false;
-                }
-            }
             
             this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
                 postId: this.postId
@@ -160,12 +157,12 @@ export class PostComponent implements OnInit {
   }
 
   authorizedToEdit(): boolean {
-      if( this.user && this.user.userId && this.post && this.post.creatorId ){
-          return (this.user.admin || (this.user.userId - this.post.creatorId === 0));
-      } else {
-          return false;
-      }
-  }
+    if( this.user && this.user.userId && this.post && this.post.creatorId ){
+        return (this.admin || (this.user.userId - this.post.creatorId === 0));
+    } else {
+        return false;
+    }
+}
 
 
   updatePost(){
@@ -203,8 +200,7 @@ export class PostComponent implements OnInit {
 
   deletePost(): void {
       if( this.post ) {
-          const dialogData = new ConfirmationDialogModel("Delete Post", "Are you sure you want to delete this" +
-              " post?");
+          const dialogData = new ConfirmationDialogModel("Delete Post", "Are you sure you want to delete this post?");
           const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
               maxWidth: '400px',
               closeOnNavigation: true,
@@ -225,11 +221,11 @@ export class PostComponent implements OnInit {
   edit(): void{
         console.log('edit view');
         this.editMode = true;
-      this.changedPost = this.post;
-  }
+        this.changedPost = this.post;
+    }
 
-  cancelEdit(): void {
-      this.editMode = false;
-  }
+    cancelEdit(): void {
+        this.editMode = false;
+    }
 
 }

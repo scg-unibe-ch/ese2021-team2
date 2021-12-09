@@ -2,7 +2,7 @@
     <h1>Secured Endpoint! You can only check your own orders</h1>
 </div>
 
-<div *ngIf="checkAuthorizationStatus()&&this.user?.admin==false">
+<div *ngIf="checkAuthorizationStatus() && !admin">
     <h1 class="headline">Order #{{this.order.orderId}}</h1>
     <button mat-raised-button color="primary" *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
     <button mat-raised-button [routerLink]="['../..']">View all orders</button>
@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div *ngIf="checkAuthorizationStatus()&&this.user?.admin==true">
+<div *ngIf="checkAuthorizationStatus() && admin">
     <h1 class="headline">Order #{{this.order.orderId}} by User: "{{this.order.customerName}}" Id #{{this.order.customerId}}</h1>
     <button mat-raised-button [routerLink]="['../..']">View all orders</button>
 

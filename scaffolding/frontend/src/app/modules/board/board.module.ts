@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { BoardComponent } from './pages/board/board.component';
@@ -8,19 +8,16 @@ import {SubjectsModule} from "../subjects/subjects.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-
-
-
 const routes: Routes = [
 {
-  path: 'board/:boardId',
+  path: ':boardId',
   component: BoardComponent
 },
 ];
+
 export const routing = RouterModule.forChild(routes);
 
 @NgModule({
@@ -40,6 +37,7 @@ export const routing = RouterModule.forChild(routes);
         MatCardModule,
         MatIconModule,
     ],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    exports: [
+    ]
 })
 export class BoardModule { }

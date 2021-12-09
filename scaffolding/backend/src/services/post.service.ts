@@ -18,31 +18,29 @@ const userService = new UserService();
 
 export class PostService {
 
-
-    public static getSubscribedBoardByUserId(uId: number) {
+    public getSubscribedBoardByUserId(userId: number) {
         return Subscription.findAll({
             where: {
-                userId: uId
+                userId: userId
             },
         });
     }
 
     // returns all posts belonging to a specified forum
-    static getPostsOfBoard(board: number): Promise<Post[]> {
+    public getPostsOfBoard(boardId: number): Promise<Post[]> {
         return Post.findAll({
             where: {
-                boardId: board
+                boardId: boardId
             },
             order: [['createdAt', 'DESC']]
         });
     }
 
-
-    public static async getPostsbyBoardids(boardids: Subscription[]) {
+    public async getPostsbyBoardIds(boardIds: Subscription[]) {
         const out = [];
-        for (let i = 0; i < boardids.length; i++) {
+        for (let i = 0; i < boardIds.length; i++) {
             let postsOfBoard;
-            postsOfBoard = await this.getPostsOfBoard(boardids[i].boardId);
+            postsOfBoard = await this.getPostsOfBoard(boardIds[i].boardId);
             for (let j = 0; j < postsOfBoard.length; j++) {
                 out.push(postsOfBoard[j]);
             }
@@ -50,23 +48,17 @@ export class PostService {
         return out;
     }
 
-
     public createPost(createReq: CreatePostRequest): Promise<PostAttributes> {
         return userService.getUser(createReq.tokenPayload.userId)
             .then(user => {
                 if (user != null) {
-                    if (user.admin === false) {
-                        if (this.postReqIsValid(createReq.post)) {
-                            createReq.post.creatorId = user.userId;
-                            return Post.create(createReq.post)
-                                .then(inserted => Promise.resolve(inserted))
-                                .catch(err => Promise.reject(err));
-                        } else {
-                            return Promise.reject('wrong post format');
-                        }
+                    if ( this.postReqIsValid(createReq.post)) {
+                        createReq.post.creatorId = user.userId;
+                        return Post.create(createReq.post)
+                            .then(inserted => Promise.resolve(inserted))
+                            .catch(err => Promise.reject(err));
                     } else {
-                        console.log('u r admin');
-                        return Promise.reject('Admins aren\'t allowed to create posts');
+                        return Promise.reject('wrong post format');
                     }
                 } else {
                     return Promise.reject('Something happened wrong');
@@ -74,9 +66,20 @@ export class PostService {
             });
     }
 
+    public getPost(postId: number): Promise<Post> {
+        return Post.findByPk(postId);
+    }
+    public getCreatorId(postId: number): Promise<number> {
+        return new Promise((resolve, reject) => {
+            Post.findByPk(postId)
+            .then(post => resolve(post.creatorId))
+            .catch(reason => reject(reason));
+        });
+    }
+
     public addImage(req: MulterRequest): Promise<PostImageAttributes> {
 
-        return Post.findByPk(req.params.id)
+        return Post.findByPk(req.params.postId)
             .then(found => {
                 if (!found) {
                     return Promise.reject('Post not found!');
@@ -95,33 +98,31 @@ export class PostService {
 
 
     // deletes a post from the database
-    public delete(deleteReq: DeletePostRequest): Promise<string> {
-        return userService.getUser(deleteReq.tokenPayload.userId)
-            .then(user => {
-                return Post.findByPk(deleteReq.postId)
-                    .then(found => {
-                        if (found != null) {
-                            if (!(found.creatorId - deleteReq.tokenPayload.userId) || user.admin) {
-                                console.log('Destroying');
-                                Post.destroy({
-                                        where: {
-                                            postId: found.postId
-                                        }
-                                    }
-                                ).then(deleted => Promise.resolve('Deleting successful ' + deleted))
-                                    .catch(err => Promise.reject(err));
-                            } else {
-                                return Promise.reject({ message: 'not authorized to delete this post' });
-                            }
-                        } else {
-                            return Promise.reject({ message: 'No Post found' });
-                        }
-                    })
-                    .catch(err => Promise.reject(err));
-            })
-            .catch(err => Promise.reject(err));
-
-
+    public deletePost(deleteReq: DeletePostRequest): Promise<string> {
+           return userService.getUser(deleteReq.tokenPayload.userId)
+               .then(user => {
+                   return Post.findByPk(deleteReq.postId)
+                       .then(found => {
+                           if (found != null) {
+                               if (!(found.creatorId - deleteReq.tokenPayload.userId)) {
+                                   console.log('Destroying');
+                                   Post.destroy({
+                                           where: {
+                                               postId: found.postId
+                                           }
+                                       }
+                                   ).then(deleted => Promise.resolve('Deleting successful ' + deleted))
+                                   .catch(err => Promise.reject(err));
+                               } else {
+                                   return Promise.reject('not authorized to delete this post');
+                               }
+                           } else {
+                               return Promise.reject('No Post found');
+                           }
+                       })
+                   .catch(err => Promise.reject(err));
+               })
+               .catch(err => Promise.reject(err));
     }
 
 
@@ -132,7 +133,7 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId) || user.admin) {
+                            if (!(found.creatorId - user.userId) ) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}

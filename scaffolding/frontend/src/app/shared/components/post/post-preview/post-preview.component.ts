@@ -26,9 +26,8 @@ export class PostPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.borderColor = this.colorHash(this.post.boardId)
-
-    this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+    this.borderColor = this.colorHash(this.post.boardId);
+    this.httpClient.post(environment.endpointURL + `board/${this.post.boardId}/post/getLikesByPostId`, {
       postId: this.post.postId
   }).subscribe((res) => {
 

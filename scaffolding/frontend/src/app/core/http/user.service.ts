@@ -12,32 +12,50 @@ export class UserService {
     // TODO: Write tests for the register(), login() and delete() functions
     // which are all based on each other so when the register() test fails the others shouldn't execute etc.
 
-    private loggedIn: boolean;
     private user: User | null;
+    private loggedIn: boolean;
+    private admin: boolean;
     private bookmarkedPosts: Post[] | undefined;
+    private imageURL: string ;
 
     // Observable Sources
-    private loggedInSource = new Subject<boolean>();
     private userSource = new Subject<User | null>();
+    private loggedInSource = new Subject<boolean>();
+    private isAdminSource = new Subject<boolean>();
+    private imageURLSource = new Subject<string>();
 
     // Observable Streams
-    loggedIn$ = this.loggedInSource.asObservable();
     user$ = this.userSource.asObservable();
-    
-
+    loggedIn$ = this.loggedInSource.asObservable();
+    admin$ = this.isAdminSource.asObservable();
+    imageURL$ = this.imageURLSource.asObservable();
 
     constructor(private httpClient: HttpClient) {
         this.user = null;
         this.loggedIn = false;
+        this.admin = false;
+        this.imageURL = '/assets/images/no_user.jpg';
 
+        this.user$.subscribe(res => {
+            this.user = res
+            this.setLoggedInURL()
+        });
         this.loggedIn$.subscribe(res => this.loggedIn = res);
-        this.user$.subscribe(res => this.user = res);
+        this.admin$.subscribe(res => this.admin = res);
+        this.imageURL$.subscribe(res => this.imageURL = res);
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
             this.loadBookmarkedPosts();
+            this.setLoggedInURL();
         } else {
             this.logout();
+        }
+    }
+
+    private setLoggedInURL() {
+        if(this.user && this.user.profile_image) { 
+            this.imageURLSource.next(environment.endpointURL + 'user/' + this.user.userId + '/image')
         }
     }
 
@@ -101,6 +119,7 @@ export class UserService {
                 this.userSource.next(user);
                 this.loggedInSource.next(true);
                 this.loadBookmarkedPosts();
+                this.setLoggedInURL();
                 resolve(user);
             }, (err: any) => {
                 reject(err);
@@ -114,6 +133,11 @@ export class UserService {
 
         this.userSource.next(null);
         this.loggedInSource.next(false);
+        this.imageURLSource.next('/assets/images/no_user.jpg');
+    }
+
+    isAdmin() {
+        return this.admin;
     }
 
     getLoggedIn(): boolean {
@@ -153,10 +177,16 @@ export class UserService {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
             });
+        this.httpClient.get<boolean>(environment.endpointURL + "admin")
+            .subscribe((res) => {
+                this.isAdminSource.next(res);
+            }, () => {
+                this.isAdminSource.next(false);
+            });
     }
 
     loadBookmarkedPosts(): void {
-        this.httpClient.get<Post[]>(environment.endpointURL + 'post/bookmarks')
+        this.httpClient.get<Post[]>(environment.endpointURL + 'board/1/post/bookmarks/all')
             .subscribe((res) => {
                     this.bookmarkedPosts = res;
                     console.log('Is bookmarked: ' + this.bookmarkedPosts);
@@ -192,7 +222,7 @@ export class UserService {
 
     addPostToBookmarks(post: Post): void {
         if( !this.isPostBookmarked(post.postId)){
-            this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
+            this.httpClient.post(environment.endpointURL + "board/1/post/" + post.postId + "/bookmark", {})
                 .subscribe((res) => {
                     console.log('Added to bookmark: ' + post.postId);
                     this.bookmarkedPosts?.push(post);
@@ -205,7 +235,7 @@ export class UserService {
 
     removePostFromBookmarks(post: Post): void {
         if( this.isPostBookmarked(post.postId)) {
-            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/bookmark/delete", {})
+            this.httpClient.delete(environment.endpointURL + "board/1/post/" + post.postId + "/bookmark/delete", {})
                 .subscribe((res) => {
                     console.log('Deleted from bookmarks: ' + post.postId);
                     if( this.bookmarkedPosts ) {
@@ -224,12 +254,48 @@ export class UserService {
 
     deletePost(post: Post): void {
         if ( post ) {
-            this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/delete", {})
+            this.httpClient.delete(environment.endpointURL + "board/1/post/" + post.postId + "/delete", {})
                 .subscribe(res => {
                     this.removePostFromBookmarks(post);
                     console.log('Successfully deleted this post');
                 }, (err: any) => {
                     console.log(err);
+                });
+        }
+    }
+
+    setProfileImageURL(url : string){
+        this.imageURLSource.next(url);
+    }
+
+    getProfileImageURL(): string {
+        return this.imageURL;
+    }
+
+    deleteProfileImage(){
+        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
+            .subscribe((res) => {
+                debugger;
+                this.imageURLSource.next('/assets/images/no_user.jpg'); 
+            },
+            error => {
+
+            });
+    }
+
+    addProfileImage(newPicture: File) {
+        if (newPicture) {
+            const fd = new FormData();
+            fd.append('image', newPicture);
+            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
+                .subscribe((res: any) => {
+                    if(this.user){
+                        this.user.profile_image = res.profile_image;
+                        this.userSource.next(this.user);
+                    }
+                },
+                error => {
+
                 });
         }
     }

@@ -35,6 +35,14 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
     }
 );
 
+userController.get('/user/:userId',
+    (req: Request, res: Response) => {
+        userService.getUser(parseInt(req.params.userId, 10))
+            .then(user => res.send({username: user.userName}))
+            .catch(err => res.status(500).send(err));
+    }
+);
+
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
         userService.delete(req.body)
@@ -80,7 +88,7 @@ userController.get('/:id/image', (req: Request, res: Response) => {
 
 // get the filename of an image
 userController.delete('/:id/image', (req: Request, res: Response) => {
-    userService.deleteProfileImage(Number(req.params.id)).then(response => res.send(response))
+    userService.deleteProfileImage(Number(req.params.id)).then(response => res.status(204).send(response))
         .catch(err => res.status(500).send(err));
 });
 

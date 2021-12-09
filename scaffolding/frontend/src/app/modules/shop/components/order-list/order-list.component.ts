@@ -12,22 +12,32 @@ import {User} from "../../../../models/user.model";
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
+    loggedIn: boolean;
+    admin: boolean;
     user: User | null;
     orders: Order[] = [];
 
-  constructor(public httpClient: HttpClient, public userService: UserService) {
-      this.user = this.userService.getUser();
-      this.initializeOrders();
-  }
+    constructor(public httpClient: HttpClient, public userService: UserService) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.admin$.subscribe(res => this.admin = res);
+        userService.user$.subscribe(res => this.user = res);
+
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.admin = userService.isAdmin();
+        this.user = userService.getUser();
+        this.initializeOrders();
+    }
 
 
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
     initializeOrders(): void {
         if (this.user) {
-            if( this.user.admin ){
+            if (this.admin) {
                 this.httpClient.get(environment.endpointURL + 'order/all')
                     .subscribe((res: any) => {
                         console.log('Received orders');

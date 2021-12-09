@@ -1,4 +1,3 @@
-
 import { OrderService } from '../services/order.service';
 import express, { Router, Request, Response } from 'express';
 
@@ -70,4 +69,5 @@ orderController.get('/:id/products', (req: Request, res: Response) => {
         })
         .catch(err => res.status(500).send(err));
 });
+
 export const OrderController: Router = orderController;

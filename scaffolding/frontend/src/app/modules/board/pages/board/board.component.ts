@@ -32,18 +32,16 @@ export class BoardComponent implements OnInit {
   imageURL: any;
   searchWord:string="";
   SemesterAuswahl: any = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
-  KategorieAuswahl: any = ['technical', 'programming', 'theoretical', 'other'];
+  KategorieAuswahl: any = ['organization', 'exercises', 'exams', 'other'];
   
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
 //this is where th http request to get the board goes
-      this.httpClient.post(environment.endpointURL + "board/getBoardByBoardId", {
-        boardId: this.id
+      this.httpClient.get(environment.endpointURL + "board/byBoardId/" + this.id, {
       }).subscribe((res: any) => {
-          let response = res[0];
-          this.title = response.boardName;
-          this.description = response.description;
+          this.title = res.boardName;
+          this.description = res.description;
         } ,
         err => {
           console.log(err);

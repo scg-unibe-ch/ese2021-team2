@@ -3,7 +3,7 @@
 </a>
 <div class="user-info">
     <div class="avatar-wrapper">
-        <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
+        <img class="avatar" [src]="loggedIn ? imageURL: '/assets/images/no_user.jpg'" />
     </div>
     <div class="user-text">
         <div *ngIf="loggedIn else notLoggedIn">
@@ -36,9 +36,6 @@
     </button>
     <button mat-button class="menu-button" [routerLink]="'/shop'">
         <span class="menu-text">Shop</span>
-    </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/settings'">
-        <span class="menu-text">Settings</span>
     </button>
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
         <span class="menu-text">Orders</span>

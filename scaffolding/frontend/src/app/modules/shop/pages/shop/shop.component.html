@@ -1,6 +1,6 @@
 <mat-toolbar>
-    <div class = "creation-container" *ngIf = "isAdmin">
-        <button mat-button (click) = "handleCreateProduct()">Add a product</button>
+    <div class="creation-container" *ngIf="admin">
+        <button mat-button (click)="handleCreateProduct()">Add a product</button>
     </div>
     Shop
     <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">

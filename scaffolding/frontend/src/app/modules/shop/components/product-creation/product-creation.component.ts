@@ -11,11 +11,12 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductCreationComponent implements OnInit {
 
-    uploaded : boolean = false;
     product : Product = new Product(0,"","","",undefined,0); 
     imageURL: any;
-    newFile : File | undefined;
+    newFile : File | null;
     isUpdate: boolean;
+    errMessage: String | null;
+
 
     constructor(private productService : ProductService,
                 public dialogRef: MatDialogRef<ProductCreationComponent>,
@@ -37,7 +38,7 @@ export class ProductCreationComponent implements OnInit {
                     this.dialogRef.close()
                 });
         }else{
-            if(this.newFile){
+            if(this.isValidInput() && this.newFile ){
                 this.productService.submitProduct(this.newFile, this.product)
                 .then(() => {
                     this.dialogRef.close()
@@ -54,5 +55,30 @@ export class ProductCreationComponent implements OnInit {
             this.imageURL = reader.result;
         }
         this.newFile = f;
+    }
+
+    private isValidInput(): boolean {
+
+        if(this.product.title === ""){
+            this.errMessage = "Title required"
+            return false;
+        }
+
+        if(this.product.category === ""){
+            this.errMessage = "Category required"
+            return false;
+        }
+
+        if(this.product.price <= 0){
+            this.errMessage = "Invalid Price"
+            return false;
+        }
+
+        if(!this.newFile){
+            this.errMessage = "Please add a Photo";
+            return false;
+        }
+
+        return true;
     }
 }

@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('./modules/subjects/subjects.module').then(m => m.SubjectsModule)
     },
     {
-        path: 'boards',
+        path: 'board',
         loadChildren: () => import('./modules/board/board.module').then(m => m.BoardModule)
     },
     {
@@ -35,10 +35,14 @@ const routes: Routes = [
         path: 'myLectures',
         loadChildren: () => import('src/app/modules/my-lectures/my-lectures.module').then(m => m.MyLecturesModule)
     },
+    {
+        path: 'user',
+        loadChildren: () => import('src/app/modules/user/user.module').then(m => m.UserModule)
+    }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
+    imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'corrected' }) ],
     exports: [ RouterModule ],
 })
 

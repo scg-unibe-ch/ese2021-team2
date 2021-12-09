@@ -13,7 +13,6 @@ export const fakeUsers: any = {
         "Musterdorf",
         "20.04.1969",
         "123 456 78 90",
-        true,
         "",
         999
     ),

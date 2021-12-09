@@ -1,7 +1,8 @@
+import { Subject } from 'src/app/models/subject.model';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import {BoardListComponent} from "../../pages/board-list/board-list.component";
+import {BoardListComponent} from "../board-list/board-list.component";
 
 
 @Component({
@@ -11,23 +12,22 @@ import {BoardListComponent} from "../../pages/board-list/board-list.component";
 })
 export class SubjectsGridComponent implements OnInit {
 
-  constructor(public httpClient: HttpClient) { }
+    subjects: Subject[]
 
+    constructor(public httpClient: HttpClient) {
+        this.subjects = [];
+    }
 
-  subjects = [{name: "test", subjectId:4}]
-
-  ngOnInit(): void {
-
-    this.httpClient.post(environment.endpointURL + "post/getAllSubjects", {}).subscribe((res: any) => {
-        this.subjects = res;
-      
-      } ,
-      err => {
-        console.log(err);
-      }
-    );
-
-  }
-
+    ngOnInit(): void {
+        this.httpClient.get(environment.endpointURL + "subject")
+            .subscribe((res: any) => {
+                this.subjects = res;
+                    console.log(this.subjects);
+                } ,
+                err => {
+                    console.log(err);
+                }
+            );
+    }
 
 }

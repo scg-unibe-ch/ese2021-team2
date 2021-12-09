@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogModel } from 'src/app/models/confirmation-dialog.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { User } from '../../../../models/user.model';
+import {isNumeric} from "rxjs/internal-compatibility";
 
 
 @Component({
@@ -17,26 +18,36 @@ export class ProfileComponent implements OnInit {
 
     loggedIn: boolean;
     user: User | null;
-    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', false, '', 0);
+    changedUser = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
     editMode: boolean = false;
     editTag: String = "Edit";
+    imageURL: string;
+    invEditDataMsg = '';
+    activeSaveButton = false;
 
     constructor(public userService: UserService,
-                 private dialog: MatDialog,
-                 public httpClient: HttpClient,
-                 private snackBar: MatSnackBar) {
-        // Listen for changes
-        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+                private dialog: MatDialog,
+                public httpClient: HttpClient,
+                private snackBar: MatSnackBar) {
+        userService.loggedIn$.subscribe(res => {
+            this.loggedIn = res;
+            this.imageURL = this.userService.getProfileImageURL()
+        });
         userService.user$.subscribe(res => {
             this.user = res
             this.initUser();
+        });
+        userService.imageURL$.subscribe(res => {
+            this.imageURL = res
         });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+        this.imageURL = userService.getProfileImageURL();
 
         this.initUser();
+        this.checkStatusButton();
     }
 
     ngOnInit() {
@@ -112,9 +123,81 @@ export class ProfileComponent implements OnInit {
         this.userService.update(this.changedUser).then(() => this.setEditMode())
     }
 
+    processFile(imageInputEvent: any) {
+        const f : File = imageInputEvent.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(f)
+        reader.onload = event =>{
+            this.userService.setProfileImageURL( <string> reader.result);
+        }
+        this.userService.addProfileImage(f);
+    }
+
+    handleDelete(){
+        this.userService.deleteProfileImage();
+    }
+
+    isDefaultPicture(): boolean {
+        return this.imageURL === '/assets/images/no_user.jpg';
+    } 
+
     test(){
         console.log(this.user);
         console.log(this.changedUser);
+    }
+
+    checkStatusButton(){
+        this.isValidNewUserInput();
+    }
+
+    isValidNewUserInput(){
+
+        if(this.changedUser.street!=''&&!this.checkOnlyText(this.changedUser.street!)){
+            this.invEditDataMsg = 'The street should only contain letters.'
+            this.activeSaveButton = false;
+        }else if(this.changedUser.city!=''&&!this.checkOnlyText(this.changedUser.city!)){
+            this.invEditDataMsg = 'The city should only contain letters.'
+            this.activeSaveButton = false;
+        }else if(this.changedUser.phonenumber!=''&&!this.checkPhoneNumb(this.changedUser.phonenumber!)){
+            this.invEditDataMsg = 'The phonenumber is invalid.'
+            this.activeSaveButton = false;
+        }else if(this.changedUser.zipCode!=''&&(!this.checkOnlyNum(this.changedUser.zipCode!)||this.changedUser.zipCode!.length!=4)){
+            this.invEditDataMsg = 'The ZipCode may only contain 4 numbers.'
+            this.activeSaveButton = false;
+        }else if(this.changedUser.housenr!!=0&&(this.changedUser.housenr!<=0||!this.checkOnlyNum(this.changedUser.housenr!.toString()))){
+            this.invEditDataMsg = 'The House Number should not contain letters.'
+            this.activeSaveButton = false;
+        }else {this.activeSaveButton = true;}
+
+    }
+
+    checkOnlyText(toCheck: string): boolean{
+        let isValid = true;
+        if ((/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~1234567890]/.test(toCheck))) {
+            isValid = false;
+        }
+        return isValid
+    }
+    checkOnlyNum(toCheck: string): boolean{
+        let isValid = false;
+        if (isNumeric(toCheck)) {
+            isValid = true;
+        }
+        return isValid
+    }
+
+    checkPhoneNumb(toCheck: string): boolean{
+        let isValid = true;
+        if ((/[0-9\+\-\ ]/.test(toCheck))) {
+            isValid = true;
+        }
+        if ((/[`!@#$%^ç&*()_=\]{};':"\\|/,.<>?~a-z]/.test(toCheck))) {
+            isValid = false;
+        }
+        if(toCheck.trim()==''){
+            isValid=false;
+        }
+        return isValid
     }
 
 }
