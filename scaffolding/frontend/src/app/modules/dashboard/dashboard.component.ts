@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   }
 
   isBoardRoute() {
-    return this.router.url.match(/\/board\S*/)
+    return this.router.url.match(/\/board\/\S*/)
   }
 
   setTech() {

@@ -1,13 +1,17 @@
 <div class="filtcat" *ngIf="isShopRoute()">
-    <button mat-button (click)="setAll()" [routerLink] = "'shop'">All</button>
-    <button mat-button (click)="setOffice()" [routerLink] = "'shop'">Office</button>
-    <button mat-button (click)="setFashion()" [routerLink] = "'shop'">Fashion</button>
-    <button mat-button (click)="setLifestyle()" [routerLink] = "'shop'">Lifestyle</button>
+    <mat-button-toggle-group [vertical]="true">
+        <mat-button-toggle (click)="setAll()" [routerLink] = "'shop'">All</mat-button-toggle>
+        <mat-button-toggle (click)="setOffice()" [routerLink] = "'shop'">Office</mat-button-toggle>
+        <mat-button-toggle (click)="setFashion()" [routerLink] = "'shop'">Fashion</mat-button-toggle>
+        <mat-button-toggle (click)="setLifestyle()" [routerLink] = "'shop'">Lifestyle</mat-button-toggle>
+    </mat-button-toggle-group>
 </div>
 <div class="filtcat" *ngIf="isBoardRoute()">
-    <button mat-button (click)="setAll()">All</button>
-    <button mat-button (click)="setTech()">technical</button>
-    <button mat-button (click)="setProg()">programming</button>
-    <button mat-button (click)="setTheo()">theoretical</button>
-    <button mat-button (click)="setOther()">other</button>
+    <mat-button-toggle-group [vertical]="true">
+        <mat-button-toggle (click)="setAll()">All</mat-button-toggle>
+        <mat-button-toggle (click)="setTech()">technical</mat-button-toggle>
+        <mat-button-toggle (click)="setProg()">programming</mat-button-toggle>
+        <mat-button-toggle (click)="setTheo()">theoretical</mat-button-toggle>
+        <mat-button-toggle (click)="setOther()">other</mat-button-toggle>
+    </mat-button-toggle-group>
 </div>
