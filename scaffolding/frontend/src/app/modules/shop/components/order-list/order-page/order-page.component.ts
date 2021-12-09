@@ -8,6 +8,10 @@ import {environment} from "../../../../../../environments/environment";
 import {ProductItem} from "../../../../../models/product-item.model";
 import {Product} from "../../../../../models/product.model";
 import {FormControl, FormGroup} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmationDialogModel} from "../../../../../models/confirmation-dialog.model";
+import {ConfirmationDialogComponent} from "../../../../../shared/components/confirmation-dialog/confirmation-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-order-page',
@@ -25,7 +29,7 @@ export class OrderPageComponent implements OnInit {
     productIds: string = '';
     status: string = this.order.status;
 
-    constructor(public httpClient: HttpClient, private _Activatedroute: ActivatedRoute, public userService: UserService) {
+    constructor(public httpClient: HttpClient, public snackBar : MatSnackBar, private _Activatedroute: ActivatedRoute, public userService: UserService, private dialog: MatDialog,) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.admin$.subscribe(res => this.admin = res);
@@ -66,18 +70,30 @@ export class OrderPageComponent implements OnInit {
 
 
     payOrder() {
-        if(confirm("Are you sure you have paid the order?")){
-            this.order.status = 'paid';
-            this.httpClient.put(environment.endpointURL + 'order', {
-                orderId: this.order.orderId,
-                status: 'paid',
+        const dialogData = new ConfirmationDialogModel("Pay your order", "Are you sure you have paid your order?");
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation : true,
+            data: dialogData
+        })
 
-            }).subscribe(update => {
-                    alert('Successfully Paid your order.\nWill be delivered soon');
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if(dialogResult) {
+                this.order.status = 'paid';
+                this.httpClient.put(environment.endpointURL + 'order', {
+                    orderId: this.order.orderId,
+                    status: 'paid',
+
+                }).subscribe(update => {
+                    this.snackBar.open('Successfully Paid your order.\nIt will be delivered soon.', "Dismiss", {
+                        duration : 3000,
+                        panelClass: ['green-snackbar'],
+                    });
                 }, error => {
                     alert(error);
                 });
-        }
+            }
+        })
     }
 
 
@@ -92,35 +108,58 @@ export class OrderPageComponent implements OnInit {
     }
 
     cancelOrder(): void{
-        if(confirm("Are you sure you want to cancel the order?")) {
-            this.order.status = 'cancelled';
-            this.httpClient.put(environment.endpointURL + "order", {
-                orderId: this.order.orderId,
-                status: 'cancelled',
+        const dialogData = new ConfirmationDialogModel("Cancel Order", "Are you sure you want to cancel the order?");
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation : true,
+            data: dialogData
+        })
 
-            }).subscribe(update => {
-                    alert('Your order was cancelled successfully.');
-                },
-                error => {
-                    alert(error);
-                });
-        }
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if(dialogResult) {
+                this.order.status = 'cancelled';
+                this.httpClient.put(environment.endpointURL + "order", {
+                    orderId: this.order.orderId,
+                    status: 'cancelled',
+
+                }).subscribe(update => {
+                        this.snackBar.open("Your order was cancelled successfully.", "Dismiss", {
+                            duration : 3000,
+                            panelClass: ['green-snackbar'],
+                        });
+                    },
+                    error => {
+                        alert(error);
+                    });
+            }
+        })
     }
 
     changeStatus(): void{
-        if(confirm("Are you sure you want to change the status?")){
-            this.order.status = this.status;
-            console.log(this.status);
-            this.httpClient.put(environment.endpointURL + "order", {
-                orderId: this.order.orderId,
-                status: this.status,
-            }).subscribe(update => {
-                    alert('Order updated successfully.');
+        const dialogData = new ConfirmationDialogModel("Change Status", "Are you sure you want to change the status of this order?");
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation : true,
+            data: dialogData
+        })
 
-                },
-                error => {
-                    alert(error);
-                });
-        }
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if(dialogResult) {
+                this.order.status = this.status;
+                console.log(this.status);
+                this.httpClient.put(environment.endpointURL + "order", {
+                    orderId: this.order.orderId,
+                    status: this.status,
+                }).subscribe(update => {
+                        this.snackBar.open("Order updated successfully.", "Dismiss", {
+                            duration : 3000,
+                            panelClass: ['green-snackbar'],
+                        });
+                    },
+                    error => {
+                        alert(error);
+                    });
+            }
+        })
     }
 }
