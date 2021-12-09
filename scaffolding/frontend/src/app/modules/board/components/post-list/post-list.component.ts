@@ -86,7 +86,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   createPostInBackend(post: Post, image:File | undefined): void {
-    this.httpClient.post(environment.endpointURL + "board/" + this.boardId + "/post/createPost",{
+    this.httpClient.post(environment.endpointURL + "post/createPost",{
       postId: post.postId,
       title: post.title,
       content: post.content,
@@ -113,16 +113,15 @@ export class PostListComponent implements OnInit, OnDestroy {
         } else {
             const fd = new FormData();
             fd.append('image', file);
-            this.httpClient.post(environment.endpointURL + "board/" + this.boardId + '/post/' + postId + '/image', fd);
+            this.httpClient.post(environment.endpointURL +  'post/' + postId + '/image', fd);
         }
     }
 
     setPostList() {
         if (this.mode==="board") {
-            console.log("post list id: "+this.boardId);
-
-            this.httpClient.get(environment.endpointURL + "board/" + this.boardId + "/post/getPostsOfBoard/" + this.boardId
-        ).subscribe((res: any) => {
+            
+            this.httpClient.get(environment.endpointURL + "post/getPostsOfBoard/" + this.boardId
+            ).subscribe((res: any) => {
                     this.posts = res;
                 },
                 err => console.log(err)

@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+
 const routes: Routes = [
 {
   path: ':boardId',
@@ -36,6 +37,7 @@ export const routing = RouterModule.forChild(routes);
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
+       
     ],
     exports: [
     ]

@@ -43,11 +43,13 @@ export class PostComponent implements OnInit {
         this.user = userService.getUser();
 
     this._Activatedroute.paramMap.subscribe(params => { 
-        this.postId= parseInt(params.get('posttId')!); 
+       
         
-        this.httpClient.post( environment.endpointURL + "post/getPostById",{
-            postId: this.postId
-        }
+        this.postId= parseInt(params.get('postId')!); 
+        
+        
+        
+        this.httpClient.get( environment.endpointURL + "post/"+this.postId  
         ).subscribe((post: any) => {
             this.post = post;
             this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {

@@ -5,7 +5,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SubjectsModule } from '../subjects/subjects.module';
 import { BoardModule } from '../board/board.module';
-import { PostPreviewComponent } from '../board/components/post-preview/post-preview.component';
 
 
 const routes: Routes = [

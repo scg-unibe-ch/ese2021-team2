@@ -109,7 +109,7 @@ export class Server {
             .use('/secured', SecuredController)
             .use('/admin', AdminController)
             .use('/subject', SubjectController)
-            .use('/board/:boardId/post', PostController)
+            .use('/post', PostController)
             .use('/board', BoardController)
             .use('/product', ProductController)
             .use('/comment', CommentController)

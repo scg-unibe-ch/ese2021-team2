@@ -1,55 +1,52 @@
-import express, { Router, Request, Response } from 'express';
-import { BoardService } from './../services/board.service';
-import { verifyToken } from './../middlewares/checkAuth';
-import { Board } from '../models/board.model';
+import express, { Router, Request, Response, request } from 'express';
+import {Board} from '../models/board.model';
 import { Subscription } from '../models/subscription.model';
 import { PostService } from '../services/post.service';
 import { UserService } from '../services/user.service';
 
+const postService = new PostService;
 const boardController: Router = express.Router();
-const boardService: BoardService = new BoardService();
-const postService: PostService = new PostService();
 
-boardController.get('/bySubjectId/:subjectId',
+
+boardController.post('/getBoardsBySubjectId',
     (req: Request, res: Response) => {
-        boardService.getBoardsBySubjectId(parseInt(req.params.subjectId, 10))
-            .then(boards => res.send(boards))
-            .catch(err => res.status(500).send(err));
+
+        Board.findAll({
+            where: {
+                subjectId: req.body.subjectId}
+        }).then(boards => {
+            console.log(boards);
+
+            res.send(boards);
+        }).catch(err => {
+            res.status(500).send(err); });
     }
 );
 
-boardController.get('/byBoardId/:boardId',
-    (req: Request, res: Response) => {
-        boardService.getBoardByBoardId(parseInt(req.params.boardId, 10))
-            .then(board => res.send(board))
-            .catch(err => res.status(500).send(err));
-    }
-);
 
-boardController.post('/create', verifyToken,
+boardController.post('/getBoardByBoardId',
     (req: Request, res: Response) => {
-        boardService.createBoard(req.body)
-            .then(board => res.send(board))
-            .catch(err => res.status(500).send(err));
-    }
-);
-
-boardController.get('/owner',
-    (req: Request, res: Response) => {
-        boardService.getOwnerId(req.body.boardId)
-            .then(ownerId => res.send(ownerId))
-            .catch(err => res.status(500).send(err));
+        Board.findAll({
+            where: {
+                boardId: req.body.boardId}
+        }).then(boards => {
+            res.send(boards);
+        }).catch(err => {
+            res.status(500).send(err); });
     }
 );
 
 boardController.post('/getSubscribedPostsByUserId',
     async (req: Request, res: Response) => {
         try {
-            const boardIds: Subscription[] = await postService.getSubscribedBoardByUserId(req.body.userId);
-            res.send(await postService.getPostsbyBoardIds(boardIds));
+        const boardIds: Subscription[] = await postService.getSubscribedBoardByUserId(req.body.userId);
+
+        res.send(await postService.getPostsbyBoardIds(boardIds));
+
+
+
         } catch (err) {
-            res.status(500).send(err);
-        }
+            res.status(500).send(err); }
     }
 );
 
@@ -125,5 +122,7 @@ boardController.post('/unsubscribe',
         );
     }
 );
+
+
 
 export const BoardController: Router = boardController;
