@@ -25,7 +25,8 @@
 mat-card{
     margin-left: 8%;
     margin-right: 8%;
-    border-left: teal 7px solid;
+    border-left:7px solid;
+    border-color: teal;
     background-color: white;
 }
 

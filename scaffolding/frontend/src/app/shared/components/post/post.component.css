@@ -67,18 +67,14 @@ img{
     color: green;
     overflow: hidden;
     height: 2rem;
-    animation-name: anim1;
-    animation-duration: 3s;
-    animation-delay: -1.5s;
+   
 }
 
 #bookmarkIcon{
     overflow: hidden;
     height: 2rem;
     overflow: hidden;
-    animation-name: anim1;
-    animation-duration: 3s;
-    animation-delay: -1.5s;
+  
 }
 
 

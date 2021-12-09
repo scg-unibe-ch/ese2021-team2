@@ -8,7 +8,8 @@ import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'app-post-preview',
   templateUrl: './post-preview.component.html',
-  styleUrls: ['./post-preview.component.css']
+  styleUrls: ['./post-preview.component.css'],
+  
 })
 export class PostPreviewComponent implements OnInit {
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
@@ -17,6 +18,7 @@ export class PostPreviewComponent implements OnInit {
   user: User | null;
   voted = false;
   userCanVote= true;
+  borderColor = "blue"
 
   constructor(public userService: UserService,public httpClient: HttpClient) { 
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -24,6 +26,8 @@ export class PostPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.borderColor = this.colorHash(this.post.boardId)
+
     this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
       postId: this.post.postId
   }).subscribe((res) => {
@@ -84,6 +88,17 @@ export class PostPreviewComponent implements OnInit {
             console.log(err);
           });
       }
+  }
+
+
+  colorHash(input: number){
+    let v = 50
+    let rgb= []
+    for(var i = 0; i<3; i++){
+        v=(input*199+v)%255
+        rgb.push(v)
+    }
+    return "rgb("+rgb[0]+","+rgb[2]+","+rgb[1]+")"
   }
 
 }

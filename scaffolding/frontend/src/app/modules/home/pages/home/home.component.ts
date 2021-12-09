@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/http/user.service';
+import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
@@ -29,6 +30,8 @@ export class HomeComponent implements OnInit {
       userId: this.userService.getUser()!.userId
     }).subscribe((res: any) => {
         this.posts = res;
+       this.posts.sort(this.compare)
+        
       } ,
       err => {
         console.log(err);
@@ -39,7 +42,21 @@ export class HomeComponent implements OnInit {
   
 
   ngOnInit(): void {
-    
+  
+  }
+
+  compare(a: Post, b:Post) {
+    let dateA = a.date.split("/")
+    let dateB = b.date.split("/")
+
+    let score1 = parseInt(dateA[2])*12+parseInt(dateA[1])+0.03*parseInt(dateA[0])
+    let score2 = parseInt(dateB[2])*12+parseInt(dateB[1])+0.03*parseInt(dateB[0])
+
+    if(score1>score2){
+      return -1
+    }else{
+      return 1
+    }
 
   }
 
