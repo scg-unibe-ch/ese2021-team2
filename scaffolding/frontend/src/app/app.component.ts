@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { UserService } from './core/http/user.service';
 import { User } from './models/user.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit {
 
     constructor(
         public httpClient: HttpClient,
-        public userService: UserService
+        public userService: UserService,
+        private router: Router
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -100,5 +102,9 @@ export class AppComponent implements OnInit {
     receiveIsExpanded($event:boolean) {
         this.isExpanded = $event;
       }
+
+    isRoute(){
+        return this.router.url.match(/\/shop\S*/) && this.router.url.length == 5 || this.router.url.match(/\/board\S*/) && this.router.url.length == 8;
+    }
 
 }
