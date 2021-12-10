@@ -28,17 +28,41 @@ figcaption {
     padding-left: 10%;
 }
 
+img{
+    max-width: 50%;
+}
+
+.no-items{
+    display:flex;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+}
+
+.mat-toolbar{
+    padding-top: 2rem;
+    background-color: inherit;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+
 .headline{
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
 }
 
 .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
     color: black;
 }
 
+.mat-icon-button :hover{
+    opacity: 0.5;
+}
+
 .item{
-    padding: 5px;
+    background-color: white;
+    padding: 1rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
     display: inline-flex;
     justify-content: space-between;
@@ -48,6 +72,7 @@ figcaption {
     margin-top: 10px;
     margin-left: 10%;
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     flex-wrap: nowrap;
 }
 
@@ -60,33 +85,29 @@ figcaption {
     flex-wrap: nowrap;
 }
 
-.actions{
-    position: fixed;
-    bottom: 0;
-    background-color:#aeb2b6 ;
-    width: 100%;
+.checkout{
+    border: 0px;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28,53,161); 
+    color: white;
+    font-weight: bold;
+    cursor:pointer;
+    box-shadow: none;
 }
-
-.total{
-    padding: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-    display: inline-flex;
-    justify-content: space-between;
-    width: 80%;
-    border-radius: 4px;
-    align-items: center;
-    margin-top: 10px;
-    margin-left: 10%;
-    font-family: Arial, Helvetica, sans-serif;
-    flex-wrap: nowrap;
-}
-
 
 #empty-cart-figure {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 50%;
     text-align: center;
-    padding: 20%;
     font-size: 20pt;
     font-family: Bahnschrift;
+    margin: 0;
 }
 
 #empty-cart{
@@ -94,8 +115,18 @@ figcaption {
 }
 
 #thumbnail {
-    height: 60px;
-    width: 60px;
+    height: 90px;
+    width: 90px;
     object-fit: contain;
     display: inline-block;
+}
+
+#background{
+    background-color:rgb(222,230,243);
+    height: 100%;
+}
+
+#trash :hover{
+    opacity: 1;
+    color: tomato;
 }
