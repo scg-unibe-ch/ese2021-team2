@@ -59,13 +59,13 @@
 
     <div >
         <mat-form-field *ngIf="emailEmpty">
-            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" >
+            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" (keydown.enter)="loginUser()">
         </mat-form-field>
         <mat-form-field *ngIf="userNameEmpty">
-            <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()">
+            <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()" (keydown.enter)="loginUser()">
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password">
+            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password" (keydown.enter)="loginUser()">
         </mat-form-field>
         <button mat-flat-button color="primary" (click)="loginUser()">Login</button>
         <p style="color: red;" *ngIf="falseLogin">{{loginFeedback}}</p>
