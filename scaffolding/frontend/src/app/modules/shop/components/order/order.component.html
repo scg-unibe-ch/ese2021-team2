@@ -10,13 +10,13 @@
             </div>
             <p>Total price: {{this.totalPrice}} CHF</p>
         </mat-card>
-        <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
-
         <div *ngIf="!addressExists">
-            <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
-            If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page here:
-                <a [routerLink]="'/profile'">Profile</a>
-            </p>
+            <mat-card>
+                <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
+                If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page here:
+                    <a [routerLink]="'/profile'">Profile</a>
+                </p>
+                </mat-card>
             <mat-form-field appearance="fill">
                 <mat-label>Street</mat-label>
                 <input matInput placeholder="Street" [(ngModel)]="newStreet" (ngModelChange)="checkNewStreet()">
@@ -61,12 +61,14 @@
         </div>
 
         <div *ngIf="addressExists">
+            <mat-card>
             <p>Since you have filled in your address in your profile details already we will use that address.
             Please pick a payment method to submit your order.</p>
             <p class="userAdress">{{this.userAddress}}</p>
             <p>If this Address is incorrect please change it in your:
                 <a [routerLink]="'/profile'">Profile</a>
             </p>
+            </mat-card>
 
             <mat-form-field appearance="fill">
                 <mat-label>Paymentmethod</mat-label>
@@ -79,16 +81,16 @@
             </mat-form-field>
         </div>
 
-        <button mat-stroked-button (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
+        <button  (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
 
         <div *ngIf="wasOrderSubmitted">
             <p>Your order has been successfully submitted.</p>
         </div>
 
     </div>
-    <div *ngIf="wasOrderSubmitted">
+    <div *ngIf="wasOrderSubmitted" id="afterOrder">
         <h1 class="title">Thanks for your order</h1>
-        <a *ngIf="!paymentSuccessful" [routerLink]="'/shop/orders'">Link to Order to make payment </a>
+        <button *ngIf="!paymentSuccessful" [routerLink]="'/shop/orders'">Make your payment</button>
     </div>
 
     <div *ngIf="!loggedIn">

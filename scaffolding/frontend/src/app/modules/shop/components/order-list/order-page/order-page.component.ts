@@ -51,7 +51,8 @@ export class OrderPageComponent implements OnInit {
   checkAuthorizationStatus(): boolean {
       this.user = this.userService.getUser();
       if( this.user && this.user.userId ) {
-          return (this.admin || this.user.userId - this.order.customerId === 0);
+          return (this.admin //|| this.user.userId - this.order.customerId === 0
+           );
       } else {
           return false;
       }
@@ -70,7 +71,7 @@ export class OrderPageComponent implements OnInit {
 
 
     payOrder() {
-        const dialogData = new ConfirmationDialogModel("Pay your order", "Are you sure you have paid your order?");
+        const dialogData = new ConfirmationDialogModel("Pay for your order", "Are you sure you paid for your order?");
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             maxWidth: '400px',
             closeOnNavigation : true,

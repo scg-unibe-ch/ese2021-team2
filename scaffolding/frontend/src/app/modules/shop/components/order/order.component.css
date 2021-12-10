@@ -1,8 +1,6 @@
-#background{
-    background-color: rgb(222,230,243);
-    font-family: arial, Helvetica, sans-serif;
-    height: 100%;
-    top:0;
+
+#afterOrder{
+    width: 100%;
 }
 h1{
     text-align: center;
@@ -16,19 +14,20 @@ p{
 .userAdress{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    margin-left: 1rem;
-    margin-right: 1rem;
     font-weight: bold;
 }
 mat-card{
+    border-left: rgb(0, 89, 130) 2px solid;
     margin-left: 1rem;
     margin-right: 1rem;
     background-color: white;
 }
 mat-form-field{
-    color: inherit;
     margin-left: 1rem;
+    border-radius: 5px;
 }
+
+
 ::ng-deep .mat-focused .mat-form-field-label {
     /*change color of label*/
     color: rgb(28, 53, 161) !important;
@@ -38,13 +37,12 @@ mat-form-field{
     /*change color of underline*/
     background-color: rgb(28, 53, 161) !important;
 }
+
 ::ng-deep.mat-option {
-    /*change color of underline*/
-    background-color: rgb(222,230,243) !important;
+    background-color: white !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
-    /*change color of underline when focused*/
     background-color: rgb(28, 53, 161) !important;;
 }
 a{
@@ -52,14 +50,14 @@ a{
     font-size: 16px;
     color: rgb(28, 53, 161);
     text-decoration: none;
-
 }
+
 a:hover{
     color: dodgerblue;
 }
+
 button{
     border: 0px;
-
     height: 2.5rem;
     border-radius: 1.2rem;
     padding-left: 1rem;
@@ -71,4 +69,10 @@ button{
 button:hover{
     background-color: dodgerblue;
     color: white;
+}
+
+#background{
+    background-color: rgb(222,230,243);
+    font-family: arial, Helvetica, sans-serif;
+    height: 100%;
 }

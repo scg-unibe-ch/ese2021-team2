@@ -1,4 +1,11 @@
 
+
+mat-card{
+    border-left: rgb(0, 89, 130) 2px solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+}
 *{
     margin-left: 2%;
     margin-right: 2%;
