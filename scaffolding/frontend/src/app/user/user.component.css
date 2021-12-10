@@ -1,6 +1,27 @@
-#liGuest{
-    width: 40em;
+.mat-card{
+    background-color: white;
+    box-shadow: none;
+    margin-top: 0;
+    padding-top: 0;
 }
+
+.mat-card-header{
+    border-bottom: solid 1px;
+    margin-bottom: 5%;
+}
+
 .warnMsg{
     color: red;
+}
+
+.mat-flat-button{
+    border: 0px;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28,53,161); 
+    color: white;
+    font-weight: bold;
+    box-shadow: none;
 }
