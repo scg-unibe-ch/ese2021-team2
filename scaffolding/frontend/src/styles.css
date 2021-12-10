@@ -24,3 +24,26 @@ button, input {
 .green-snackbar button {
     color: white
 }
+.mat-button-toggle-checked {
+    border: 1px solid #c5c0c7;
+    background-color: green;
+}
+mat-button-toggle-group {
+    border: hidden;
+    box-shadow: none;
+}
+mat-button-toggle {
+    border: hidden !important;
+    margin-top: 5px !important;
+    padding: 0 5px !important;
+    z-index: 3 !important;
+}
+.mat-button-toggle-checked {
+    border: 1px #000 solid !important;
+    border-radius: 5px !important;
+    background-color: lightgreen !important;
+}
+.mat-button-toggle-input {
+    background-color: white !important;
+    padding-left: 32px !important;
+}

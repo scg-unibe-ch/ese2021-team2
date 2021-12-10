@@ -1,8 +1,10 @@
-
-    
+.filter-description{
+    text-align: center;
+    font-family: Roboto;
+}
 .filtcat {
 position: relative;
 top: 200px;
-width: 150px;
-text-align: center;
+width: auto;
+text-align: left;
   }

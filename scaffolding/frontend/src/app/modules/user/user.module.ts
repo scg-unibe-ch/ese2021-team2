@@ -4,6 +4,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {UserPageComponent} from "./user-page/user-page.component";
 import {SharedModule} from "../../shared/shared.module";
 import {MatCardModule} from "@angular/material/card";
+import {MatDividerModule} from '@angular/material/divider';
 
 const routes: Routes = [
     {
@@ -24,6 +25,7 @@ export const routing = RouterModule.forChild(routes);
         SharedModule,
         routing,
         MatCardModule,
+        MatDividerModule,
     ]
 })
 export class UserModule { }

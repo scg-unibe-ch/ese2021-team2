@@ -91,5 +91,10 @@ userController.delete('/:id/image', (req: Request, res: Response) => {
         .catch(err => res.status(500).send(err));
 });
 
+userController.get('/:id/admin', (req: Request, res: Response) => {
+    userService.getAdminStatus(Number(req.params.id))
+        .then(isAdmin => res.status(200).send(isAdmin))
+        .catch(err => res.status(500).send(err));
+});
 
 export const UserController: Router = userController;

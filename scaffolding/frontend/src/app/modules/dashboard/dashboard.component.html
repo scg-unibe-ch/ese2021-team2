@@ -1,4 +1,6 @@
 <div class="filtcat" *ngIf="isShopRoute()">
+    <p class="filter-description">Filter Products</p>
+    <mat-divider></mat-divider>
     <mat-button-toggle-group [vertical]="true">
         <mat-button-toggle (click)="setAll()" [routerLink] = "'shop'">All</mat-button-toggle>
         <mat-button-toggle (click)="setOffice()" [routerLink] = "'shop'">Office</mat-button-toggle>
@@ -7,6 +9,8 @@
     </mat-button-toggle-group>
 </div>
 <div class="filtcat" *ngIf="isBoardRoute()">
+    <p class="filter-description">Filter Posts</p>
+    <mat-divider></mat-divider>
     <mat-button-toggle-group [vertical]="true">
         <mat-button-toggle (click)="setAll()">All</mat-button-toggle>
         <mat-button-toggle (click)="setTech()">technical</mat-button-toggle>

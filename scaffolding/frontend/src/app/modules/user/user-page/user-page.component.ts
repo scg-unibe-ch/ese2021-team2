@@ -25,6 +25,7 @@ export class UserPageComponent implements OnInit {
     createdPosts: Post[] | null;
     lectures: Board[] | null;
     exists: boolean = false;
+    admin: boolean = false;
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public userService : UserService
     ) {
@@ -35,6 +36,7 @@ export class UserPageComponent implements OnInit {
                     this.userName = user.username;
                     this.exists = true;
                     this.imageURL = user.image ? (environment.endpointURL + 'user/'+ this.userId + '/image') : '/assets/images/no_user.jpg';
+                    this.getAdminStatus();
                 })
         });
         this.initializePostList();
@@ -63,5 +65,14 @@ export class UserPageComponent implements OnInit {
 
         )
 
+    }
+
+    private getAdminStatus() {
+        this.httpClient.get<boolean>(environment.endpointURL + 'user/' + this.userId + '/admin')
+            .subscribe(isAdmin => {
+                this.admin = isAdmin;
+            }, (err) => {
+
+            })
     }
 }

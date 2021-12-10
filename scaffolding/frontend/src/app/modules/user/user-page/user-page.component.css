@@ -1,6 +1,7 @@
 .user-name{
     float: right;
-    margin-left: 20px;
+    font-size: 4em;
+    margin-left: 50px;
     margin-top: 100px;
 
 }
@@ -18,4 +19,14 @@
     border-radius: 20%;
     flex-shrink: 0;
     float: left;
+}
+.subject{
+    cursor: pointer;
+}
+.post-section{
+    text-align: center;
+}
+.no-posts{
+    font-style: italic;
+    font-weight: 500;
 }

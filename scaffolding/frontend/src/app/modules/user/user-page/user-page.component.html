@@ -1,5 +1,3 @@
-<div *ngIf="loading">Loading ...</div>
-<div *ngIf="!loading">
 <div *ngIf="exists">
 
     <div class = "user-info">
@@ -7,21 +5,30 @@
             <mat-card-header>
                 <div class = "image-container">
                     <img class = "profile-picture" [src] = "this.imageURL">
-                    <p class = "user-name">{{this.userName}}</p>
+                    <h1 *ngIf="this.admin" class = "user-name">{{this.userName}} [Admin]</h1>
+                    <h1 *ngIf="!this.admin" class = "user-name">{{this.userName}}</h1>
+
                 </div>
 
             </mat-card-header>
         </mat-card>
     </div>
-<h2>Subscriptions</h2>
-<div *ngFor="let subject of this.lectures">
-    <h1>{{subject.boardName}}</h1>
-</div>
-<h2>Posts</h2>
-<h2 *ngIf="!this.createdPosts">This User hasn't posted anything yet</h2>
-<app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
+    <div class="subscriptions">
+        <h1>Subscriptions</h1>
+        <h2 class="no-subscriptions" *ngIf="this.lectures && this.lectures.length < 1">
+            This User hasn't subscribed any board
+        </h2>
+        <div *ngFor="let subject of this.lectures">
+            <h2 class="subject"[routerLink]="'../../board/' + subject.boardId">{{subject.boardName}}</h2>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="post-section">
+        <h1>Posts</h1>
+        <h2 class="no-posts" *ngIf="this.createdPosts && this.createdPosts.length < 1">This User hasn't posted anything yet</h2>
+        <app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
+    </div>
 </div>
 <div *ngIf="!exists">
     <h1>ERROR 404: User Not Found</h1>
 </div>
-</div>n
