@@ -28,6 +28,8 @@ button{
 .image-container{
     display: flex;
     height:min-content;
+    object-fit: contain;
+    overflow: hidden;
 }
 
 .mat-card-image{
@@ -49,7 +51,8 @@ button{
 }
 
 .mat-card-image:hover{
-    transform: scale(1.1)
+    transform: scale(1.05);
+    overflow: hidden;
 }
 
 .mat-button{
@@ -62,8 +65,10 @@ button{
 
 #delete:hover{
     color:tomato;
+    padding-bottom: 5%;
 }
 
 #details:hover{
     opacity: 0.5;
+    padding-bottom: 5%;
 }
