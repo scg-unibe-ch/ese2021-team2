@@ -42,14 +42,14 @@ export class PostComponent implements OnInit {
         this.admin = userService.isAdmin();
         this.user = userService.getUser();
 
-    this._Activatedroute.paramMap.subscribe(params => { 
-       
-        
-        this.postId= parseInt(params.get('postId')!); 
-        
-        
-        
-        this.httpClient.get( environment.endpointURL + "post/"+this.postId  
+    this._Activatedroute.paramMap.subscribe(params => {
+
+
+        this.postId= parseInt(params.get('postId')!);
+
+
+
+        this.httpClient.get( environment.endpointURL + "post/"+this.postId
         ).subscribe((post: any) => {
             this.post = post;
             this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
@@ -61,8 +61,8 @@ export class PostComponent implements OnInit {
             }, (err: any) => {
                 console.log(err);
             });
-      
-            
+
+
             this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
                 postId: this.postId
             }).subscribe(res => {
@@ -75,8 +75,8 @@ export class PostComponent implements OnInit {
                 userId: this.post.creatorId
             }).subscribe(res=>{
                 this.creator=res
-            })   
-            
+            })
+
         })
     });
 
@@ -86,8 +86,8 @@ export class PostComponent implements OnInit {
 
   }
 
-  canUserVote(){  
-    for(var i=0; i<this.post.likes; i++){  
+  canUserVote(){
+    for(var i=0; i<this.post.likes; i++){
         if(this.likes[i].userId==this.user?.userId){
             this.voted=true;
         }
@@ -230,10 +230,4 @@ export class PostComponent implements OnInit {
         this.editMode = false;
     }
 
-    getCreator(): void {
-        this.httpClient.get( environment.endpointURL + "user/user/" + this.post.creatorId)
-            .subscribe((user: any) => {
-                this.creatorName = user.username;
-            })
-    }
 }

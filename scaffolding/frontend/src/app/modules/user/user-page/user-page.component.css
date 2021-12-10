@@ -23,8 +23,10 @@
 .subject{
     cursor: pointer;
 }
-.post-section{
+.post-header{
     text-align: center;
+}
+.post-section {
 }
 .no-posts{
     font-style: italic;

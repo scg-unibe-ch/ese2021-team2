@@ -24,7 +24,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="post-section">
-        <h1>Posts</h1>
+        <h1 class="post-header">Posts</h1>
         <h2 class="no-posts" *ngIf="this.createdPosts && this.createdPosts.length < 1">This User hasn't posted anything yet</h2>
         <app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
     </div>

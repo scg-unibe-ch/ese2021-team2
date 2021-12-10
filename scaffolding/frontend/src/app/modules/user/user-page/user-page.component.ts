@@ -47,7 +47,7 @@ export class UserPageComponent implements OnInit {
   }
 
     private initializePostList(): void {
-        this.httpClient.get<Post[]>(environment.endpointURL + 'board/1/post/getPostsByUser/' + this.userId)
+        this.httpClient.get<Post[]>(environment.endpointURL + 'post/getPostsByUser/' + this.userId)
             .subscribe((posts: any) => {
                 this.createdPosts = posts;
             }, (err: any) => {
