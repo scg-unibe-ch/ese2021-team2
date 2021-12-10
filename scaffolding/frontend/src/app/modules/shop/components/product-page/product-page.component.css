@@ -1,27 +1,35 @@
+mat-card{
+  border-left: 7px solid rgb(25, 159, 90);
+  border-radius: 5px;
+}
+
+#container{
+  margin: 2%;
+  margin-top: 0px;
+  height: auto;
+  background-color: white;
+  display: flex;
+}
+
+#column {
+  flex: 50%;
+  padding: 2%;
+}
+
+
+
+/*
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px;
     display: flex;
     font-family: 'Roboto', sans-serif;
-}
+}*/
 
 
-
-.second_column {
-    width: 500px;
-    margin-top: 60px;
-}
-
-.first_column {
-    display: flex;
-    justify-content: left;
-    align-items: left;
-    min-width: 40%;
-}
-
-.first_column > img {
-    width: 80%;
+#column > img {
+    width: 100%;
     height: auto;
 }
 .ddescription {
