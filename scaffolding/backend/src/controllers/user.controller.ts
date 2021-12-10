@@ -6,6 +6,7 @@ import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
 import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
 import { MulterRequest } from '../models/multerRequest.model';
 import { upload } from '../middlewares/fileFilter';
+import { User } from '../models/user.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
@@ -96,5 +97,14 @@ userController.get('/:id/admin', (req: Request, res: Response) => {
         .then(isAdmin => res.status(200).send(isAdmin))
         .catch(err => res.status(500).send(err));
 });
+userController.post('/getUserById',
+    async (req: Request, res: Response) => {
+
+        const u = await userService.getUser(req.body.userId);
+        res.send(u);
+
+    }
+);
+
 
 export const UserController: Router = userController;

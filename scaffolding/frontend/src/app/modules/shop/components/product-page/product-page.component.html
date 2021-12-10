@@ -17,6 +17,7 @@
             <span>CHF {{product.price.toFixed(2)}}</span>
             <div *ngIf = "!admin; else isAdmin">
                 <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
+                <button mat-raised-button color = "primary" [routerLink] = "'/shop/cart/'">Go to Cart</button>
             </div>
             <ng-template #isAdmin>
                 <button mat-raised-button color = "primary" (click) = "handleUpdate()">Update Product</button>

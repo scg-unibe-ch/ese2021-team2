@@ -18,6 +18,7 @@ export class ProductComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    borderColor = "white";
 
     constructor(public userService : UserService, public productService: ProductService) {
         // Listen for changes
@@ -33,10 +34,27 @@ export class ProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
+        this.createColor();
     }
 
     handleDelete(){
         this.productService.deleteProduct(this.product.productId);
+    }
+
+    private createColor(){
+        switch(this.product.category){
+            case 'office':
+                this.borderColor = "rgb(244,222,241)";
+                break;
+            case 'fashion':
+                this.borderColor = "rgb(244,236,222)";
+                break;
+            case 'lifestyle':
+                this.borderColor = "rgb(222,244,225)";
+                break;
+            default:
+                this.borderColor = 'white';
+        }
     }
 
 }

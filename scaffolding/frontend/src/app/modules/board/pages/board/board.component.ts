@@ -32,7 +32,7 @@ export class BoardComponent implements OnInit {
   imageURL: any;
   searchWord:string="";
   SemesterAuswahl: any = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
-  KategorieAuswahl: any = ['technical', 'programming', 'theoretical', 'other'];
+  KategorieAuswahl: any = ['organization', 'exercises', 'exams', 'other'];
   
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
@@ -116,6 +116,26 @@ export class BoardComponent implements OnInit {
       }
     );
 }
+
+  unsubscribe(){
+    this.unsubscribed=true;
+
+    this.httpClient.post(environment.endpointURL+"board/unsubscribe",{
+      boardId: this.id,
+      userId: this.userService.getUser()!.userId
+    }).subscribe(res=>{
+      console.log(res);
+    },
+    err=>{
+      console.log(err);
+    }
+  );
+    
+  }
+
+  cancelCreate(){
+    this.creatingPost=false;
+  }
 }
 
 

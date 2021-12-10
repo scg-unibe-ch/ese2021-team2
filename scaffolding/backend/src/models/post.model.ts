@@ -65,7 +65,7 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 category: {
-                    type: DataTypes.ENUM('technical', 'programming', 'theoretical', 'other') ,
+                    type: DataTypes.ENUM('organization', 'exercises', 'exams', 'other') ,
                     allowNull: true
                 },
                 postImage : {

@@ -11,7 +11,7 @@ import { DeletePostRequest } from '../models/postRequest.model';
 import { Like } from '../models/like.model';
 
 // The mergeParams: true makes it so that the :boardId from the parent route in server.ts get passed onto this.
-const postController: Router = express.Router({ mergeParams: true });
+const postController: Router = express.Router();
 const postService = new PostService();
 const userService = new UserService();
 
@@ -41,7 +41,7 @@ postController.post('/:postId/image',
     }
 );
 
-postController.get('/:postId/',
+postController.get('/:postId',
     (req: Request, res: Response) => {
         postService.getPost(parseInt(req.params.postId, 10))
             .then(post => res.send(post))
@@ -144,5 +144,19 @@ postController.delete('/:postId/bookmark/delete', verifyToken,
             .catch(err => res.status(500).send(err));
     }
 );
+
+postController.post('/unlike',
+    (req: Request, res: Response) => {
+        Like.destroy({
+            where: {
+                userId: req.body.userId,
+                postId: req.body.postId
+            }
+        }).catch(
+           err => res.send(err)
+        );
+    }
+);
+
 
 export const PostController: Router = postController;

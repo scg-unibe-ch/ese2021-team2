@@ -12,10 +12,12 @@
     <p class="filter-description">Filter Posts</p>
     <mat-divider></mat-divider>
     <mat-button-toggle-group [vertical]="true">
+        <mat-button-toggle (click)="setfiltarg(0)">most popular</mat-button-toggle>
+        <mat-button-toggle (click)="setfiltarg(1)">newest</mat-button-toggle>
         <mat-button-toggle (click)="setAll()">All</mat-button-toggle>
-        <mat-button-toggle (click)="setTech()">technical</mat-button-toggle>
-        <mat-button-toggle (click)="setProg()">programming</mat-button-toggle>
-        <mat-button-toggle (click)="setTheo()">theoretical</mat-button-toggle>
+        <mat-button-toggle (click)="setOrg()">organization</mat-button-toggle>
+        <mat-button-toggle (click)="setExer()">exercises</mat-button-toggle>
+        <mat-button-toggle (click)="setExam()">exams</mat-button-toggle>
         <mat-button-toggle (click)="setOther()">other</mat-button-toggle>
     </mat-button-toggle-group>
 </div>
