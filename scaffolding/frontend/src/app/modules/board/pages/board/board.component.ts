@@ -38,10 +38,15 @@ export class BoardComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
 //this is where th http request to get the board goes
-      this.httpClient.get(environment.endpointURL + "board/byBoardId/" + this.id, {
+      this.httpClient.post(environment.endpointURL + "board/getBoardByBoardId/", {
+        boardId: this.id
       }).subscribe((res: any) => {
-          this.title = res.boardName;
-          this.description = res.description;
+          this.title = res[0].boardName;
+          this.description = res[0].description;
+          console.log(res);
+          console.log(this.title);
+          
+          
         } ,
         err => {
           console.log(err);
