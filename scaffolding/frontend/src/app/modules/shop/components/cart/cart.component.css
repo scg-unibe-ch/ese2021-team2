@@ -85,7 +85,7 @@ img{
     flex-wrap: nowrap;
 }
 
-.checkout{
+.mat-raised-button{
     border: 0px;
     height: 2.5rem;
     border-radius: 1.2rem;
@@ -96,6 +96,11 @@ img{
     font-weight: bold;
     cursor:pointer;
     box-shadow: none;
+}
+
+.mat-toolbar{
+    display: inline-flex;
+    justify-content: flex-start;
 }
 
 #empty-cart-figure {
@@ -121,12 +126,18 @@ img{
     display: inline-block;
 }
 
-#background{
-    background-color:rgb(222,230,243);
-    height: 100%;
-}
-
 #trash :hover{
     opacity: 1;
     color: tomato;
+}
+
+#button-wrapper{
+    width: 40%;
+    display: inline-flex;
+    justify-content: flex-start;
+}
+
+#continue-shopping{
+    color: black;
+    background-color: transparent;
 }
