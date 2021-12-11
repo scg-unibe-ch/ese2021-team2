@@ -5,6 +5,7 @@ import { MyLecturesComponent } from './my-lectures/my-lectures.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -23,6 +24,7 @@ export const routing = RouterModule.forChild(routes);
     MyLecturesComponent
   ],
   imports: [
+    MatButtonModule,
     CommonModule,
     routing,
     SharedModule,

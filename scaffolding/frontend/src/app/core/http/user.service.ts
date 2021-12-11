@@ -137,7 +137,8 @@ export class UserService {
     }
 
     isAdmin() {
-        return this.admin;
+        return this.admin; //CHANGE BACK
+        
     }
 
     getLoggedIn(): boolean {
@@ -177,7 +178,7 @@ export class UserService {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
             });
-        this.httpClient.get<boolean>(environment.endpointURL + "admin")
+        this.httpClient.get<boolean>(environment.endpointURL + "admin/getAdmin")
             .subscribe((res) => {
                 this.isAdminSource.next(res);
             }, () => {
