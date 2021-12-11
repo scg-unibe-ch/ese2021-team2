@@ -3,6 +3,7 @@ mat-card{
     margin-left: 1rem;
     margin-right: 1rem;
     background-color: white;
+    cursor: pointer;
 }
 #shippedStatus{
     margin-left: 0;
