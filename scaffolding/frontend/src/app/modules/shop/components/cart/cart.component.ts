@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
     }
 
     handleRemoveAll(){
-        const dialogData = new ConfirmationDialogModel("Empty Cart", "Are you sure you want to remove all items from your cart?");
+        const dialogData = new ConfirmationDialogModel("Clear Cart", "Are you sure you want to remove all items from your cart?");
         const dialogRef =  this.dialog.open(ConfirmationDialogComponent, {
             maxWidth: '400px',
             closeOnNavigation : true,

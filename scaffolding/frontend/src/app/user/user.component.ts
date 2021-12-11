@@ -21,6 +21,7 @@ export class UserComponent {
     falseLogin: boolean = false;
     loggedIn: boolean | null;
     user: User | null;
+    hide: boolean = true;
 
     userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
     userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);

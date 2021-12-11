@@ -1,0 +1,65 @@
+
+.user-page {
+    font-family: Roboto, serif;
+    height: max-content;
+
+}
+.user-details {
+    float: right;
+    font-size: 2em;
+    margin-left: 50px;
+
+}
+mat-card{
+    margin-left: 8%;
+    margin-right: 8%;
+    background-color: white;
+}
+
+.profile {
+    display: inline-block;
+    vertical-align: top;
+}
+.profile-picture {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    height: 200px;
+    width: 200px;
+    object-fit: fill;
+    border-radius: 20%;
+    flex-shrink: 0;
+    float: left;
+}
+.role {
+    font-size: 0.8em;
+    font-style: italic;
+}
+.subscription-title{
+    margin-left: 8%;
+    margin-right: 8%;
+    padding-top: 30px;
+}
+.subscriptions {
+
+}
+
+.subscription {
+    cursor: pointer;
+    padding: 20px 20px 20px 20px;
+}
+.post-header {
+    margin-left: 8%;
+    margin-right: 8%;
+    padding-top: 30px;
+}
+.post-section {
+
+    padding-bottom: 10px;
+}
+.empty-section {
+    margin-left: 8%;
+    margin-right: 8%;
+    font-weight: 800;
+    color: black;
+}

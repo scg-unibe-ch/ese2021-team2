@@ -28,6 +28,8 @@ button{
 .image-container{
     display: flex;
     height:min-content;
+    object-fit: contain;
+    overflow: visible;
 }
 
 .mat-card-image{
@@ -42,6 +44,7 @@ button{
 .mat-card-actions{
     display:inline-flex;
     justify-content: right;
+    padding-top: 0;
 }
 
 .mat-card-content{
@@ -49,7 +52,8 @@ button{
 }
 
 .mat-card-image:hover{
-    transform: scale(1.1)
+    transform: scale(1.05);
+    overflow: hidden;
 }
 
 .mat-button{
