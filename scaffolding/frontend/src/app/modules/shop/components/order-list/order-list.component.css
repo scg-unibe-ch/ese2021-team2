@@ -25,5 +25,6 @@ button:hover{
     background-color: rgb(222,230,243);
     font-family: arial, Helvetica, sans-serif;
     height: 100%;
+    overflow: auto;
 
 }

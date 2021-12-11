@@ -43,7 +43,6 @@ mat-form-field{
 ::ng-deep.mat-option {
     background-color: white !important;
 }
-
 ::ng-deep.mat-form-field-ripple {
     background-color: rgb(28, 53, 161) !important;;
 }
