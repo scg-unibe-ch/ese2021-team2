@@ -15,7 +15,7 @@ export class SidebarComponent {
 
     loggedIn: boolean;
     user: User | null;
-    isExpanded: boolean = false;
+    isExpanded: boolean = true;
     @Output() messageEvent = new EventEmitter<boolean>();
     isLogin: boolean = false;
     imageURL : string;
@@ -71,13 +71,8 @@ export class SidebarComponent {
         this.messageEvent.emit(this.isExpanded);
     }
 
-    isShopRoute() {
-        return this.router.url.match(/\/shop\S*/)
-    }
-
-
-    isBoardRoute() {
-        return /\/board\/\d*\S*$/.test(this.router.url);
+    isRoute(){
+        return this.router.url.match(/\/shop\S*/) && this.router.url.length == 5 || this.router.url.match(/\/board\S*/) && this.router.url.length == 8;
     }
 
 }
