@@ -51,7 +51,7 @@ export class OrderPageComponent implements OnInit {
   checkAuthorizationStatus(): boolean {
       this.user = this.userService.getUser();
       if( this.user && this.user.userId ) {
-          return (this.admin //|| this.user.userId - this.order.customerId === 0
+          return (this.admin || this.user.userId - this.order.customerId === 0
            );
       } else {
           return false;
