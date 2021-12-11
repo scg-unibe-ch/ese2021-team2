@@ -78,6 +78,13 @@ img{
 
 .name{
     opacity: 0.8;
+    width: 15%;
+    text-align: center;
+}
+
+.price{
+    width:  10%;
+    text-align: right;
 }
 
 .item-actions{
@@ -140,4 +147,8 @@ img{
 #continue-shopping{
     color: black;
     background-color: transparent;
+}
+
+#total{
+    padding-left: 15px;
 }

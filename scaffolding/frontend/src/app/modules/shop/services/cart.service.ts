@@ -26,6 +26,7 @@ export class CartService {
         if (items) {
             this.products = JSON.parse(items);
         }
+        this.checkLogout();
     }
 
     addProduct(product : Product, quantity: number) {
@@ -76,7 +77,6 @@ export class CartService {
 
     removeItem(product : ProductItem) {
         const index = this.products.indexOf(product);
-        debugger;
         if(index >= 0){
             this.products.splice(index, 1);
             sessionStorage.setItem('cart', JSON.stringify(this.products));
@@ -84,7 +84,7 @@ export class CartService {
     }
 
     private checkLogout() {
-        if (!this.loggedIn){
+        if (!this.userService.getLoggedIn()){
             this.clearCart();
         }
     }

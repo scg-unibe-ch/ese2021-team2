@@ -36,9 +36,7 @@ export class ProductService {
         return new Promise((resolve, reject) => {
             this.httpClient.post(environment.endpointURL + "product", product)
             .subscribe((created: any) => {
-                this.addPhoto(image, created.productId);
-                this.products.push(created);
-                this.productSource.next(this.products);
+                this.addPhoto(image, created);
                 resolve(created);
             },
             (err :any) => {
@@ -47,11 +45,13 @@ export class ProductService {
         })
     }
 
-    addPhoto(image : File, id : number){
+    addPhoto(image : File, created: Product){
         const fd = new FormData();
         fd.append('image', image);
-        this.httpClient.post(environment.endpointURL + "product/" + id + "/image", fd)
+        this.httpClient.post(environment.endpointURL + "product/" + created.productId + "/image", fd)
         .subscribe(() => {
+                this.products.push(created);
+                this.productSource.next(this.products);
         })
     }
 

@@ -29,7 +29,7 @@ button{
     display: flex;
     height:min-content;
     object-fit: contain;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .mat-card-image{
@@ -44,6 +44,7 @@ button{
 .mat-card-actions{
     display:inline-flex;
     justify-content: right;
+    padding-top: 0;
 }
 
 .mat-card-content{
@@ -65,10 +66,8 @@ button{
 
 #delete:hover{
     color:tomato;
-    padding-bottom: 5%;
 }
 
 #details:hover{
     opacity: 0.5;
-    padding-bottom: 5%;
 }
