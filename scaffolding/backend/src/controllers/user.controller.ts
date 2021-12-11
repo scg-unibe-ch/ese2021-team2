@@ -38,7 +38,7 @@ userController.get('/', verifyToken, // you can add middleware on specific reque
 userController.get('/user/:userId',
     (req: Request, res: Response) => {
         userService.getUser(parseInt(req.params.userId, 10))
-            .then(user => res.send({username: user.userName}))
+            .then(user => res.send({username: user.userName, image: user.profile_image}))
             .catch(err => res.status(500).send(err));
     }
 );
@@ -92,6 +92,11 @@ userController.delete('/:id/image', (req: Request, res: Response) => {
         .catch(err => res.status(500).send(err));
 });
 
+userController.get('/:id/admin', (req: Request, res: Response) => {
+    userService.getAdminStatus(Number(req.params.id))
+        .then(isAdmin => res.status(200).send(isAdmin))
+        .catch(err => res.status(500).send(err));
+});
 userController.post('/getUserById',
     async (req: Request, res: Response) => {
 

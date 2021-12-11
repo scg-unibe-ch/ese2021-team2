@@ -26,7 +26,7 @@
 
 <div id="post-meta">
 <p>{{this.post.date}}</p>
-<p>made by: {{this.creator.userName}}</p>
+<p [routerLink]="'../../user/' + this.post.creatorId">made by: {{this.creator.userName}}</p>
 </div>
 </div>
 

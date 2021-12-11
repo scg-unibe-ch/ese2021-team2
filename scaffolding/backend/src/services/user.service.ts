@@ -12,6 +12,7 @@ import { Like } from '../models/like.model';
 import path from 'path';
 import { Subscription } from '../models/subscription.model';
 import { unlinkSync } from 'fs';
+import {Admin} from '../models/admin.model';
 const { Op } = require('sequelize');
 
 export class UserService {
@@ -261,5 +262,22 @@ export class UserService {
                 }
             )
             .catch(() => Promise.reject('Could not delete image!'));
+    }
+
+    async getAdminStatus(userId: number): Promise<boolean> {
+        try {
+            const admin = await Admin.findAll({
+                where: {
+                    userId: userId
+                }
+            });
+            if (admin && admin.length >= 1) {
+                return Promise.resolve(true);
+            } else {
+                return Promise.resolve(false);
+            }
+        } catch ( err) {
+            return Promise.reject(err);
+        }
     }
 }
