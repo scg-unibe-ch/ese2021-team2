@@ -1,15 +1,27 @@
-.user-name{
-    float: right;
-    font-size: 4em;
-    margin-left: 50px;
-    margin-top: 100px;
+
+.user-page {
+    font-family: Roboto, serif;
+    background-color: white;
+    height: max-content;
 
 }
-.profile{
+.user-details {
+    float: right;
+    font-size: 2em;
+    margin-left: 50px;
+
+}
+mat-card{
+    margin-left: 8%;
+    margin-right: 8%;
+    background-color: white;
+}
+
+.profile {
     display: inline-block;
     vertical-align: top;
 }
-.profile-picture{
+.profile-picture {
     margin-left: auto;
     margin-right: auto;
     background-color: black;
@@ -20,15 +32,35 @@
     flex-shrink: 0;
     float: left;
 }
-.subject{
-    cursor: pointer;
+.role {
+    font-size: 0.8em;
+    font-style: italic;
 }
-.post-header{
-    text-align: center;
+.subscription-title{
+    margin-left: 8%;
+    margin-right: 8%;
+    padding-top: 30px;
+}
+.subscriptions {
+
+}
+
+.subscription {
+    cursor: pointer;
+    padding: 20px 20px 20px 20px;
+}
+.post-header {
+    margin-left: 8%;
+    margin-right: 8%;
+    padding-top: 30px;
 }
 .post-section {
+
+    padding-bottom: 10px;
 }
-.no-posts{
-    font-style: italic;
-    font-weight: 500;
+.empty-section {
+    margin-left: 8%;
+    margin-right: 8%;
+    font-weight: 800;
+    color: black;
 }

@@ -1,3 +1,4 @@
+<div class="user-page">
 <div *ngIf="exists">
 
     <div class = "user-info">
@@ -5,30 +6,32 @@
             <mat-card-header>
                 <div class = "image-container">
                     <img class = "profile-picture" [src] = "this.imageURL">
-                    <h1 *ngIf="this.admin" class = "user-name">{{this.userName}} [Admin]</h1>
-                    <h1 *ngIf="!this.admin" class = "user-name">{{this.userName}}</h1>
-
+                    <div class="user-details">
+                        <h2>{{this.userName}}</h2>
+                        <h2 class="role" *ngIf="admin">Role: Admin</h2>
+                        <h2 class="role" *ngIf="!admin">Role: User</h2>
+                    </div>
                 </div>
 
             </mat-card-header>
         </mat-card>
     </div>
     <div class="subscriptions">
-        <h1>Subscriptions</h1>
-        <h2 class="no-subscriptions" *ngIf="this.lectures && this.lectures.length < 1">
+        <h1 class="subscription-title">Subscriptions</h1>
+        <h2 class="empty-section" *ngIf="this.lectures && this.lectures.length < 1">
             This User hasn't subscribed any board
         </h2>
-        <div *ngFor="let subject of this.lectures">
-            <h2 class="subject"[routerLink]="'../../board/' + subject.boardId">{{subject.boardName}}</h2>
-        </div>
+        <mat-card  *ngFor="let subject of this.lectures">
+            <h2 class="subscription" [routerLink]="'../../board/' + subject.boardId">{{subject.boardName}}</h2>
+        </mat-card>
     </div>
-    <mat-divider></mat-divider>
     <div class="post-section">
         <h1 class="post-header">Posts</h1>
-        <h2 class="no-posts" *ngIf="this.createdPosts && this.createdPosts.length < 1">This User hasn't posted anything yet</h2>
+        <h2 class="empty-section" *ngIf="this.createdPosts && this.createdPosts.length < 1">This User hasn't posted anything yet</h2>
         <app-post-preview *ngFor="let post of this.createdPosts" [post]="post"></app-post-preview>
     </div>
 </div>
 <div *ngIf="!exists">
     <h1>ERROR 404: User Not Found</h1>
+</div>
 </div>

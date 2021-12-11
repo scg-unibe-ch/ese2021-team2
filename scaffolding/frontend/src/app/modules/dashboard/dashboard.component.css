@@ -1,10 +1,32 @@
+.dashboard-component {
+    text-align: left;
+    font-family: Roboto, serif;
+    background: rgb(133,217,255);
+    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);
+    width: 150px;
+    height: 95%;
+    color: black;
+}
+.dashboard-button {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+.dashboard-button:hover {
+    background-color: grey !important;
+
+}
+.dashboard-button:focus {
+    background-color: darkgreen !important;
+}
 .filter-description{
-    text-align: center;
-    font-family: Roboto;
+    margin-left: 10px;
+    font-size: 1.4rem;
+    font-weight: 800;
 }
 .filtcat {
-position: relative;
-top: 200px;
-width: auto;
-text-align: left;
+    position: relative;
+    top: 200px;
+    width: auto;
+    text-align: left;
   }
