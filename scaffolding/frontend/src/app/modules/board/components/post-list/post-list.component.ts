@@ -29,6 +29,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   filterarg: string;
   subscription: Subscription;
   sortarg: string;
+  semarg: string;
   
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
@@ -51,7 +52,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setPostList();
 
-    this.subscription = this.data.currentMessage.subscribe(message => (["date","likes"].includes(message)) ? this.sortarg = message : this.filterarg = message);
+    this.subscription = this.data.currentMessage.subscribe(message => (["date","likes"].includes(message)) ? (this.sortarg = message, this.filterarg = "", this.semarg ="") : ((["1.Semester","2.Semester","3.Semester","4.Semester","5.Semester","6.Semester"].includes(message)) ? (this.semarg = message, this.filterarg = "", this.sortarg = "") : (this.filterarg = message,this.sortarg= "",this.semarg = "")));
   }
 
   ngOnDestroy() {

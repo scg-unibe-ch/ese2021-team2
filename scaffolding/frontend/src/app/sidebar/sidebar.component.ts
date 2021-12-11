@@ -77,7 +77,7 @@ export class SidebarComponent {
 
 
     isBoardRoute() {
-        return this.router.url.match(/\/board\S*/)
+        return /\/board\/\d*\S*$/.test(this.router.url);
     }
 
 }

@@ -120,6 +120,7 @@ export class UserService {
                 this.loggedInSource.next(true);
                 this.loadBookmarkedPosts();
                 this.setLoggedInURL();
+                this.refreshAdmin();
                 resolve(user);
             }, (err: any) => {
                 reject(err);
@@ -134,6 +135,7 @@ export class UserService {
         this.userSource.next(null);
         this.loggedInSource.next(false);
         this.imageURLSource.next('/assets/images/no_user.jpg');
+        this.isAdminSource.next(false);
     }
 
     isAdmin() {
@@ -178,7 +180,12 @@ export class UserService {
                 this.userSource.next(null);
                 this.loggedInSource.next(false);
             });
-        this.httpClient.get<boolean>(environment.endpointURL + "admin/getAdmin")
+
+        this.refreshAdmin();
+    }
+
+    refreshAdmin() : void{
+        this.httpClient.get<boolean>(environment.endpointURL + "admin")
             .subscribe((res) => {
                 this.isAdminSource.next(res);
             }, () => {
@@ -276,7 +283,6 @@ export class UserService {
     deleteProfileImage(){
         this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
             .subscribe((res) => {
-                debugger;
                 this.imageURLSource.next('/assets/images/no_user.jpg'); 
             },
             error => {
@@ -292,7 +298,6 @@ export class UserService {
                 .subscribe((res: any) => {
                     if(this.user){
                         this.user.profile_image = res.profile_image;
-                        this.userSource.next(this.user);
                     }
                 },
                 error => {

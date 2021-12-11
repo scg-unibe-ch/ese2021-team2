@@ -1,95 +1,99 @@
-<div *ngIf="loggedIn && !wasOrderSubmitted">
-    <h1 class = "headline">Your Order</h1>
-    <mat-card>
-        <mat-label>
-            <mat-card-title>Summary of your order</mat-card-title>
-        </mat-label>
-        <div *ngFor="let product of products">
-            <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
+<div id="background">
+    <div *ngIf="loggedIn && !wasOrderSubmitted">
+        <h1 class = "title">Your Order</h1>
+        <mat-card>
+            <mat-label>
+                <mat-card-title>Summary of your order</mat-card-title>
+            </mat-label>
+            <div *ngFor="let product of products">
+                <p>Product: {{product.product.title}}, {{product.quantity}}x</p>
+            </div>
+            <p>Total price: {{this.totalPrice}} CHF</p>
+        </mat-card>
+        <div *ngIf="!addressExists">
+            <mat-card>
+                <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
+                If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page here:
+                    <a [routerLink]="'/profile'">Profile</a>
+                </p>
+                </mat-card>
+            <mat-form-field appearance="fill">
+                <mat-label>Street</mat-label>
+                <input matInput placeholder="Street" [(ngModel)]="newStreet" (ngModelChange)="checkNewStreet()">
+                <div *ngIf="isStreetInvalid">
+                    <br>
+                    {{invalidStreetMsg}}
+                </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>House Number</mat-label>
+                <input matInput type="number"  min="1" placeholder="House Number" [(ngModel)]="newHouseNr">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="City" [(ngModel)]="newCity" (ngModelChange)="checkNewCity()">
+                <div *ngIf="isCityInvalid">
+                    <br>
+                    {{invalidCityMsg}}
+                </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>ZipCode</mat-label>
+                <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode" (ngModelChange)="checkNewZipCode()">
+                <div *ngIf="isZipCodeInvalid">
+                    <br>
+                    {{invalidZipCodeMsg}}
+                </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Paymentmethod</mat-label>
+                <mat-select [(value)]="paymentMethod">
+                    <mat-option value="Invoice">Invoice</mat-option>
+                    <mat-option value="CreditCard">Credit Card</mat-option>
+                    <mat-option value="Twint">Twint</mat-option>
+                    <mat-option value="PayPal">PayPal</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-        <p>Total price: {{this.totalPrice}} CHF</p>
-    </mat-card>
-    <div *ngIf="!addressExists"><p>Please fill in your address and pick a payment method below to submit your order.</p></div>
 
-    <div *ngIf="!addressExists">
-        <p>You don't seem to have filled in your complete address yet, please give us an address to send the order to.
-        If you always want your orders to be sent to the same address you can link it by filling it in in your Profile page here:
-            <a [routerLink]="'/profile'">Profile</a>
-        </p>
-        <mat-form-field appearance="fill">
-            <mat-label>Street</mat-label>
-            <input matInput placeholder="Street" [(ngModel)]="newStreet" (ngModelChange)="checkNewStreet()">
-            <div *ngIf="isStreetInvalid">
-                <br>
-                {{invalidStreetMsg}}
-            </div>
-        </mat-form-field>
+        <div *ngIf="addressExists">
+            <mat-card>
+            <p>Since you have filled in your address in your profile details already we will use that address.
+            Please pick a payment method to submit your order.</p>
+            <p class="userAdress">{{this.userAddress}}</p>
+            <p>If this Address is incorrect please change it in your:
+                <a [routerLink]="'/profile'">Profile</a>
+            </p>
+            </mat-card>
 
-        <mat-form-field appearance="fill">
-            <mat-label>House Number</mat-label>
-            <input matInput type="number"  min="1" placeholder="House Number" [(ngModel)]="newHouseNr">
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Paymentmethod</mat-label>
+                <mat-select [(value)]="paymentMethod">
+                    <mat-option value="Invoice" selected>Invoice</mat-option>
+                    <mat-option value="CreditCard">Credit Card</mat-option>
+                    <mat-option value="Twint">Twint</mat-option>
+                    <mat-option value="PayPal">PayPal</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="fill">
-            <mat-label>City</mat-label>
-            <input matInput placeholder="City" [(ngModel)]="newCity" (ngModelChange)="checkNewCity()">
-            <div *ngIf="isCityInvalid">
-                <br>
-                {{invalidCityMsg}}
-            </div>
-        </mat-form-field>
+        <button  (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
 
-        <mat-form-field appearance="fill">
-            <mat-label>ZipCode</mat-label>
-            <input matInput placeholder="ZipCode" [(ngModel)]="newZipCode" (ngModelChange)="checkNewZipCode()">
-            <div *ngIf="isZipCodeInvalid">
-                <br>
-                {{invalidZipCodeMsg}}
-            </div>
-        </mat-form-field>
+        <div *ngIf="wasOrderSubmitted">
+            <p>Your order has been successfully submitted.</p>
+        </div>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Paymentmethod</mat-label>
-            <mat-select [(value)]="paymentMethod">
-                <mat-option value="Invoice">Invoice</mat-option>
-                <mat-option value="CreditCard">Credit Card</mat-option>
-                <mat-option value="Twint">Twint</mat-option>
-                <mat-option value="PayPal">PayPal</mat-option>
-            </mat-select>
-        </mat-form-field>
+    </div>
+    <div *ngIf="wasOrderSubmitted" id="afterOrder">
+        <h1 class="title">Thanks for your order</h1>
+        <button *ngIf="!paymentSuccessful" [routerLink]="'/shop/orders'">Make your payment</button>
     </div>
 
-    <div *ngIf="addressExists">
-        <p>Since you have filled in your address in your profile details already we will use that address.
-        Please pick a payment method to submit your order.</p>
-        <p class="userAdress">{{this.userAddress}}</p>
-        <p>If this Address is incorrect please change it in your:
-            <a [routerLink]="'/profile'">Profile</a>
-        </p>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Paymentmethod</mat-label>
-            <mat-select [(value)]="paymentMethod">
-                <mat-option value="Invoice" selected>Invoice</mat-option>
-                <mat-option value="CreditCard">Credit Card</mat-option>
-                <mat-option value="Twint">Twint</mat-option>
-                <mat-option value="PayPal">PayPal</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div *ngIf="!loggedIn">
+        <h1 class = "title">To purchase an order please log in first.</h1>
     </div>
-
-    <button mat-stroked-button (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
-
-    <div *ngIf="wasOrderSubmitted">
-        <p>Your order has been successfully submitted.</p>
-    </div>
-
-</div>
-<div *ngIf="wasOrderSubmitted">
-    <h1 class="headline">Thanks for your order</h1>
-    <a *ngIf="!paymentSuccessful" [routerLink]="'/shop/orders'">Link to Order to make payment </a>
-</div>
-
-<div *ngIf="!loggedIn">
-    <h1 class = "headline">To purchase an order please log in first.</h1>
 </div>

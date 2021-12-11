@@ -1,8 +1,40 @@
+.dashboard-component {
+    text-align: left;
+    font-family: Roboto, serif;
+    overflow-x: hidden;
+    /*
+    background: rgb(133,217,255);
+    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);*/
+    width: 170px;
+    height: 95%;
+    color: black;
+}
+.dashboard-button {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+.dashboard-button:hover {
+    background-color: grey !important;
 
-    
+}
+.dashboard-button:focus {
+    background-color: darkgreen !important;
+}
+.filter-description{
+    margin-left: 10px;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
 .filtcat {
-position: relative;
-top: 200px;
-width: 150px;
-text-align: center;
+    position: relative;
+    top: 170px;
+    width: auto;
+    text-align: left;
   }
+
+#submenu {
+    background-color: transparent;
+    box-shadow: none;
+}
+

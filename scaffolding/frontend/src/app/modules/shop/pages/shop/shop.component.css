@@ -40,7 +40,6 @@
     padding-left:1rem;
 }
 
-#background{
-    background-color: rgb(222,230,243);
-    height: 100%;
+.mat-icon-button:hover{
+    opacity: 0.5;
 }

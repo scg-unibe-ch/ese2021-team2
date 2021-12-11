@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   }
 
   isBoardRoute() {
-    return this.router.url.match(/\/board\S*/)
+    return this.router.url.match(/\/board\/\S*/)
   }
 
   setOrg() {
@@ -71,5 +71,15 @@ export class DashboardComponent implements OnInit, OnDestroy  {
     else {
       this.data.changeMessage("likes");
     }
+  }
+
+  setSemester(sem:number){
+    if(sem == 0){
+      console.log(sem);
+      this.data.changeMessage("");
+      return;
+    }
+    const newSem = sem + ".Semester";
+    this.data.changeMessage(newSem);
   }
 }
