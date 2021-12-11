@@ -1,21 +1,24 @@
-.master {
-    height: 900px;
-    padding: 30px;
+.action-button-container{
+    margin:35px;
 }
 
 .mat-card{
     background-color: white;
+    margin: 50px;
+    margin-bottom: 0;
 }
 
 .mat-card-header{
-    display: inline-flex;
     flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .image-container{
     position: relative;
     display: flex;
     align-content:flex-end;
+    margin-right: 10%;
 }
 
 .mat-button{
@@ -27,11 +30,17 @@
     margin: 0 !important;
 }
 
-.mat-icon-button{
-    position: absolute;
-    top:80%;
-    left: 10%;
+.menu-button{
     margin: 0 !important;
+    font-weight: bold;
+}
+
+.mat-card-title{
+    font-weight: bold;
+}
+
+.additional-info{
+    margin-top: 0;
 }
 
 .profile-picture{
@@ -43,6 +52,37 @@
     flex-shrink: 0;
 }
 
+.mat-card-title{
+    display:flex;
+    align-items: center;
+}
+
+.mat-card-subtitle{
+    display:flex;
+    align-items: center;
+}
+
+.footer {
+    display: block;
+    box-sizing: border-box;
+    height: 500px;
+    background: -webkit-linear-gradient(bottom right, #9EB8FF, #213BA5);
+    background: -moz-linear-gradient(bottom right, #9EB8FF, #213BA5);
+    background: linear-gradient(to top left, #9EB8FF, #213BA5);
+    clip-path: ellipse(108% 100% at 108% 100%);
+}
+
+.header{
+    height: 500px;
+    background: -webkit-linear-gradient(top left, #9EB8FF, #213BA5);
+    background: -moz-linear-gradient(top left, #9EB8FF, #213BA5);
+    background: linear-gradient(to bottom right, #9EB8FF, #213BA5);    clip-path: ellipse(200% 90% at -140% 0%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 input:disabled{
     color:black
 }
@@ -51,4 +91,15 @@ input:disabled{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     color: red;
+}
+
+#id{
+    font-size: 5pt;
+}
+
+#submit{
+    border-radius: 1.2rem;
+    background-color: rgb(28,53,161); 
+    color: white;
+    font-weight: bold;
 }
