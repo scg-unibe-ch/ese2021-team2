@@ -1,22 +1,31 @@
 <div class="master" *ngIf="loggedIn; else notShow">
+    <div class = "header"></div>
+    <div class= "footer"></div>
     <div class = "user-info">
         <mat-card>
             <mat-card-header>
                 <div class = "image-container">
-                    <div class = "delete-image" *ngIf = "!isDefaultPicture()">
-                        <button mat-icon-button color = "warn" (click) = "handleDelete()">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>
-                    </div>
                     <img class = "profile-picture" [src] = "imageURL">
-                    <button mat-button (click) = "imageInput.click()">
+                    <button id = "edit" mat-button [matMenuTriggerFor] = "menu">
                         <mat-icon>create</mat-icon>
                         Edit
                     </button>
-                    <input hidden #imageInput type ="file" accept = "image/jpeg" (change) = "processFile($event)">
+                    <mat-menu #menu = "matMenu">
+                        <button mat-menu-item  class = "menu-button"(click) = "imageInput.click()">
+                            <span>Upload Photo</span>
+                        </button>
+                            <input hidden #imageInput type ="file" accept = "image/jpeg" (change) = "processFile($event)">
+                        <button mat-menu-item class = "menu-button" (click) = "handleDelete()">
+                            <span>Delete Photo</span>
+                        </button>
+                    </mat-menu>
                 </div>
-                <mat-card-title>{{this.changedUser.userName}}</mat-card-title>
-                <mat-card-subtitle>{{this.changedUser.email}}</mat-card-subtitle>
+                <mat-card-title>
+                    <mat-icon >face</mat-icon>
+                    {{this.changedUser.userName}}</mat-card-title>
+                <mat-card-subtitle>
+                    <mat-icon>mail</mat-icon>
+                    {{this.changedUser.email}}</mat-card-subtitle>
             </mat-card-header>
         </mat-card>
     </div>
@@ -56,17 +65,17 @@
             <input matInput type = "date" placeholder = "Birthday" [(ngModel)] = "changedUser.birthday"  [disabled] = "!editMode">
         </mat-form-field>
         <div class = "SubmitContainer" *ngIf = "editMode" >
-            <button mat-raised-button (click) = "updateUser()" [disabled]="!activeSaveButton">Submit Changes</button>
+            <button id = "submit" mat-flat-button (click) = "updateUser()" [disabled]="!activeSaveButton">Submit Changes</button>
         </div>
         <div *ngIf="!activeSaveButton">
             <p class="warnMsg">{{invEditDataMsg}}</p>
         </div>
     </mat-card>
     </div>
-    <div class = "ActionButtonContainer">
+    <div class = "action-button-container">
         <button mat-flat-button color="warn" (click)="handleLogout()">Logout</button>
         <button mat-flat-button color = "warn" (click) = "handleDeletingAccount()">Delete Account</button>
-        <button mat-raised-button (click) = "setEditMode()">{{editTag}}</button>
+        <button mat-flat-button (click) = "setEditMode()">{{editTag}}</button>
     </div>
 </div>
 <ng-template #notShow>

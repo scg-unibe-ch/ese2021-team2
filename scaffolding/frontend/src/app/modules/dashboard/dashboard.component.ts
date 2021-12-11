@@ -72,4 +72,14 @@ export class DashboardComponent implements OnInit, OnDestroy  {
       this.data.changeMessage("likes");
     }
   }
+
+  setSemester(sem:number){
+    if(sem == 0){
+      console.log(sem);
+      this.data.changeMessage("");
+      return;
+    }
+    const newSem = sem + ".Semester";
+    this.data.changeMessage(newSem);
+  }
 }

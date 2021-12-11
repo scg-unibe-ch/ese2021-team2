@@ -9,6 +9,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
 import {MatIconModule} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms'
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
     {
@@ -33,6 +34,7 @@ export const routing = RouterModule.forChild(routes);
     FormsModule,
     routing,
     MatCardModule,
+    MatMenuModule,
   ]
 })
 export class ProfileModule { }

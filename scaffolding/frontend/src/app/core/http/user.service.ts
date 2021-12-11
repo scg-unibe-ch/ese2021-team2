@@ -296,7 +296,6 @@ export class UserService {
                 .subscribe((res: any) => {
                     if(this.user){
                         this.user.profile_image = res.profile_image;
-                        this.userSource.next(this.user);
                     }
                 },
                 error => {

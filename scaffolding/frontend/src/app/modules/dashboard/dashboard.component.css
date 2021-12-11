@@ -1,9 +1,11 @@
 .dashboard-component {
     text-align: left;
     font-family: Roboto, serif;
+    overflow-x: hidden;
+    /*
     background: rgb(133,217,255);
-    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);
-    width: 150px;
+    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);*/
+    width: 170px;
     height: 95%;
     color: black;
 }
@@ -26,7 +28,13 @@
 }
 .filtcat {
     position: relative;
-    top: 200px;
+    top: 170px;
     width: auto;
     text-align: left;
   }
+
+#submenu {
+    background-color: transparent;
+    box-shadow: none;
+}
+

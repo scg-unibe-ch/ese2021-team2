@@ -43,6 +43,7 @@ import { CommentsListComponent } from './shared/components/post/comments-list/co
 import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatDialogModule,
         SharedModule,
         MatButtonToggleModule,
+        MatExpansionModule,
     ],
     providers: [ DataService],
     bootstrap: [AppComponent],

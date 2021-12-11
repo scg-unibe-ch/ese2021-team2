@@ -10,10 +10,34 @@
     <p class="filter-description">Filter Posts</p>
     <button mat-button class="dashboard-button"(click)="setfiltarg(0)">Most popular</button>
     <button mat-button class="dashboard-button" (click)="setfiltarg(1)">Newest</button>
-    <button mat-button class="dashboard-button" (click)="setAll()">All</button>
-    <button mat-button class="dashboard-button" (click)="setOrg()">Organization</button>
-    <button mat-button class="dashboard-button" (click)="setExer()">Exercises</button>
-    <button mat-button class="dashboard-button" (click)="setExam()">Exams</button>
-    <button mat-button class="dashboard-button" (click)="setOther()">Other</button>
+    <mat-accordion>
+        <mat-expansion-panel id="submenu" >
+            <mat-expansion-panel-header >
+                <mat-panel-title class="dashboard-button">
+                    Categories
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-button class="dashboard-button" (click)="setAll()">All</button>
+            <button mat-button class="dashboard-button" (click)="setOrg()">Organization</button>
+            <button mat-button class="dashboard-button" (click)="setExer()">Exercises</button>
+            <button mat-button class="dashboard-button" (click)="setExam()">Exams</button>
+            <button mat-button class="dashboard-button" (click)="setOther()">Other</button>
+        </mat-expansion-panel>
+        <mat-expansion-panel id="submenu" >
+            <mat-expansion-panel-header >
+                <mat-panel-title class="dashboard-button">
+                    Semester
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-button class="dashboard-button" (click)="setSemester(0)">Alle</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(1)">1.Semester</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(2)">2.Semester</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(3)">3.Semester</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(4)">4.Semester</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(5)">5.Semester</button>
+            <button mat-button class="dashboard-button" (click)="setSemester(6)">6.Semester</button>
+        </mat-expansion-panel>
+    </mat-accordion>
+    
 </div>
 </div>
