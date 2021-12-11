@@ -4,7 +4,7 @@
     </mat-sidenav>
         <mat-sidenav-content>
             <mat-sidenav-container id="main-sidebar-container" autosize>
-                <mat-sidenav id = "dashboard" #sidenav mode="side" opened>
+                <mat-sidenav id = "dashboard" #sidenav mode="side" [(opened)]="isExpanded">
                     <app-dashboard *ngIf="isRoute()"></app-dashboard>
                 </mat-sidenav>
                 <mat-sidenav-content>
