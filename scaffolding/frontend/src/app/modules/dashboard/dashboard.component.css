@@ -1,8 +1,10 @@
 .dashboard-component {
     text-align: left;
     font-family: Roboto, serif;
+    overflow-x: hidden;
+    /*
     background: rgb(133,217,255);
-    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);
+    background: linear-gradient(180deg, rgba(133,217,255,1) 0%, rgba(90,125,240,1) 72%);*/
     width: 150px;
     height: 95%;
     color: black;
