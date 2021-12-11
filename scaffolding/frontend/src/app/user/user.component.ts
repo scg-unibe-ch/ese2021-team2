@@ -7,6 +7,7 @@ import { UserService } from '../core/http/user.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import {isNumeric} from "rxjs/internal-compatibility";
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-user',
@@ -65,7 +66,7 @@ export class UserComponent {
             this.userToLogin = res;
             this.loginUser();})
         .catch((err) => {
-            this.registrationFeedback = err;})
+            this.registrationFeedback = err})
     }
 
     checkStatusButton(){
@@ -86,6 +87,10 @@ export class UserComponent {
     }
 
     isValidNewUserInput(){
+        if(this.userToRegister==null){
+            console.log()
+            throwError('usertToRegister is null');
+        }
         if(this.areMandatoryFieldsNull()){
            this.invRegDataMsg = 'The First 5 Fields with a (*) are mandatory to fill in for a Registration.'
             this.activeRegButton = false;
