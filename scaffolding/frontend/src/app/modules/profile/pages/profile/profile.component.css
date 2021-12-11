@@ -63,13 +63,16 @@
 }
 
 .footer {
-    display: block;
-    box-sizing: border-box;
-    height: 500px;
+    height: 35%;
     background: -webkit-linear-gradient(bottom right, #9EB8FF, #213BA5);
     background: -moz-linear-gradient(bottom right, #9EB8FF, #213BA5);
     background: linear-gradient(to top left, #9EB8FF, #213BA5);
     clip-path: ellipse(108% 100% at 108% 100%);
+    position: absolute;
+    transform: translate(0, -100%);
+    top:100%;
+    left: 0;
+    width: 100%;
 }
 
 .header{
