@@ -10,13 +10,14 @@
     <button mat-raised-button color="warn" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
     <h1 class="order-subtitle">Shipment to</h1>
     <mat-card class="address-section">
-            <h3 class="address-details">{{this.order.customerName}}</h3>
-            <h3 class="address-details">{{this.street}}</h3>
-            <h3 class="address-details">{{this.zip}} {{this.city}}</h3>
+            <h3>{{this.order.customerName}}</h3>
+            <h3>{{this.street}}</h3>
+            <h3>{{this.zip}} {{this.city}}</h3>
              <div class="order-status">
-            <h3 class="address-details status-successful" *ngIf="this.order.status==='paid' || this.order.status==='shipped'">{{this.order.status.toUpperCase()}}</h3>
-            <h3 class="address-details status-pending" *ngIf="this.order.status==='pending'">{{this.order.status.toUpperCase()}}</h3>
-            <h3 class="address-details status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="status-paid" *ngIf="this.order.status==='paid'">{{this.order.status}}</h3>
+            <h3 class="status-shipped" *ngIf="this.order.status==='shipped'">{{this.order.status}}</h3>
+            <h3 class="status-pending" *ngIf="this.order.status==='pending'">{{this.order.status}}</h3>
+            <h3 class="status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status}}</h3>
 
              </div>
     </mat-card>
@@ -44,7 +45,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
             <mat-select [(value)]="status">
-                <mat-option value="invoice">Pending</mat-option>
+                <mat-option value="pending">Pending</mat-option>
                 <mat-option value="paid">Paid</mat-option>
                 <mat-option value="shipped">Shipped</mat-option>
                 <mat-option value="cancelled">Cancelled</mat-option>
@@ -54,13 +55,15 @@
     <button mat-raised-button color="primary" (click)="changeStatus()">Save Status</button>
     <h1 class="order-subtitle">Shipment to</h1>
     <mat-card class="address-section">
-        <h3 class="address-details">{{this.order.customerName}}</h3>
-        <h3 class="address-details">{{this.street}}</h3>
-        <h3 class="address-details">{{this.zip}} {{this.city}}</h3>
+        <h3>{{this.order.customerName}}</h3>
+        <h3>{{this.street}}</h3>
+        <h3>{{this.zip}} {{this.city}}</h3>
         <div class="order-status">
-            <h3 class="address-details status-successful" *ngIf="this.order.status==='paid' || this.order.status==='shipped'">{{this.order.status.toUpperCase()}}</h3>
-            <h3 class="address-details status-pending" *ngIf="this.order.status==='pending'">{{this.order.status.toUpperCase()}}</h3>
-            <h3 class="address-details status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="status-paid" *ngIf="this.order.status==='paid'">{{this.order.status}}</h3>
+            <h3 class="status-shipped" *ngIf="this.order.status==='shipped'">{{this.order.status}}</h3>
+            <h3 class="status-pending" *ngIf="this.order.status==='pending'">{{this.order.status}}</h3>
+            <h3 class="status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status}}</h3>
+
         </div>
     </mat-card>
 
