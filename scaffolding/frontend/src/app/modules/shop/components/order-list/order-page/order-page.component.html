@@ -1,3 +1,4 @@
+<div class="order-page">
 <div *ngIf="!checkAuthorizationStatus()">
     <h1>Secured Endpoint! You can only check your own orders</h1>
 </div>
@@ -7,8 +8,20 @@
     <button mat-raised-button color="primary" *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
     <button mat-raised-button [routerLink]="['../..']">View all orders</button>
     <button mat-raised-button color="warn" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
-    <p *ngIf="this.order.status==='paid'">You have paid</p>
-    <h1 class = "headline">Your Items</h1>
+    <h1 class="order-subtitle">Shipment to</h1>
+    <mat-card class="address-section">
+            <h3 class="address-details">{{this.order.customerName}}</h3>
+            <h3 class="address-details">{{this.street}}</h3>
+            <h3 class="address-details">{{this.zip}} {{this.city}}</h3>
+             <div class="order-status">
+            <h3 class="address-details status-successful" *ngIf="this.order.status==='paid' || this.order.status==='shipped'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="address-details status-pending" *ngIf="this.order.status==='pending'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="address-details status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status.toUpperCase()}}</h3>
+
+             </div>
+    </mat-card>
+
+    <h1 class="order-subtitle">Ordered Products</h1>
 
     <div *ngFor = "let productItem of this.productItems" >
         <div class = "item">
@@ -21,6 +34,7 @@
         <p>Total</p>
         <p>CHF {{this.order.price.toFixed(2)}}</p>
     </div>
+
 </div>
 
 <div *ngIf="checkAuthorizationStatus() && admin">
@@ -38,8 +52,20 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="changeStatus()">Save Status</button>
+    <h1 class="order-subtitle">Shipment to</h1>
+    <mat-card class="address-section">
+        <h3 class="address-details">{{this.order.customerName}}</h3>
+        <h3 class="address-details">{{this.street}}</h3>
+        <h3 class="address-details">{{this.zip}} {{this.city}}</h3>
+        <div class="order-status">
+            <h3 class="address-details status-successful" *ngIf="this.order.status==='paid' || this.order.status==='shipped'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="address-details status-pending" *ngIf="this.order.status==='pending'">{{this.order.status.toUpperCase()}}</h3>
+            <h3 class="address-details status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status.toUpperCase()}}</h3>
 
-    <h1 class = "headline">This Order's Items</h1>
+        </div>
+    </mat-card>
+
+    <h1 class = "order-subtitle">This Order's Items</h1>
 
     <div *ngFor = "let productItem of this.productItems" >
         <div class = "item">
@@ -53,4 +79,5 @@
         <p>CHF {{this.order.price.toFixed(2)}}</p>
     </div>
 
+</div>
 </div>

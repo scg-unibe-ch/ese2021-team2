@@ -24,6 +24,9 @@ export class OrderPageComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    street: string = "";
+    zip: string = "";
+    city: string = "";
     order: Order = new Order(0,-1,"","","","", [],0);
     productItems: ProductItem[] = [];
     productIds: string = '';
@@ -64,6 +67,7 @@ export class OrderPageComponent implements OnInit {
               this.order = res;
               this.status=res.status;
               this.loadProductItems();
+              this.extractAddress();
           }, (err: any) => {
               console.log(err);
           });
@@ -162,5 +166,11 @@ export class OrderPageComponent implements OnInit {
                     });
             }
         })
+    }
+    extractAddress(): void {
+        var addressArray = this.order.deliveryAddress.split(',');
+        this.street = addressArray[0]+' '+ addressArray[1];
+        this.city = addressArray[2];
+        this.zip = addressArray[3];
     }
 }
