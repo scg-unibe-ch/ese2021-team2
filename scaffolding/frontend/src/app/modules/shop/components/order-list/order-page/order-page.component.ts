@@ -48,20 +48,20 @@ export class OrderPageComponent implements OnInit {
         this.initializeOrder();
     }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  checkAuthorizationStatus(): boolean {
-      this.user = this.userService.getUser();
-      if( this.user && this.user.userId ) {
-          return (this.admin || this.user.userId - this.order.customerId === 0
-           );
-      } else {
-          return false;
-      }
-  }
+    checkAuthorizationStatus(): boolean {
+        this.user = this.userService.getUser();
+        if (this.user && this.user.userId !== undefined) {
+            return (this.admin || this.user.userId === this.order.customerId);
+        } else {
+            return false;
+        }
+    }
 
-  initializeOrder(): void {
+
+    initializeOrder(): void {
       this.httpClient.get<Order>(environment.endpointURL + 'order/' + this.order.orderId)
           .subscribe((res: any) => {
               this.order = res;

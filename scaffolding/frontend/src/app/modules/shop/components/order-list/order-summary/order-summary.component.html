@@ -2,5 +2,9 @@
     <h1>Order Id: #{{this.order.orderId}}</h1>
     <p>Ordered by {{this.order.customerName}} to {{this.showAddress()}}</p>
     <p>Total Price: CHF {{this.order.price.toFixed(2)}}</p>
-    <p>Status: {{this.order.status}}</p>
+
+    <p *ngIf="this.order.status=='cancelled'">Status: <span id="cancelledStatus">{{this.order.status}}</span></p>
+    <p *ngIf="this.order.status=='pending'"> Status: <span id="pendingStatus">{{this.order.status}}</span></p>
+    <p *ngIf="this.order.status=='paid'">Status: <span id="paidStatus"> {{this.order.status}}</span></p>
+    <p *ngIf="this.order.status=='shipped'">Status: <span id="shippedStatus">{{this.order.status}}</span></p>
 </mat-card>

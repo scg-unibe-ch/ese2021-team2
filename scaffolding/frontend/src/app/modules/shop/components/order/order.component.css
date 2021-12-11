@@ -4,6 +4,8 @@
 }
 h1{
     text-align: center;
+    margin-top: 0;
+    padding-top: 2rem;
 }
 p{
     font-family: Arial, Helvetica, sans-serif;
@@ -41,7 +43,6 @@ mat-form-field{
 ::ng-deep.mat-option {
     background-color: white !important;
 }
-
 ::ng-deep.mat-form-field-ripple {
     background-color: rgb(28, 53, 161) !important;;
 }
@@ -75,4 +76,5 @@ button:hover{
     background-color: rgb(222,230,243);
     font-family: arial, Helvetica, sans-serif;
     height: 100%;
+    overflow: auto;
 }
