@@ -19,7 +19,7 @@ p{
     font-weight: bold;
 }
 mat-card{
-    border-left: rgb(0, 89, 130) 2px solid;
+    border-left: rgb(0, 89, 130) 7px solid;
     margin-left: 1rem;
     margin-right: 1rem;
     background-color: white;
@@ -78,3 +78,23 @@ button:hover{
     height: 100%;
     overflow: auto;
 }
+
+#payMeth{
+    background-color: white;
+    border-left:rgb(0, 89, 130) solid 7px;
+    padding-left: 20px;
+    margin-bottom: 2rem;
+}
+
+#label{
+    padding-top: 0px;
+    
+}
+
+mat-select{
+    margin-top: 1.5rem;
+}
+
+
+
+

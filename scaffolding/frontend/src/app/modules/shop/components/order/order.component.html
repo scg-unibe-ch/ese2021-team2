@@ -49,8 +49,8 @@
                 </div>
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Paymentmethod</mat-label>
+            <mat-form-field  id="payMeth">
+                <label>Paymentmethod</label>
                 <mat-select [(value)]="paymentMethod">
                     <mat-option value="Invoice">Invoice</mat-option>
                     <mat-option value="CreditCard">Credit Card</mat-option>
@@ -70,15 +70,17 @@
             </p>
             </mat-card>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Paymentmethod</mat-label>
-                <mat-select [(value)]="paymentMethod">
-                    <mat-option value="Invoice" selected>Invoice</mat-option>
-                    <mat-option value="CreditCard">Credit Card</mat-option>
-                    <mat-option value="Twint">Twint</mat-option>
-                    <mat-option value="PayPal">PayPal</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div>
+                <mat-form-field id="payMeth">  
+                    <label id="label">Payment Method:</label>
+                    <mat-select [(value)]="paymentMethod">
+                        <mat-option value="Invoice" selected>Invoice</mat-option>
+                        <mat-option value="CreditCard">Credit Card</mat-option>
+                        <mat-option value="Twint">Twint</mat-option>
+                        <mat-option value="PayPal">PayPal</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
 
         <button  (click)="submitOrder()" [disabled]="isAddressInvalid"> Submit Order </button>
