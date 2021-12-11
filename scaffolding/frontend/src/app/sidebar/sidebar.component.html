@@ -19,10 +19,7 @@
     </div>
 </div>
 <div class="menu-button-wrapper">
-    <button mat-button class="menu-button" *ngIf="isShopRoute() || isBoardRoute()" (click)="sendIsExpanded()">
-        <mat-icon>home</mat-icon>
-        <span class="dashboard">Dashboard</span>
-    </button>
+    
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>

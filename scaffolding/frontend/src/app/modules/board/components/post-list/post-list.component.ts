@@ -113,7 +113,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         } else {
             const fd = new FormData();
             fd.append('image', file);
-            this.httpClient.post(environment.endpointURL +  'post/' + postId + '/image', fd);
+            this.httpClient.post(environment.endpointURL +  'post/' + postId + '/image', fd).subscribe();
         }
     }
 

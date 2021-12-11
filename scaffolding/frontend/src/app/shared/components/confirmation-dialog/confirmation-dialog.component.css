@@ -1,14 +1,31 @@
 .mat-dialog-title {
     text-align: center;
-    color: white;
-    background:  #1e90ff;
-    width: 100%;
+    font-weight: bold;
+    color: black;
+    background:  rgb(222,230,243);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
 }
 .mat-dialog-content{
-    font-family:sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 
 .mat-dialog-actions{
     display:flex;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.mat-raised-button{
+    color:white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#confirm{
+    background-color: lightgreen;
+}
+
+#decline{
+    background-color:tomato ;
 }

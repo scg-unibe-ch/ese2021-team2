@@ -1,8 +1,6 @@
 mat-card{
     border-left: 7px solid rgb(25, 159, 90);
     border-radius: 5px;
-    
-   
 }
 
 img{
@@ -49,12 +47,10 @@ img{
     display: flex;
     position: absolute;
     right: 20px;
-  
 }
 
 #votedIcon{
     color: red;
-    
 }
 
 #voteIcon{

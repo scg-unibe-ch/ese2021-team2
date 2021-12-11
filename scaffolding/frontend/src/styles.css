@@ -18,9 +18,12 @@ button, input {
 }
 
 .green-snackbar {
-    background-color:green;
+    background-color:rgb(222,244,225);
+    color: rgb(83, 81, 81);
+    font-weight: bold;
+    padding:0.3rem;
 }
 
 .green-snackbar button {
-    color: white
+    color: tomato;
 }

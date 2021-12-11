@@ -1,23 +1,22 @@
-<div class="container">
+<mat-card id="container">
 
-    <div class="first_column">
+    <div id="column">
         <img [src]= "imageURL" onerror="this.src='/assets/images/platzhalter.png'">
     </div>
 
-    <div class="second_column">
-        <div class="description">
-        <span>{{product.category}}</span>
-        <h2>{{product.title}}</h2>
+    <div id="column">
+        <div id="description">
+        <a [routerLink] = "'/shop/'" ><span>{{product.category}}</span></a>
+        <h1>{{product.title}}</h1>
         <p>{{product.description}}</p>
         </div>
         <br>
-        <mat-divider></mat-divider>
         <br>
         <div class="product-price">
             <span>CHF {{product.price.toFixed(2)}}</span>
             <div *ngIf = "!admin; else isAdmin">
-                <button mat-raised-button color = "primary" (click) = "handleAdd()">Add to Cart </button>
-                <button mat-raised-button color = "primary" [routerLink] = "'/shop/cart/'">Go to Cart</button>
+                <button (click) = "handleAdd()">Add to Cart </button>
+                <button id="gotocart" [routerLink] = "'/shop/cart/'">Go to Cart</button>
             </div>
             <ng-template #isAdmin>
                 <button mat-raised-button color = "primary" (click) = "handleUpdate()">Update Product</button>
@@ -26,4 +25,4 @@
 
     </div>
 
-</div>
+</mat-card>
