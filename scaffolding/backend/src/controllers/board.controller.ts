@@ -15,8 +15,6 @@ boardController.post('/getBoardsBySubjectId',
             where: {
                 subjectId: req.body.subjectId}
         }).then(boards => {
-            console.log(boards);
-
             res.send(boards);
         }).catch(err => {
             res.status(500).send(err); });

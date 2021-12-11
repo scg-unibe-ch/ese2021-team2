@@ -10,6 +10,8 @@ adminController.use(checkAdmin);
 
 adminController.get('/',
     (req: Request, res: Response) => {
+        console.log('TEST');
+
         res.send(true);
     }
 );

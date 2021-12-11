@@ -223,6 +223,7 @@ export class OrderComponent implements OnInit {
                                     });
                                     this.paymentSuccessful = true;
                                     this.wasOrderSubmitted = true;
+                                    this.cartService.clearCart();
                            },
                            (err: any) => {
                                this.paymentSuccessful = true;

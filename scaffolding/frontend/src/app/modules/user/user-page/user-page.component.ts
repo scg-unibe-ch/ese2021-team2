@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../models/user.model";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
-import {CartService} from "../../shop/services/cart.service";
 import {UserService} from "../../../core/http/user.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../../../environments/environment";
 import {Post} from "../../../models/post.model";
-import {Subject} from "../../../models/subject.model";
 import {Board} from "../../../models/board.model";
 
 @Component({

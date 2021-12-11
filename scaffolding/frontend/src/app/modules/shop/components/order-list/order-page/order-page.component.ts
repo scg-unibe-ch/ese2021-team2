@@ -24,6 +24,9 @@ export class OrderPageComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    street: string = "";
+    zip: string = "";
+    city: string = "";
     order: Order = new Order(0,-1,"","","","", [],0);
     productItems: ProductItem[] = [];
     productIds: string = '';
@@ -45,24 +48,26 @@ export class OrderPageComponent implements OnInit {
         this.initializeOrder();
     }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  checkAuthorizationStatus(): boolean {
-      this.user = this.userService.getUser();
-      if( this.user && this.user.userId ) {
-          return (this.admin || this.user.userId - this.order.customerId === 0);
-      } else {
-          return false;
-      }
-  }
+    checkAuthorizationStatus(): boolean {
+        this.user = this.userService.getUser();
+        if (this.user && this.user.userId !== undefined) {
+            return (this.admin || this.user.userId === this.order.customerId);
+        } else {
+            return false;
+        }
+    }
 
-  initializeOrder(): void {
+
+    initializeOrder(): void {
       this.httpClient.get<Order>(environment.endpointURL + 'order/' + this.order.orderId)
           .subscribe((res: any) => {
               this.order = res;
               this.status=res.status;
               this.loadProductItems();
+              this.extractAddress();
           }, (err: any) => {
               console.log(err);
           });
@@ -70,7 +75,7 @@ export class OrderPageComponent implements OnInit {
 
 
     payOrder() {
-        const dialogData = new ConfirmationDialogModel("Pay your order", "Are you sure you have paid your order?");
+        const dialogData = new ConfirmationDialogModel("Pay for your order", "Are you sure you paid for your order?");
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             maxWidth: '400px',
             closeOnNavigation : true,
@@ -161,5 +166,11 @@ export class OrderPageComponent implements OnInit {
                     });
             }
         })
+    }
+    extractAddress(): void {
+        var addressArray = this.order.deliveryAddress.split(',');
+        this.street = addressArray[0]+' '+ addressArray[1];
+        this.city = addressArray[2];
+        this.zip = addressArray[3];
     }
 }
