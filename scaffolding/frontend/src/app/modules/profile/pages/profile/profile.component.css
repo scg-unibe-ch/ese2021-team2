@@ -68,10 +68,9 @@
     background: -moz-linear-gradient(bottom right, #9EB8FF, #213BA5);
     background: linear-gradient(to top left, #9EB8FF, #213BA5);
     clip-path: ellipse(108% 100% at 108% 100%);
-    position: absolute;
-    transform: translate(0, -100%);
-    top:100%;
-    left: 0;
+    position: fixed;
+    bottom: 0;
+    left: 1;
     width: 100%;
 }
 
