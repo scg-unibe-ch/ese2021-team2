@@ -13,7 +13,7 @@
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon mat-icon-button  > {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-hint *ngIf = 'invPwMsgRegistration' color = 'warn'>
+        <mat-hint *ngIf = 'this.invalidPassword' color = 'warn'>
             {{invPwMsgRegistration}}
         </mat-hint>
     </mat-form-field>
