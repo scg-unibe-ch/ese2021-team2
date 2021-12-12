@@ -94,6 +94,9 @@ export class UserComponent {
         if(this.areMandatoryFieldsNull()){
            this.invRegDataMsg = 'The First 5 Fields with a (*) are mandatory to fill in for a Registration.'
             this.activeRegButton = false;
+        }else if(this.invalidPassword){
+            this.invRegDataMsg = 'Your password isn\'t strong enough.';
+            this.activeRegButton = false;
         }else if(this.userToRegister.street!=''&&!this.checkOnlyText(this.userToRegister.street!)){
             this.invRegDataMsg = 'The street should only contain letters.'
             this.activeRegButton = false;
@@ -214,6 +217,7 @@ export class UserComponent {
             this.invPwMsgRegistration = "Something unusual went wrong. Please try again."
         } finally {
             this.invalidPassword = invalidFormat;
+            this.checkStatusButton();
         }
     }
 
