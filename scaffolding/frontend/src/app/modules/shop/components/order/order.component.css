@@ -1,6 +1,7 @@
 
 #afterOrder{
-    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 h1{
     text-align: center;
@@ -79,16 +80,26 @@ button:hover{
     overflow: auto;
 }
 
-#payMeth{
+.form-field{
     background-color: white;
     border-left:rgb(0, 89, 130) solid 7px;
     padding-left: 20px;
     margin-bottom: 2rem;
+    height: 100px;
 }
 
 #label{
     padding-top: 0px;
-    
+
+}
+
+#houseNr{
+    background-color: white;
+    border-left:rgb(0, 89, 130) solid 7px;
+    padding-left: 20px;
+    padding-bottom: 0;
+    margin-bottom: 2rem;
+    height: 100px;
 }
 
 mat-select{
