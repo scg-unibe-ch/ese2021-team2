@@ -28,3 +28,6 @@ mat-card{
     margin-left: 0;
     color: red;
 }
+#fat{
+    font-weight: bold;
+}
