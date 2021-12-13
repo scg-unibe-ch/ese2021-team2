@@ -24,7 +24,6 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
                     if (creatorId === req.body.tokenPayload.userId) {
                         isCreator = true;
                     }
-                    console.log(req.body);
                     boardService.isModerator(req.body.tokenPayload.userId, Number(post.boardId))
                     .then(isMod => {
                         if (isMod || isCreator) {
