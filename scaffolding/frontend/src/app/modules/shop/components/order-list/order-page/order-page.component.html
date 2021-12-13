@@ -5,9 +5,9 @@
 
 <div *ngIf="checkAuthorizationStatus() && !admin">
     <h1 class="headline">Order #{{this.order.orderId}}</h1>
-    <button  [routerLink]="['../..']">View all orders</button>
-    <button  *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
-    <button id="cancelButton" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
+    <button  [routerLink]="['../..']" class="normalButton">View all orders</button>
+    <button  *ngIf="this.order.status==='pending'" (click)="payOrder()" class="normalButton">Pay Order</button>
+    <button id="cancelButton" *ngIf="this.order.status==='pending'" (click)="cancelOrder()" class="cancelButton">Cancel Order</button>
     <h1 class="order-subtitle">Shipment to</h1>
     <mat-card class="address-section">
             <h3>{{this.order.customerName}}</h3>

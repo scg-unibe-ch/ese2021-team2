@@ -83,3 +83,9 @@ button{
 #cancelButton{
     background-color:red;
 }
+.cancelButton:hover{
+    background-color: darkred;
+}
+.normalButton:hover{
+    background-color: dodgerblue;
+}
