@@ -75,6 +75,14 @@
     align-self: center;
 }
 
+.mat-raised-button:hover{
+    background-color: dodgerblue;
+}
+
+.mat-icon-button:hover{
+    opacity: 0.5;
+}
+
 #image-preview{
     object-fit: contain;
     overflow: hidden;

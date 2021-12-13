@@ -11,6 +11,10 @@
     box-shadow: none;
 }
 
+.mat-raised-button:hover{
+    background-color: dodgerblue;
+}
+
 .mat-icon-button{
     color: black;
     background-color: transparent;

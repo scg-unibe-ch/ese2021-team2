@@ -105,6 +105,10 @@ img{
     box-shadow: none;
 }
 
+.mat-raised-button:hover{
+    background-color:dodgerblue;
+}
+
 .mat-toolbar{
     display: inline-flex;
     justify-content: flex-start;
