@@ -18,24 +18,26 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
         const postService: PostService = new PostService();
         const boardService: BoardService = new BoardService();
         let isCreator = false;
-
-        postService.getCreatorId(Number(req.params.postId))
-            .then(creatorId => {
-                if (creatorId === req.body.tokenPayload.userId) {
-                    isCreator = true;
-                }
-                boardService.isModerator(req.body.tokenPayload.userId, Number(req.params.boardId))
-                .then(isMod => {
-                    if (isMod || isCreator) {
-                        next();
-                    } else {
-                        res.status(403).send({ message: 'Forbidden' });
+        postService.getPost(Number(req.params.postId)).then(post => {
+            postService.getCreatorId(Number(req.params.postId))
+                .then(creatorId => {
+                    if (creatorId === req.body.tokenPayload.userId) {
+                        isCreator = true;
                     }
+                    console.log(req.body);
+                    boardService.isModerator(req.body.tokenPayload.userId, Number(post.boardId))
+                    .then(isMod => {
+                        if (isMod || isCreator) {
+                            next();
+                        } else {
+                            res.status(403).send({ message: 'Forbidden' });
+                        }
+                    })
+                    .catch(err => res.status(500).send(err));
                 })
                 .catch(err => res.status(500).send(err));
-            })
-            .catch(err => res.status(500).send(err));
-    } catch (err) {
-        res.status(403).send({ message: 'Forbidden' });
-    }
+            });
+        } catch (err) {
+            res.status(403).send({ message: 'Forbidden' });
+        }
 }
