@@ -55,8 +55,6 @@ boardController.post('/subscribe',
         const out =  Subscription.create(req.body)
         .then(inserted => Promise.resolve(inserted))
         .catch(err => Promise.reject(err));
-        console.log('SUB CREATED');
-
     return out;
     }
 );

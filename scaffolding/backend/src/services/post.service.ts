@@ -105,7 +105,6 @@ export class PostService {
                        .then(found => {
                            if (found != null) {
                                if (!(found.creatorId - deleteReq.tokenPayload.userId)) {
-                                   console.log('Destroying');
                                    Post.destroy({
                                            where: {
                                                postId: found.postId
@@ -222,15 +221,12 @@ export class PostService {
         });
         const posts: Post[] = [];
         if (bookmarkedPosts != null) {
-            console.log(bookmarkedPosts.length + ' so many bookmarked posts');
             for (const bookmark of bookmarkedPosts) {
                 await Post.findByPk(bookmark.postId)
                     .then(found => {
-                        console.log('found a post');
                         posts.push(found);
                     });
             }
-            console.log(posts.length);
             return posts;
         } else {
             return Promise.reject('no bookmarked posts');

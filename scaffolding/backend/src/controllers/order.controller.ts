@@ -6,8 +6,6 @@ const orderService = new OrderService();
 const stripe = require('stripe')('sk_test_51JzfroDwNYe9Y3WcBdkDzuhQi788x9tQO3anNhsDGEaGT6lUvhoadyMLRidDQVMcUydGOGx8thcywc6DMwADoQKg00jbzy0p6z');
 
 orderController.post('/createOrder', (req: Request, res: Response) => {
-    console.log(req.body.productItems);
-    console.log(req.body);
     orderService.createOrder(req.body.order, req.body.productItems)
             .then(created => res.status(200).send(created))
             .catch(err => res.status(500).send(err));
@@ -53,10 +51,8 @@ orderController.get('/:id', (req: Request, res: Response) => {
 });
 
 orderController.put('', (req: Request, res: Response) => {
-    console.log(req.body);
     orderService.updateOrder(req.body)
         .then(order => {
-            console.log('working');
             res.status(200).json({order: order});
         })
         .catch(err => res.status(500).send({message: err}));

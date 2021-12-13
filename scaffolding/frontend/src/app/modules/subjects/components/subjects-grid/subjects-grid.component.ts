@@ -22,7 +22,6 @@ export class SubjectsGridComponent implements OnInit {
         this.httpClient.get(environment.endpointURL + "subject")
             .subscribe((res: any) => {
                 this.subjects = res;
-                    console.log(this.subjects);
                 } ,
                 err => {
                     console.log(err);

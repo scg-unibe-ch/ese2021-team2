@@ -66,7 +66,6 @@ export class PostComponent implements OnInit {
             this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
                 postId: this.postId
             }).subscribe(res => {
-                console.log(res);
             })
 
             this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
@@ -103,7 +102,6 @@ export class PostComponent implements OnInit {
       userId: this.user?.userId,
       postId: this.post.postId
     }).subscribe((res) => {
-      console.log(res);
     },(err: any) => {
       console.log(err);
     });
@@ -119,7 +117,6 @@ export class PostComponent implements OnInit {
               userId: this.user?.userId,
               postId: this.post.postId
           }).subscribe((res) => {
-            console.log(res);
           },(err: any) => {
             console.log(err);
           });
@@ -180,7 +177,6 @@ export class PostComponent implements OnInit {
               semester: this.changedPost.semester,
               postImage: this.changedPost.postImage
           }).subscribe((res) => {
-              console.log(res);
               this.post = this.changedPost;
               this.cancelEdit();
 
@@ -221,7 +217,6 @@ export class PostComponent implements OnInit {
       }
   }
   edit(): void{
-        console.log('edit view');
         this.editMode = true;
         this.changedPost = this.post;
     }

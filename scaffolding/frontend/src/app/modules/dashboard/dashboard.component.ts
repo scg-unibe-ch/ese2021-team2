@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
+
 
   setAll() {
     this.data.changeMessage("")
@@ -75,7 +75,6 @@ export class DashboardComponent implements OnInit, OnDestroy  {
 
   setSemester(sem:number){
     if(sem == 0){
-      console.log(sem);
       this.data.changeMessage("");
       return;
     }
