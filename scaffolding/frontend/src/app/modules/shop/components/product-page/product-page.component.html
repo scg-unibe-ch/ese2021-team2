@@ -6,7 +6,7 @@
 
     <div id="column">
         <div id="description">
-        <a [routerLink] = "'/shop/'" ><span>{{product.category}}</span></a>
+        <a [routerLink] = "'/shop/'" (click) = "setFilter()" ><span>{{product.category}}</span></a>
         <h1>{{product.title}}</h1>
         <p>{{product.description}}</p>
         </div>
