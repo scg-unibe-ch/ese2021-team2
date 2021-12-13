@@ -7,6 +7,7 @@ import { ConfirmationDialogModel } from 'src/app/models/confirmation-dialog.mode
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { User } from '../../../../models/user.model';
 import {isNumeric} from "rxjs/internal-compatibility";
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class ProfileComponent implements OnInit {
     constructor(public userService: UserService,
                 private dialog: MatDialog,
                 public httpClient: HttpClient,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private router: Router) {
         userService.loggedIn$.subscribe(res => {
             this.loggedIn = res;
             this.imageURL = this.userService.getProfileImageURL()
@@ -74,6 +76,7 @@ export class ProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe(dialogResult => {
             if (dialogResult) {
                 this.deleteAccount();
+                this.router.navigate(['..']);
             }
         });
     }
@@ -89,6 +92,7 @@ export class ProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe(dialogResult => {
             if(dialogResult) {
                 this.userService.logout();
+                this.router.navigate(['..']);
             }
         })
     }
