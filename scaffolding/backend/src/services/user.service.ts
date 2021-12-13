@@ -206,8 +206,6 @@ export class UserService {
     }
 
     public updateProfileImage(req: MulterRequest): Promise<User> {
-        console.log(req.file + ' PARAMS ID');
-
         return User.findByPk(req.params.id)
             .then(async found => {
                 if (!found) {

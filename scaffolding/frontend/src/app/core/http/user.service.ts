@@ -9,9 +9,6 @@ import {Post} from "../../models/post.model";
     providedIn: 'root'
   })
 export class UserService {
-    // TODO: Write tests for the register(), login() and delete() functions
-    // which are all based on each other so when the register() test fails the others shouldn't execute etc.
-
     private user: User | null;
     private loggedIn: boolean;
     private admin: boolean;
@@ -54,7 +51,7 @@ export class UserService {
     }
 
     private setLoggedInURL() {
-        if(this.user && this.user.profile_image) { 
+        if(this.user && this.user.profile_image) {
             this.imageURLSource.next(environment.endpointURL + 'user/' + this.user.userId + '/image')
         }
     }
@@ -140,7 +137,7 @@ export class UserService {
 
     isAdmin() {
         return this.admin; //CHANGE BACK
-        
+
     }
 
     getLoggedIn(): boolean {
@@ -197,13 +194,11 @@ export class UserService {
         this.httpClient.get<Post[]>(environment.endpointURL + 'post/bookmarks/all')
             .subscribe((res) => {
                     this.bookmarkedPosts = res;
-                    console.log('Is bookmarked: ' + this.bookmarkedPosts);
                 }, (err: any) => {
                     console.log(err + ' at initialization');
 
                 }
             );
-        console.log('load bookmarked posts');
     }
 
     getBookmarkedPosts(): Post[] {
@@ -232,7 +227,6 @@ export class UserService {
         if( !this.isPostBookmarked(post.postId)){
             this.httpClient.post(environment.endpointURL + "post/" + post.postId + "/bookmark", {})
                 .subscribe((res) => {
-                    console.log('Added to bookmark: ' + post.postId);
                     this.bookmarkedPosts?.push(post);
                 }, (err: any) => {
                     console.log('Couldnt add post to bookmarks ' + err);
@@ -245,7 +239,6 @@ export class UserService {
         if( this.isPostBookmarked(post.postId)) {
             this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/bookmark/delete", {})
                 .subscribe((res) => {
-                    console.log('Deleted from bookmarks: ' + post.postId);
                     if( this.bookmarkedPosts ) {
                         for (let i = 0; i < this.bookmarkedPosts.length; i++) {
                             if (post.postId - this.bookmarkedPosts[i].postId === 0) {
@@ -265,7 +258,6 @@ export class UserService {
             this.httpClient.delete(environment.endpointURL + "post/" + post.postId + "/delete", {})
                 .subscribe(res => {
                     this.removePostFromBookmarks(post);
-                    console.log('Successfully deleted this post');
                 }, (err: any) => {
                     console.log(err);
                 });
@@ -283,7 +275,7 @@ export class UserService {
     deleteProfileImage(){
         this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
             .subscribe((res) => {
-                this.imageURLSource.next('/assets/images/no_user.jpg'); 
+                this.imageURLSource.next('/assets/images/no_user.jpg');
             },
             error => {
 

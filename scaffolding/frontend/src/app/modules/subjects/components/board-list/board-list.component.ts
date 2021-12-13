@@ -33,7 +33,6 @@ export class BoardListComponent implements OnInit {
 
     public  setSubjectId(subjectId: number): void{
         this.subjectId = subjectId;
-        console.log(this.subjectId)
         this.setBoardList()
     }
 
@@ -73,6 +72,6 @@ export class BoardListComponent implements OnInit {
         }
         return "rgb("+rgb[0]+","+rgb[2]+","+rgb[1]+")"
       }
-    
+
 
 }

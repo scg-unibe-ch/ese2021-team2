@@ -18,7 +18,6 @@ export class OrderService {
     private async addProductsToOrder(orderId: number, productItems: ProductItemAttributes[]): Promise<string> {
         try {
             for (let i = 0; i < productItems.length; i++) {
-                console.log(productItems[i].product.productId + ' so many: ' + productItems[i].quantity);
                 await ProductOrder.create({
                     orderId: orderId,
                     productId: productItems[i].product.productId,
@@ -33,7 +32,6 @@ export class OrderService {
     }
 
     public getOrdersOfUser(userId: number): Promise<Order[]> {
-        console.log('Getting orders of ' + userId);
         return Order.findAll({
             where: {
                 customerId: userId,

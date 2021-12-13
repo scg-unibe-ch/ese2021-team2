@@ -199,13 +199,11 @@ export class OrderComponent implements OnInit {
            key: 'pk_test_51JzfroDwNYe9Y3WcyjCtptJFt6slOlyMayQJWLfkINvxc9bAPoyQRZ0N4X8VIZOyUyuadq0ioNutyX8YXd6ASvw70067Nj7siO',
            locale: 'auto',
            token: (stripeToken: any) => {
-               console.log(stripeToken.card);
                this.httpClient.post(environment.endpointURL + 'order/payment/stripe', {
                    amount: this.totalPrice,
                    token: stripeToken,
                })
                    .subscribe((res: any) => {
-                           console.log('Successfully Paid');
                             this.httpClient.post(environment.endpointURL + "order/createOrder", {
                                 order: {
                                     customerId: this.user?.userId,
@@ -266,7 +264,6 @@ export class OrderComponent implements OnInit {
                     key: 'pk_test_51H7bbSE2RcKvfXD4DZhu',
                     locale: 'auto',
                     token: function (stripeToken: any) {
-                        console.log(stripeToken)
                         this.snackBar.open('Payment has been successful!', "Dismiss", {
                             duration : 3000,
                             panelClass: ['green-snackbar'],
@@ -284,7 +281,6 @@ export class OrderComponent implements OnInit {
         while(!window.document.getElementById('stripe-script') && i < 12){
             i++;
             await this.sleep(1000);
-            console.log(i + 's');
         }
         if( !window.document.getElementById('stripe-script')) {
             this.snackBar.open('Could not load script!', "Dismiss", {
