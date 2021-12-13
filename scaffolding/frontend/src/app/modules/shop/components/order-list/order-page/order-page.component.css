@@ -6,6 +6,7 @@
     padding-bottom: 20px;
 }
 .address-section {
+    background-color: white;
     margin-top: 15px;
     font-weight: bold;
     text-align: left;
@@ -31,6 +32,7 @@
     font-style: italic;
 }
 .total{
+    background-color: white;
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: inline-flex;
@@ -52,6 +54,7 @@
     align-items: center;
     margin-top: 10px;
     flex-wrap: nowrap;
+    background-color: white;
 }
 .name{
     opacity: 0.8;
@@ -61,4 +64,22 @@
     padding-bottom: 20px;
     text-align: center;
 }
-
+.form-field{
+    background-color: white;
+    border-left:rgb(0, 89, 130) solid 7px;
+    padding-left: 20px;
+    border-radius: 0.5rem;
+}
+button{
+    border: 0px;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28, 53, 161);
+    color: white;
+    font-weight: bold;
+}
+#cancelButton{
+    background-color:red;
+}

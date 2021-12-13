@@ -5,9 +5,9 @@
 
 <div *ngIf="checkAuthorizationStatus() && !admin">
     <h1 class="headline">Order #{{this.order.orderId}}</h1>
-    <button mat-raised-button color="primary" *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
-    <button mat-raised-button [routerLink]="['../..']">View all orders</button>
-    <button mat-raised-button color="warn" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
+    <button  [routerLink]="['../..']">View all orders</button>
+    <button  *ngIf="this.order.status==='pending'" (click)="payOrder()">Pay Order</button>
+    <button id="cancelButton" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
     <h1 class="order-subtitle">Shipment to</h1>
     <mat-card class="address-section">
             <h3>{{this.order.customerName}}</h3>
@@ -42,8 +42,8 @@
     <h1 class="headline">Order #{{this.order.orderId}} by User: "{{this.order.customerName}}" Id #{{this.order.customerId}}</h1>
     <button mat-raised-button [routerLink]="['../..']">View all orders</button>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Status</mat-label>
+    <mat-form-field class="form-field">
+        <mat-label>Change Status</mat-label>
             <mat-select [(value)]="status">
                 <mat-option value="pending">Pending</mat-option>
                 <mat-option value="paid">Paid</mat-option>

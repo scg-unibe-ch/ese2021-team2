@@ -85,7 +85,12 @@ button:hover{
     border-left:rgb(0, 89, 130) solid 7px;
     padding-left: 20px;
     margin-bottom: 2rem;
-    height: 100px;
+}
+:disabled{
+    background-color: darkgrey;
+}
+:disabled:hover{
+    background-color: darkgrey;
 }
 
 #label{
