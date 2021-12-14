@@ -19,18 +19,22 @@ export function checkModOrCommentCreator(req: Request, res: Response, next: any)
         const boardService: BoardService = new BoardService();
         let isCreator = false;
 
-        postCommentService.getCreatorId(req.body.postCommentId)
+        postCommentService.getCreatorId(Number(req.params.commentId))
             .then(creatorId => {
                 if (creatorId === req.body.tokenPayload.userId) {
                     isCreator = true;
                 }
-                boardService.isModerator(req.body.tokenPayload.userId, req.body.boardId)
-                .then(isMod => {
-                    if (isMod || isCreator) {
-                        next();
-                    } else {
-                        res.status(403).send({ message: 'Forbidden' });
-                    }
+                postCommentService.getPost(Number(req.params.commentId))
+                .then(post => {
+                    boardService.isModerator(req.body.tokenPayload.userId, post.boardId)
+                    .then(isMod => {
+                        if (isMod || isCreator) {
+                            next();
+                        } else {
+                            res.status(403).send({ message: 'Forbidden' });
+                        }
+                    })
+                    .catch(err => res.status(500).send(err));
                 })
                 .catch(err => res.status(500).send(err));
             })

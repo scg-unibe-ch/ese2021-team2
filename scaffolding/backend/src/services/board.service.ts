@@ -65,7 +65,9 @@ export class BoardService {
                     resolve(false);
                 }
             })
-            .catch(err => reject(err));
+            .catch(err => {
+                reject(err);
+            });
         });
     }
 }

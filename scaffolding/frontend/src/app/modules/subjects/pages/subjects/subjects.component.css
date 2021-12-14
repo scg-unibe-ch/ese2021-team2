@@ -1,4 +1,27 @@
-#title{
+#background {
+    height: 200%;
+    width: 100%;
+    background-color: #5799c2a1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.titleContainer {
+    height: 40rem;
+    position: relative;
+    padding-left: 4rem;
+    background-color: rgb(249, 249, 249);
+    clip-path: ellipse(87% 100% at 78.12% 0%);
+}
+
+#titleBox {
+    margin-top: 5rem;
+    background-color: rgb(225, 73, 101);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    display: inline-block;
+}
+
+#title {
     font-size: 2.6rem;
     font-weight: 900;
     position: relative;
@@ -8,13 +31,6 @@
     padding-right: 1rem;
 }
 
-#titleBox{
-    margin-top: 5rem;
-    background-color: rgb(225, 73, 101);
-    padding: 0.5rem;
-    border-radius: 1rem;
-    display: inline-block;
-}
 
 #admin-panel {
     width: 40rem;
@@ -35,29 +51,7 @@
     background-color: rgb(250, 252, 255);
 }
 
-.titleContainer{
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    height: 500px;
-    background-color: rgb(249, 249, 249);
-    clip-path: ellipse(87% 100% at 78.12% 0%);
-    bottom: 28px;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-left: 4rem;
-}
-
-
-
-#content{
+#content {
     position: absolute;
     top: 10%;
 }
-
-#background{
-    height: 200%;
-    width: 100%;
-    background-color: #5799c2a1;
-}
-
-

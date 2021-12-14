@@ -14,7 +14,6 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
             res.status(403).send({ message: 'Forbidden' });
         }
         req.body.tokenPayload = decoded;
-
         const postService: PostService = new PostService();
         const boardService: BoardService = new BoardService();
         let isCreator = false;
