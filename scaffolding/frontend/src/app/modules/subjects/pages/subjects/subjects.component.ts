@@ -126,9 +126,8 @@ export class SubjectsComponent implements OnInit {
 
 
   deleteSubject(sub: Subject){
-    this.httpClient.delete(environment.endpointURL+"subject/"+this.moddedSubject.subjectId+"/delete").subscribe(res=>{
+    this.httpClient.delete(environment.endpointURL+"subject/"+sub.subjectId+"/delete").subscribe(res=>{
       console.log(res);
-      
     }, err => {
       console.log(err);
       
