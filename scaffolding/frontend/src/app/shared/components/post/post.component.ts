@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
 import { ActivatedRoute } from '@angular/router';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import {ModeratorService} from "../../../core/moderator/moderator.service";
 
 
 @Component({
@@ -33,21 +34,24 @@ export class PostComponent implements OnInit {
   creator:any = {userName: ""}
   SemesterAuswahl = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
   KategorieAuswahl = ['Organization', 'Exercises', 'Exams', 'Other'];
-
+  moderator: boolean;
 
     constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.admin$.subscribe(res => this.admin = res);
         userService.user$.subscribe(res => this.user = res);
+        userService.moderator$.subscribe(res => this.moderator = res);
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.admin = userService.isAdmin();
         this.user = userService.getUser();
+        this.moderator = userService.isModerator();
 
         this._Activatedroute.paramMap.subscribe(params => {
 
             this.postId= parseInt(params.get('postId')!);
+            userService.refreshModerator(this.post.postId)
 
             this.httpClient.get( environment.endpointURL + "post/"+this.postId
             ).subscribe((post: any) => {

@@ -2,6 +2,7 @@ import { BoardService } from './../services/board.service';
 import { PostCommentService } from './../services/postComment.service';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import {ModeratorService} from '../services/moderator.service';
 
 export function checkModOrCommentCreator(req: Request, res: Response, next: any) {
     try {
@@ -16,7 +17,7 @@ export function checkModOrCommentCreator(req: Request, res: Response, next: any)
         req.body.tokenPayload = decoded;
 
         const postCommentService: PostCommentService = new PostCommentService();
-        const boardService: BoardService = new BoardService();
+        const moderatorService: ModeratorService = new ModeratorService();
         let isCreator = false;
 
         postCommentService.getCreatorId(Number(req.params.commentId))
@@ -26,7 +27,7 @@ export function checkModOrCommentCreator(req: Request, res: Response, next: any)
                 }
                 postCommentService.getPost(Number(req.params.commentId))
                 .then(post => {
-                    boardService.isModerator(req.body.tokenPayload.userId, post.boardId)
+                    moderatorService.isModerator(req.body.tokenPayload.userId, post.boardId)
                     .then(isMod => {
                         if (isMod || isCreator) {
                             next();
