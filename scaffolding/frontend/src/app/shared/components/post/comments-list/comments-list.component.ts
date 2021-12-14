@@ -13,6 +13,7 @@ import { PostCommentModel } from 'src/app/models/postComment.model';
 export class CommentsListComponent implements OnInit {
 
     @Input() postId: number | null = null;
+    @Input() moderator: boolean = false;
     postCommentList = [{postCommentId: 0, postId: 0, commentText: '', userId: 0, userName: ''}]
     showComments: boolean = false;
     loggedIn: boolean = false;
@@ -84,7 +85,7 @@ export class CommentsListComponent implements OnInit {
 
     authorizedToEdit(post: PostCommentModel): boolean {
         if (this.user && this.user.userId !== undefined && post && post.userId !== undefined) {
-            return this.admin || this.user.userId === post.userId;
+            return this.moderator || this.admin || this.user.userId === post.userId;
         } else {
             return false;
         }

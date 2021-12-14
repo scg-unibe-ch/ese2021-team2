@@ -17,6 +17,7 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
         const postService: PostService = new PostService();
         const moderatorService: ModeratorService = new ModeratorService();
         let isCreator = false;
+        console.log(req.params);
         postService.getPost(Number(req.params.postId)).then(post => {
             postService.getCreatorId(Number(req.params.postId))
                 .then(creatorId => {
@@ -34,8 +35,9 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
                     .catch(err => res.status(500).send(err));
                 })
                 .catch(err => res.status(500).send(err));
-            });
-        } catch (err) {
-            res.status(403).send({ message: 'Forbidden' });
-        }
+            })
+            .catch(err => res.status(500).send(err));
+    } catch (err) {
+        res.status(403).send({ message: 'Forbidden' });
+    }
 }

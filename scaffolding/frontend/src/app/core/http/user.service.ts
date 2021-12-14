@@ -200,10 +200,10 @@ export class UserService {
     }
 
     refreshModerator(postId: number){
-        this.httpClient.get<boolean>(environment.endpointURL + "moderator/" + postId )
+        this.httpClient.get<boolean>(environment.endpointURL + "moderator/" + postId)
             .subscribe((res) => {
                 this.isModSource.next(res);
-            }, () => {
+            }, (err) => {
                 this.isModSource.next(false);
             });
     }

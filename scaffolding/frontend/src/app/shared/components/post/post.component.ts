@@ -40,7 +40,10 @@ export class PostComponent implements OnInit {
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.admin$.subscribe(res => this.admin = res);
         userService.user$.subscribe(res => this.user = res);
-        userService.moderator$.subscribe(res => this.moderator = res);
+        userService.moderator$.subscribe(res => {
+            console.log(res);
+            this.moderator = res
+        });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
@@ -50,8 +53,8 @@ export class PostComponent implements OnInit {
 
         this._Activatedroute.paramMap.subscribe(params => {
 
-            this.postId= parseInt(params.get('postId')!);
-            userService.refreshModerator(this.post.postId)
+            this.postId = parseInt(params.get('postId')!);
+            userService.refreshModerator(this.postId)
 
             this.httpClient.get( environment.endpointURL + "post/"+this.postId
             ).subscribe((post: any) => {
@@ -160,7 +163,7 @@ export class PostComponent implements OnInit {
 
     authorizedToEdit(): boolean {
         if (this.user && this.user.userId !== undefined && this.post && this.post.creatorId !== undefined) {
-            return this.admin || this.user.userId === this.post.creatorId;
+            return this.moderator || this.admin || this.user.userId === this.post.creatorId;
         } else {
             return false;
         }

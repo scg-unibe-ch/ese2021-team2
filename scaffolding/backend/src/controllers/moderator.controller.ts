@@ -5,15 +5,13 @@ import {checkModOrPostCreator} from '../middlewares/checkModOrPostCreator';
 const moderatorController: Router = express.Router();
 const moderatorService: ModeratorService = new ModeratorService();
 
-moderatorController.use(checkModOrPostCreator);
-
-moderatorController.get('/:postId/',
+moderatorController.get('/:postId/', checkModOrPostCreator,
     (req: Request, res: Response) => {
         res.send(true);
     }
 );
 
-moderatorController.post( '/',
+moderatorController.post( '/', checkModOrPostCreator,
     (req: Request, res: Response) => {
         moderatorService.makeModerator(req.body.userId, req.body.boardId)
             .then(() => res.status(200).send())
