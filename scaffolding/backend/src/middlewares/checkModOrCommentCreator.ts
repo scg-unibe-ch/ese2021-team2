@@ -2,6 +2,7 @@ import { BoardService } from './../services/board.service';
 import { PostCommentService } from './../services/postComment.service';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import {ModeratorService} from '../services/moderator.service';
 
 export function checkModOrCommentCreator(req: Request, res: Response, next: any) {
     try {
@@ -16,21 +17,25 @@ export function checkModOrCommentCreator(req: Request, res: Response, next: any)
         req.body.tokenPayload = decoded;
 
         const postCommentService: PostCommentService = new PostCommentService();
-        const boardService: BoardService = new BoardService();
+        const moderatorService: ModeratorService = new ModeratorService();
         let isCreator = false;
 
-        postCommentService.getCreatorId(req.body.postCommentId)
+        postCommentService.getCreatorId(Number(req.params.commentId))
             .then(creatorId => {
                 if (creatorId === req.body.tokenPayload.userId) {
                     isCreator = true;
                 }
-                boardService.isModerator(req.body.tokenPayload.userId, req.body.boardId)
-                .then(isMod => {
-                    if (isMod || isCreator) {
-                        next();
-                    } else {
-                        res.status(403).send({ message: 'Forbidden' });
-                    }
+                postCommentService.getPost(Number(req.params.commentId))
+                .then(post => {
+                    moderatorService.isModerator(req.body.tokenPayload.userId, post.boardId)
+                    .then(isMod => {
+                        if (isMod || isCreator) {
+                            next();
+                        } else {
+                            res.status(403).send({ message: 'Forbidden' });
+                        }
+                    })
+                    .catch(err => res.status(500).send(err));
                 })
                 .catch(err => res.status(500).send(err));
             })

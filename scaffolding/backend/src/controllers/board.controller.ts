@@ -1,12 +1,14 @@
 import express, { Router, Request, Response, request } from 'express';
+import { checkAdmin } from '../middlewares/checkAdmin';
 import {Board} from '../models/board.model';
 import { Subscription } from '../models/subscription.model';
 import { PostService } from '../services/post.service';
 import { UserService } from '../services/user.service';
+import { BoardService } from '../services/board.service';
 
 const postService = new PostService;
 const boardController: Router = express.Router();
-
+const boardService = new BoardService;
 
 boardController.post('/getBoardsBySubjectId',
     (req: Request, res: Response) => {
@@ -119,6 +121,13 @@ boardController.post('/unsubscribe',
     }
 );
 
+boardController.post('/create', checkAdmin,
+    (req: Request, res: Response) => {
+        boardService.createBoard(req.body)
+            .then(subject => res.send(subject))
+            .catch(err => res.status(500).send(err));
+    }
+);
 
 
 export const BoardController: Router = boardController;

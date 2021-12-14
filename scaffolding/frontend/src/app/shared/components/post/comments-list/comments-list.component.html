@@ -3,11 +3,11 @@
 <div id="outline">
 <mat-icon (click)="createComment()" *ngIf="loggedIn" id="chatIcon">chat_bubble_outline</mat-icon>
 <button (click)="switchShowComments()" id="toggleButton">Toggle Comments</button>
-   
 
 
 
-    
+
+
     <div *ngIf="creatingComment" id="postCreator">
         <h3>Create a comment</h3>
 
@@ -18,6 +18,6 @@
         </div>
 
 <div *ngIf="showComments">
-<app-post-comment *ngFor="let postcomment of postCommentList" [postComment]="postcomment"></app-post-comment>
+<app-post-comment *ngFor="let postcomment of postCommentList" [postComment]="postcomment" [deletable]="authorizedToEdit(postcomment)"></app-post-comment>
 </div>
 </div>

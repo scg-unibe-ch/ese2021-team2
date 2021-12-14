@@ -33,9 +33,9 @@
 
 
 
-<app-comments-list [postId]="this.post.postId"></app-comments-list>
+<app-comments-list [postId]="this.post.postId" [moderator]="moderator"></app-comments-list>
 
-   
+
 </mat-card>
 <mat-card *ngIf="editMode" >
 
@@ -43,7 +43,7 @@
     <br>
     <textarea id="newContent" class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
     <br>
-   
+
 
  <select [(ngModel)]="this.changedPost.semester"  class="newPostField" id="newSemester">
         <option value="" disabled>Semester</option>
@@ -64,7 +64,7 @@
     <div id="editbtn">
     <button id="submitPost" (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
     <button id="cancel" (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
-    </div>  
+    </div>
     <app-comments-list id="comList"></app-comments-list>
 
 </mat-card>

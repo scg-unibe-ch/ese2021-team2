@@ -17,6 +17,8 @@
 #dashboard {
     background: rgb(133,217,255);
     background: linear-gradient(180deg, rgb(152, 209, 235) 0%, rgb(136, 158, 228) 72%);
-    
+}
 
+.mat-drawer-side {
+    border: 0;
 }

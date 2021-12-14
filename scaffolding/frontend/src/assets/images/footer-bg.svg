@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 170 60">¨
+    <defs>
+        <linearGradient id="gradient-outer" gradientTransform="rotate(-30)">
+            <stop offset="0%" stop-color="#fac09c"/>
+            <stop offset="50%" stop-color="#b2b4e1"/>
+            <stop offset="100%" stop-color="#acb3e7"/>
+        </linearGradient>
+    </defs>
+    <path d="M 0 60
+        C 10 50, 20 40, 60 40
+        C 120 40, 140 70, 170 0
+        L 170 60
+        L 0 60"
+        fill="url(#gradient-outer)"/>
+</svg>

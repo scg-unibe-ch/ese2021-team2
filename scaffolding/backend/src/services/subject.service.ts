@@ -12,18 +12,19 @@ export class SubjectService {
     }
 
     // TODO: Pass the image in here once the image is implemented
-    public modifySubject(newSubject: SubjectAttributes): Promise<Subject> {
+    public modifySubject(newSubject: SubjectAttributes): Promise<void> {
         return new Promise((resolve, reject) => {
-            Subject.update({
-                subjectId: newSubject.subjectId,
-                name: newSubject.name
-            }, {
+                Subject.update({
+                    subjectId: newSubject.subjectId,
+                    name: newSubject.name
+                }, {
                 where: {
                     subjectId: newSubject.subjectId
                 }
             })
-            .then(res => resolve(res[1][0]))
+            .then(res => resolve())
             .catch(err => reject(err));
+
         });
     }
 

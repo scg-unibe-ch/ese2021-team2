@@ -10,6 +10,7 @@ import { Admin } from './models/admin.model';
 import { Order } from './models/order.model';
 
 import cors from 'cors';
+import { ModeratorController} from './controllers/moderator.controller';
 import { AdminController } from './controllers/admin.controller';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
@@ -65,7 +66,9 @@ export class Server {
         ProductOrder.createAssociations();
 
         this.sequelize.sync().then(() => {                           // create connection to the database
-            this.server.listen(this.port, () => {});                                   // start server on specified port
+            this.server.listen(this.port, () => {                                   // start server on specified port
+                console.log(`server listening at http://localhost:${this.port}`);   // indicate that the server has started
+            });
         });
     }
 
@@ -97,6 +100,7 @@ export class Server {
             .use('/board', BoardController)
             .use('/product', ProductController)
             .use('/comment', CommentController)
+            .use('/moderator', ModeratorController)
             .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))

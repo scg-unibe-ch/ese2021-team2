@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 import {PostComment} from '../models/postComment.model';
 import {PostCommentService} from '../services/postComment.service';
+import { checkModOrCommentCreator } from '../middlewares/checkModOrCommentCreator';
 
 const postCommentController: Router = express.Router();
 const postCommentService = new PostCommentService;
@@ -21,6 +22,14 @@ postCommentController.post('/createComment',
     (req: Request, res: Response) => {
         postCommentService.createPostComment(req.body)
             .then(created => res.send(created))
+            .catch(err => res.status(500).send(err));
+    }
+);
+
+postCommentController.delete('/:commentId/delete', checkModOrCommentCreator,
+    (req: Request, res: Response) => {
+        postCommentService.deletePostComment(Number(req.params.commentId))
+            .then(() => res.send())
             .catch(err => res.status(500).send(err));
     }
 );

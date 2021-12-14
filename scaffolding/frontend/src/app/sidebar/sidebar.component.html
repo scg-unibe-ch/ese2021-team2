@@ -1,4 +1,4 @@
-<a class="logo" routerLink="/" routerLinkActive="active">
+<a class="logo" routerLink="" routerLinkActive="active">
     <img src="/assets/images/logo.png" />
 </a>
 <div class="user-info">
@@ -19,17 +19,13 @@
     </div>
 </div>
 <div class="menu-button-wrapper">
-
     <button mat-button class="menu-button" *ngIf="isRoute()" (click)="sendIsExpanded()">
         <span class="menu-text">Filter</span>
     </button>
-    
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>
-
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/myLectures'">
-
         <span class="menu-text">My Lectures</span>
     </button>
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/bookmarks'">
