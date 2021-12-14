@@ -1,15 +1,62 @@
 <div id="background">
-
-
-<div id="titleContainer">
-<img src="/assets/images/logo.png" />
-<p>The posts of the Boards youre currently subscribed to</p>
-</div>
-
-
-<div *ngIf="loggedIn" id="posts">
-    
-    <app-post-preview *ngFor="let post of posts" [post]="post"></app-post-preview>
-
-</div>
+    <div *ngIf="loggedIn else notLoggedIn" id="posts">
+        <div id="titleContainer">
+            <img src="/assets/images/logo.png" />
+            <p>The posts of the Boards youre currently subscribed to</p>
+        </div>
+        <app-post-preview *ngFor="let post of posts" [post]="post"></app-post-preview>
+    </div>
+    <ng-template #notLoggedIn>
+        <section id="hero">
+            <div id="hero-text-wrapper">
+                <h1>
+                    InSync
+                    <div id="blue-bar"></div>
+                </h1>
+                <p id="hero-text">Communication is the key to education.<br>Follow a subject, help and learn with others.</p>
+            </div>
+            <img id="hero-bg-inner" src="/assets/images/hero-bg-inner.svg" />
+            <img id="hero-post-1" src="/assets/images/hero-bg-post-1.svg" />
+            <img id="hero-post-2" src="/assets/images/hero-bg-post-2.svg" />
+            <img id="hero-post-3" src="/assets/images/hero-bg-post-3.svg" />
+            <img id="hero-bg-outer" src="/assets/images/hero-bg-outer.svg" />
+        </section>
+        <section id="subjects">
+            <div id="subjects-text-wrapper">
+                <h2>
+                    Subjects
+                    <div id="red-bar"></div>
+                </h2>
+                <p id="subjects-text">
+                    Chose a <b>subject</b>, then the <b>lecture</b> you want and you will have access<br>
+                    to all of the <b>boards</b> information. You can <b>post</b> questions, ways to solve<br>
+                    complex problems or search for people to study with!
+                </p>
+            </div>
+            <div id="card-container">
+                <div class="card" id="math-card">
+                    <img id="math-card-logo" src="/assets/images/mathematics-logo.svg"/>
+                    <span class="card-text">MATHEMATICS</span>
+                </div>
+                <div class="card" id="psy-card">
+                    <img id="psy-card-logo" src="/assets/images/psychology-logo.svg"/>
+                    <span class="card-text">PSYCHOLOGY</span>
+                </div>
+                <div class="card" id="cs-card">
+                    <img id="cs-card-logo" src="/assets/images/computer-science-logo.svg"/>
+                    <span class="card-text">COMPUTER SCIENCE</span>
+                </div>
+            </div>
+        </section>
+        <section id="goal">
+            <h4>InSync aims to build the biggest learning community in Switzerland!</h4>
+            <h3>Join now and be part of the experience!</h3>
+            <div id="orange-bar"></div>
+            <div id="lime-bar"></div>
+            <div id="ocean-bar"></div>
+            <img id="speech-bubble-1" src="/assets/images/speech-bubble.svg" />
+            <img id="speech-bubble-2" src="/assets/images/speech-bubble.svg" />
+            <img id="footer-bg" src="/assets/images/footer-bg.svg" />
+        </section>
+    </ng-template>
 </div>
