@@ -23,8 +23,8 @@ export class UserComponent {
     user: User | null;
     hide: boolean = true;
 
-    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
-    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
+    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '');
+    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '');
 
     invPwMsgRegistration: string | undefined;
     invalidPassword: boolean | undefined;

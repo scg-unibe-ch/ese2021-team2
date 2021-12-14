@@ -1,13 +1,15 @@
 <div id="background">
     <div id="titleContainer">
-<h1 id="title">My Lectures</h1>
-</div>
+        <div id="titleBox">
+            <h1 id="title">My Lectures</h1>
+        </div>
+    </div>
 
-<div id="list">
-<div *ngFor="let board of boardList" class="board" [ngStyle]="{'border-color': colorHashBoard(board.boardId)}">
-    <button mat-button class="menu-button" [routerLink]="['/board/' + board.boardId]">
-        <span class="menu-text">{{board.boardName}}</span>
-    </button>
-</div>
-</div>
+    <div id="list">
+        <div *ngFor="let board of boardList" class="board" [ngStyle]="{'border-color': colorHashBoard(board.boardId)}">
+            <button mat-button class="menu-button" [routerLink]="['/board/' + board.boardId]">
+                <span class="menu-text">{{board.boardName}}</span>
+            </button>
+        </div>
+    </div>
 </div>

@@ -1,7 +1,7 @@
-import { BoardService } from './../services/board.service';
 import { PostService } from './../services/post.service';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import {ModeratorService} from '../services/moderator.service';
 
 export function checkModOrPostCreator(req: Request, res: Response, next: any) {
     try {
@@ -14,17 +14,17 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
             res.status(403).send({ message: 'Forbidden' });
         }
         req.body.tokenPayload = decoded;
-
         const postService: PostService = new PostService();
-        const boardService: BoardService = new BoardService();
+        const moderatorService: ModeratorService = new ModeratorService();
         let isCreator = false;
+        console.log(req.params);
         postService.getPost(Number(req.params.postId)).then(post => {
             postService.getCreatorId(Number(req.params.postId))
                 .then(creatorId => {
                     if (creatorId === req.body.tokenPayload.userId) {
                         isCreator = true;
                     }
-                    boardService.isModerator(req.body.tokenPayload.userId, Number(post.boardId))
+                    moderatorService.isModerator(req.body.tokenPayload.userId, Number(post.boardId))
                     .then(isMod => {
                         if (isMod || isCreator) {
                             next();
@@ -35,8 +35,9 @@ export function checkModOrPostCreator(req: Request, res: Response, next: any) {
                     .catch(err => res.status(500).send(err));
                 })
                 .catch(err => res.status(500).send(err));
-            });
-        } catch (err) {
-            res.status(403).send({ message: 'Forbidden' });
-        }
+            })
+            .catch(err => res.status(500).send(err));
+    } catch (err) {
+        res.status(403).send({ message: 'Forbidden' });
+    }
 }

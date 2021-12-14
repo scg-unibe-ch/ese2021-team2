@@ -10,6 +10,7 @@ import { Admin } from './models/admin.model';
 import { Order } from './models/order.model';
 
 import cors from 'cors';
+import { ModeratorController} from './controllers/moderator.controller';
 import { AdminController } from './controllers/admin.controller';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
@@ -99,6 +100,7 @@ export class Server {
             .use('/board', BoardController)
             .use('/product', ProductController)
             .use('/comment', CommentController)
+            .use('/moderator', ModeratorController)
             .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))
