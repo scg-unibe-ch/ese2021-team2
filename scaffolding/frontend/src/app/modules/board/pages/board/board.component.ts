@@ -76,6 +76,7 @@ export class BoardComponent implements OnInit {
     if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.newCategory, this.id, this.newFile) ){
         this.reset();
     }
+    this.postList.setPostList()
   }
 
   processFile(imageInputEvent: any) {

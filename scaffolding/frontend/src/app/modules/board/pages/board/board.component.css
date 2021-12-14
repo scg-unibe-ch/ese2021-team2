@@ -57,6 +57,10 @@ button{
     background-color: rgb(28, 53, 161);
     color: white;
     font-weight: bold;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(40, 72, 215);
 }
 
 #info{
@@ -67,11 +71,20 @@ button{
 }
 
 #unsubbtn{
-    background-color: gray;
+    background-color: rgb(17, 44, 62);
+    cursor: pointer;
+}
+#unsubbtn:hover{
+    background-color: rgb(48, 117, 164);
 }
 
 #subbtn{
-    background-color: rgb(4, 71, 99);
+    background-color: rgb(25, 124, 167);
+    cursor: pointer;
+}
+#subbtn:hover{
+    background-color: rgb(10, 52, 70);
+
 }
 
 #postCreator{

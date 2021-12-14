@@ -5,7 +5,10 @@
 
 .mat-icon {
     position:relative;
-    
+    cursor: pointer;
+}
+.mat-icon:hover{
+    color: hotpink;
 }
 
 .post-att {
@@ -46,4 +49,8 @@ h1{
 
 #votedIcon{
     color: red;
+    cursor: pointer;
+}
+#votedIcon:hover{
+    color: hotpink;
 }

@@ -30,6 +30,12 @@ button{
     height:min-content;
     object-fit: contain;
     overflow: visible;
+    text-align: center;
+    justify-content: center;
+}
+#img{
+    align-self: center;
+    margin-left: 0px;
 }
 
 .mat-card-image{

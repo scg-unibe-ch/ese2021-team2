@@ -58,7 +58,7 @@ export class CommentsListComponent implements OnInit {
  }
 
  submitComment(): void{
-
+    this.showComments=true
      this.httpClient.post(environment.endpointURL + "comment/createComment",{
          commentText: this.newCommentText,
          postId: this.postId,

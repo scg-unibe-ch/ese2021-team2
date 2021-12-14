@@ -1,9 +1,10 @@
 <div *ngIf="post" id="background">
 
 <mat-card *ngIf="!editMode && !deleted" id="frame">
-    <h1>
+    <h1 id="title">
     {{this.post.title}}
 </h1>
+<p id="semester" *ngIf="this.post.semester != ''">relevant for the {{this.post.semester}}</p>
 
 <p>{{this.post.content}}</p>
 
@@ -36,13 +37,23 @@
 
    
 </mat-card>
-<mat-card *ngIf="editMode">
+<mat-card *ngIf="editMode" >
 
-    <input type="text" placeholder="title" name="title" [(ngModel)]="this.changedPost.title">
+    <input id="newTitle" type="text" placeholder="title" name="title" [(ngModel)]="this.changedPost.title" >
     <br>
-    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
+    <textarea id="newContent" class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
     <br>
-    <input type="text" placeholder="semester" name="semester" [(ngModel)]="this.changedPost.semester">
+   
+
+ <select [(ngModel)]="this.changedPost.semester"  class="newPostField" id="newSemester">
+        <option value="" disabled>Semester</option>
+        <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+    </select>
+
+    <select [(ngModel)]="this.changedPost.category" class="newPostField">
+        <option value="" disabled>Category</option>
+        <option *ngFor="let kategorie of KategorieAuswahl" [ngValue]="kategorie">{{kategorie}}</option>
+     </select>
 
 
     <div class = "imagePreviewContainer" *ngIf = "this.post.postImage" >
@@ -50,8 +61,10 @@
     </div>
     <br>
 
-    <button (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
-    <button (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
+    <div id="editbtn">
+    <button id="submitPost" (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
+    <button id="cancel" (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
+    </div>  
     <app-comments-list id="comList"></app-comments-list>
 
 </mat-card>
