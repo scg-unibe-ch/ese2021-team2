@@ -44,6 +44,7 @@ import { PostCommentComponent } from './shared/components/post/comments-list/pos
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from '@angular/material/expansion';
+import {ModeratorService} from "./core/moderator/moderator.service";
 
 
 @NgModule({
@@ -81,7 +82,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatButtonToggleModule,
         MatExpansionModule,
     ],
-    providers: [ DataService],
+    providers: [ DataService, ModeratorService],
     bootstrap: [AppComponent],
     exports: [
         UserComponent,

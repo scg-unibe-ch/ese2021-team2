@@ -14,6 +14,7 @@ import { Admin } from './models/admin.model';
 import { Order } from './models/order.model';
 
 import cors from 'cors';
+import { ModeratorController} from './controllers/moderator.controller';
 import { AdminController } from './controllers/admin.controller';
 import { ItemImage } from './models/itemImage.model';
 import { Post } from './models/post.model';
@@ -111,6 +112,7 @@ export class Server {
             .use('/board', BoardController)
             .use('/product', ProductController)
             .use('/comment', CommentController)
+            .use('/moderator', ModeratorController)
             .use('/order', OrderController)
             .options('*', cors(options))
             .use(express.static('./src/public'))

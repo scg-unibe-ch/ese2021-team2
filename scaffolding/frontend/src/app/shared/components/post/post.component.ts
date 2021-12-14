@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
 import { ActivatedRoute } from '@angular/router';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import {ModeratorService} from "../../../core/moderator/moderator.service";
 
 
 @Component({
@@ -30,23 +31,25 @@ export class PostComponent implements OnInit {
   user: User | null;
   imageURL: string = "";
   admin: boolean;
-  creator:any = {userName: ""}
+  creator:any = {userName: ""};
+  moderator: boolean;
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.admin$.subscribe(res => this.admin = res);
         userService.user$.subscribe(res => this.user = res);
+        userService.moderator$.subscribe(res => this.moderator = res);
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.admin = userService.isAdmin();
         this.user = userService.getUser();
+        this.moderator = userService.isModerator();
 
     this._Activatedroute.paramMap.subscribe(params => {
 
-
         this.postId= parseInt(params.get('postId')!);
-
+        userService.refreshModerator(this.post.postId)
 
 
         this.httpClient.get( environment.endpointURL + "post/"+this.postId
@@ -157,7 +160,7 @@ export class PostComponent implements OnInit {
 
   authorizedToEdit(): boolean {
     if( this.user && this.user.userId && this.post && this.post.creatorId ){
-        return (this.admin || (this.user.userId - this.post.creatorId === 0));
+        return (this.moderator || this.admin || (this.user.userId - this.post.creatorId === 0));
     } else {
         return false;
     }
