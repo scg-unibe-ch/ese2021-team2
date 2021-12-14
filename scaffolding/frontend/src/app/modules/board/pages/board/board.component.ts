@@ -53,16 +53,19 @@ export class BoardComponent implements OnInit {
     this.postList = new PostListComponent(httpClient, userService, _Activatedroute, data)
       // Listen for changes
       userService.loggedIn$.subscribe(res => this.loggedIn = res);
-      userService.user$.subscribe(res => {
+      this.loggedIn = userService.getLoggedIn();
+      if(this.loggedIn){
+          this.user = userService.getUser();
+      }
+
+      if(this.loggedIn){
           httpClient.post(environment.endpointURL + "board/isUserNotSubscribed", {
               boardId: this.id,
               userId: userService.getUser()?.userId
           }).subscribe((res: any) => {
-              this.unsubscribed=res;
-          });
-          this.loggedIn= userService.getLoggedIn();
-          this.user=userService.getUser();
-      })
+              this.unsubscribed=res
+          })
+      }
   }
 
   ngOnInit(): void {
