@@ -23,9 +23,17 @@
 }
 
 #confirm{
-    background-color: lightgreen;
+    background-color: rgb(51, 130, 55);
+}
+
+#confirm:hover{
+    background-color: rgb(74, 190, 80);
 }
 
 #decline{
-    background-color:tomato ;
+    background-color:rgb(244, 67, 54);
+}
+
+#decline:hover{
+    background-color: orange;
 }
