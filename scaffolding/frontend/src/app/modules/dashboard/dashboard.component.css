@@ -19,7 +19,7 @@
 
 }
 .dashboard-button:focus {
-    background-color: darkgreen !important;
+    background-color: dodgerblue !important;
 }
 .filter-description{
     margin-left: 10px;
