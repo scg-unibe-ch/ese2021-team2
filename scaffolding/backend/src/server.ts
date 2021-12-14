@@ -2,20 +2,15 @@ import { Moderator } from './models/moderator.model';
 import { SubjectController } from './controllers/subject.controller';
 import express, { Application , Request, Response } from 'express';
 import morgan from 'morgan';
-import { TodoItemController } from './controllers/todoitem.controller';
-import { TodoListController } from './controllers/todolist.controller';
 import { UserController } from './controllers/user.controller';
 import { SecuredController } from './controllers/secured.controller';
 import { Sequelize } from 'sequelize';
-import { TodoList } from './models/todolist.model';
-import { TodoItem } from './models/todoitem.model';
 import { User } from './models/user.model';
 import { Admin } from './models/admin.model';
 import { Order } from './models/order.model';
 
 import cors from 'cors';
 import { AdminController } from './controllers/admin.controller';
-import { ItemImage } from './models/itemImage.model';
 import { Post } from './models/post.model';
 import { PostController } from './controllers/post.controller';
 import { PostImage } from './models/postImage.model';
@@ -46,11 +41,8 @@ export class Server {
         this.server = this.configureServer();
         this.sequelize = this.configureSequelize();
 
-        TodoItem.initialize(this.sequelize); // creates the tables if they dont exist
-        TodoList.initialize(this.sequelize);
         User.initialize(this.sequelize);
         Post.initialize(this.sequelize);
-        ItemImage.initialize(this.sequelize);
         PostImage.initialize(this.sequelize);
         Like.initialize(this.sequelize);
         Subject.initialize(this.sequelize);
@@ -64,9 +56,6 @@ export class Server {
         Subscription.initialize(this.sequelize);
         Order.initialize(this.sequelize);
         ProductOrder.initialize(this.sequelize);
-        TodoItem.createAssociations();
-        TodoList.createAssociations();
-        ItemImage.createAssociations();
         PostImage.createAssociations();
         ProductImage.createAssociations();
         Bookmark.createAssociations();
@@ -96,13 +85,10 @@ export class Server {
             preflightContinue: false,
         };
 
-        // TODO: Remove the todoitem and todolist as well as the secured endpoint stuff
         return express()
             .use(cors())
             .use(express.json())                    // parses an incoming json to an object
             .use(morgan('tiny'))                    // logs incoming requests
-            .use('/todoitem', TodoItemController)   // any request on this path is forwarded to the TodoItemController
-            .use('/todolist', TodoListController)
             .use('/user', UserController)
             .use('/secured', SecuredController)
             .use('/admin', AdminController)
