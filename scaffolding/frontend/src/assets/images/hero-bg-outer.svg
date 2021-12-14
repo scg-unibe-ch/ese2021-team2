@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 170 90">
+    <defs>
+        <linearGradient id="gradient-outer" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#fac09c"/>
+            <stop offset="50%" stop-color="#b2b4e1"/>
+            <stop offset="100%" stop-color="#acb3e7"/>
+        </linearGradient>
+    </defs>
+    <path d="M 0 90
+        C 15 76, 40 70, 105 70
+        C 150 70, 163 60, 163 45
+        C 163 20, 147 18, 142 0
+        L 130 0
+        C 137 18, 150 23, 150 42
+        C 150 60, 137 68, 95 70
+        C 32 70, 15 74, 0 80
+        L 0 90"
+        fill="url(#gradient-outer)"/>
+</svg>

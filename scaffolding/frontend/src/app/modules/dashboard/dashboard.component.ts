@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   }
 
   setfiltarg(filt:number){
-    if(filt == 0){
+    if(filt == 1){
       this.data.changeMessage("date");
     }
     else {

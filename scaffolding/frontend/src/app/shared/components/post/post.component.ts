@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Post} from "../../../models/post.model";
 import { ActivatedRoute } from '@angular/router';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import {ModeratorService} from "../../../core/moderator/moderator.service";
 
 
 @Component({
@@ -33,56 +34,58 @@ export class PostComponent implements OnInit {
   creator:any = {userName: ""}
   SemesterAuswahl = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
   KategorieAuswahl = ['Organization', 'Exercises', 'Exams', 'Other'];
+  moderator: boolean;
 
-
-  constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
+    constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
         userService.admin$.subscribe(res => this.admin = res);
         userService.user$.subscribe(res => this.user = res);
+        userService.moderator$.subscribe(res => {
+            console.log(res);
+            this.moderator = res
+        });
 
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.admin = userService.isAdmin();
         this.user = userService.getUser();
+        this.moderator = userService.isModerator();
 
-    this._Activatedroute.paramMap.subscribe(params => {
+        this._Activatedroute.paramMap.subscribe(params => {
+
+            this.postId = parseInt(params.get('postId')!);
+            userService.refreshModerator(this.postId)
+
+            this.httpClient.get( environment.endpointURL + "post/"+this.postId
+            ).subscribe((post: any) => {
+                this.post = post;
+                this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
+                    postId: this.post.postId
+                }).subscribe((res) => {
+                this.likes = res;
+                this.post.likes = this.likes.length;
+                this.canUserVote();
+                }, (err: any) => {
+                    console.log(err);
+                });
 
 
-        this.postId= parseInt(params.get('postId')!);
+                this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
+                    postId: this.postId
+                }).subscribe(res => {
+                })
 
+                this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
 
+                this.httpClient.post(environment.endpointURL+"user/getUserById",{
+                    userId: this.post.creatorId
+                }).subscribe(res=>{
+                    this.creator=res
+                })
 
-        this.httpClient.get( environment.endpointURL + "post/"+this.postId
-        ).subscribe((post: any) => {
-            this.post = post;
-            this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
-                postId: this.post.postId
-            }).subscribe((res) => {
-              this.likes = res;
-              this.post.likes = this.likes.length;
-              this.canUserVote();
-            }, (err: any) => {
-                console.log(err);
-            });
-
-
-            this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
-                postId: this.postId
-            }).subscribe(res => {
             })
-
-            this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
-
-            this.httpClient.post(environment.endpointURL+"user/getUserById",{
-                userId: this.post.creatorId
-            }).subscribe(res=>{
-                this.creator=res
-            })
-
-        })
-    });
-
-}
+        });
+    }
 
   ngOnInit(): void {
 
@@ -158,13 +161,13 @@ export class PostComponent implements OnInit {
       }
   }
 
-  authorizedToEdit(): boolean {
-    if( this.user && this.user.userId && this.post && this.post.creatorId ){
-        return (this.admin || (this.user.userId - this.post.creatorId === 0));
-    } else {
-        return false;
+    authorizedToEdit(): boolean {
+        if (this.user && this.user.userId !== undefined && this.post && this.post.creatorId !== undefined) {
+            return this.moderator || this.admin || this.user.userId === this.post.creatorId;
+        } else {
+            return false;
+        }
     }
-}
 
 
   updatePost(){

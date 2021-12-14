@@ -99,29 +99,21 @@ export class PostService {
 
     // deletes a post from the database
     public deletePost(deleteReq: DeletePostRequest): Promise<string> {
-           return userService.getUser(deleteReq.tokenPayload.userId)
-               .then(user => {
-                   return Post.findByPk(deleteReq.postId)
-                       .then(found => {
-                           if (found != null) {
-                               if (!(found.creatorId - deleteReq.tokenPayload.userId)) {
-                                   Post.destroy({
-                                           where: {
-                                               postId: found.postId
-                                           }
-                                       }
-                                   ).then(deleted => Promise.resolve('Deleting successful ' + deleted))
-                                   .catch(err => Promise.reject(err));
-                               } else {
-                                   return Promise.reject('not authorized to delete this post');
-                               }
-                           } else {
-                               return Promise.reject('No Post found');
-                           }
-                       })
-                   .catch(err => Promise.reject(err));
-               })
-               .catch(err => Promise.reject(err));
+            return Post.findByPk(deleteReq.postId)
+                .then(found => {
+                    if (found != null) {
+                        Post.destroy({
+                                where: {
+                                    postId: found.postId
+                                }
+                            })
+                        .then(deleted => Promise.resolve('Deleting successful ' + deleted))
+                        .catch(err => Promise.reject(err));
+                    } else {
+                        return Promise.reject('No Post found');
+                    }
+                })
+                .catch(err => Promise.reject(err));
     }
 
 

@@ -15,35 +15,37 @@ export class HomeComponent implements OnInit {
   user: User | null;
   home = "home";
   posts = [{postId: 0, title:"", content:"", likes:0, date:"",boardId:0,creatorId:0,semester:"",category:"",postImage:""}]
-  
 
 
-  constructor(public userService: UserService, private httpClient: HttpClient) { 
+
+
+  constructor(public userService: UserService, private httpClient: HttpClient) {
+
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
-    if(this.userService.getUser()!=null){
-      this.loggedIn=true;
-    }
 
-   
-    
-    this.httpClient.post(environment.endpointURL + "board/getSubscribedPostsByUserId", {
-      userId: this.userService.getUser()!.userId
-    }).subscribe((res: any) => {
-        this.posts = res;
-       this.posts.sort(this.compare)
-        
-      } ,
-      err => {
-        console.log(err);
-      }
-    );    
+    this.loggedIn = userService.getLoggedIn();
+    this.user = userService.getUser();
+
+    if (this.user) {
+        this.httpClient.post(environment.endpointURL + "board/getSubscribedPostsByUserId", {
+            userId: this.userService.getUser()!.userId
+          }).subscribe((res: any) => {
+              this.posts = res;
+              this.posts.sort(this.compare)
+          },
+          err => {
+              console.log(err);
+          });
+    } else {
+        this.posts = [];
+    }
   }
-    
-  
+
+
 
   ngOnInit(): void {
-  
+
   }
 
   compare(a: Post, b:Post) {

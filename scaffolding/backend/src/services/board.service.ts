@@ -51,23 +51,7 @@ export class BoardService {
         });
     }
 
-    public isModerator(userId: number, boardId: number): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            Moderator.findOne({
-                where: {
-                    userId: userId,
-                    boardId: boardId
-                }
-            }).then(res => {
-                if (res) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            })
-            .catch(err => reject(err));
-        });
-    }
+
 
 
 

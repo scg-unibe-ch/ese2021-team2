@@ -1,5 +1,8 @@
-<mat-card>
-{{postComment.commentText}}
-<br>
-<h5>By: {{postComment.userName}}</h5>
+<mat-card id="postCard">
+    <div>
+        {{postComment.commentText}}
+        <br>
+        <h5>By: {{postComment.userName}}</h5>
+    </div>
+    <mat-icon (click)="deletePost()" *ngIf="deletable" id="delete-icon">delete_outline</mat-icon>
 </mat-card>

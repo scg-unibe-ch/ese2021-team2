@@ -14,24 +14,28 @@ export class UserService {
     private admin: boolean;
     private bookmarkedPosts: Post[] | undefined;
     private imageURL: string ;
+    private moderator: boolean;
 
     // Observable Sources
     private userSource = new Subject<User | null>();
     private loggedInSource = new Subject<boolean>();
     private isAdminSource = new Subject<boolean>();
     private imageURLSource = new Subject<string>();
+    private isModSource = new Subject<boolean>();
 
     // Observable Streams
     user$ = this.userSource.asObservable();
     loggedIn$ = this.loggedInSource.asObservable();
     admin$ = this.isAdminSource.asObservable();
     imageURL$ = this.imageURLSource.asObservable();
+    moderator$ = this.isModSource.asObservable();
 
     constructor(private httpClient: HttpClient) {
         this.user = null;
         this.loggedIn = false;
         this.admin = false;
         this.imageURL = '/assets/images/no_user.jpg';
+        this.moderator = false;
 
         this.user$.subscribe(res => {
             this.user = res
@@ -40,6 +44,7 @@ export class UserService {
         this.loggedIn$.subscribe(res => this.loggedIn = res);
         this.admin$.subscribe(res => this.admin = res);
         this.imageURL$.subscribe(res => this.imageURL = res);
+        this.moderator$.subscribe(res => this.moderator = res);
 
         if (!this.isTokenExpired()) {
             this.refreshUser();
@@ -140,6 +145,10 @@ export class UserService {
         return true;
     }
 
+    isModerator() {
+        return this.moderator;
+    }
+
     getLoggedIn(): boolean {
         return this.loggedIn;
     }
@@ -187,6 +196,15 @@ export class UserService {
                 this.isAdminSource.next(res);
             }, () => {
                 this.isAdminSource.next(false);
+            });
+    }
+
+    refreshModerator(postId: number){
+        this.httpClient.get<boolean>(environment.endpointURL + "moderator/" + postId)
+            .subscribe((res) => {
+                this.isModSource.next(res);
+            }, (err) => {
+                this.isModSource.next(false);
             });
     }
 
