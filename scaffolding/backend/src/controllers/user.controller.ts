@@ -70,7 +70,6 @@ userController.post('/likePost',
     }
 );
 
-// add image to a todoItem
 userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
     userService.updateProfileImage(req)
         .then(created => res.send(created))
