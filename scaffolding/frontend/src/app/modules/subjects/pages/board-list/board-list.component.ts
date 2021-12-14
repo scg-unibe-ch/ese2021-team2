@@ -30,7 +30,6 @@ export class BoardListComponent implements OnInit {
 
   public  setSubjectId(subjectId: number): void{
       this.subjectId = subjectId;
-      console.log(this.subjectId)
       this.setBoardList()
   }
 
@@ -40,7 +39,6 @@ export class BoardListComponent implements OnInit {
                   this.boardList = res;
               } ,
               err => {
-                  console.log(err);
               }
           );
   }

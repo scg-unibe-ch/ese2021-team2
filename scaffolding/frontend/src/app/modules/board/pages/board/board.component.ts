@@ -32,8 +32,8 @@ export class BoardComponent implements OnInit {
   imageURL: any;
   searchWord:string="";
   SemesterAuswahl: any = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
-  KategorieAuswahl: any = ['organization', 'exercises', 'exams', 'other'];
-  
+  KategorieAuswahl: any = ['Organization', 'Exercises', 'Exams', 'Other'];
+
   constructor(private httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute, private data: DataService) {
     this._Activatedroute.paramMap.subscribe(params => {
       this.id= parseInt(params.get('boardId')!);
@@ -43,10 +43,6 @@ export class BoardComponent implements OnInit {
       }).subscribe((res: any) => {
           this.title = res[0].boardName;
           this.description = res[0].description;
-          console.log(res);
-          console.log(this.title);
-          
-          
         } ,
         err => {
           console.log(err);
@@ -57,20 +53,19 @@ export class BoardComponent implements OnInit {
     this.postList = new PostListComponent(httpClient, userService, _Activatedroute, data)
       // Listen for changes
       userService.loggedIn$.subscribe(res => this.loggedIn = res);
-      // Current value
       this.loggedIn = userService.getLoggedIn();
       if(this.loggedIn){
-        this.user = userService.getUser();
+          this.user = userService.getUser();
       }
 
-    if(this.loggedIn){
-    httpClient.post(environment.endpointURL + "board/isUserNotSubscribed", {
-      boardId: this.id,
-      userId: userService.getUser()?.userId
-    }).subscribe((res: any) => {
-     this.unsubscribed=res
-    })
-    }
+      if(this.loggedIn){
+          httpClient.post(environment.endpointURL + "board/isUserNotSubscribed", {
+              boardId: this.id,
+              userId: userService.getUser()?.userId
+          }).subscribe((res: any) => {
+              this.unsubscribed=res
+          })
+      }
   }
 
   ngOnInit(): void {
@@ -84,6 +79,7 @@ export class BoardComponent implements OnInit {
     if( this.postList.createPost(this.newTitle, this.newContent, this.newSemester, this.newCategory, this.id, this.newFile) ){
         this.reset();
     }
+    this.postList.setPostList()
   }
 
   processFile(imageInputEvent: any) {
@@ -114,7 +110,7 @@ export class BoardComponent implements OnInit {
         this.title = response.boardName;
         this.description = response.description;
 
-      
+
       } ,
       err => {
         console.log(err);
@@ -135,7 +131,7 @@ export class BoardComponent implements OnInit {
       console.log(err);
     }
   );
-    
+
   }
 
   cancelCreate(){

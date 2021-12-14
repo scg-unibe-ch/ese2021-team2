@@ -1,5 +1,5 @@
 mat-card{
-  border-left: 7px solid rgb(25, 159, 90);
+  border-left: 10px solid;
   border-radius: 5px;
 }
 
@@ -73,7 +73,15 @@ mat-card{
     cursor: pointer;
 }
 
+button:hover{
+    background-color: dodgerblue;
+}
+
 #gotocart {
   background-color: rgb(51, 130, 55);
   margin: 4%;
+}
+
+#gotocart:hover {
+    background-color:rgb(74, 190, 80);
 }

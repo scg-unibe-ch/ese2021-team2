@@ -11,7 +11,7 @@
     padding: 0px;
     background-color: lightblue;
     height: 300%
-}    
+}
 
 #titleContainer{
     display: block;
@@ -24,16 +24,16 @@
 
 #list{
     position: relative;
-    top: -10%;
+    bottom: 8%;
     padding: 8%;
 }
 
 #title{
-    font-family: "helvetica neue";
+    font-family: Arial, Helvetica, sans-serif;
     padding: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-radius: 2.2rem;
+    border-radius: 1rem;
     display: inline-block;
     color: white;
     background-color: rgb(121, 212, 242);
@@ -49,5 +49,5 @@
     width: 105%;
     height: 100%;
     padding: 10px;
-    
+
 }

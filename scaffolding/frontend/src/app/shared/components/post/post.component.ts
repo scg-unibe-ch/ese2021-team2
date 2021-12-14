@@ -31,6 +31,9 @@ export class PostComponent implements OnInit {
   imageURL: string = "";
   admin: boolean;
   creator:any = {userName: ""}
+  SemesterAuswahl = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
+  KategorieAuswahl = ['Organization', 'Exercises', 'Exams', 'Other'];
+
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -66,7 +69,6 @@ export class PostComponent implements OnInit {
             this.httpClient.post(environment.endpointURL+"post/"+this.postId+"/image", {
                 postId: this.postId
             }).subscribe(res => {
-                console.log(res);
             })
 
             this.imageURL = environment.endpointURL + "post/" + this.post.postId + "/image";
@@ -103,7 +105,6 @@ export class PostComponent implements OnInit {
       userId: this.user?.userId,
       postId: this.post.postId
     }).subscribe((res) => {
-      console.log(res);
     },(err: any) => {
       console.log(err);
     });
@@ -119,7 +120,6 @@ export class PostComponent implements OnInit {
               userId: this.user?.userId,
               postId: this.post.postId
           }).subscribe((res) => {
-            console.log(res);
           },(err: any) => {
             console.log(err);
           });
@@ -180,7 +180,6 @@ export class PostComponent implements OnInit {
               semester: this.changedPost.semester,
               postImage: this.changedPost.postImage
           }).subscribe((res) => {
-              console.log(res);
               this.post = this.changedPost;
               this.cancelEdit();
 
@@ -221,7 +220,6 @@ export class PostComponent implements OnInit {
       }
   }
   edit(): void{
-        console.log('edit view');
         this.editMode = true;
         this.changedPost = this.post;
     }

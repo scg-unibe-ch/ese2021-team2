@@ -9,7 +9,7 @@ import { User } from 'src/app/models/user.model';
   selector: 'app-post-preview',
   templateUrl: './post-preview.component.html',
   styleUrls: ['./post-preview.component.css'],
-  
+
 })
 export class PostPreviewComponent implements OnInit {
   @Input() post: Post = new Post(0, "", "", 0, "", 0, 0, "","", "");
@@ -20,7 +20,7 @@ export class PostPreviewComponent implements OnInit {
   userCanVote= true;
   borderColor = "blue"
 
-  constructor(public userService: UserService,public httpClient: HttpClient) { 
+  constructor(public userService: UserService,public httpClient: HttpClient) {
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
   }
@@ -30,7 +30,7 @@ export class PostPreviewComponent implements OnInit {
     this.httpClient.post(environment.endpointURL + "post/getLikesByPostId", {
       postId: this.post.postId
   }).subscribe((res) => {
-      
+
       this.likes = res;
       this.post.likes = this.likes.length;
       this.canUserVote()
@@ -39,22 +39,22 @@ export class PostPreviewComponent implements OnInit {
   });
   }
 
-  canUserVote(){  
+  canUserVote(){
     this.user=this.userService.getUser();
     if(this.user!=null){
       this.loggedIn=true;
     }
-    for(var i=0; i<this.post.likes; i++){  
+    for(var i=0; i<this.post.likes; i++){
         if(this.likes[i].userId==this.user?.userId){
             this.voted=true;
         }
     }
-   
+
   }
 
   like(){
-   
-    
+
+
     if(!this.voted && this.loggedIn){
     this.post.likes++;
     this.voted=true;
@@ -63,7 +63,6 @@ export class PostPreviewComponent implements OnInit {
       userId: this.user?.userId,
       postId: this.post.postId
     }).subscribe((res) => {
-      console.log(res);
     },(err: any) => {
       console.log(err);
     });
@@ -71,7 +70,7 @@ export class PostPreviewComponent implements OnInit {
   }
 
   unlike(){
-    
+
       if(this.voted && this.loggedIn){
           this.post.likes--;
           this.voted=false;
@@ -80,7 +79,6 @@ export class PostPreviewComponent implements OnInit {
               userId: this.user?.userId,
               postId: this.post.postId
           }).subscribe((res) => {
-            console.log(res);
           },(err: any) => {
             console.log(err);
           });

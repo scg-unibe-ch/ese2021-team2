@@ -92,7 +92,7 @@ export class UserComponent {
             throwError('usertToRegister is null');
         }
         if(this.areMandatoryFieldsNull()){
-           this.invRegDataMsg = 'The First 5 Fields with a (*) are mandatory to fill in for a Registration.'
+           this.invRegDataMsg = 'The first 5 fields with a (*) are mandatory to fill in for a registration.'
             this.activeRegButton = false;
         }else if(this.invalidPassword){
             this.invRegDataMsg = 'Your password isn\'t strong enough.';
@@ -104,7 +104,7 @@ export class UserComponent {
             this.invRegDataMsg = 'The city should only contain letters.'
             this.activeRegButton = false;
         }else if(this.userToRegister.phonenumber!=''&&!this.checkPhoneNumb(this.userToRegister.phonenumber!)){
-            this.invRegDataMsg = 'The phonenumber is invalid.'
+            this.invRegDataMsg = 'The phone number is invalid.'
             this.activeRegButton = false;
         }else if(this.userToRegister.zipCode!=''&&(!this.checkOnlyNum(this.userToRegister.zipCode!)||this.userToRegister.zipCode!.length!=4)){
             this.invRegDataMsg = 'The ZipCode may only contain 4 numbers.'
@@ -149,9 +149,6 @@ export class UserComponent {
         return isValid
     }
 
-    // I filled this with some pretty ugly pseudo tests, ignore this for now.
-    // You can use and test it if you want though, it should work.
-    // This registers, logins and then deletes a user to see if it all works.
     accessUserEndpoint(): void {
         const fakeUser = fakeUsers.fillOnlyNeededParameters;
         this.userService.register(fakeUsers.fillOnlyNeededParameters)
@@ -159,21 +156,10 @@ export class UserComponent {
             this.userService.login(fakeUser.userName, fakeUser.email, fakeUser.password)
                     .then(res =>
                         this.userService.delete(res)
-                            .then(() => console.log("It worked!"))
-                            .catch(err => console.log("Something went wrong: " + err))
-                    ).catch(err => console.log("Something went wrong: " + err))
-            ).catch(err => console.log("Something went wrong: " + err));
-        /*
-        this.httpClient.get(environment.endpointURL + "secured")
-
-        .subscribe(() => {
-                this.endpointMsgUser = "Access granted";
-            },
-            () => {
-                this.endpointMsgUser = "Unauthorized";
-            }
-        );
-        */
+                            .then(() => console.log())
+                            .catch(err => console.log( err))
+                    ).catch(err => console.log( err))
+            ).catch(err => console.log( err));
     }
 
     accessAdminEndpoint(): void {

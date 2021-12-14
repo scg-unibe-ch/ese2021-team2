@@ -22,7 +22,6 @@ export class SubjectsGridComponent implements OnInit {
         this.httpClient.get(environment.endpointURL + "subject")
             .subscribe((res: any) => {
                 this.subjects = res;
-                    console.log(this.subjects);
                 } ,
                 err => {
                     console.log(err);
@@ -39,7 +38,7 @@ export class SubjectsGridComponent implements OnInit {
             v=(col*19+v)%255
             rgb.push(v)
         }
-        return "rgb("+(rgb[0]/4)+","+(rgb[2]/2)+","+(rgb[1]/2+50)+","+0.9+")"
+        return "rgb("+(rgb[0]/4)+","+(rgb[2]/2)+","+(rgb[1]/2+50)+")"
     }
 
 }

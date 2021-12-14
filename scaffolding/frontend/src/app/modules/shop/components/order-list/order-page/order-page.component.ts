@@ -151,7 +151,6 @@ export class OrderPageComponent implements OnInit {
         dialogRef.afterClosed().subscribe(dialogResult => {
             if(dialogResult) {
                 this.order.status = this.status;
-                console.log(this.status);
                 this.httpClient.put(environment.endpointURL + "order", {
                     orderId: this.order.orderId,
                     status: this.status,

@@ -1,6 +1,6 @@
 <div *ngIf="loggedIn">
    <div *ngIf="refreshBookmarks().length>0; else empty">
-       <h1>Your bookmarked posts</h1>
+       <h1 id="title">Bookmarked posts</h1>
        <app-post-preview  *ngFor="let poste of refreshBookmarks()" [post]="poste"></app-post-preview>
    </div>
     <ng-template #empty >

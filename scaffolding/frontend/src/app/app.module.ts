@@ -12,8 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatListModule } from '@angular/material/list';
@@ -49,8 +47,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
     declarations: [
         AppComponent,
-        TodoListComponent,
-        TodoItemComponent,
         UserComponent,
         SidebarComponent,
         HeaderComponent,

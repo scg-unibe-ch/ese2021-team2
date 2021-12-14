@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   sortarg: string;
   semarg: string;
-  
+
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
     // Listen for changes
@@ -102,7 +102,6 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.addImage(image, response.postId);
     },
       (err: any) => {
-        console.log(err);
         this.postFeedback = err;
       }
     );
@@ -120,7 +119,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
     setPostList() {
         if (this.mode==="board") {
-            
+
             this.httpClient.get(environment.endpointURL + "post/getPostsOfBoard/" + this.boardId
             ).subscribe((res: any) => {
                     this.posts = res;

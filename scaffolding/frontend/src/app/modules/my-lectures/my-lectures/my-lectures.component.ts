@@ -12,12 +12,11 @@ export class MyLecturesComponent implements OnInit {
 
   boardList=[{boardName:'placeholder', boardId:1}];
 
-  constructor(public httpClient: HttpClient, public userService: UserService) { 
+  constructor(public httpClient: HttpClient, public userService: UserService) {
     let userId = userService.getUser()!.userId
     httpClient.post(environment.endpointURL + "board/getMyLectures",{
       userId: userId
     }).subscribe((response: any) => {
-      console.log(response);
       let res=response
       this.boardList = res
     },

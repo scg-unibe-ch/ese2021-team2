@@ -75,10 +75,8 @@ postController.get('/getPostsOfBoard/:boardId',
 // needs to be changed to get request
 postController.get('/getPostsByUser/:userId',
     (req: Request, res: Response) => {
-        console.log('Getting user posts');
         postService.getPostsbyUser(parseInt(req.params.userId, 10))
             .then(posts => {
-                console.log('Found posts');
                 res.send(posts);
             })
             .catch(err => res.status(500).send(err));
@@ -130,7 +128,6 @@ postController.post('/getLikesByPostId',
             }
         }).then(likes => {
             res.send(likes);
-            // console.log(likes);
         }).catch(err => {
             res.status(500).send(err);
         });

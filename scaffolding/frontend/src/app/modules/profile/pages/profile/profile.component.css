@@ -30,9 +30,12 @@
     margin: 0 !important;
 }
 
+.mat-button:hover{
+    background-color: rgba(37, 37, 37, 0.685);
+}
+
 .menu-button{
     margin: 0 !important;
-    font-weight: bold;
 }
 
 .mat-card-title{
@@ -95,6 +98,10 @@ input:disabled{
     color: red;
 }
 
+.warn-buttons:hover{
+    background-color: orange;
+}
+
 #id{
     font-size: 5pt;
 }
@@ -104,4 +111,12 @@ input:disabled{
     background-color: rgb(28,53,161); 
     color: white;
     font-weight: bold;
+}
+
+#submit:hover{
+    background-color: dodgerblue;
+}
+
+#edit:hover{
+    background-color: lightgray;
 }
