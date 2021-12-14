@@ -53,19 +53,19 @@ export class Post extends Model<PostAttributes, PostCreationAttributes> implemen
                     allowNull: true
                 },
                 boardId: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.INTEGER,
                     allowNull: true
                 },
                 creatorId: {
-                    type: DataTypes.STRING,
-                    allowNull: true
+                    type: DataTypes.INTEGER,
+                    allowNull: false
                 },
                 semester: {
                     type: DataTypes.ENUM('1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'),
                     allowNull: true
                 },
                 category: {
-                    type: DataTypes.ENUM('technial', 'programming', 'theoretical', 'other') ,
+                    type: DataTypes.ENUM('organization', 'exercises', 'exams', 'other') ,
                     allowNull: true
                 },
                 postImage : {

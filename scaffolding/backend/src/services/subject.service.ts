@@ -46,4 +46,12 @@ export class SubjectService {
             .catch(err => reject(err));
         });
     }
+
+    public getSubject(id: number): Promise<Subject> {
+        return new Promise((resolve, reject) => {
+            Subject.findByPk(id)
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+        });
+    }
 }

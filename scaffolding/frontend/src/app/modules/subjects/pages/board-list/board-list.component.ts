@@ -25,25 +25,20 @@ export class BoardListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
 
   public  setSubjectId(subjectId: number): void{
       this.subjectId = subjectId;
-      console.log(this.subjectId)
       this.setBoardList()
   }
 
    setBoardList(): void{
-
       this.httpClient.post(environment.endpointURL + "board/getBoardsBySubjectId", {subjectId: this.subjectId})
           .subscribe((res: any) => {
                   this.boardList = res;
-                  
               } ,
               err => {
-                  console.log(err);
               }
           );
   }

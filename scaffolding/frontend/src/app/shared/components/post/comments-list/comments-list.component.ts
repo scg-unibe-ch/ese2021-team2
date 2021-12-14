@@ -27,6 +27,7 @@ export class CommentsListComponent implements OnInit {
         // Current value
         this.loggedIn = userService.getLoggedIn();
         this.user = userService.getUser();
+
     }
 
     ngOnInit(): void {
@@ -37,7 +38,6 @@ export class CommentsListComponent implements OnInit {
         this.httpClient.post(environment.endpointURL + 'comment/getCommentsByPostId', {postId: this.postId})
             .subscribe((res: any) => {
                     this.postCommentList = res;
-                    console.log(this.postCommentList);
                 },
                 err => {
                     console.log(err);
@@ -46,20 +46,19 @@ export class CommentsListComponent implements OnInit {
     }
 
     switchShowComments(): void {
+        this.getComments()
         this.showComments = !this.showComments
     }
 
     createComment(): void {
      this.creatingComment = true;
-     console.log('creating comment');
  }
  cancelCreateComment(): void{
         this.creatingComment = false;
  }
 
  submitComment(): void{
-     console.log('submitting comment');
-
+    this.showComments=true
      this.httpClient.post(environment.endpointURL + "comment/createComment",{
          commentText: this.newCommentText,
          postId: this.postId,

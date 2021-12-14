@@ -1,0 +1,56 @@
+#post-preview {
+    position:relative;
+    padding-top:4px;
+}
+
+.mat-icon {
+    position:relative;
+    cursor: pointer;
+}
+.mat-icon:hover{
+    color: hotpink;
+}
+
+.post-att {
+    position:absolute;
+    padding-top:2px;
+    color: gray;
+}
+
+#post-tit {
+    cursor: pointer; 
+}
+
+#post-tit:hover{
+    color: grey;
+}
+
+mat-card{
+    margin-left: 8%;
+    margin-right: 8%;
+    border-left:7px solid;
+    border-color: teal;
+    background-color: white;
+}
+
+h1{
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+#topBar{
+    display: flex;
+}
+
+#cal{
+    position: absolute;
+    right: 90px;
+}
+
+#votedIcon{
+    color: red;
+    cursor: pointer;
+}
+#votedIcon:hover{
+    color: hotpink;
+}

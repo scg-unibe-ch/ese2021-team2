@@ -26,8 +26,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   user: User | null;
 
   @Input() searchTerm:string="";
-  filterarg = 'technical';
+  filterarg: string;
   subscription: Subscription;
+  sortarg: string;
+  semarg: string;
+
 
   constructor(public httpClient: HttpClient, public userService: UserService, private _Activatedroute:ActivatedRoute,private data: DataService) {
     // Listen for changes
@@ -47,9 +50,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.setPostList()
+    this.setPostList();
 
-    this.subscription = this.data.currentMessage.subscribe(message => this.filterarg = message)
+    this.subscription = this.data.currentMessage.subscribe(message => (["date","likes"].includes(message)) ? (this.sortarg = message, this.filterarg = "", this.semarg ="") : ((["1.Semester","2.Semester","3.Semester","4.Semester","5.Semester","6.Semester"].includes(message)) ? (this.semarg = message, this.filterarg = "", this.sortarg = "") : (this.filterarg = message,this.sortarg= "",this.semarg = "")));
   }
 
   ngOnDestroy() {
@@ -99,7 +102,6 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.addImage(image, response.postId);
     },
       (err: any) => {
-        console.log(err);
         this.postFeedback = err;
       }
     );
@@ -111,25 +113,21 @@ export class PostListComponent implements OnInit, OnDestroy {
         } else {
             const fd = new FormData();
             fd.append('image', file);
-            this.httpClient.post(environment.endpointURL + 'post/' + postId + '/image', fd);
+            this.httpClient.post(environment.endpointURL +  'post/' + postId + '/image', fd).subscribe();
         }
     }
 
     setPostList() {
         if (this.mode==="board") {
-            console.log("post list id: "+this.boardId);
 
-            this.httpClient.post(environment.endpointURL + "post/getPostsOfBoard", {
-                boardId: this.boardId
-            }).subscribe((res: any) => {
+            this.httpClient.get(environment.endpointURL + "post/getPostsOfBoard/" + this.boardId
+            ).subscribe((res: any) => {
                     this.posts = res;
                 },
                 err => console.log(err)
             );
         } else if (this.mode === "user") {
-            this.httpClient.post(environment.endpointURL + "post/getPostsByUser", {
-                userId: this.user?.userId
-            })
+            this.httpClient.get(environment.endpointURL + "board/1/post/getPostsByUser" + this.user?.userId)
             .subscribe((res: any) => {
                     this.posts = res;
                 },

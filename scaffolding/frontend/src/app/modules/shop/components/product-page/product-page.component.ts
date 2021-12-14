@@ -11,6 +11,7 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { User } from 'src/app/models/user.model';
 import { ProductCreationComponent } from '../product-creation/product-creation.component';
+import { DataService } from 'src/app/modules/service/data.service';
 
 @Component({
     selector: 'app-product-page',
@@ -26,9 +27,11 @@ export class ProductPageComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    borderColor = "white";
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public cartService: CartService,
-        public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog
+        public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog,
+        private dataService: DataService
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -45,13 +48,13 @@ export class ProductPageComponent implements OnInit {
             this.httpClient.get( environment.endpointURL + "product/" + this.productId)
             .subscribe((product: any) => {
                 this.product = product;
+                this.createColor();
                 this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
             })
         });
     }
 
     ngOnInit(): void {
-
     }
 
     handleAdd(){
@@ -81,5 +84,25 @@ export class ProductPageComponent implements OnInit {
             product : this.product
         }
         this.dialog.open(ProductCreationComponent, dialogConfig);
+    }
+
+    setFilter(){
+        this.dataService.changeMessage(this.product.category);
+    }
+
+    private createColor(){
+        switch(this.product.category){
+            case 'office':
+                this.borderColor = "rgb(244,222,241)";
+                break;
+            case 'fashion':
+                this.borderColor = "rgb(244,236,222)";
+                break;
+            case 'lifestyle':
+                this.borderColor = "rgb(222,244,225)";
+                break;
+            default:
+                this.borderColor = 'white';
+        }
     }
 }

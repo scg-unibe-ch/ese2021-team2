@@ -3,7 +3,7 @@
 </a>
 <div class="user-info">
     <div class="avatar-wrapper">
-        <img class="avatar" [src]="loggedIn ? '/assets/images/profile_pic.png' : '/assets/images/no_user.jpg'" />
+        <img class="avatar" [src]="loggedIn ? imageURL: '/assets/images/no_user.jpg'" />
     </div>
     <div class="user-text">
         <div *ngIf="loggedIn else notLoggedIn">
@@ -19,10 +19,11 @@
     </div>
 </div>
 <div class="menu-button-wrapper">
-    <button mat-button class="menu-button" *ngIf="isShopRoute() || isBoardRoute()" (click)="sendIsExpanded()">
-        <mat-icon>home</mat-icon>
-        <span class="dashboard">Dashboard</span>
+
+    <button mat-button class="menu-button" *ngIf="isRoute()" (click)="sendIsExpanded()">
+        <span class="menu-text">Filter</span>
     </button>
+    
     <button mat-button class="menu-button" [routerLink]="'/subjects'">
         <span class="menu-text">Subjects</span>
     </button>
@@ -36,9 +37,6 @@
     </button>
     <button mat-button class="menu-button" [routerLink]="'/shop'">
         <span class="menu-text">Shop</span>
-    </button>
-    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/settings'">
-        <span class="menu-text">Settings</span>
     </button>
     <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
         <span class="menu-text">Orders</span>

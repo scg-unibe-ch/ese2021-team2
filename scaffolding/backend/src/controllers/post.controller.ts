@@ -11,7 +11,7 @@ import { DeletePostRequest } from '../models/postRequest.model';
 import { Like } from '../models/like.model';
 
 // The mergeParams: true makes it so that the :boardId from the parent route in server.ts get passed onto this.
-const postController: Router = express.Router({ mergeParams: true });
+const postController: Router = express.Router();
 const postService = new PostService();
 const userService = new UserService();
 
@@ -41,6 +41,13 @@ postController.post('/:postId/image',
     }
 );
 
+postController.get('/:postId',
+    (req: Request, res: Response) => {
+        postService.getPost(parseInt(req.params.postId, 10))
+            .then(post => res.send(post))
+            .catch(err => res.status(500).send(err));
+    });
+
 postController.get('/:postId/image',
     (req: Request, res: Response) => {
         PostImage.findOne({
@@ -57,19 +64,21 @@ postController.get('/:postId/image',
 );
 
 // needs to be changed to get request
-postController.post('/getPostsOfBoard',
+postController.get('/getPostsOfBoard/:boardId',
     (req: Request, res: Response) => {
-        postService.getPostsOfBoard(req.body.boardId)
+        postService.getPostsOfBoard(parseInt(req.params.boardId, 10))
             .then(posts => res.send(posts))
             .catch(err => res.status(500).send(err));
     }
 );
 
 // needs to be changed to get request
-postController.post('/getPostsByUser',
+postController.get('/getPostsByUser/:userId',
     (req: Request, res: Response) => {
-        postService.getPostsbyUser(req.body.userId)
-            .then(posts => res.send(posts))
+        postService.getPostsbyUser(parseInt(req.params.userId, 10))
+            .then(posts => {
+                res.send(posts);
+            })
             .catch(err => res.status(500).send(err));
     }
 );
@@ -96,7 +105,7 @@ postController.post('/:postId/bookmark', verifyToken,
     }
 );
 
-postController.get('/:postId/bookmark', verifyToken,
+postController.get('/:postId/bookmark/', verifyToken,
     (req: Request, res: Response) => {
         postService.getBookmarkStatus(req.body.tokenPayload.userId, parseInt(req.params.postId, 10))
             .then((isBookmarked) => res.send(isBookmarked))
@@ -104,7 +113,7 @@ postController.get('/:postId/bookmark', verifyToken,
     }
 );
 
-postController.get('/bookmarks', verifyToken,
+postController.get('/bookmarks/all', verifyToken,
     (req: Request, res: Response) => {
         postService.getBookmarkList(req.body.tokenPayload.userId)
             .then(bookmarkedPosts => res.send(bookmarkedPosts))
@@ -119,7 +128,6 @@ postController.post('/getLikesByPostId',
             }
         }).then(likes => {
             res.send(likes);
-            // console.log(likes);
         }).catch(err => {
             res.status(500).send(err);
         });
@@ -133,5 +141,19 @@ postController.delete('/:postId/bookmark/delete', verifyToken,
             .catch(err => res.status(500).send(err));
     }
 );
+
+postController.post('/unlike',
+    (req: Request, res: Response) => {
+        Like.destroy({
+            where: {
+                userId: req.body.userId,
+                postId: req.body.postId
+            }
+        }).catch(
+           err => res.send(err)
+        );
+    }
+);
+
 
 export const PostController: Router = postController;

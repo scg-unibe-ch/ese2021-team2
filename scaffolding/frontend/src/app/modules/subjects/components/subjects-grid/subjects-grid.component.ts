@@ -22,12 +22,23 @@ export class SubjectsGridComponent implements OnInit {
         this.httpClient.get(environment.endpointURL + "subject")
             .subscribe((res: any) => {
                 this.subjects = res;
-                    console.log(this.subjects);
                 } ,
                 err => {
                     console.log(err);
                 }
             );
+    }
+
+
+    colorHash(s: Subject){
+        let col = s.subjectId
+        let v = 73
+        let rgb= []
+        for(var i = 0; i<3; i++){
+            v=(col*19+v)%255
+            rgb.push(v)
+        }
+        return "rgb("+(rgb[0]/4)+","+(rgb[2]/2)+","+(rgb[1]/2+50)+")"
     }
 
 }

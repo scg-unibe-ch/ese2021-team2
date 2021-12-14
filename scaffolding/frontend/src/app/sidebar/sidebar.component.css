@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .logo {
     display: flex;
     justify-content: center;
@@ -25,9 +26,11 @@
 }
 
 .avatar {
+    background-color: black;
     width: 70px;
     height: 70px;
     border-radius: 10px;
+    object-fit:scale-down;
 }
 
 .user-text {
@@ -90,6 +93,7 @@
 
 .menu-text {
     padding-left: 50px;
+    color: black;
 }
 
 .dashboard {

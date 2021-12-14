@@ -1,7 +1,7 @@
 #main-sidebar-container {
     display: flex;
     flex-direction: column;
-    background-color:white;
+    background-color:rgb(222,230,243);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -12,4 +12,11 @@
 #main-sidebar {
     width: 250px;
     background-color: rgb(250, 252, 255);
+}
+
+#dashboard {
+    background: rgb(133,217,255);
+    background: linear-gradient(180deg, rgb(152, 209, 235) 0%, rgb(136, 158, 228) 72%);
+    
+
 }

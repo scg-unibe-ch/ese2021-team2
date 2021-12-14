@@ -12,8 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoItemComponent } from './todo-list/todo-item/todo-item.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatListModule } from '@angular/material/list';
@@ -42,18 +40,18 @@ import {SharedModule} from "./shared/shared.module";
 import { CommentsListComponent } from './shared/components/post/comments-list/comments-list.component';
 import { PostCommentComponent } from './shared/components/post/comments-list/post-comment/post-comment.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        TodoListComponent,
-        TodoItemComponent,
         UserComponent,
         SidebarComponent,
         HeaderComponent,
         DashboardComponent,
-    
+
 
     ],
     imports: [
@@ -76,6 +74,8 @@ import {MatSelectModule} from "@angular/material/select";
         AppRoutingModule,
         MatDialogModule,
         SharedModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
     ],
     providers: [ DataService],
     bootstrap: [AppComponent],

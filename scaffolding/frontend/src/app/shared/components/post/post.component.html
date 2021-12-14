@@ -1,9 +1,10 @@
-<div *ngIf="post">
+<div *ngIf="post" id="background">
 
-<mat-card *ngIf="!editMode && !deleted">
-    <h1>
+<mat-card *ngIf="!editMode && !deleted" id="frame">
+    <h1 id="title">
     {{this.post.title}}
 </h1>
+<p id="semester" *ngIf="this.post.semester != ''">relevant for the {{this.post.semester}}</p>
 
 <p>{{this.post.content}}</p>
 
@@ -11,30 +12,48 @@
    <img [src] = "imageURL" >
 </div>
 
+<div id="info">
+
+
+<div id="likes">
+<mat-icon (click)="like()" *ngIf="!voted" id="voteIcon">favorite_outline</mat-icon>
+<mat-icon  *ngIf="voted" id="votedIcon" (click)="unlike()">favorite_outline</mat-icon>
+<span id="like-count"> {{this.post.likes}}</span></div>
+<mat-icon class="bm" (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()" id="bookmarkIcon">bookmark_border</mat-icon>
+<mat-icon class="bm" (click)="removeBookmark()" *ngIf="isBookmarked()" id="bookmarkedIcon">bookmark_border</mat-icon>
+<mat-icon id="edit" (click)="edit()"  *ngIf="authorizedToEdit()">edit</mat-icon>
+<mat-icon id="delete" (click)="deletePost()"  *ngIf="authorizedToEdit()">delete_outline</mat-icon>
+
+
+<div id="post-meta">
 <p>{{this.post.date}}</p>
+<p [routerLink]="'../../user/' + this.post.creatorId">made by: {{this.creator.userName}}</p>
+</div>
+</div>
 
-<p>likes: {{this.post.likes}}</p>
 
-<p>made by user: {{this.post.creatorId}}</p>
-
-<button (click)="upvote()" *ngIf="!voted">upvote</button>
 
 <app-comments-list [postId]="this.post.postId"></app-comments-list>
 
-    <button (click)="bookmark()" *ngIf="loggedIn && !isBookmarked()">bookmark</button>
-    <button (click)="removeBookmark()" *ngIf="loggedIn && isBookmarked()">remove bookmark</button>
-    <button (click)="edit()" *ngIf="authorizedToEdit()">Edit Post</button>
-    <button (click)="deletePost()" *ngIf="authorizedToEdit()">Delete Post</button>
-
-
+   
 </mat-card>
-<mat-card *ngIf="editMode">
+<mat-card *ngIf="editMode" >
 
-    <input type="text" placeholder="title" name="title" [(ngModel)]="this.changedPost.title">
+    <input id="newTitle" type="text" placeholder="title" name="title" [(ngModel)]="this.changedPost.title" >
     <br>
-    <textarea class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
+    <textarea id="newContent" class="contentInput" placeholder="content" name="content" cols="40" rows="10" [(ngModel)]="this.changedPost.content" ></textarea>
     <br>
-    <input type="text" placeholder="semester" name="semester" [(ngModel)]="this.changedPost.semester">
+   
+
+ <select [(ngModel)]="this.changedPost.semester"  class="newPostField" id="newSemester">
+        <option value="" disabled>Semester</option>
+        <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+    </select>
+
+    <select [(ngModel)]="this.changedPost.category" class="newPostField">
+        <option value="" disabled>Category</option>
+        <option *ngFor="let kategorie of KategorieAuswahl" [ngValue]="kategorie">{{kategorie}}</option>
+     </select>
 
 
     <div class = "imagePreviewContainer" *ngIf = "this.post.postImage" >
@@ -42,9 +61,11 @@
     </div>
     <br>
 
-    <button (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
-    <button (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
-    <app-comments-list></app-comments-list>
+    <div id="editbtn">
+    <button id="submitPost" (click)="updatePost()" *ngIf="isUpdatedValid()">Update</button>
+    <button id="cancel" (click)="cancelEdit()" *ngIf="authorizedToEdit()">Cancel Edit</button>
+    </div>  
+    <app-comments-list id="comList"></app-comments-list>
 
 </mat-card>
 

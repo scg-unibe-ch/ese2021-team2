@@ -16,7 +16,7 @@ const routes: Routes = [
         component: SubjectsComponent
     },
     {
-        path: 'boards/:subjectId',
+        path: ':subjectId/boards',
         component: BoardsComponent
     }
 ];

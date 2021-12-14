@@ -1,14 +1,21 @@
 <mat-card *ngIf="!loggedIn && !isLogin">
-    <h2>Register</h2>
+    <mat-card-header>
+        <h3>Register</h3>
+    </mat-card-header>
     <mat-form-field>
         <input matInput type="text" required placeholder="User Name"  name="name" [(ngModel)]="userToRegister.userName" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
     <mat-form-field>
-        <input matInput type="password" required placeholder="Password" name="password"  [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
-        <div *ngIf="invalidPassword">
-        <br>
-        {{invPwMsgRegistration}}
-        </div>
+        <input matInput type="email" required placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email" (ngModelChange)="checkStatusButton()" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [type]="hide ? 'password' : 'text'"required placeholder="Password" name="password"  [(ngModel)]="userToRegister.password" (ngModelChange)="checkUserPassword()">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon mat-icon-button  > {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint *ngIf = 'this.invalidPassword' color = 'warn'>
+            {{invPwMsgRegistration}}
+        </mat-hint>
     </mat-form-field>
     <br>
     <mat-form-field>
@@ -17,10 +24,6 @@
 
     <mat-form-field>
         <input matInput type="text" required placeholder="Last Name" name="lname" [(ngModel)]="userToRegister.lname" (ngModelChange)="checkStatusButton()" >
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <input matInput type="email" required placeholder="E-Mail" name="email" [(ngModel)]="userToRegister.email" (ngModelChange)="checkStatusButton()" >
     </mat-form-field>
     <br>
     <h3>Adress</h3>
@@ -41,10 +44,10 @@
     <mat-form-field>
         <input matInput type="date" placeholder="Birthdate" name="birthday" [(ngModel)]="userToRegister.birthday">
     </mat-form-field>
-    <br>
     <mat-form-field>
         <input matInput type="tel" placeholder="Phone Number" name="phonenumber" [(ngModel)]="userToRegister.phonenumber" (ngModelChange)="checkStatusButton()">
     </mat-form-field>
+    <br>
     <button mat-flat-button color="primary" [disabled]="!activeRegButton" (click)="registerUser()">Register</button>
     <div *ngIf="!activeRegButton">
         <p class="warnMsg">{{invRegDataMsg}}</p>
@@ -55,17 +58,21 @@
 
 
 <mat-card *ngIf="!loggedIn && isLogin">
-    <h3>Login</h3>
-
+    <mat-card-header>
+        <h3>Login</h3>
+    </mat-card-header>
     <div >
         <mat-form-field *ngIf="emailEmpty">
-            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" >
+            <input matInput type="text" placeholder="User Name" name="name" [(ngModel)]="userToLogin.userName" (input)="checkIfUsernameEmpty()" (keydown.enter)="loginUser()">
         </mat-form-field>
         <mat-form-field *ngIf="userNameEmpty">
-            <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()">
+            <input matInput type="email" placeholder="E-Mail" name="email" [(ngModel)]="userToLogin.email" (input)="checkIfEmailEmpty()" (keydown.enter)="loginUser()">
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="userToLogin.password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" [(ngModel)]="userToLogin.password" (keydown.enter)="loginUser()">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon mat-icon-button  > {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
         </mat-form-field>
         <button mat-flat-button color="primary" (click)="loginUser()">Login</button>
         <p style="color: red;" *ngIf="falseLogin">{{loginFeedback}}</p>

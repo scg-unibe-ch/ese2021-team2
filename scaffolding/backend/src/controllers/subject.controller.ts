@@ -38,4 +38,12 @@ subjectController.delete('/:subjectId/delete', checkAdmin,
     }
 );
 
+subjectController.get('/:subjectId',
+    (req: Request, res: Response) => {
+        subjectService.getSubject(Number(req.params.subjectId))
+        .then(sub => res.send(sub))
+        .catch(err => res.status(500).send(err));
+    }
+);
+
 export const SubjectController: Router = subjectController;

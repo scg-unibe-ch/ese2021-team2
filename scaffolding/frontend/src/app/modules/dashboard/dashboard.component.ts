@@ -16,13 +16,13 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   constructor(private data: DataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message)
+    this.subscription = this.data.currentMessage.subscribe(message => this.catfilter = message);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
+
 
   setAll() {
     this.data.changeMessage("")
@@ -45,22 +45,40 @@ export class DashboardComponent implements OnInit, OnDestroy  {
   }
 
   isBoardRoute() {
-    return this.router.url.match(/\/board\S*/)
+    return this.router.url.match(/\/board\/\S*/)
   }
 
-  setTech() {
-    this.data.changeMessage("technical");
+  setOrg() {
+    this.data.changeMessage("organization");
   }
 
-  setProg() {
-    this.data.changeMessage("programming");
+  setExer() {
+    this.data.changeMessage("exercises");
   }
 
-  setTheo() {
-    this.data.changeMessage("theoretical");
+  setExam() {
+    this.data.changeMessage("exams");
   }
 
   setOther() {
     this.data.changeMessage("other");
+  }
+
+  setfiltarg(filt:number){
+    if(filt == 0){
+      this.data.changeMessage("date");
+    }
+    else {
+      this.data.changeMessage("likes");
+    }
+  }
+
+  setSemester(sem:number){
+    if(sem == 0){
+      this.data.changeMessage("");
+      return;
+    }
+    const newSem = sem + ".Semester";
+    this.data.changeMessage(newSem);
   }
 }

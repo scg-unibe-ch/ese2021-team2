@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { UserService } from './core/http/user.service';
 import { User } from './models/user.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit {
 
     constructor(
         public httpClient: HttpClient,
-        public userService: UserService
+        public userService: UserService,
+        private router: Router
     ) {
         // Listen for changes
         userService.loggedIn$.subscribe(res => this.loggedIn = res);
@@ -93,47 +95,6 @@ export class AppComponent implements OnInit {
         this.userService.setLoggedIn(!!userToken);
     }
 
-    processFile(imageInputEvent: any) {
-        const f : File = imageInputEvent.target.files[0];
-        this.addProfileImage(f);
-    }
-
-    addProfileImage(newPicture: File) {
-        if (newPicture) {
-            const fd = new FormData();
-            fd.append('image', newPicture);
-            this.httpClient.post(environment.endpointURL + 'user/' + this.user?.userId + '/image', fd)
-                .subscribe((res) => {
-
-                },
-                error => {
-
-                });
-        }
-    }
-
-    deleteProfileImage(){
-        this.httpClient.delete(environment.endpointURL + 'user/' + this.user?.userId + '/image')
-            .subscribe((res) => {
-
-            },
-            error => {
-
-            });
-    }
-
-    getImageSrc(): string {
-        if (this.user?.profile_image) {
-            return environment.endpointURL + 'user/' + this.user?.userId + '/image';
-        } else {
-            return '/assets/images/default_image.jpg';
-        }
-    }
-
-    hasProfileImage(): boolean {
-        return !!this.user?.profile_image;
-    }
-
     test() {
         console.log(this.user);
     }
@@ -141,5 +102,9 @@ export class AppComponent implements OnInit {
     receiveIsExpanded($event:boolean) {
         this.isExpanded = $event;
       }
+
+    isRoute(){
+        return this.router.url.match(/\/shop\S*/) && this.router.url.length == 5 || this.router.url.match(/\/board\S*/) && this.router.url.length == 8;
+    }
 
 }

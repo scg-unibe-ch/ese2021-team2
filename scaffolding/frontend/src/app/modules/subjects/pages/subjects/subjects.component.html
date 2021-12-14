@@ -1,7 +1,16 @@
-<h1>Subjects</h1>
+<div id="background">
+
+<div class="titleContainer">
+    <div id="titleBox">
+        <h1 id="title">Subjects</h1>
+    </div>
+ </div>
+<div id="content">
 <div *ngIf="admin" id="admin-panel">
     <button mat-button>Create Subject</button>
     <button mat-button>Modify Subject</button>
     <button mat-button>Delete Subject</button>
 </div>
 <app-subjects-grid></app-subjects-grid>
+</div>
+</div>

@@ -66,6 +66,9 @@ export class PostService {
             });
     }
 
+    public getPost(postId: number): Promise<Post> {
+        return Post.findByPk(postId);
+    }
     public getCreatorId(postId: number): Promise<number> {
         return new Promise((resolve, reject) => {
             Post.findByPk(postId)
@@ -102,7 +105,6 @@ export class PostService {
                        .then(found => {
                            if (found != null) {
                                if (!(found.creatorId - deleteReq.tokenPayload.userId)) {
-                                   console.log('Destroying');
                                    Post.destroy({
                                            where: {
                                                postId: found.postId
@@ -130,7 +132,7 @@ export class PostService {
                 return Post.findByPk(updateReq.postId)
                     .then(found => {
                         if (found != null) {
-                            if (!(found.creatorId - user.userId)) {
+                            if (!(found.creatorId - user.userId) ) {
                                 Post.update(updateReq.postUpdate,
                                     {
                                         where: {postId: updateReq.postId}
@@ -194,7 +196,7 @@ export class PostService {
             }
         )
             .then(() => Promise.resolve('Delete successful'))
-            .catch((err) => Promise.reject('Something happened wrong when deleting bookmark'));
+            .catch((err) => Promise.reject('Something happened wrong when deleting the bookmark'));
     }
 
     public getAll(): Promise<Post[]> {
@@ -219,15 +221,12 @@ export class PostService {
         });
         const posts: Post[] = [];
         if (bookmarkedPosts != null) {
-            console.log(bookmarkedPosts.length + ' so many bookmarked posts');
             for (const bookmark of bookmarkedPosts) {
                 await Post.findByPk(bookmark.postId)
                     .then(found => {
-                        console.log('found a post');
                         posts.push(found);
                     });
             }
-            console.log(posts.length);
             return posts;
         } else {
             return Promise.reject('no bookmarked posts');

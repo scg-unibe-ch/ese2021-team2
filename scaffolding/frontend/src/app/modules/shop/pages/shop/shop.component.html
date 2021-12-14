@@ -1,14 +1,13 @@
 <mat-toolbar>
-    <div class="creation-container" *ngIf="admin">
-        <button mat-button (click)="handleCreateProduct()">Add a product</button>
-    </div>
-    Shop
-    <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
-    <button mat-icon-button [routerLink] = "'/shop/cart'" matBadge = {{productCount}} matBadgeSize = "small"
+    <button mat-icon-button [routerLink] = "'/shop/cart'" title = "Go to shopping cart" matBadge = {{productCount}} matBadgeSize = "small"
             matBadgeHidden = {{!productCount}} matBadgeColor = "warn">
         <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button *ngIf="loggedIn" mat-icon-button [routerLink] = "'/shop/orders/'">
+    <div class="creation-container" *ngIf="admin">
+        <button mat-raised-button (click)="handleCreateProduct()">Add a product</button>
+    </div>
+    <input id="searchBar" type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search">
+    <button mat-raised-button *ngIf="loggedIn" [routerLink] = "'/shop/orders/'">
         All Orders
     </button>
 </mat-toolbar>

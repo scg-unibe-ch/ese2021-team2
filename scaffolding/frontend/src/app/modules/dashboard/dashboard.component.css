@@ -1,8 +1,46 @@
-
+.dashboard-component {
+    text-align: left;
+    font-family: Roboto, serif;
+    overflow-x: hidden;
     
+    width: 170px;
+    height: 95%;
+    color: black;
+}
+.dashboard-button {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+.dashboard-button:hover {
+    background-color: grey !important;
+
+}
+.dashboard-button:focus {
+    background-color: dodgerblue !important;
+}
+.filter-description{
+    margin-left: 10px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    display: inline-block;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+}
 .filtcat {
-position: relative;
-top: 200px;
-width: 150px;
-text-align: center;
+    position: relative;
+    top: 170px;
+    width: auto;
+    text-align: left;
   }
+
+#submenu {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.panelTitle{
+    color: white;
+}

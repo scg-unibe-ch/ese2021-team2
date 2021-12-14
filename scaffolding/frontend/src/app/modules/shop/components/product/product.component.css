@@ -1,9 +1,13 @@
+button{
+    text-align: center;
+}
+
 .product-card{
+    border-left: solid 10px;
     display: inline-block;
     vertical-align: top;
-    font-family: Bahnschrift Light;
     background-color: white;
-    height: 390px;
+    height: 380px;
     width: 240px;
     text-align: center;
     padding: 0px;
@@ -18,11 +22,20 @@
     font-size: 13pt;
     min-height: 45px;
     min-width: 200px;
+    padding-top: 1rem;
 }
 
 .image-container{
     display: flex;
     height:min-content;
+    object-fit: contain;
+    overflow: visible;
+    text-align: center;
+    justify-content: center;
+}
+#img{
+    align-self: center;
+    margin-left: 0px;
 }
 
 .mat-card-image{
@@ -37,8 +50,30 @@
 .mat-card-actions{
     display:inline-flex;
     justify-content: right;
+    padding-top: 0;
+}
+
+.mat-card-content{
+    margin:0;
 }
 
 .mat-card-image:hover{
-    transform: scale(1.1)
+    transform: scale(1.05);
+    overflow: hidden;
+}
+
+.mat-button{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    cursor:pointer;
+    box-shadow: none;
+}
+
+#delete:hover{
+    color:tomato;
+}
+
+#details:hover{
+    opacity: 0.5;
 }

@@ -12,12 +12,11 @@ export class MyLecturesComponent implements OnInit {
 
   boardList=[{boardName:'placeholder', boardId:1}];
 
-  constructor(public httpClient: HttpClient, public userService: UserService) { 
+  constructor(public httpClient: HttpClient, public userService: UserService) {
     let userId = userService.getUser()!.userId
     httpClient.post(environment.endpointURL + "board/getMyLectures",{
       userId: userId
     }).subscribe((response: any) => {
-      console.log(response);
       let res=response
       this.boardList = res
     },
@@ -27,6 +26,17 @@ export class MyLecturesComponent implements OnInit {
     );
   }
   ngOnInit(): void {
+  }
+
+
+  colorHashBoard(input: number){
+    let v = 50
+    let rgb= []
+    for(var i = 0; i<3; i++){
+        v=(input*199+v)%255
+        rgb.push(v)
+    }
+    return "rgb("+rgb[0]+","+rgb[2]+","+rgb[1]+")"
   }
 
 }

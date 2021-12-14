@@ -40,15 +40,11 @@ export class OrderListComponent implements OnInit {
             if (this.admin) {
                 this.httpClient.get(environment.endpointURL + 'order/all')
                     .subscribe((res: any) => {
-                        console.log('Received orders');
-                        console.log(res);
                         this.orders = res.orders;
                     }, (error => console.log(error)));
             } else {
                 this.httpClient.get(environment.endpointURL + 'order/' + this.user.userId + '/orders')
                     .subscribe((res: any) => {
-                        console.log('Received orders');
-                        console.log(res);
                         this.orders = res.orders;
                     }, (error => console.log(error)));
             }
