@@ -1,4 +1,4 @@
-<mat-card id="container">
+<mat-card id="container" [ngStyle]="{'border-color': borderColor}" >
 
     <div id="column">
         <img [src]= "imageURL" onerror="this.src='/assets/images/platzhalter.png'">

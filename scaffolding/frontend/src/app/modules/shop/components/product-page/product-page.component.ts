@@ -27,6 +27,7 @@ export class ProductPageComponent implements OnInit {
     loggedIn: boolean;
     admin: boolean;
     user: User | null;
+    borderColor = "white";
 
     constructor(public httpClient: HttpClient, private _Activatedroute:ActivatedRoute, public cartService: CartService,
         public userService : UserService, public snackBar : MatSnackBar, private dialog: MatDialog,
@@ -47,13 +48,13 @@ export class ProductPageComponent implements OnInit {
             this.httpClient.get( environment.endpointURL + "product/" + this.productId)
             .subscribe((product: any) => {
                 this.product = product;
+                this.createColor();
                 this.imageURL = environment.endpointURL + "product/" + this.product.productId + "/image";
             })
         });
     }
 
     ngOnInit(): void {
-
     }
 
     handleAdd(){
@@ -87,5 +88,21 @@ export class ProductPageComponent implements OnInit {
 
     setFilter(){
         this.dataService.changeMessage(this.product.category);
+    }
+
+    private createColor(){
+        switch(this.product.category){
+            case 'office':
+                this.borderColor = "rgb(244,222,241)";
+                break;
+            case 'fashion':
+                this.borderColor = "rgb(244,236,222)";
+                break;
+            case 'lifestyle':
+                this.borderColor = "rgb(222,244,225)";
+                break;
+            default:
+                this.borderColor = 'white';
+        }
     }
 }
