@@ -18,7 +18,7 @@
 
 #admin-panel {
     width: 40rem;
-    display: flex;
+ 
     justify-content: space-around;
     align-items: center;
     background-color: rgb(228, 237, 255);
@@ -27,6 +27,11 @@
     margin-left: 4rem;
     margin-bottom: 0px;
     border-radius: 0.4rem;
+
+}
+
+#adminButtons{
+    display: flex;
 
 }
 
@@ -61,3 +66,32 @@
 }
 
 
+label{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input{
+    border: 1px solid grey;
+    border-radius: 7px;
+    margin: 1rem;
+}
+
+#boardCreator{
+    border: 1px grey solid;
+    border-radius: 7px;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+button{
+    border: 0px;
+    background-color: rgb(58, 116, 203);
+    height: 2rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    color: white;
+}
+
+.mat-button{
+    color: black
+}

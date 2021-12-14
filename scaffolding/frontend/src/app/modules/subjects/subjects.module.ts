@@ -9,6 +9,10 @@ import { PostListComponent } from '../board/components/post-list/post-list.compo
 import { BrowserModule } from '@angular/platform-browser';
 import { BoardsComponent } from './pages/boards/boards.component';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
     {
@@ -29,6 +33,7 @@ export const routing = RouterModule.forChild(routes);
         SubjectsGridComponent,
         BoardListComponent,
         BoardsComponent,
+        
     ],
     exports: [
         BoardListComponent
@@ -37,6 +42,11 @@ export const routing = RouterModule.forChild(routes);
         MatButtonModule,
         CommonModule,
         routing,
+        FormsModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatIconModule,
     ]
 })
 export class SubjectsModule { }
