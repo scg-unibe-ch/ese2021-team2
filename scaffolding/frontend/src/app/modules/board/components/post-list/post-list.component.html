@@ -1,0 +1,2 @@
+
+<app-post-preview *ngFor="let post of posts |search:searchTerm|filter:filterarg|sort:sortarg|filter:semarg" [post]="post"></app-post-preview>

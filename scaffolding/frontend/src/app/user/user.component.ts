@@ -1,10 +1,13 @@
+import { fakeUsers } from './../core/mocks/fake-users';
 import { Component } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { UserService } from '../services/user.service';
-
-
+import { UserService } from '../core/http/user.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import {isNumeric} from "rxjs/internal-compatibility";
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-user',
@@ -13,158 +16,212 @@ import { UserService } from '../services/user.service';
 })
 export class UserComponent {
 
-  userNameEmpty: boolean = true;
+    userNameEmpty: boolean = true;
+    emailEmpty: boolean = true;
+    falseLogin: boolean = false;
+    loggedIn: boolean | null;
+    user: User | null;
+    hide: boolean = true;
 
-  emailEmpty: boolean = true;
+    userToRegister: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
+    userToLogin: User = new User('', '', '', '', '', '', 0, '', '', '', '', '', 0);
 
-  falseLogin: boolean = false;
+    invPwMsgRegistration: string | undefined;
+    invalidPassword: boolean | undefined;
+    endpointMsgUser: string = '';
+    endpointMsgAdmin: string = '';
+    registrationFeedback: string = '';
+    loginFeedback: string | undefined;
+    activeRegButton: boolean = false;
+    invRegDataMsg: string = '';
 
-  loggedIn: boolean | undefined;
+    isLogin: boolean = false;
 
-  user: User | undefined;
+    constructor(
+        public httpClient: HttpClient,
+        public userService: UserService,
+        public dialogRef: MatDialogRef<UserComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
-  userToRegister: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
 
-  userToLogin: User = new User(0, '', '', '', '', '', '', 0, '', '', '', '');
-
-  invPwMsgRegistration: string | undefined;
-  invalidPassword: boolean | undefined;
-
-  endpointMsgUser: string = '';
-  endpointMsgAdmin: string = '';
-
-  constructor(
-    public httpClient: HttpClient,
-    public userService: UserService
-  ) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
-
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
-  }
-
-  registerUser(): void {
-    this.httpClient.post(environment.endpointURL + "user/register", {
-      userName: this.userToRegister.username,
-      password: this.userToRegister.password,
-      fname: this.userToRegister.fname,
-      lname: this.userToRegister.lname,
-      street: this.userToRegister.street,
-      housenr: this.userToRegister.housenr,
-      zipCode: this.userToRegister.zipCode,
-      city: this.userToRegister.city,
-      email: this.userToRegister.email,
-      birthday: this.userToRegister.birthday,
-      phonenumber: this.userToRegister.phonenumber
-    }).subscribe(() => {
-      this.userToLogin=this.userToRegister;
-      this.loginUser();
-      this.userToRegister.username = this.userToRegister.password = '';
-    });
-  }
-
-
-  loginUser(): void {
-    this.httpClient.post(environment.endpointURL + "user/login", {
-      userName: this.userToLogin.username,
-      email: this.userToLogin.email,
-      password: this.userToLogin.password,
-    }).subscribe((res: any) => {
-
-      this.falseLogin = false;
-      this.userToLogin.username = this.userToLogin.password = '';
-
-      localStorage.setItem('userName', res.user.userName);
-      localStorage.setItem('userToken', res.token);
-
-      this.userService.setLoggedIn(true);
-      this.userService.setUser(new User(res.user.userId, res.user.userName, res.user.password, res.user.fname, res.user.lname, res.user.email, res.user.street, res.user.housenr, res.user.zipCode, res.user.city, res.user.birthday, res.user.phonenumber));
-      },
-      err => {
-        this.falseLogin=true;
-      }
-    );
-  }
-
-
-  logoutUser(): void {
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userToken');
-
-    this.userService.setLoggedIn(false);
-    this.userService.setUser(undefined);
-  }
-
-  accessUserEndpoint(): void {
-    this.httpClient.get(environment.endpointURL + "secured").subscribe(() => {
-      this.endpointMsgUser = "Access granted";
-    }, () => {
-      this.endpointMsgUser = "Unauthorized";
-    });
-  }
-
-  accessAdminEndpoint(): void {
-    this.httpClient.get(environment.endpointURL + "admin").subscribe(() => {
-      this.endpointMsgAdmin = "Access granted";
-    }, () => {
-      this.endpointMsgAdmin = "Unauthorized";
-    });
-  }
-
-  checkUserPassword(): void {
-    let invalidFormat = false;
-    let msg = '';
-
-    try {
-      const pw: string = this.userToRegister.password;
-
-      if (pw.length < 8) {
-        invalidFormat = true;
-        msg = 'Password too short';
-      } else if (pw.search(/\d/) === -1) {
-        invalidFormat = true;
-        msg = 'Password must contain number';
-      } else if (pw.search('[A-Z]') === -1) {
-        invalidFormat = true;
-        msg = 'Password must contain capital letter';
-      } else if (pw.search('[a-z]') === -1) {
-        invalidFormat = true;
-        msg = 'Password must contain lowercase letter';
-      } else if (!(/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/.test(pw))) {
-        invalidFormat = true;
-        msg = 'Password must contain a special character';
-      }
-      if (invalidFormat) {
-        this.invPwMsgRegistration = msg;
-      }
-
-    } catch {
-      this.invPwMsgRegistration = "Something unusual went wrong. Please try again."
-    } finally {
-      this.invalidPassword = invalidFormat;
+        this.isLogin = data.loginDialog;
+        this.checkStatusButton();
     }
-  }
 
-  checkIfUsernameEmpty(){
-    if(this.userToLogin.username===""){ 
-      this.userNameEmpty=true;
-    }else{
-    this.userNameEmpty=false;
+    ngOnInit(): void {
+
     }
-    
-  }
 
-  checkIfEmailEmpty(){
-    console.log("test");
-    if(this.userToLogin.email===""){
-       this.emailEmpty=true;
-    }else{
-      
-      
-      this.emailEmpty=false;
-    }   
-  }
+    registerUser(): void {
+        this.registrationFeedback = '';
+        this.userService.register(this.userToRegister)
+        .then((res) => {
+            this.userToLogin = res;
+            this.loginUser();})
+        .catch((err) => {
+            this.registrationFeedback = err})
+    }
+
+    checkStatusButton(){
+        this.isValidNewUserInput();
+    }
+
+    loginUser(): void {
+        this.userService.login(this.userToLogin.userName, this.userToLogin.email, this.userToLogin.password)
+        .then(() => {
+            this.falseLogin = false;
+            this.userToLogin.userName = this.userToLogin.email = this.userToLogin.password = '';
+            this.dialogRef.close()})
+        .catch((err) => {
+            this.falseLogin = true;
+            console.log(err);
+            this.loginFeedback = err.message;
+        })
+    }
+
+    isValidNewUserInput(){
+        if(this.userToRegister==null){
+            console.log()
+            throwError('usertToRegister is null');
+        }
+        if(this.areMandatoryFieldsNull()){
+           this.invRegDataMsg = 'The first 5 fields with a (*) are mandatory to fill in for a registration.'
+            this.activeRegButton = false;
+        }else if(this.invalidPassword){
+            this.invRegDataMsg = 'Your password isn\'t strong enough.';
+            this.activeRegButton = false;
+        }else if(this.userToRegister.street!=''&&!this.checkOnlyText(this.userToRegister.street!)){
+            this.invRegDataMsg = 'The street should only contain letters.'
+            this.activeRegButton = false;
+        }else if(this.userToRegister.city!=''&&!this.checkOnlyText(this.userToRegister.city!)){
+            this.invRegDataMsg = 'The city should only contain letters.'
+            this.activeRegButton = false;
+        }else if(this.userToRegister.phonenumber!=''&&!this.checkPhoneNumb(this.userToRegister.phonenumber!)){
+            this.invRegDataMsg = 'The phone number is invalid.'
+            this.activeRegButton = false;
+        }else if(this.userToRegister.zipCode!=''&&(!this.checkOnlyNum(this.userToRegister.zipCode!)||this.userToRegister.zipCode!.length!=4)){
+            this.invRegDataMsg = 'The ZipCode may only contain 4 numbers.'
+            this.activeRegButton = false;
+        }else if((this.userToRegister.housenr!)!=0&&0>=this.userToRegister.housenr!){
+            this.invRegDataMsg = 'The House Number must be at least 1.'
+            this.activeRegButton = false;
+        }else {this.activeRegButton = true;}
+
+    }
+
+    areMandatoryFieldsNull(): boolean{
+        return (this.userToRegister.userName==''||this.userToRegister.password==''||this.userToRegister.fname==''||this.userToRegister.lname==''||this.userToRegister.email=='')
+    }
+
+    checkOnlyText(toCheck: string): boolean{
+        let isValid = true;
+        if ((/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~1234567890]/.test(toCheck))) {
+            isValid = false;
+        }
+        return isValid
+    }
+    checkOnlyNum(toCheck: string): boolean{
+        let isValid = false;
+        if (isNumeric(toCheck)) {
+            isValid = true;
+        }
+        return isValid
+    }
+
+    checkPhoneNumb(toCheck: string): boolean{
+        let isValid = true;
+        if ((/[0-9\+\-\ ]/.test(toCheck))) {
+            isValid = true;
+        }
+        if ((/[`!@#$%^ç&*()_=\]{};':"\\|/,.<>?~a-z]/.test(toCheck))) {
+            isValid = false;
+        }
+        if(toCheck.trim()==''){
+            isValid=false;
+        }
+        return isValid
+    }
+
+    accessUserEndpoint(): void {
+        const fakeUser = fakeUsers.fillOnlyNeededParameters;
+        this.userService.register(fakeUsers.fillOnlyNeededParameters)
+            .then(() =>
+            this.userService.login(fakeUser.userName, fakeUser.email, fakeUser.password)
+                    .then(res =>
+                        this.userService.delete(res)
+                            .then(() => console.log())
+                            .catch(err => console.log( err))
+                    ).catch(err => console.log( err))
+            ).catch(err => console.log( err));
+    }
+
+    accessAdminEndpoint(): void {
+        this.httpClient.get(environment.endpointURL + "admin")
+        .subscribe(() => {
+                this.endpointMsgAdmin = "Access granted";
+            },
+            () => {
+                this.endpointMsgAdmin = "Unauthorized";
+            }
+        );
+    }
+
+    checkUserPassword(): void {
+        let invalidFormat = false;
+        let msg = '';
+
+        try {
+            const pw: string = this.userToRegister.password;
+
+            if (pw.length < 8) {
+                invalidFormat = true;
+                msg = 'Password too short';
+            } else if (pw.search(/\d/) === -1) {
+                invalidFormat = true;
+                msg = 'Password must contain number';
+            } else if (pw.search('[A-Z]') === -1) {
+                invalidFormat = true;
+                msg = 'Password must contain capital letter';
+            } else if (pw.search('[a-z]') === -1) {
+                invalidFormat = true;
+                msg = 'Password must contain lowercase letter';
+            } else if (!(/[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/.test(pw))) {
+                invalidFormat = true;
+                msg = 'Password must contain a special character';
+            }
+            if (invalidFormat) {
+                this.invPwMsgRegistration = msg;
+            }
+        } catch {
+            this.invPwMsgRegistration = "Something unusual went wrong. Please try again."
+        } finally {
+            this.invalidPassword = invalidFormat;
+            this.checkStatusButton();
+        }
+    }
+
+    checkIfUsernameEmpty(){
+        if (this.userToLogin.userName === "") {
+            this.userNameEmpty = true;
+        } else {
+            this.userNameEmpty = false;
+        }
+    }
+
+    checkIfEmailEmpty() {
+        if (this.userToLogin.email === "") {
+            this.emailEmpty = true;
+        } else {
+            this.emailEmpty = false;
+        }
+    }
+
+
 }

@@ -1,0 +1,44 @@
+<a class="logo" routerLink="/" routerLinkActive="active">
+    <img src="/assets/images/logo.png" />
+</a>
+<div class="user-info">
+    <div class="avatar-wrapper">
+        <img class="avatar" [src]="loggedIn ? imageURL: '/assets/images/no_user.jpg'" />
+    </div>
+    <div class="user-text">
+        <div *ngIf="loggedIn else notLoggedIn">
+            <a routerLink="/profile">{{this.user?.userName}}</a>
+            <div>
+                <b style="color: rgb(0, 255, 0);">•</b> Online
+            </div>
+        </div>
+        <ng-template #notLoggedIn>
+        <a class="link" (click)="onLogin()"> Log in</a>
+        <a class="link" (click)="onRegister()">Sign up</a>
+        </ng-template>
+    </div>
+</div>
+<div class="menu-button-wrapper">
+
+    <button mat-button class="menu-button" *ngIf="isRoute()" (click)="sendIsExpanded()">
+        <span class="menu-text">Filter</span>
+    </button>
+    
+    <button mat-button class="menu-button" [routerLink]="'/subjects'">
+        <span class="menu-text">Subjects</span>
+    </button>
+
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/myLectures'">
+
+        <span class="menu-text">My Lectures</span>
+    </button>
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/bookmarks'">
+        <span class="menu-text">Bookmark</span>
+    </button>
+    <button mat-button class="menu-button" [routerLink]="'/shop'">
+        <span class="menu-text">Shop</span>
+    </button>
+    <button *ngIf="this.user!=null" mat-button class="menu-button" [routerLink]="'/shop/orders'">
+        <span class="menu-text">Orders</span>
+    </button>
+</div>

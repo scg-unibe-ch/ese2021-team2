@@ -1,41 +1,109 @@
-
 import express, { Router, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { verifyToken } from '../middlewares/checkAuth';
 import { checkPassword } from '../middlewares/checkPassword';
 import { checkNoDuplicates } from '../middlewares/checkNoDuplicate';
+import { checkNoDuplicateEmail } from '../middlewares/checkNoDuplicate';
+import { MulterRequest } from '../models/multerRequest.model';
+import { upload } from '../middlewares/fileFilter';
+import { User } from '../models/user.model';
 
 const userController: Router = express.Router();
 const userService = new UserService();
 
-
-userController.post('/register', checkPassword, checkNoDuplicates,
+userController.post('/register', checkPassword, checkNoDuplicates, checkNoDuplicateEmail,
     (req: Request, res: Response) => {
-        console.log(req);
-
-        userService.register(req.body).then(registered => res.send(registered)).catch(err => res.status(500).send(err));
+        userService.register(req.body)
+            .then(registered => res.send(registered))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.post('/login',
     (req: Request, res: Response) => {
-        console.log('reached BE user controller line 17');
-
-
-        userService.login(req.body).then(login => res.send(login)).catch(err => res.status(500).send(err));
+        userService.login(req.body)
+            .then(login => res.send(login))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.get('/', verifyToken, // you can add middleware on specific requests like that
     (req: Request, res: Response) => {
-        userService.getAll().then(users => res.send(users)).catch(err => res.status(500).send(err));
+        userService.getUser(req.body.tokenPayload.userId)
+            .then(user => res.send(user))
+            .catch(err => res.status(500).send(err));
+    }
+);
+
+userController.get('/user/:userId',
+    (req: Request, res: Response) => {
+        userService.getUser(parseInt(req.params.userId, 10))
+            .then(user => res.send({username: user.userName, image: user.profile_image}))
+            .catch(err => res.status(500).send(err));
     }
 );
 
 userController.delete('/delete', verifyToken, // pathway can be adapted if necessary
     (req: Request, res: Response) => {
-        userService.delete(req.body).then(response => res.send(response)).catch(err => res.status(500).send(err));
+        userService.delete(req.body)
+            .then(response => res.sendStatus(204))
+            .catch(err => res.status(500).send(err));
     }
 );
+
+userController.put('/update', verifyToken,
+    (req: Request, res: Response) => {
+        userService.update(req.body)
+            .then(response => {res.send(response); })
+            .catch(err => res.status(500).send(err));
+    });
+
+userController.post('/likePost',
+    (req: Request, res: Response) => {
+
+        userService.likePost(req.body).catch(err => {
+            console.log(err);
+
+            res.status(500).send(err);
+        });
+
+    }
+);
+
+// add image to a todoItem
+userController.post('/:id/image', upload.single('image'), (req: MulterRequest, res: Response) => {
+    userService.updateProfileImage(req)
+        .then(created => res.send(created))
+        .catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.get('/:id/image', (req: Request, res: Response) => {
+    userService.getProfileImage(Number(req.params.id)).then(products => {
+        res.sendFile(products, { root: process.cwd()});
+    })
+        .catch(err => res.status(500).send(err));
+});
+
+// get the filename of an image
+userController.delete('/:id/image', (req: Request, res: Response) => {
+    userService.deleteProfileImage(Number(req.params.id)).then(response => res.status(204).send(response))
+        .catch(err => res.status(500).send(err));
+});
+
+userController.get('/:id/admin', (req: Request, res: Response) => {
+    userService.getAdminStatus(Number(req.params.id))
+        .then(isAdmin => res.status(200).send(isAdmin))
+        .catch(err => res.status(500).send(err));
+});
+userController.post('/getUserById',
+    async (req: Request, res: Response) => {
+
+        const u = await userService.getUser(req.body.userId);
+        res.send(u);
+
+    }
+);
+
 
 export const UserController: Router = userController;

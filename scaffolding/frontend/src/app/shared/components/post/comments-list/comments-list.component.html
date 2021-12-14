@@ -1,0 +1,23 @@
+
+
+<div id="outline">
+<mat-icon (click)="createComment()" *ngIf="loggedIn" id="chatIcon">chat_bubble_outline</mat-icon>
+<button (click)="switchShowComments()" id="toggleButton">Toggle Comments</button>
+   
+
+
+
+    
+    <div *ngIf="creatingComment" id="postCreator">
+        <h3>Create a comment</h3>
+
+        <input type="text" placeholder="Text" name="commentText" [(ngModel)]="newCommentText">
+
+        <button (click)="submitComment()" id="commentSubmit">Submit Comment</button>
+        <button (click)="cancelCreateComment()" *ngIf="creatingComment" id="cancelButton">Cancel</button>
+        </div>
+
+<div *ngIf="showComments">
+<app-post-comment *ngFor="let postcomment of postCommentList" [postComment]="postcomment"></app-post-comment>
+</div>
+</div>

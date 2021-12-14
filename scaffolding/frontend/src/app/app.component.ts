@@ -3,8 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { TodoList } from './models/todo-list.model';
 import { TodoItem } from './models/todo-item.model';
 import { environment } from '../environments/environment';
-import { UserService } from './services/user.service';
+import { UserService } from './core/http/user.service';
 import { User } from './models/user.model';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -13,86 +16,95 @@ import { User } from './models/user.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
 
-  todoLists: TodoList[] = [];
+    title = 'frontend';
+    todoLists: TodoList[] = [];
+    newTodoListName: string = '';
 
-  newTodoListName: string = '';
+    loggedIn: boolean;
+    user: User | null;
+    isExpanded: boolean = true;
 
-  loggedIn: boolean | undefined;
+    constructor(
+        public httpClient: HttpClient,
+        public userService: UserService,
+        private router: Router
+    ) {
+        // Listen for changes
+        userService.loggedIn$.subscribe(res => this.loggedIn = res);
+        userService.user$.subscribe(res => this.user = res);
 
-  user: User | undefined;
+        // Current value
+        this.loggedIn = userService.getLoggedIn();
+        this.user = userService.getUser();
+    }
 
-  constructor(
-    public httpClient: HttpClient,
-    public userService: UserService
-  ) {
-    // Listen for changes
-    userService.loggedIn$.subscribe(res => this.loggedIn = res);
-    userService.user$.subscribe(res => this.user = res);
+    ngOnInit() {
+        this.readLists();
+        this.checkUserStatus();
+    }
 
-    // Current value
-    this.loggedIn = userService.getLoggedIn();
-    this.user = userService.getUser();
-    console.log(this.user?.fname);
-  }
+    // CREATE - TodoList
+    createList(): void {
+        this.httpClient.post(environment.endpointURL + "todolist", {
+                name: this.newTodoListName
+            })
+            .subscribe((list: any) => {
+                this.todoLists.push(new TodoList(list.todoListId, list.name, []));
+                this.newTodoListName = '';
+            })
+    }
 
-  ngOnInit() {
-    this.readLists();
-    this.checkUserStatus();
-  }
+    // READ - TodoList, TodoItem
+    readLists(): void {
+        this.httpClient.get(environment.endpointURL + "todolist")
+            .subscribe((lists: any) => {
+                lists.forEach((list: any) => {
+                    const todoItems: TodoItem[] = [];
 
-  // CREATE - TodoList
-  createList(): void {
-    this.httpClient.post(environment.endpointURL + "todolist", {
-      name: this.newTodoListName
-    }).subscribe((list: any) => {
-      this.todoLists.push(new TodoList(list.todoListId, list.name, []));
-      this.newTodoListName = '';
-    })
-  }
+                    list.todoItems.forEach((item: any) => {
+                        todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
+                    });
 
-  // READ - TodoList, TodoItem
-  readLists(): void {
-    this.httpClient.get(environment.endpointURL + "todolist").subscribe((lists: any) => {
-      lists.forEach((list: any) => {
-        const todoItems: TodoItem[] = [];
+                    this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
+                });
+            });
+    }
 
-        list.todoItems.forEach((item: any) => {
-          todoItems.push(new TodoItem(item.todoItemId, item.todoListId, item.name, item.itemImage, item.done));
-        });
+    // UPDATE - TodoList
+    updateList(todoList: TodoList): void {
+        this.httpClient.put(environment.endpointURL + "todolist/" + todoList.listId, {
+                name: todoList.name
+            })
+            .subscribe();
+    }
 
-        this.todoLists.push(new TodoList(list.todoListId, list.name, todoItems))
-      });
-    });
-  }
+    // DELETE - TodoList
+    deleteList(todoList: TodoList): void {
+        this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId)
+            .subscribe(() => {
+                this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
+            });
+    }
 
-  // UPDATE - TodoList
-  updateList(todoList: TodoList): void {
-    this.httpClient.put(environment.endpointURL + "todolist/" + todoList.listId, {
-      name: todoList.name
-    }).subscribe();
-  }
+    checkUserStatus(): void {
+        // Get user data from local storage
+        const userToken = localStorage.getItem('userToken');
 
-  // DELETE - TodoList
-  deleteList(todoList: TodoList): void {
-    this.httpClient.delete(environment.endpointURL + "todolist/" + todoList.listId).subscribe(() => {
-      this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
-    });
-  }
+        // Set boolean whether a user is logged in or not
+        this.userService.setLoggedIn(!!userToken);
+    }
 
-  checkUserStatus(): void {
-    // Get user data from local storage
-    const userToken = localStorage.getItem('userToken');
+    test() {
+        console.log(this.user);
+    }
 
-    // Set boolean whether a user is logged in or not
-    this.userService.setLoggedIn(!!userToken);
+    receiveIsExpanded($event:boolean) {
+        this.isExpanded = $event;
+      }
 
-  }
+    isRoute(){
+        return this.router.url.match(/\/shop\S*/) && this.router.url.length == 5 || this.router.url.match(/\/board\S*/) && this.router.url.length == 8;
+    }
 
-  test(){
- 
-      console.log(this.user);
-    
-  }
 }

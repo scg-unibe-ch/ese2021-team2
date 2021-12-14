@@ -1,0 +1,200 @@
+mat-card{
+    border-left: 7px solid rgb(25, 159, 90);
+    border-radius: 5px;
+}
+
+img{
+   max-width: 100%;
+   height: auto;
+}
+
+#background{
+    height: 100%;
+    width: 100%;
+    background-color:  rgb(222,230,243);
+    padding-top: 2%;
+}
+
+#frame{
+    margin: 2%;
+    margin-top: 0px;
+    height: auto;
+    background-color: white;
+}
+
+#info{
+    display: flex;
+}
+
+#info p{
+    margin-left: 10px
+}
+
+
+
+#likes{
+    position: relative;
+    margin-top: 12px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#like-count{
+    position: relative;
+    bottom: 6px;
+}
+
+#post-meta{
+    display: flex;
+    position: absolute;
+    right: 20px;
+}
+
+#votedIcon{
+    color: red;
+}
+#votedIcon:hover{
+    color: hotpink;
+}
+
+#voteIcon{
+    overflow: hidden;
+}
+#voteIcon:hover{
+    color: hotpink;
+}
+
+
+
+#bookmarkedIcon{
+    color: green;
+    overflow: hidden;
+    height: 2rem;
+    cursor: pointer;
+}
+#bookmarkedIcon:hover{
+    color:rgb(54, 193, 252)
+}
+
+#bookmarkIcon{
+    overflow: hidden;
+    height: 2rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+#bookmarkIcon:hover{
+    color:rgb(54, 193, 252)
+}
+
+
+.bm{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 10px;
+}
+
+#edit{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 25px;
+    cursor: pointer;
+}
+#edit:hover{
+    color:rgb(25, 159, 90)
+}
+
+#delete{
+    position: relative;
+    margin-top: 12px;
+    margin-left: 25px;
+    cursor: pointer;
+}
+#delete:hover{
+    color:rgb(252, 54, 54)
+}
+
+@keyframes anim1 {
+    0% {height: 2rem}
+    50%{height: 0rem}
+    100% {height: 2rem}
+}
+
+  #comList{
+    height: 100%;
+  }
+
+  #newTitle{
+    height: 1.8rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 90%;
+}
+
+#newContent{
+    width:90%;
+    font-family: inherit;
+    padding: 0.5rem;
+}
+#submitPost{
+    width: 60%;
+    background-color: rgb(51, 130, 55);
+}
+#cancel{
+    background-color: rgb(126, 57, 68);
+}
+
+button{
+    border: 0px;
+
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28, 53, 161);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+input{
+   border-radius: 7px;
+    border: gray 1px solid;
+    margin-bottom: 1rem;
+}
+
+textarea{
+    margin: 1rem;
+    border-radius: 7px;
+    border: gray 1px solid;
+}
+
+select{
+    margin-left: 0rem;
+    padding-left: 0rem;
+}
+
+
+#editbtn{
+    display: flex;
+}
+.newPostField{
+
+    border: 1px solid grey;
+    border-radius: 0.3rem;
+    margin-left: 3%;
+    margin-bottom: 4%;
+    padding: 0.2rem;
+    padding-left: 0.9rem;
+
+}
+
+#semester{
+    color: gray;
+    margin-top: 0px;
+    margin-bottom: 2rem;
+}
+
+#title{
+    margin-bottom: 0px;
+}

@@ -1,0 +1,11 @@
+
+<div id="gridContainer">
+    <div *ngFor="let sub of subjects" class="subj" >
+        <div id="gridBox" [ngStyle]="{'background-color': colorHash(sub)}">
+            <button mat-button class="menu-button" [routerLink]="['/subjects/' + sub.subjectId + '/boards']" >
+                <h2>{{sub.name[0]}}</h2>
+                <p class="menu-text">{{sub.name}}</p>
+            </button>
+        </div>
+    </div>
+</div>

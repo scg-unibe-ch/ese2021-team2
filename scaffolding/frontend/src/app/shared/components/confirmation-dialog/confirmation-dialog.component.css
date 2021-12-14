@@ -1,0 +1,39 @@
+.mat-dialog-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    background:  rgb(222,230,243);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+.mat-dialog-content{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.mat-dialog-actions{
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.mat-raised-button{
+    color:white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#confirm{
+    background-color: rgb(51, 130, 55);
+}
+
+#confirm:hover{
+    background-color: rgb(74, 190, 80);
+}
+
+#decline{
+    background-color:rgb(244, 67, 54);
+}
+
+#decline:hover{
+    background-color: orange;
+}

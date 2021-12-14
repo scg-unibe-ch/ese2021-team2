@@ -1,17 +1,29 @@
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 body {
-  margin: 30px;
+    margin: 0px;
 }
 
 .mat-card {
-  margin: 20px 0;
-  background-color: #EEE;
+    margin: 20px 0;
+    background-color: #EEE;
 }
 
 button, input {
-  margin-left: 15px !important;
-  margin-right: 15px !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
 }
 
 .mat-form-field-wrapper {
-  margin-right: 25px !important;
+    margin-right: 25px !important;
+}
+
+.green-snackbar {
+    background-color:rgb(51, 130, 55);
+    color:white; 
+    font-weight: bold;
+    padding:0.3rem;
+}
+
+.green-snackbar button{
+    color: white;
 }

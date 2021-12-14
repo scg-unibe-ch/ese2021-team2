@@ -1,0 +1,55 @@
+<div id="background">
+<mat-toolbar>
+
+    <input type="text" [(ngModel)]="searchWord" name="searchWord" placeholder="Search..." id="searchBar">
+    <button id="createPost" *ngIf="this.postList.isAuthorizedToCreate()" (click)="createPost()" > Create new Post</button>
+</mat-toolbar>
+
+<div id="info">
+<h1 id="title">{{title}}</h1>
+<button *ngIf="loggedIn && unsubscribed" (click)="subscribe()" id="subbtn">Subscribe</button>
+<button *ngIf="loggedIn && !unsubscribed" (click)="unsubscribe()" id="unsubbtn">Unsubscribe</button>
+<p id="description">{{description}}</p>
+</div>
+
+<mat-card *ngIf="creatingPost" id="postCreator">
+
+
+    <input class="newPostField" id="newTitle" type="text" placeholder="Title" name="title" [(ngModel)]="newTitle">
+    <br>
+    <textarea class="newPostField" id="newContent" placeholder="Content" name="Content" cols="40" rows="10" [(ngModel)]="newContent" ></textarea>
+    <br>
+
+    <select [(ngModel)]="newSemester"  class="newPostField">
+        <option value="" disabled>Semester</option>
+        <option *ngFor="let semester of SemesterAuswahl" [ngValue]="semester">{{semester}}</option>
+    </select>
+    &nbsp;
+    <select [(ngModel)]="newCategory" class="newPostField">
+        <option value="" disabled>Category</option>
+        <option *ngFor="let kategorie of KategorieAuswahl" [ngValue]="kategorie">{{kategorie}}</option>
+     </select>
+
+    <br>
+    <br>
+    <div id="imgDiv">
+    <button type="button" (click)="imageInput.click()" id="addPhoto">Add a photo</button>
+
+
+    <input hidden type="file" #imageInput  accept = "image/jpeg, image/png" (change)="processFile($event)">
+    <br>
+    <div class = "imagePreviewContainer" *ngIf = "imageURL" >
+        <img [src] = "imageURL">
+    </div>
+    </div>
+    <br>
+    <div id="submitbox">
+    <button (click)="submitPost()" id="submitPost">Submit Post</button>
+    <button (click)="cancelCreate()" id="cancel">Cancel</button>
+    </div>
+    <div *ngIf="this.postList.postFeedback">{{this.postList.postFeedback}}</div>
+</mat-card>
+
+
+<app-post-list [searchTerm]="searchWord" ></app-post-list>
+</div>

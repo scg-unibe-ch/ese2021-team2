@@ -1,0 +1,12 @@
+<div mat-dialog-title> {{title}}</div>
+<div mat-dialog-content>
+    <p>{{message}}</p>
+</div>
+<div mat-dialog-actions>
+    <button id = "decline" mat-raised-button (click) = "onDismiss()" title="Decline">
+        <mat-icon>clear</mat-icon>
+    </button>
+    <button id = "confirm" mat-raised-button (click) = "onConfirm()" title="Confirm">
+        <mat-icon>done</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,14 @@
+<div *ngIf="loggedIn">
+   <div *ngIf="refreshBookmarks().length>0; else empty">
+       <h1 id="title">bookmarked posts</h1>
+       <app-post-preview  *ngFor="let poste of refreshBookmarks()" [post]="poste"></app-post-preview>
+   </div>
+    <ng-template #empty >
+       <h1>No bookmarks to show</h1>
+        <h2>Browse in  <a [routerLink]="'../subjects'">Posts</a> to bookmark posts you like</h2>
+    </ng-template>
+</div>
+
+<div *ngIf="!loggedIn"  >
+    <h1>Log in to add bookmarks!</h1>
+</div>

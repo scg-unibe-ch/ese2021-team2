@@ -1,65 +1,15 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>ESE-2021 Frontend Scaffolding</span>
-    
-
-  </mat-toolbar-row>
-</mat-toolbar>
-
-<mat-tab-group>
-  <mat-tab label="Todo List Example">
-    <mat-card>
-      <mat-form-field>
-        <input matInput placeholder="List Name" [(ngModel)]="newTodoListName" name="name">
-      </mat-form-field>
-      <button mat-flat-button color="primary" (click)="createList()" [disabled]="newTodoListName === ''">Create new list</button>
-    </mat-card>
-
-    <app-todo-list
-      *ngFor="let todoList of todoLists"
-      [todoList]="todoList"
-      (update)="updateList($event)"
-      (delete)="deleteList($event)"
-    ></app-todo-list>
-  </mat-tab>
-
-  <mat-tab label="Authentication">
-    <app-user></app-user>
-  </mat-tab>
-
-  <mat-tab *ngIf="loggedIn" label="Profile Page">
-    <mat-card>
-      
-      <h1>{{this.user?.username}}</h1>
-      <label for="">First name:</label>
-      <p>{{this.user?.fname}}</p>
-      <br>
-      <label for="">Last name:</label>
-      <p>{{this.user?.lname}}</p>
-      <br>
-      <label for="">Street:</label>
-      <p>{{this.user?.street}}</p>
-      <br>
-      <label for="">House Number:</label>
-      <p>{{this.user?.housenr}}</p>
-      <br>
-      <label for="">ZIP-Code:</label>
-      <p>{{this.user?.zipCode}}</p>
-      <br>
-      <label for="">City:</label>
-      <p>{{this.user?.city}}</p>
-      <br>
-      <label for="">E-mail:</label>
-      <p>{{this.user?.email}}</p>
-      <br>
-      <label for="">Phone Number:</label>
-      <p>{{this.user?.phonenumber}}</p>
-      <br>
-      <label for="">Last name:</label>
-      <p>{{this.user?.lname}}</p>
-      <br>
-      <label for="">Birthday:</label>
-      <p>{{this.user?.birthday}}</p>
-    </mat-card>
-  </mat-tab>
-</mat-tab-group>
+<mat-sidenav-container id="main-sidebar-container">
+    <mat-sidenav id="main-sidebar" #sideNav mode="side" opened>
+        <app-sidebar (messageEvent)="receiveIsExpanded($event)"></app-sidebar>
+    </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-sidenav-container id="main-sidebar-container" autosize>
+                <mat-sidenav id = "dashboard" #sidenav mode="side" [(opened)]="isExpanded">
+                    <app-dashboard *ngIf="isRoute()"></app-dashboard>
+                </mat-sidenav>
+                <mat-sidenav-content>
+                    <router-outlet></router-outlet>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>

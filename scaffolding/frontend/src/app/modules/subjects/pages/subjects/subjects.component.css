@@ -1,0 +1,63 @@
+#title{
+    font-size: 2.6rem;
+    font-weight: 900;
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#titleBox{
+    margin-top: 5rem;
+    background-color: rgb(225, 73, 101);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    display: inline-block;
+}
+
+#admin-panel {
+    width: 40rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(228, 237, 255);
+    padding: 15px 15px 15px 15px;
+    margin-top: 2rem;
+    margin-left: 4rem;
+    margin-bottom: 0px;
+    border-radius: 0.4rem;
+
+}
+
+.mat-button {
+    font-size: 1.2rem;
+    background-color: rgb(250, 252, 255);
+}
+
+.titleContainer{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    height: 500px;
+    background-color: rgb(249, 249, 249);
+    clip-path: ellipse(87% 100% at 78.12% 0%);
+    bottom: 28px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 4rem;
+}
+
+
+
+#content{
+    position: absolute;
+    top: 10%;
+}
+
+#background{
+    height: 200%;
+    width: 100%;
+    background-color: #5799c2a1;
+}
+
+

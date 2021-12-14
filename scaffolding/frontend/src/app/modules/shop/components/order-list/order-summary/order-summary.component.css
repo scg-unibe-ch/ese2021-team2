@@ -1,0 +1,33 @@
+mat-card{
+    border-left: rgb(0, 89, 130) 7px solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+    cursor: pointer;
+}
+#shippedStatus{
+    margin-left: 0;
+    color: green;
+    text-transform: uppercase;
+}
+#cancelledStatus{
+    margin-left: 0;
+    color: red;
+    text-transform: uppercase;
+}
+#paidStatus{
+    margin-left: 0;
+    color: dodgerblue;
+    text-transform: uppercase;
+}
+#pendingStatus{
+    text-transform: uppercase;
+    margin-left: 0;
+}
+#test{
+    margin-left: 0;
+    color: red;
+}
+#fat{
+    font-weight: bold;
+}

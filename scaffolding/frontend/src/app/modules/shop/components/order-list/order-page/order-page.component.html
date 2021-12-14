@@ -1,0 +1,85 @@
+<div class="order-page">
+<div *ngIf="!checkAuthorizationStatus()">
+    <h1>Secured Endpoint! You can only check your own orders</h1>
+</div>
+
+<div *ngIf="checkAuthorizationStatus() && !admin">
+    <h1 class="headline">Order #{{this.order.orderId}}</h1>
+    <button  [routerLink]="['../..']">View all orders</button>
+    <button  *ngIf="this.order.status==='pending'" (click)="payOrder()" class="normalButton">Pay Order</button>
+    <button id="cancelButton" *ngIf="this.order.status==='pending'" (click)="cancelOrder()">Cancel Order</button>
+    <h1 class="order-subtitle">Shipment to</h1>
+    <mat-card class="address-section">
+            <h3>{{this.order.customerName}}</h3>
+            <h3>{{this.street}}</h3>
+            <h3>{{this.zip}} {{this.city}}</h3>
+             <div class="order-status">
+            <h3 class="status-paid" *ngIf="this.order.status==='paid'">{{this.order.status}}</h3>
+            <h3 class="status-shipped" *ngIf="this.order.status==='shipped'">{{this.order.status}}</h3>
+            <h3 class="status-pending" *ngIf="this.order.status==='pending'">{{this.order.status}}</h3>
+            <h3 class="status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status}}</h3>
+
+             </div>
+    </mat-card>
+
+    <h1 class="order-subtitle">Ordered Products</h1>
+
+    <div *ngFor = "let productItem of this.productItems" >
+        <div class = "item">
+            <p class = "name">{{productItem.product.title}}</p>
+            <p>{{productItem.quantity}}</p>
+            <p class = "price">CHF {{productItem.product.price.toFixed(2)}}</p>
+        </div>
+    </div>
+    <div class = "total">
+        <p>Total</p>
+        <p>CHF {{this.order.price.toFixed(2)}}</p>
+    </div>
+
+</div>
+
+<div *ngIf="checkAuthorizationStatus() && admin">
+    <h1 class="headline">Order #{{this.order.orderId}} by User: "{{this.order.customerName}}" Id #{{this.order.customerId}}</h1>
+    <button mat-raised-button [routerLink]="['../..']">View all orders</button>
+
+    <mat-form-field class="form-field">
+        <mat-label>Change Status</mat-label>
+            <mat-select [(value)]="status">
+                <mat-option value="pending">Pending</mat-option>
+                <mat-option value="paid">Paid</mat-option>
+                <mat-option value="shipped">Shipped</mat-option>
+                <mat-option value="cancelled">Cancelled</mat-option>
+            </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="changeStatus()">Save Status</button>
+    <h1 class="order-subtitle">Shipment to</h1>
+    <mat-card class="address-section">
+        <h3>{{this.order.customerName}}</h3>
+        <h3>{{this.street}}</h3>
+        <h3>{{this.zip}} {{this.city}}</h3>
+        <div class="order-status">
+            <h3 class="status-paid" *ngIf="this.order.status==='paid'">{{this.order.status}}</h3>
+            <h3 class="status-shipped" *ngIf="this.order.status==='shipped'">{{this.order.status}}</h3>
+            <h3 class="status-pending" *ngIf="this.order.status==='pending'">{{this.order.status}}</h3>
+            <h3 class="status-cancelled" *ngIf="this.order.status==='cancelled'">{{this.order.status}}</h3>
+
+        </div>
+    </mat-card>
+
+    <h1 class = "order-subtitle">This Order's Items</h1>
+
+    <div *ngFor = "let productItem of this.productItems" >
+        <div class = "item">
+            <p class = "name">{{productItem.product.title}}</p>
+            <p>{{productItem.quantity}}</p>
+            <p class = "price">CHF {{productItem.product.price.toFixed(2)}}</p>
+        </div>
+    </div>
+    <div class = "total">
+        <p>Total</p>
+        <p>CHF {{this.order.price.toFixed(2)}}</p>
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,145 @@
+
+
+.imagePreviewContainer {
+    width: 200px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.contentInput {
+    resize: none;
+}
+
+.mat-toolbar{
+    display: inline-flex;
+    font-family: Bahnschrift;
+    background-color: inherit;
+    justify-content: center;
+}
+
+:host{
+    background-color: rgb(222,230,243);
+}
+
+#background{
+    background-color: rgb(222,230,243);
+    font-family: arial;
+    height: 300%;
+}
+
+
+#searchBar{
+    border: 0px;
+    width: 50%;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+}
+
+.mat-toolbar{
+    text-align: left;
+}
+
+button{
+    border: 0px;
+
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28, 53, 161);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(40, 72, 215);
+}
+
+#info{
+    background-color: white;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    padding-left: 7%;
+}
+
+#unsubbtn{
+    background-color: rgb(17, 44, 62);
+    cursor: pointer;
+}
+#unsubbtn:hover{
+    background-color: rgb(48, 117, 164);
+}
+
+#subbtn{
+    background-color: rgb(25, 124, 167);
+    cursor: pointer;
+}
+#subbtn:hover{
+    background-color: rgb(10, 52, 70);
+
+}
+
+#postCreator{
+    margin-left: 8%;
+    margin-right: 8%;
+    border-left: rgb(0, 89, 130) 7px solid;
+    background-color: white;
+    padding-top: 2%;
+}
+
+.newPostField{
+
+    border: 1px solid grey;
+    border-radius: 0.3rem;
+    margin-left: 3%;
+    margin-bottom: 4%;
+    padding: 0.2rem;
+    padding-left: 0.9rem;
+
+}
+
+#newTitle{
+    height: 1.8rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 90%;
+}
+
+#newContent{
+    width:90%;
+    font-family: inherit;
+    padding: 0.5rem;
+}
+
+h3{
+    margin-left: 3%;
+}
+
+#submitPost{
+    width: 90%;
+    background-color: rgb(51, 130, 55);
+}
+
+#imgDiv{
+    display: flex;
+}
+
+#addPhoto{
+    background-color: rgb(0, 89, 130);
+}
+
+#submitbox{
+    display: flex;
+}
+
+#cancel{
+    background-color: rgb(126, 57, 68);
+}

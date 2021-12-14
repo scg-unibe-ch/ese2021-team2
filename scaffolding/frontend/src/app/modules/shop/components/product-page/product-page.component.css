@@ -1,0 +1,87 @@
+mat-card{
+  border-left: 10px solid;
+  border-radius: 5px;
+}
+
+#container{
+  margin: 2%;
+  margin-top: 2%;
+  height: auto;
+  background-color: white;
+  display: flex;
+}
+
+#column {
+  flex: 50%;
+  padding: 2%;
+}
+
+
+
+/*
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+}*/
+
+
+#column > img {
+    width: 100%;
+    height: auto;
+}
+#description {
+    border-bottom: 1px solid #E1E8EE;
+    margin-bottom: 20px;
+  }
+#description a {
+  text-decoration: none;
+}
+  #description span {
+    font-size: 12px;
+    color: #358ED7;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+
+
+  .product-price {
+    display: flex;
+    align-items: center;
+  }
+
+  .product-price span {
+    font-size: 26px;
+    font-weight: 300;
+    color: #43474D;
+    margin-right: 2%;
+  }
+  button{
+    border: 0px;
+    
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28, 53, 161);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: dodgerblue;
+}
+
+#gotocart {
+  background-color: rgb(51, 130, 55);
+  margin: 4%;
+}
+
+#gotocart:hover {
+    background-color:rgb(74, 190, 80);
+}

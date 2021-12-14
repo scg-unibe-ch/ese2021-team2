@@ -1,0 +1,139 @@
+
+#afterOrder{
+    height: 100%;
+    overflow: auto;
+}
+h1{
+    text-align: center;
+    margin-top: 0;
+    padding-top: 2rem;
+}
+p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.userAdress{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+mat-card{
+    border-left: rgb(0, 89, 130) 7px solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+}
+mat-form-field{
+    margin-left: 1rem;
+    border-radius: 5px;
+}
+.form-field{
+    background-color: white;
+    border-left:rgb(0, 89, 130) solid 7px;
+    padding-left: 20px;
+    margin-bottom: 2rem;
+    padding-top: 10px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 7px;;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: rgb(28, 53, 161) !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: rgb(28, 53, 161) !important;
+}
+
+::ng-deep.mat-option {
+    background-color: white !important;
+}
+::ng-deep.mat-form-field-ripple {
+    background-color: rgb(28, 53, 161) !important;;
+}
+a{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: rgb(28, 53, 161);
+    text-decoration: none;
+}
+
+a:hover{
+    color: dodgerblue;
+}
+
+button{
+    border: 0px;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(28, 53, 161);
+    color: white;
+    font-weight: bold;
+}
+button:hover{
+    background-color: dodgerblue;
+    color: white;
+}
+
+#background{
+    background-color: rgb(222,230,243);
+    font-family: arial, Helvetica, sans-serif;
+    height: 100%;
+    overflow: auto;
+}
+
+
+:disabled{
+    background-color: darkgrey;
+}
+:disabled:hover{
+    background-color: darkgrey;
+}
+
+#label{
+    padding-top: 0px;
+
+}
+
+#houseNr{
+    background-color: white;
+    border-left:rgb(0, 89, 130) solid 7px;
+    padding-left: 20px;
+    padding-bottom: 0;
+    margin-bottom: 2rem;
+    height: 100px;
+}
+
+mat-select{
+    margin-top: 0rem;
+}
+
+mat-label{
+    font-size: 20px;
+    
+}
+
+#title{
+    text-align: left;
+    margin: 1.5rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(0, 89, 130);
+    color: white;
+    border-radius: 0.5rem;
+    display: inline-block;
+}
+
+
+
