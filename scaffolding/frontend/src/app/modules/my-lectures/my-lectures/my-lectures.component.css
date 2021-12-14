@@ -24,7 +24,7 @@
 
 #list{
     position: relative;
-    top: -10%;
+    bottom: 8%;
     padding: 8%;
 }
 
@@ -33,7 +33,7 @@
     padding: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-radius: 2.2rem;
+    border-radius: 1rem;
     display: inline-block;
     color: white;
     background-color: rgb(121, 212, 242);

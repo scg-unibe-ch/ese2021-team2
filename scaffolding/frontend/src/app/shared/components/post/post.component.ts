@@ -31,6 +31,9 @@ export class PostComponent implements OnInit {
   imageURL: string = "";
   admin: boolean;
   creator:any = {userName: ""}
+  SemesterAuswahl = ['1.Semester', '2.Semester', '3.Semester', '4.Semester', '5.Semester', '6.Semester'];
+  KategorieAuswahl = ['Organization', 'Exercises', 'Exams', 'Other'];
+
 
   constructor(public userService: UserService, public httpClient: HttpClient, private dialog: MatDialog,private _Activatedroute:ActivatedRoute) {
     userService.loggedIn$.subscribe(res => this.loggedIn = res);

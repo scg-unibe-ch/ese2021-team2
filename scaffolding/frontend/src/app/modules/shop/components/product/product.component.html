@@ -5,7 +5,7 @@
         </mat-card-title>
     </mat-card-header>
     <div class="image-container" [routerLink]="['product', product.productId]">
-        <img mat-card-image [src]="imageURL" onerror="this.src='/assets/images/platzhalter.png'">
+        <img mat-card-image id="img" [src]="imageURL" onerror="this.src='/assets/images/platzhalter.png'">
     </div>
     <mat-card-content [routerLink]="['product', product.productId]">
         CHF {{product.price.toFixed(2)}}

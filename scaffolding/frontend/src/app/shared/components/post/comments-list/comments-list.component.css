@@ -9,12 +9,14 @@
     top: 10px;
     margin-top: 12px;
     margin-left: 0px;
+    cursor: pointer;
 }
 
 #toggleButton{
     border: 0px;
     background-color: inherit;
     color: grey;
+    cursor: pointer;
 }
 
 #commentSubmit{
@@ -25,7 +27,12 @@
     color: white;
     padding-left: 1rem;
     padding-right: 1rem;
+    cursor: pointer;
 }
+#commentSubmit:hover{
+    background-color: rgb(0, 64, 24);;
+}
+
 
 #cancelButton{
     height: 1.8rem;
@@ -35,4 +42,8 @@
     color: white;
     padding-left: 1rem;
     padding-right: 1rem;
+    cursor: pointer;
+}
+#cancelButton:hover{
+    background-color: rgb(100, 26, 50);
 }
