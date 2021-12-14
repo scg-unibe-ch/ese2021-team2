@@ -11,7 +11,7 @@
 #titleContainer{
     display: block;
 box-sizing: border-box;
-height: 1500px;
+height: 500px;
 background-color: rgb(255, 255, 255);
 clip-path: ellipse(81% 100% at 79.45% 0%);
 padding-left: 4rem;
