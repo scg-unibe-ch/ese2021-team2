@@ -281,11 +281,14 @@ background-color: rgb(255, 255, 255);
 clip-path: ellipse(81% 100% at 79.45% 0%);
 padding-left: 4rem;
     font-family: Arial, Helvetica, sans-serif;
+
+width: 100%;
 }
 
 #posts{
     position: absolute;
-    top: 15%;
+    
+    width: 100%;
 }
 
 img{
@@ -327,4 +330,15 @@ img{
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+#list{
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    padding-right: 4rem;
+}
+
+.post{
+    font-size: 1rem;
 }
