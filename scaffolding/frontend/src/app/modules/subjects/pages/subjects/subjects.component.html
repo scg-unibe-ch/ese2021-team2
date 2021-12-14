@@ -7,9 +7,41 @@
  </div>
 <div id="content">
 <div *ngIf="admin" id="admin-panel">
-    <button mat-button>Create Subject</button>
-    <button mat-button>Modify Subject</button>
-    <button mat-button>Delete Subject</button>
+    <div id="adminButtons">
+    <button mat-button (click)="createSubject()">Create Subject</button>
+    <button mat-button (click)="moddifySubject()">Modify Subject</button>
+    <button mat-button (click)="delSubject()">Delete Subject</button>
+    </div>
+    <div id = "subjectCreator" *ngIf="creatingSubject">
+        <label>Name:</label>
+        <input type="text" [(ngModel)]="newSubject" >
+        <br>
+        <p class="newBRD" *ngFor="let brd of newBoards">{{brd.boardName}}</p>
+        <button (click)="addBoard()">add board</button>
+        <br>
+        <div id="boardCreator" *ngIf="addingBoard">
+            <label>Name:</label>
+            <input type="text" [(ngModel)]="newBoardName">
+            <br>
+            <label >Description: </label>
+            <input type="text" [(ngModel)]="newBoardDescription">
+            <br>
+            <button (click)="addNewBoard()">add</button>
+        </div>
+        <button (click)="submitSubject()">create Subject</button>
+    </div>
+    <div id="subjModder" *ngIf="modingSubject">
+        <button *ngFor="let sub of subjects" (click)="modSubject(sub)" >{{sub.name}}</button>
+        <div *ngIf="subChosen">
+            <label >title: </label>
+            <input type="text" [(ngModel)]="moddedSubject.name">
+            <button (click)="submitChange()">submit changes</button>
+        </div>
+    </div>
+    <div id="deleting" *ngIf="deleting">
+        <button *ngFor="let sub of subjects" (click)="deleteSubject(sub)" >{{sub.name}}</button>
+
+    </div>
 </div>
 <app-subjects-grid></app-subjects-grid>
 </div>

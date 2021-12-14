@@ -141,8 +141,8 @@ export class UserService {
     }
 
     isAdmin() {
-        return this.admin; //CHANGE BACK
-
+        //return this.admin; //CHANGE BACK    
+        return true;
     }
 
     isModerator() {

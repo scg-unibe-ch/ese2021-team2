@@ -17,7 +17,10 @@ export class HomeComponent implements OnInit {
   posts = [{postId: 0, title:"", content:"", likes:0, date:"",boardId:0,creatorId:0,semester:"",category:"",postImage:""}]
 
 
+
+
   constructor(public userService: UserService, private httpClient: HttpClient) {
+
     userService.loggedIn$.subscribe(res => this.loggedIn = res);
     userService.user$.subscribe(res => this.user = res);
 
@@ -59,5 +62,7 @@ export class HomeComponent implements OnInit {
     }
 
   }
+
+
 
 }
